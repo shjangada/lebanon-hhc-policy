@@ -171,4 +171,4 @@ def test_stale_data_missing_an_indicator_does_not_crash():
     """A cached frame built before an indicator existed (e.g. after switching branches) must be skipped visibly, not raise KeyError."""
     raw = m2.raw_indicators().drop(columns=["conflict_incidents"])
     s = m2.compute(raw)
-    assert s.attrs["skipped_indicators"] == ["conflict_incidents"] and s.need_score.between(0, 1).all()
+    assert "conflict_incidents" in s.attrs["skipped_indicators"] and s.need_score.between(0, 1).all()      # (nitrate is also skipped while water_quality is mock)

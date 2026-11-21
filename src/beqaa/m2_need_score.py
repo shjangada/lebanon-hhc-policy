@@ -102,11 +102,18 @@ def raw_indicators(d0: float = 30, demand_col: str = "women_15_49", include_unre
     df["speciation_uncertainty_nearby"] = spec_unc
     df["rung_b_exposure_nearby"] = rung_b
     df["soil_hq_high_nearby"] = hq_near
-    nit = m4_exposure.nitrate_by_cadaster()
-    df = df.merge(nit, on="cadaster_id", how="left")
-    df["nitrate_imputed"] = df.nitrate_mg_l.isna()
-    df["env_evidence"] = df.soil_sampled_nearby | ~df.nitrate_imputed        # any environmental measurement for this cadaster at all
-    df["nitrate_mg_l"] = df.nitrate_mg_l.fillna(df.groupby("district").nitrate_mg_l.transform("median")).fillna(df.nitrate_mg_l.median())
+    if load_dataset("water_quality").is_mock:
+        # No public Beqaa well data (water_quality is mock): water exposure is UNKNOWN for every cadaster and is never scored from mock values.
+        # The indicator is skipped (attrs['skipped_indicators']) and every cadaster is a water evidence gap (feeds research_gaps.py).
+        df["nitrate_mg_l"] = np.nan
+        df["nitrate_imputed"] = True
+        df["env_evidence"] = df.soil_sampled_nearby
+    else:
+        nit = m4_exposure.nitrate_by_cadaster()
+        df = df.merge(nit, on="cadaster_id", how="left")
+        df["nitrate_imputed"] = df.nitrate_mg_l.isna()
+        df["env_evidence"] = df.soil_sampled_nearby | ~df.nitrate_imputed        # any environmental measurement for this cadaster at all
+        df["nitrate_mg_l"] = df.nitrate_mg_l.fillna(df.groupby("district").nitrate_mg_l.transform("median")).fillna(df.nitrate_mg_l.median())
     # NGO-dependency stress (not a Need Score domain; drives the escrow switch): 1 - share funds managed locally (latest actual year)
     g = gov[~gov.projected.astype(bool)]
     g = g[g.year == g.year.max()][["district", "share_funds_managed_locally", "admin_capacity_index"]]
