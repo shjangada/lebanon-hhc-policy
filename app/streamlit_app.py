@@ -4,7 +4,7 @@ import pandas as pd
 import pydeck as pdk
 import streamlit as st
 
-from beqaa import (allocation, assumptions, chat, equity, escrow, funding_finder as ff, io, m1_access, m2_need_score as m2,
+from beqaa import (allocation, assumptions, chat, chat_llm, equity, escrow, funding_finder as ff, io, m1_access, m2_need_score as m2,
                    m4_exposure, m5_options)
 
 st.set_page_config(page_title="Beqaa Health Prioritization", layout="wide")
@@ -280,10 +280,31 @@ with section("s5", "5 · Funding sources",
 # ---------------- Reference ----------------
 st.markdown("<a id='ref'></a>", unsafe_allow_html=True)
 st.subheader("Evidence, assumptions and data")
-with st.expander("Ask the registry (grounded; no match → 'No verified entry')"):
-    q = st.text_input("Question", "maternal health funding for national NGOs")
-    if q:
-        st.markdown(chat.answer(q)["answer"])
+st.markdown("**Ask the funding assistant**")
+_client = chat_llm.get_client()
+st.caption(("LLM assistant (" + chat_llm.MODEL + ") loops through the funding, organisation and source registries; every claim cites a registry id and URL. "
+            "It never uses outside knowledge for grants.") if _client else
+           "No ANTHROPIC_API_KEY found (set it in .env): showing retrieval-only answers from the registries.")
+if "chat_hist" not in st.session_state:
+    st.session_state.chat_hist = []
+for m_ in st.session_state.chat_hist:
+    with st.chat_message(m_["role"]):
+        st.markdown(m_["content"])
+if q_ := st.chat_input("e.g. Which funders could let local communities decide how maternal-health money is spent?"):
+    st.session_state.chat_hist.append({"role": "user", "content": q_})
+    with st.chat_message("user"):
+        st.markdown(q_)
+    with st.chat_message("assistant"):
+        with st.spinner("Searching the registries…"):
+            ctx = f"budget tier {budget_label}; priority cadasters: {', '.join(top.cadaster_name.head(3))}; theme: community-decided, locally administered funding"
+            r_ = chat_llm.ask(q_, history=st.session_state.chat_hist[:-1], client=_client, context=ctx)
+        st.markdown(r_["answer"])
+        st.caption(f"Mode: {r_['mode']}" + (f" · cited: {', '.join(r_['citations'])}" if r_["citations"] else ""))
+        if r_["trace"]:
+            with st.expander("Registry lookups"):
+                st.json(r_["trace"])
+    st.session_state.chat_hist.append({"role": "assistant", "content": r_["answer"]})
+
 with st.expander("Assumptions log"):
     asm = assumptions.build()
     st.dataframe(asm, hide_index=True, width="stretch")
