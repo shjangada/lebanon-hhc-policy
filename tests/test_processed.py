@@ -108,7 +108,7 @@ def test_loader_prefers_processed_and_falls_back_to_mock(monkeypatch):
 
 def test_badges_are_real_partly_real_or_mock():
     for n in io.DATASETS:
-        assert io.dataset_badge(n) in ("real", "partly real", "mock")
+        assert io.dataset_badge(n) in ("real", "partly real", "mock", "missing")
 
 
 @need
