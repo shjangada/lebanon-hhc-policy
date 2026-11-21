@@ -1,6 +1,6 @@
 PY ?= .venv/bin/python
 
-.PHONY: mock all app app-stable test readme ingest
+.PHONY: mock all app app-stable test readme ingest appendix
 mock:
 	$(PY) scripts/make_mock_data.py
 
@@ -21,3 +21,9 @@ ingest:
 
 app-stable:
 	scripts/run_stable.sh
+
+appendix:
+	$(PY) -m beqaa.ingest all
+	$(PY) -m beqaa.pipeline
+	$(PY) scripts/make_figures.py
+	$(PY) scripts/make_appendix_notebook.py

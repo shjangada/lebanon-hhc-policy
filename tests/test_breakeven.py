@@ -66,3 +66,13 @@ def test_memo_docs_exist_and_never_claim_a_health_effect():
     rows = [l for l in ev.splitlines() if l.startswith("| ") and l[2].isdigit()]
     assert rows and not any(" | c | " in r and "Beqaa" in r.split(" | c | ")[1] for r in rows)       # no rung (c) for Beqaa
     assert "white phosphorus" in ev and "not white phosphorus" in ev.lower() or "Total P is not white phosphorus" in ev
+
+
+def test_appendix_notebook_and_memo_figures_exist():
+    import json
+    import pathlib
+    root = pathlib.Path(__file__).resolve().parents[1]
+    nb = json.loads((root / "notebooks" / "appendix.ipynb").read_text())
+    assert nb["nbformat"] == 4 and any("make_figures" in "".join(c["source"]) for c in nb["cells"])
+    figs = sorted(p.name for p in (root / "outputs" / "memo").glob("fig*.png"))
+    assert len(figs) == 6, figs
