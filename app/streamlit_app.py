@@ -1,6 +1,6 @@
 """Beqaa dashboard: the UN funding line. Put the money and the decisions where the damage is.
 
-One scrolling Dashboard page (five sections stacked in order) plus a separate Methods page. Run: make app"""
+One scrolling Dashboard page (six sections stacked in order) plus a separate Methods page. Run: make app"""
 import importlib
 import pathlib
 import runpy
@@ -36,7 +36,8 @@ import common  # noqa: E402
 
 importlib.reload(common)        # app/common.py is a plain module: reload it on every rerun so edits are never stale (the beqaa package is reloaded by Streamlit's watcher)
 
-SECTIONS = [("1 · Funding today", "Funding today", "funding", "pages/1_Money_now.py"),
+SECTIONS = [("0 · Why Beqaa", "Why Beqaa", "why", "pages/0_Why_Beqaa.py"),
+            ("1 · Funding today", "Funding today", "funding", "pages/1_Money_now.py"),
             ("2 · Priority areas", "Priority areas", "areas", "pages/2_Where.py"),
             ("3 · Control of the money", "Control of the money", "control", "pages/3_Who_holds.py"),
             ("4 · Resilience", "Resilience", "resilience", "pages/4_Resilience.py"),
@@ -45,7 +46,7 @@ SECTIONS = [("1 · Funding today", "Funding today", "funding", "pages/1_Money_no
 
 def dashboard():
     st.title("The UN funding line: Beqaa health")
-    st.caption("Put the money and the decisions where the damage is. One page, five sections: scroll, or jump:")
+    st.caption("Put the money and the decisions where the damage is. One page, six sections: scroll, or jump:")
     st.markdown(" · ".join(f"[{label}](#{anchor})" for label, _, anchor, _ in SECTIONS))
     common.ONE_PAGE = True
     common.ANCHORS = {title: anchor for _, title, anchor, _ in SECTIONS}

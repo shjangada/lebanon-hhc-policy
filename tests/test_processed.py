@@ -175,3 +175,15 @@ def test_beqaa_funding_proxy_is_labelled_and_matches_the_pack():
     reg = pd.read_csv(io.ROOT / "data" / "registry" / "org_registry.csv")
     added = reg[reg.org_id > "O008"]
     assert (added.women_led == "to_verify").all() and (added.status == "to_verify").all()        # women_led is unknown for all partners: never guessed
+
+
+def test_why_beqaa_data_is_labelled():
+    """Damage figures are extracted automatically: never marked verified. Facts carry a status and a year; the Why Beqaa age/sex file covers the five districts."""
+    d = PROC / "damage_published.csv"
+    if d.exists():
+        assert set(pd.read_csv(d).status) == {"to_verify_pdf"}
+    f = pd.read_csv(io.ROOT / "data" / "registry" / "why_beqaa_facts.csv")
+    assert f.status.notna().all() and f.year.notna().all() and f.url.str.startswith("http").all()
+    a = PROC / "agesex_by_district.csv"
+    if a.exists():
+        assert set(pd.read_csv(a).district) == {"Baalbek", "Hermel", "Rachaya", "West Bekaa", "Zahle"}

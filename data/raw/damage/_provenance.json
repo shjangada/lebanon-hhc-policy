@@ -1,0 +1,117 @@
+{
+  "folder": "damage",
+  "generated": "2026-11-21",
+  "downloaded_files": [],
+  "sources": [
+    {
+      "status": "not_downloaded",
+      "sha256": null,
+      "accessed": "2026-11-21",
+      "note": "NOT DOWNLOADED: host blocked by the session egress allowlist on both the user's machine (proxy 403 'host is not on the allow list') and the cloud container (agent proxy 403). Re-run download when the host is allowed; compute sha256 then.",
+      "name": "UN-Habitat/UoB/USJ BDDQA - Baalbek-Hermel Governorate (PDF)",
+      "url": "https://unhabitat.org/sites/default/files/2025/01/unh-uob-usj_building_destruction_and_debris_quantities_assessment_baalbek-hermel_revised_22-01-2025.pdf",
+      "date": "published 2025-01-22; imagery 2025-01-07/10 vs pre-conflict 2023-09-01",
+      "license": "Not stated in document (UN-Habitat publication; cite source)",
+      "resolution": "building footprint / cadaster tables; PlanetScope 3-5 m",
+      "content_read_via": "WebFetch text extraction; figures transcribed to published_figures.csv"
+    },
+    {
+      "status": "not_downloaded",
+      "sha256": null,
+      "accessed": "2026-11-21",
+      "note": "NOT DOWNLOADED: host blocked by the session egress allowlist on both the user's machine (proxy 403 'host is not on the allow list') and the cloud container (agent proxy 403). Re-run download when the host is allowed; compute sha256 then.",
+      "name": "UN-Habitat/UoB/USJ BDDQA - Bekaa Governorate (Zahle, West Bekaa, Rachaya) (PDF)",
+      "url": "https://unhabitat.org/sites/default/files/2025/01/unh-uob-usj_building_destruction_and_debris_quantities_assessment_bekaa_revised_22-01-2025.pdf",
+      "date": "published 2025-01-22/23; imagery Dec 2024 vs Sep 2023",
+      "license": "Not stated",
+      "resolution": "building footprint / cadaster tables",
+      "content_read_via": "URL confirmed only; figures not yet transcribed"
+    },
+    {
+      "status": "not_downloaded",
+      "sha256": null,
+      "accessed": "2026-11-21",
+      "note": "NOT DOWNLOADED: host blocked by the session egress allowlist on both the user's machine (proxy 403 'host is not on the allow list') and the cloud container (agent proxy 403). Re-run download when the host is allowed; compute sha256 then.",
+      "name": "UN-Habitat BDDQA series landing page",
+      "url": "https://unhabitat.org/bddqa-Lebanon",
+      "date": "2025",
+      "license": "n/a"
+    },
+    {
+      "status": "not_downloaded",
+      "sha256": null,
+      "accessed": "2026-11-21",
+      "note": "NOT DOWNLOADED: host blocked by the session egress allowlist on both the user's machine (proxy 403 'host is not on the allow list') and the cloud container (agent proxy 403). Re-run download when the host is allowed; compute sha256 then.",
+      "name": "World Bank Lebanon RDNA March 2025 (text)",
+      "url": "https://documents1.worldbank.org/curated/en/099030125012526525/text/P506380-f58e9761-b29e-4d62-97c3-ebf5a511c4e1.txt",
+      "date": "published 2025-03-07; covers 2023-10-08 to 2024-12-20",
+      "license": "CC BY 3.0 IGO ('Some rights reserved', World Bank standard)",
+      "resolution": "governorate only (no caza table found)",
+      "content_read_via": "WebFetch; governorate totals transcribed"
+    },
+    {
+      "status": "not_downloaded",
+      "sha256": null,
+      "accessed": "2026-11-21",
+      "note": "No 2026 RDNA publication located as of 2026-11-21. World Bank Aug 2026 economic update gave losses, not new damage estimates.",
+      "name": "World Bank / CNRS-L 2026 damage assessment (in preparation per Finance Minister, Apr 2026)",
+      "url": "https://today.lorientlejour.com/article/1504400/lebanon-has-suffered-at-least-3-billion-in-war-related-losses-jaber-says.html",
+      "date": "2026",
+      "license": "n/a"
+    },
+    {
+      "status": "not_downloaded",
+      "sha256": null,
+      "accessed": "2026-11-21",
+      "note": "NO Bekaa / Baalbek-Hermel release located as of 2026-11-21. Building-level datasets referenced as in 'full report', not public download.",
+      "name": "UNDP/CNRS-L Building-Level Damage Assessments 2026 (Beirut&Mount Lebanon; South Lebanon Issue #1 to 29 Apr 2026, Issue #2 to Jul 2026)",
+      "url": "https://www.undp.org/arab-states/publications/building-level-damage-assessment-south-lebanon",
+      "date": "2026-06-08 / 2026-06-23",
+      "license": "Not stated"
+    },
+    {
+      "status": "not_downloaded",
+      "sha256": null,
+      "accessed": "2026-11-21",
+      "note": "NOT DOWNLOADED: host blocked by the session egress allowlist on both the user's machine (proxy 403 'host is not on the allow list') and the cloud container (agent proxy 403). Re-run download when the host is allowed; compute sha256 then.",
+      "name": "CNRS-L 2026 housing-unit damage by governorate (via Annahar)",
+      "url": "https://en.annahar.com/fr/300776/israel-destroyed-1081-housing-units-daily-in-lebanon-over-5-weeks-numbers-reveal-the-extent-of-residential-sector-destruction",
+      "date": "2026-04-16; 2026 figures cover 2026-03-02 to 2026-04-07",
+      "license": "press article",
+      "resolution": "governorate",
+      "content_read_via": "WebFetch; transcribed"
+    },
+    {
+      "status": "not_downloaded",
+      "sha256": null,
+      "accessed": "2026-11-21",
+      "note": "NOT DOWNLOADED: host blocked by the session egress allowlist on both the user's machine (proxy 403 'host is not on the allow list') and the cloud container (agent proxy 403). Re-run download when the host is allowed; compute sha256 then.",
+      "name": "IMPACT/REACH Humanitarian Situation Monitoring LBN25 Round 2 (KI damage index, cadaster)",
+      "url": "https://repository.impact-initiatives.org/document/impact/12a6a0ac/LBN25_HSM_Round2.pdf",
+      "date": "data collection 2024-12-10 to 2024-12-20",
+      "license": "Not stated (IMPACT publication)",
+      "resolution": "cadaster (28 Bekaa + 24 Baalbek-Hermel assessed)",
+      "content_read_via": "WebFetch; only 6 named high-damage cadasters transcribed"
+    },
+    {
+      "status": "not_downloaded",
+      "sha256": null,
+      "accessed": "2026-11-21",
+      "note": "HDX unreachable (both machines and WebFetch). No UNOSAT Bekaa/Baalbek product confirmed via search; check HDX manually.",
+      "name": "UNOSAT/UNITAR Lebanon damage datasets on HDX",
+      "url": "https://data.humdata.org/organization/un-operational-satellite-appplications-programme-unosat",
+      "date": "unknown",
+      "license": "unknown"
+    },
+    {
+      "status": "not_downloaded",
+      "sha256": null,
+      "accessed": "2026-11-21",
+      "note": "HDX blocked; not searched.",
+      "name": "HDX search 'Lebanon damage assessment'",
+      "url": "https://data.humdata.org/search?q=lebanon+damage",
+      "date": "n/a",
+      "license": "n/a"
+    }
+  ]
+}
