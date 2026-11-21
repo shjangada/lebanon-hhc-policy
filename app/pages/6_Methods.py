@@ -13,7 +13,6 @@ try:                                   # Sankey for the escrow flow; falls back 
 except ImportError:                    # pragma: no cover
     go = None
 
-st.set_page_config(page_title="Beqaa Health Prioritization", layout="wide")
 MODE = io.overall_mode()
 IS_MOCK = MODE != "REAL"
 CFG = m2.load_spec()
@@ -58,10 +57,6 @@ def funding(ver):
 
 
 # ---------------- sidebar: global controls ----------------
-st.sidebar.title("Beqaa health priorities")
-color = {"MOCK": "#c0392b", "PARTIAL": "#d68910", "REAL": "#1e8449"}[MODE]
-st.sidebar.markdown(f"<div style='background:{color};color:white;padding:8px;border-radius:6px;text-align:center'>"
-                    f"<b>DATA MODE: {MODE}</b>{' — real places and population, some inputs still mock' if MODE == 'PARTIAL' else (' — synthetic cadasters, placeholder costs' if IS_MOCK else '')}</div>", unsafe_allow_html=True)
 st.sidebar.markdown("**Scenario**")
 budget_label = st.sidebar.selectbox("Budget tier", list(m5_options.BUDGET_TIERS) + ["Custom"], 1)
 budget = st.sidebar.number_input("Custom budget (USD)", 100, 10_000_000, 50_000, 1000) if budget_label == "Custom" else m5_options.BUDGET_TIERS[budget_label]
@@ -143,7 +138,7 @@ def pretty(df, **rename):
 
 
 # ---------------- header ----------------
-st.title("Where should Beqaa primary-care money go first, and who should run it?")
+st.title("Methods: the models behind the five pages")
 st.caption("Adaptive funding switch: money follows measured need; control moves from foreign NGOs to Lebanese entities (national NGOs, Unions of Municipalities, with MoPH co-governing) as measured capacity improves. "
            "Traditional: funds follow appeals and agency footprint, referrals untracked, unregistered workers invisible.")
 _ds = io.data_status()

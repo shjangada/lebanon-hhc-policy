@@ -1,0 +1,81 @@
+"""Page 1: Where does the money go now, and who controls it?"""
+import pathlib
+import sys
+
+import altair as alt
+import pandas as pd
+import streamlit as st
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+import common as C  # noqa: E402
+from beqaa import io, narrative, state_capacity, theme_kpi  # noqa: E402
+
+PROC = io.PROCESSED
+SC = pd.read_csv(io.ROOT / "data" / "registry" / "state_capacity_sources.csv")
+GOV_SHARE = float(SC.loc[SC.id == "SC02", "value"].iloc[0]) / (100.0 if float(SC.loc[SC.id == "SC02", "value"].iloc[0]) > 1 else 1.0)
+GLOBAL_DIRECT, PLEDGE = 0.043, 0.25
+ALNAP = "https://alnap.org/help-library/resources/sohs-2026/chapter-4-power-imbalances-and-improving-accountability/4-overview/"
+
+lhf = theme_kpi.observed_series()
+req = pd.read_csv(PROC / "funding_requirements.csv") if (PROC / "funding_requirements.csv").exists() else None
+flows = pd.read_csv(PROC / "funding_flows.csv") if (PROC / "funding_flows.csv").exists() else None
+flash = None
+if req is not None:
+    r = req[(req.plan == "Lebanon Flash Appeal 2026") & (req.cluster == "All clusters (plan total)")]
+    flash = float(r.percent_funded.iloc[0]) / 100.0 if len(r) else None
+last_year = int(lhf.year.max()) if lhf is not None else None
+last_share = float(lhf.loc[lhf.year == last_year, "national_ngo_share"].iloc[0]) if lhf is not None else None
+sent = narrative.page1(last_share, last_year, flash, GOV_SHARE, GLOBAL_DIRECT)
+C.header("Where does the money go now, and who controls it?", sent, ["funding_flows"])
+
+c = st.columns(4)
+c[0].metric("Direct to local actors, globally (2025)", f"{GLOBAL_DIRECT:.1%}", f"target {PLEDGE:.0%}", delta_color="off",
+            help=f"Grand Bargain 2016 pledged 25% 'as directly as possible' to local actors; 4.3% went directly in 2025. Source: ALNAP SOHS 2026 ch.4 ({ALNAP}). Secondary source: verify against the primary tables.")
+c[1].metric(f"LHF to national NGOs ({last_year})" if last_year else "LHF to national NGOs", f"{last_share:.0%}" if last_share is not None else "data pending",
+            help="Lebanon Humanitarian Fund: share of project budgets to National NGOs. CBPF project summary via HDX (real). Nationwide, one pooled fund, not all aid; 2026 is a partial year." if last_share is not None else "Run `make ingest` (CBPF project summary). No value is shown without data.")
+c[2].metric("Flash Appeal 2026 funded", f"{flash:.0%}" if flash is not None else "data pending",
+            help="OCHA FTS: Lebanon Flash Appeal 2026, funding as a share of requirements (Health cluster: see the chart below)." if flash is not None else "Run `make ingest` (FTS requirements).")
+c[3].metric("State share of health spending", f"{GOV_SHARE:.1%}", help="SC02: K2P/UNICEF primary-healthcare financing memo (Oct 2025), verified in state_capacity_sources.csv.")
+if flash is not None:
+    h = req[(req.plan == "Lebanon Flash Appeal 2026") & (req.cluster == "Health")]
+    if len(h):
+        st.caption(f"Health cluster 2026: ${float(h.funding_usd.iloc[0]) / 1e6:,.1f}M of ${float(h.requirements_usd.iloc[0]) / 1e6:,.1f}M funded ({float(h.percent_funded.iloc[0]):.0f}%). Source: OCHA FTS.")
+
+st.subheader("Who receives the money: Lebanon funding by recipient type")
+if flows is None:
+    st.info("Data pending: run `make ingest` to load OCHA FTS funding flows. Nothing is shown without data.")
+else:
+    clu = st.radio("Cluster", ["Health", "All clusters"], horizontal=True, key="p1_cluster")
+    d = flows if clu == "All clusters" else flows[flows.cluster == "Health"]
+    d = d.groupby(["year", "recipient_type"], as_index=False).usd.sum()
+    d = d[d.year <= 2026]
+    ch = alt.Chart(d).mark_bar().encode(x=alt.X("year:O", title=None), y=alt.Y("usd:Q", stack="normalize", title="share of funding"), color=alt.Color("recipient_type:N", title="Recipient"),
+                                        tooltip=["year", "recipient_type", alt.Tooltip("usd:Q", format=",.0f")])
+    st.altair_chart(C.wm(ch, 760, 300), use_container_width=False)
+    st.caption("Source: OCHA FTS incoming funding (real). FTS does not split national from international NGOs: the national-NGO share comes from the Lebanon Humanitarian Fund (below). "
+               "Government is a lower bound on money held by Lebanese state actors. 2027 flows are pledges.")
+
+st.subheader("Theme KPI: share of Beqaa health money controlled by Lebanese actors")
+scn = st.selectbox("Scenario for the projection", list(theme_kpi.SCENARIOS), format_func=lambda k: theme_kpi.SCENARIO_LABELS[k], key="p1_scn")
+base = theme_kpi.local_control_share(last_year or 2025, scn)
+k = st.columns(3)
+k[0].metric("Baseline (observed)", f"{base['value']:.0%}" if base["value"] is not None else "missing", help=f"{base['scope']}. Source: {base['source']}. Status: {base['status']}. {base['caveat']}")
+p30 = theme_kpi.local_control_share(2030, scn, scored=C.scored_cached(None, 30, 0.1, C.VER))
+k[1].metric("2030 local control (escrow window)", f"{p30['value']:.0%}" if p30["value"] is not None else "missing",
+            help=f"{p30['scope']}. Status: {p30['status']} (district capacity inputs are mock). Source: {p30['source']}.")
+k[2].metric("2030 held by Lebanese organisations", f"{p30.get('lebanese_held_share', 0):.0%}", help="Share of released money administered by any Lebanese organisation (national NGO or above). Starts near 100% in the model because national NGOs qualify from day one.")
+tab = theme_kpi.kpi_table(scenarios=[scn], scored=C.scored_cached(None, 30, 0.1, C.VER))
+obs = lhf.rename(columns={"national_ngo_share": "value"}).assign(series="Observed: LHF share to national NGOs (real)", kind="observed")[["year", "value", "series", "kind"]] if lhf is not None else pd.DataFrame(columns=["year", "value", "series", "kind"])
+proj = tab.rename(columns={"local_control_share": "value"}).assign(series="Projection: local control of the escrow window (assumption, mock capacity inputs)", kind="projection")[["year", "value", "series", "kind"]]
+allp = pd.concat([obs, proj], ignore_index=True)
+line = alt.Chart(allp).mark_line(point=True).encode(x=alt.X("year:O", title=None), y=alt.Y("value:Q", scale=alt.Scale(domain=[0, 1]), title="share"), color=alt.Color("series:N", title=None, legend=alt.Legend(orient="bottom")),
+                                                      strokeDash=alt.StrokeDash("kind:N", legend=None, scale=alt.Scale(domain=["observed", "projection"], range=[[1, 0], [5, 4]])))
+st.altair_chart(C.wm(line, 760, 300), use_container_width=False)
+st.caption("The two series have different scopes and are not one continuous line: observed = one real pooled fund, nationwide; projection = the proposed escrow window, weighted by the rung that holds the money (INGO 0, national NGO 1/3, union of municipalities 2/3, MoPH 1). Page 3 shows the mechanism.")
+
+st.subheader("Why a mechanism: pledges without one fail")
+st.markdown(
+    f"- **Grand Bargain 2016:** 25% of humanitarian funding pledged 'as directly as possible' to local actors; **4.3%** went directly in 2025 ([ALNAP SOHS 2026 ch.4]({ALNAP})).\n"
+    "- **UN Emergency Relief Coordinator, June 2025:** aspiration of 70% of pooled funding to local actors, especially women-led organizations ([ALNAP SOHS 2026 ch.4.1](https://alnap.org/help-library/resources/sohs-2026/chapter-4-power-imbalances-and-improving-accountability/4-1-funding-pathways-and-the-politics-behind-the-numbers/)).\n"
+    "- **ODI/HPG, May 2026:** CBPF share to local and national actors 2016-2025 ([report](https://media.odi.org/documents/HST-LHL_localistion_report_final.pdf)).\n"
+    "- **Lebanon Recovery Fund** ran no projects in 2025 ([UNDP MPTF annual report](https://mptf.undp.org/sites/default/files/documents/2026-05/2025_consolidated_annual_narrative_report_lebanon_recovery_fund.pdf)).")
