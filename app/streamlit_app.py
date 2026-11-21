@@ -113,7 +113,7 @@ def pretty(df, **rename):
 
 # ---------------- header ----------------
 st.title("Where should Beqaa primary-care money go first, and who should run it?")
-st.caption("Adaptive funding switch: money follows measured need; control moves from foreign NGOs to Lebanese entities (municipalities → MoPH) as measured capacity improves. "
+st.caption("Adaptive funding switch: money follows measured need; control moves from foreign NGOs to Lebanese entities (national NGOs, Unions of Municipalities, with MoPH co-governing) as measured capacity improves. "
            "Traditional: funds follow appeals and agency footprint, referrals untracked, unregistered workers invisible.")
 if IS_MOCK:
     st.error("MOCK DATA: synthetic cadasters and placeholder costs. Do not cite these numbers.", icon="⚠️")
@@ -190,13 +190,22 @@ best = ev.sort_values("extra_pathways_median", ascending=False).iloc[0] if ev is
 with section("s2", "2 · Options & budget",
              (f"Best of your picks: <b>{best.label}</b>, about {best.extra_pathways_median:,.0f} extra completed care pathways "
               f"(range {best.extra_pathways_p05:,.0f}–{best.extra_pathways_p95:,.0f})." if best is not None else "Pick interventions to compare.")):
-    pick = st.multiselect("Compare up to 3 interventions", list(iv.intervention_id), default=pick, max_selections=3, key="pick",
-                          format_func=lambda i: iv.set_index("intervention_id").loc[i, "label"])
+    feas = m5_options.feasibility_table().set_index("intervention_id")
+    only_ok = st.checkbox("Only interventions that pass the feasibility filter (F1–F8)", False, key="only_ok")
+    opts = [i for i in iv.intervention_id if not only_ok or feas.loc[i, "feasible"]]
+    pick = [i for i in pick if i in opts]
+    pick = st.multiselect("Compare up to 3 interventions", opts, default=pick, max_selections=3, key="pick",
+                          format_func=lambda i: iv.set_index("intervention_id").loc[i, "label"] + ("" if feas.loc[i, "feasible"] else " ⚠"))
     if pick:
         ev = m5_options.evaluate(pick, budget)
         st.dataframe(pretty(ev[["label", "women_reached_median", "extra_pathways_median", "cost_per_pathway_median", "equity_gap_after"]].round(1),
                             label="Intervention", women_reached_median="Women reached", extra_pathways_median="Extra pathways",
                             cost_per_pathway_median="$ per pathway", equity_gap_after="Equity gap after"), hide_index=True, width="stretch")
+        with st.expander("Feasibility filter F1–F8 (no new public money, pausable, low grid power, no new doctors, existing institution, no ID, funding window, measurable)"):
+            st.dataframe(pretty(feas.loc[pick, ["label", "flags", "existing_institution", "funding_window", "indicator_source"]].assign(flags=lambda d: d["flags"].replace("", "passes all")),
+                                label="Intervention", flags="Fails", existing_institution="Existing institution", funding_window="Funding window",
+                                indicator_source="Indicator"), hide_index=True, width="stretch")
+            st.caption("Qualitative team judgments from docs/FEASIBILITY.md (assumptions, not data). ⚠ in the picker = fails at least one test.")
         with st.expander("Collateral-damage check (who could be excluded, capture, dependency)"):
             st.dataframe(pretty(ev[["label", "collateral_exclusion", "collateral_capture", "collateral_dependency", "collateral_displacement", "collateral_conflict"]],
                                 label="Intervention", collateral_exclusion="Excludes", collateral_capture="Capture", collateral_dependency="Dependency",
@@ -212,15 +221,16 @@ fit = st.session_state.get("fit", 1.1); ws = st.session_state.get("ws", 0.3); wk
 floor = st.session_state.get("floor", 0.5); unres = st.session_state.get("unres", False)
 rules = {"referral_min": st.session_state.get("ref_min", 0.40), "posts_filled_min": st.session_state.get("posts_min", 0.60)}
 summ, det = allocation.simulate(scored, budget, top_k, {"local_fit_multiplier": fit, "women_seat_share": ws, "worker_seat_share": wk})
-sched, esum, warns = escrow.run(scored, max(budget, 10_000), top_k, floor, rules=rules, unrestricted=unres)
+esc_on = st.session_state.get("esc", False)
+sched, esum, warns = escrow.run(scored, max(budget, 10_000), top_k, floor, rules=rules, unrestricted=unres, escalation_year=2028 if esc_on else None)
 sm = summ.set_index("regime")
 held = esum.held_usd.sum() / max(esum.held_usd.sum() + esum.released_usd.sum(), 1)
 with section("s3", "3 · Allocation & escrow",
-             f"Community-decided allocation reaches <b>{sm.loc['community', 'women_reached'] / sm.loc['top_down', 'women_reached']:.0%}</b> of the women top-down does under these assumptions; "
-             f"escrow holds back <b>{held:.0%}</b> of funds and ends at <b>{esum.share_managed_locally.iloc[-1]:.0%}</b> locally administered by {int(esum.year.max())}."):
+             f"Pilot test arms, not results: with these assumptions the community arm reaches <b>{sm.loc['community', 'women_reached'] / sm.loc['top_down', 'women_reached']:.0%}</b> of the women top-down does. "
+             f"Escrow holds back <b>{held:.0%}</b> of funds; <b>{esum.share_lebanese_managed.iloc[-1]:.0%}</b> is administered by Lebanese organisations by {int(esum.year.max())}."):
     l, r = st.columns(2)
     with l:
-        st.markdown("**Who decides: community vs top-down vs per-capita**")
+        st.markdown("**Who decides: pilot test arms (community vs top-down vs per-capita)**")
         st.dataframe(pretty(summ[["regime", "women_reached", "extra_pathways", "unregistered_share_of_reach", "equity_gap_after"]].round(3),
                             regime="Regime", women_reached="Women reached", extra_pathways="Extra pathways",
                             unregistered_share_of_reach="Unregistered share", equity_gap_after="Equity gap"), hide_index=True, width="stretch")
@@ -228,13 +238,19 @@ with section("s3", "3 · Allocation & escrow",
             st.slider("Local-fit multiplier (assumption, 1.0–1.3)", 1.0, 1.3, 1.1, 0.05, key="fit")
             st.slider("Women's decision seats", 0.0, 0.5, 0.3, 0.05, key="ws")
             st.slider("Worker seats", 0.0, 0.5, 0.1, 0.05, key="wk")
-        st.caption("The local-choice effect is an assumption. The model does not value legitimacy or sustainability. Priorities are mock.")
+        st.caption("The local-choice effect is an assumption to be tested in a stepped-wedge pilot, not a finding. The model does not value legitimacy or sustainability. Priorities are mock.")
+        with st.expander("How much does the result depend on the assumptions?"):
+            st.dataframe(allocation.sensitivity(scored, budget, top_k).round(2), width="stretch")
+            st.caption("Community-arm extra pathways as a ratio of top-down (rows: capture rate 0.1–0.4; columns: local-fit multiplier 1.0–1.3; no safeguards). Above 1.0 the community arm does better.")
     with r:
         st.markdown("**Who administers: escrow by year**")
         st.altair_chart(wm(alt.Chart(esum.melt("year", ["released_usd", "held_usd"])).mark_bar().encode(x="year:O", y=alt.Y("value:Q", title="USD"), color="variable:N"), 420, 190))
+        st.caption(f"Share administered by Lebanese organisations: {esum.share_lebanese_managed.iloc[0]:.0%} in {int(esum.year.min())} → {esum.share_lebanese_managed.iloc[-1]:.0%} in {int(esum.year.max())}. "
+                   "Pilot target ≥50% (assumption). MoPH co-governs; it is not assumed to administer.")
         with st.popover("Adjust escrow rules"):
             st.slider("Need floor %", 0.0, 1.0, 0.5, 0.05, key="floor")
             st.toggle("Unrestricted (route via a more-foreign intermediary instead of holding)", False, key="unres")
+            st.toggle("Renewed escalation from 2028 (capacity drops, recovers slowly)", False, key="esc")
             st.caption("Scenario inputs: capacity, referral and staffing figures are mock defaults that the pilot would measure (no public source).")
             st.slider("Referral completion ≥", 0.0, 1.0, 0.40, 0.05, key="ref_min")
             st.slider("Posts filled ≥", 0.0, 1.0, 0.60, 0.05, key="posts_min")

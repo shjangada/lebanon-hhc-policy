@@ -116,3 +116,15 @@ def what_local_choice_changes(summary: pd.DataFrame) -> pd.DataFrame:
         rows.append({"metric": m, "top_down": s.loc["top_down", m], "community": s.loc["community", m],
                      "community_minus_top_down": s.loc["community", m] - s.loc["top_down", m]})
     return pd.DataFrame(rows)
+
+
+def sensitivity(scored: pd.DataFrame, budget: float, top_k: int = 8, captures=(0.1, 0.2, 0.3, 0.4), fits=(1.0, 1.1, 1.2, 1.3)) -> pd.DataFrame:
+    """Community-decided extra pathways as a ratio of top-down, over the two assumptions that drive the result.
+    >1 means the community arm does better under that assumption pair. Shows the result is an assumption, to be tested in the pilot."""
+    rows = []
+    for c in captures:
+        for f in fits:
+            s, _ = simulate(scored, budget, top_k, {"base_capture": c, "local_fit_multiplier": f, "women_seat_share": 0.0, "worker_seat_share": 0.0})
+            r = s.set_index("regime")
+            rows.append({"capture_rate": c, "local_fit": f, "community_vs_top_down_pathways": r.loc["community", "extra_pathways"] / r.loc["top_down", "extra_pathways"]})
+    return pd.DataFrame(rows).pivot(index="capture_rate", columns="local_fit", values="community_vs_top_down_pathways")

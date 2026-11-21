@@ -135,6 +135,20 @@ iv = pd.DataFrame([
      "Organisation membership may exclude outsiders", "Medium: org capture", "Low: builds local capacity", "Could compete with PHC outreach", "Trusted local actors; women-led"),
 ], columns=["intervention_id", "label", "cost_low_usd", "cost_high_usd", "acts_on", "people_low", "people_high", "steps", "lift_low",
             "lift_high", "divisible", "risk_exclusion", "risk_capture", "risk_dependency", "risk_displacement", "risk_conflict"])
+# Feasibility filter F1-F8 (docs/FEASIBILITY.md). Qualitative team judgments (status: assumption), not data.
+FEAS = {  # id: (needs_new_public_money, pausable, grid_power_dependent, needs_new_doctors, existing_institution, requires_id, funding_window, indicator_source)
+    "mobile_maternal_unit": (False, True, False, False, "MoPH PHC hub + existing partner (UNFPA/MSF precedent)", False, "LHF; UNFPA appeal", "visits scheduled/held; ANC4 via hub register"),
+    "hub_spoke_ereferral": (False, True, False, False, "MoPH PHC network + DHIS2", True, "LHF/LFF Beqaa window", "referrals completed/sent (pilot-collected, offline-first phone log)"),
+    "transport_vouchers": (False, True, False, False, "Women's organisation / NGO distribution", True, "LHF; EU civil-society window", "vouchers used; ANC4 and facility delivery"),
+    "soil_water_screening": (False, True, False, False, "AUB lab / MoE", False, "UNDP/WB GATE grants (check eligibility)", "samples reported; days from finding to action"),
+    "cr_speciation_tests": (False, True, False, False, "AUB lab", False, "small grant (<= $1.5k)", "Cr(VI) fraction measured"),
+    "washing_water_truck": (False, True, False, False, "Municipality / WASH sector", False, "WASH sector (LHF)", "litres/day delivered; workers served"),
+    "sunflower_biochar_plot": (False, True, False, False, "AUB + farmer cooperative", False, "UNDP/WB GATE (check eligibility)", "soil metal change in plot (research pilot only)"),
+    "chw_women_orgs": (False, True, False, False, "Women's organisations + PHC network", False, "EU civil-society window; LHF", "CHW visits; ANC4 and postnatal follow-up"),
+}
+for j, col in enumerate(["needs_new_public_money", "pausable", "grid_power_dependent", "needs_new_doctors", "existing_institution", "requires_id",
+                         "funding_window", "indicator_source"]):
+    iv[col] = iv.intervention_id.map(lambda i: FEAS[i][j])
 iv["note"] = "ALL COSTS/LIFTS MOCK: replace with UNFPA/WHO appeal lines, K2P/UNICEF, quotes"
 save(iv, "interventions.csv")
 
@@ -158,15 +172,21 @@ ph["referral_sent_month"] = rng.integers(10, 80, len(ph))
 ph["referral_completed_month"] = (ph.referral_sent_month * rng.uniform(0.2, 0.7, len(ph))).astype(int)
 save(ph, "staffing_referrals.csv")
 
-# Governance capacity per district per year (MOCK): NGO->state transition curve + escrow thresholds.
+# Governance capacity per district per year (MOCK; no public source: a scenario input the pilot would measure).
+# Projection is deliberately modest: gains capped at 0.05/yr (docs/FEASIBILITY.md), not the old jump to MoPH-level capacity.
 yrs = list(range(2019, 2031)); gc = []
 for d in districts:
-    base = rng.uniform(0.3, 0.5)
+    base = rng.uniform(0.3, 0.45)
+    prev = None
     for y in yrs:
-        dip = 0.25 if y in (2020, 2021, 2024, 2026) else 0
-        gc.append({"district": d, "year": y, "projected": y > 2026,
-                   "admin_capacity_index": round(min(1, max(0, base - dip + 0.04 * (y - 2019) + rng.normal(0, 0.03))), 3),
-                   "share_funds_managed_locally": round(min(1, max(0, 0.15 + 0.05 * max(0, y - 2026) + rng.normal(0, 0.02))), 3),
+        if y <= 2026:
+            dip = 0.2 if y in (2020, 2021, 2024, 2026) else 0
+            val = base - dip + 0.02 * (y - 2019) + rng.normal(0, 0.02)
+        else:
+            val = prev + min(0.03, 0.05)
+        val = round(min(1, max(0, val)), 3); prev = val
+        gc.append({"district": d, "year": y, "projected": y > 2026, "admin_capacity_index": val,
+                   "share_funds_managed_locally": round(min(1, max(0, 0.15 + 0.03 * max(0, y - 2026) + rng.normal(0, 0.02))), 3),
                    "transparent_reporting": bool(rng.random() > 0.5)})
 save(pd.DataFrame(gc), "governance_capacity.csv")
 

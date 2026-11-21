@@ -20,6 +20,39 @@ CASCADE_GROUPS = list(DEFAULT_REACH_W)
 BUDGET_TIERS = {"$1,000 (starter pilot)": 1_000, "$100,000": 100_000, "$1,000,000": 1_000_000}
 
 
+def feasibility_flags(r) -> list[str]:
+    """Feasibility filter F1-F8 (docs/FEASIBILITY.md). Returns the tests an intervention fails (qualitative team judgments)."""
+    fl = []
+    if r["needs_new_public_money"]:
+        fl.append("F1 needs new public money")
+    if not r["pausable"]:
+        fl.append("F2 not pausable under escalation")
+    if r["grid_power_dependent"]:
+        fl.append("F3 needs grid power")
+    if r["needs_new_doctors"]:
+        fl.append("F4 needs new doctors")
+    if not str(r["existing_institution"]).strip() or str(r["existing_institution"]) == "nan":
+        fl.append("F5 no existing institution")
+    if r["requires_id"]:
+        fl.append("F6 requires ID: needs an anonymous / community-ID workaround")
+    if not str(r["funding_window"]).strip() or str(r["funding_window"]) == "nan":
+        fl.append("F7 no named funding window")
+    if not str(r["indicator_source"]).strip() or str(r["indicator_source"]) == "nan":
+        fl.append("F8 no measurable indicator")
+    return fl
+
+
+def feasibility_table() -> pd.DataFrame:
+    iv, mock = load_dataset("interventions")
+    rows = []
+    for _, r in iv.iterrows():
+        fl = feasibility_flags(r)
+        rows.append({"intervention_id": r.intervention_id, "label": r.label, "feasible": not fl, "n_flags": len(fl), "flags": "; ".join(fl),
+                     "existing_institution": r.existing_institution, "funding_window": r.funding_window, "indicator_source": r.indicator_source,
+                     "is_mock": bool(mock)})
+    return pd.DataFrame(rows)
+
+
 def step_probs(row) -> dict:
     return {"any_anc": row.p_any_anc, "anc4": min(1.0, row.p_anc4 / row.p_any_anc), "facility_delivery": row.p_facility_delivery,
             "postnatal": row.p_postnatal, "referral_complete": row.p_referral_complete}
@@ -133,7 +166,8 @@ def evaluate(selected: list[str], budget: float, shares: dict | None = None, rea
                "equity_gap_before": float(gap_before), "equity_gap_after": float(gap_after),
                "equity_gap_change": float(gap_after - gap_before),
                "collateral_exclusion": r.risk_exclusion, "collateral_capture": r.risk_capture, "collateral_dependency": r.risk_dependency,
-               "collateral_displacement": r.risk_displacement, "collateral_conflict": r.risk_conflict, "is_mock": bool(mock)}
+               "collateral_displacement": r.risk_displacement, "collateral_conflict": r.risk_conflict,
+               "feasibility_flags": "; ".join(feasibility_flags(r)) or "passes F1-F8", "is_mock": bool(mock)}
         if not steps:
             row["note"] = "Environmental / protection measure: acts on exposure, not on the ANC cascade (no pathways counted)"
         rows.append(row)
