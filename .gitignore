@@ -5,8 +5,9 @@ __pycache__/
 .env
 .pytest_cache/
 *.egg-info/
-data/raw/*
-!data/raw/.gitkeep
+# raw downloads are committed (small) except files >5 MB, which scripts/fetch_sources.py re-downloads
+data/raw/admin_boundaries/*.geojson.zip
+data/raw/soil_sites/**/*.pdf
 data/processed/*
 !data/processed/.gitkeep
 .ipynb_checkpoints/

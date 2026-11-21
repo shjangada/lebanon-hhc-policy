@@ -1,0 +1,17 @@
+{
+  "source_id": "D03",
+  "title": "LRP 2026 population package",
+  "publisher": "GoL/UN LRP / HDX",
+  "license": "CC BY",
+  "retrieved": "2026-11-21",
+  "files": [
+    {
+      "file": "05.-2026-lrp-population-package.xlsx",
+      "url": "https://data.humdata.org/dataset/d0f7980a-4b72-4744-9065-a036c89dc3b5/resource/feef36a8-cbf8-48fc-9bd3-758e03a7b85a/download/05.-2026-lrp-population-package.xlsx",
+      "bytes": 125812,
+      "sha256": "b79b8fc3a53ed7292f529add88d6e4bf72051bb8c0ae7b599aef9f85ae464ceb"
+    }
+  ],
+  "hdx_last_modified": "2026-03-17T14:42:01.837950",
+  "hdx_page": "https://data.humdata.org/dataset/lebanon-population-estimates-and-displacement-figures"
+}

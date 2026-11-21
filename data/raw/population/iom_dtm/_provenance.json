@@ -1,0 +1,17 @@
+{
+  "source_id": "D04",
+  "title": "IOM DTM Lebanon (admin 0-2) from API",
+  "publisher": "IOM DTM / HDX",
+  "license": "Other (see HDX page)",
+  "retrieved": "2026-11-21",
+  "files": [
+    {
+      "file": "lbn-iom-dtm-from-api-admin-0-to-2.csv",
+      "url": "https://data.humdata.org/dataset/e0729389-06d0-48b1-957b-a22168e85ee2/resource/34e7f993-45dd-4152-895e-31a60dbc4872/download/lbn-iom-dtm-from-api-admin-0-to-2.csv",
+      "bytes": 1538597,
+      "sha256": "43a42637bfb84191a7a691cb1be0cce6824de0584d95166c9aea7313a7e8734a"
+    }
+  ],
+  "hdx_last_modified": "2026-11-16T13:10:43.548530",
+  "hdx_page": "https://data.humdata.org/dataset/lbn-iom-dtm-from-api"
+}

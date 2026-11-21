@@ -1,0 +1,56 @@
+countryCode,id,name,code,typeId,typeName,startDate,endDate,year,requirements,funding,percentFunded
+LBN,,Not specified,,,,,,2029,,312500,
+LBN,,Not specified,,,,,,2028,,9644147,
+LBN,,Not specified,,,,,,2027,,78935209,
+LBN,1568,Lebanon Flash Appeal 2026,FLBN26,5,Flash appeal,2026-03-01,2026-08-31,2026,639875890,344735044,54
+LBN,1528,Syrian Arab Republic Regional Refugee and Resilience Plan (3RP) 2026,RJORLBNTUR26,111,Regional response plan,2026-01-01,2026-12-31,2026,,353280615,
+LBN,,Not specified,,,,,,2026,,168322089,
+LBN,1286,Lebanon Flash Appeal 2025,FLBN25,5,Flash appeal,2025-01-01,2025-03-31,2025,371357000,299327101,81
+LBN,1217,Syrian Arab Republic Regional Refugee and Resilience Plan (3RP) 2025,RSYR25,111,Regional response plan,2025-01-01,2025-12-31,2025,2992299991,335149370,11
+LBN,,Not specified,,,,,,2025,,113282851,
+LBN,1210,Lebanon Flash Appeal 2024,FLBN24,5,Flash appeal,2024-10-01,2024-12-31,2024,425745000,400236075,94
+LBN,1168,Syrian Arab Republic Regional Refugee and Resilience Plan (3RP) 2024,RSYR24,111,Regional response plan,2024-01-01,2024-12-31,2024,2720654036,641708218,24
+LBN,,Not specified,,,,,,2024,,291680990,
+LBN,1134,Lebanon Emergency Response Plan 2023,OLBN23,6,Other,2023-01-01,2023-12-31,2023,200203540,113005189,56
+LBN,1126,Syrian Arab Republic Regional Refugee and Resilience Plan (3RP) 2023,RSYR23,111,Regional response plan,2023-01-01,2023-12-31,2023,3595290691,529133568,15
+LBN,,Not specified,,,,,,2023,,178803298,
+LBN,1099,Lebanon Emergency Response Plan 2022,OLBN22,6,Other,2022-01-01,2022-12-31,2022,378175867,331297889,88
+LBN,1072,Syrian Arab Republic Regional Refugee and Resilience Plan (3RP) 2022,RSYR22,111,Regional response plan,2022-01-01,2022-12-31,2022,3195999999,827197182,26
+LBN,,Not specified,,,,,,2022,,181107397,
+LBN,1050,Lebanon Emergency Response Plan 2021,OLBN2122,6,Other,2021-08-03,2022-07-31,2021,167976726,119357388,71
+LBN,1020,Syrian Arab Republic Regional Refugee and Resilience Plan (3RP) 2021,RSYR21,111,Regional response plan,2021-01-01,2021-12-31,2021,2749999998,716021233,26
+LBN,,Not specified,,,,,,2021,,248163855,
+LBN,1009,Lebanon Flash Appeal 2020,FLBN20,5,Flash appeal,2020-08-05,2020-11-13,2020,196609142,162779141,83
+LBN,988,Lebanon Intersectoral COVID-19 Response Plan 2020,OLBN20,6,Other,2020-05-01,2020-12-31,2020,136500000,104662589,77
+LBN,943,Syrian Arab Republic Regional Refugee and Resilience Plan (3RP) 2020,RSYR20,111,Regional response plan,2020-01-01,2020-12-31,2020,2656353273,1026277319,39
+LBN,,Not specified,,,,,,2020,,384120948,
+LBN,724,Syrian Arab Republic Regional Refugee and Resilience Plan (3RP) 2019,RSYR19,111,Regional response plan,2019-01-01,2019-12-31,2019,2240773283,978018886,44
+LBN,,Not specified,,,,,,2019,,152472010,
+LBN,658,Syrian Arab Republic regional refugee and resilience plan (3RP) 2018,RSYR18,111,Regional response plan,2018-01-01,2018-12-31,2018,2290918474,1012369152,44
+LBN,,Not specified,,,,,,2018,,136105104,
+LBN,552,Syrian Arab Republic Regional Refugee and Resilience Plan (3RP) 2017,RSYR17,111,Regional response plan,2017-01-01,2017-12-31,2017,2170478254,980976859,45
+LBN,,Not specified,,,,,,2017,,88461403,
+LBN,514,Syrian Arab Republic Regional Refugee and Resilience Plan (3RP) 2016,RXSYRREG16,111,Regional response plan,2016-01-01,2016-12-31,2016,1902410103,1170685047,62
+LBN,,Not specified,,,,,,2016,,137107439,
+LBN,480,Syrian Arab Republic Regional Refugee and Resilience Plan (3RP) 2015,RXSYRREG15,111,Regional response plan,2015-01-01,2015-12-31,2015,1760250814,1152559655,65
+LBN,,Not specified,,,,,,2015,,162044504,
+LBN,443,Syria Regional Refugee Response Plan 2014,,111,Regional response plan,2014-01-01,2014-12-31,2014,1488017024,906771529,61
+LBN,,Not specified,,,,,,2014,,195893313,
+LBN,423,Syria Regional Refugee Response Plan (RRP) 2013,RXSYRREG13,111,Regional response plan,2013-01-01,2013-06-30,2013,1216189393,872095002,72
+LBN,,Not specified,,,,,,2013,,172831776,
+LBN,,Not specified,,,,,,2012,,163915544,
+LBN,,Not specified,,,,,,2011,,43452482,
+LBN,329,Regional Response Plan for Iraqi Refugees 2010,OXIRQREG10,111,Regional response plan,2010-01-01,2010-12-31,2010,21889600,5556447,25
+LBN,,Not specified,,,,,,2010,,30756222,
+LBN,,Not specified,,,,,,2009,,64073633,
+LBN,,Not specified,,,,,,2008,,80941435,
+LBN,246,Lebanon Crisis Appeal 2007,OLBN07,6,Other,2007-06-04,2007-09-03,2007,13083469,20294953,155
+LBN,,Not specified,,,,,,2007,,114068933,
+LBN,214,Lebanon Crisis 2006,FLBN06,5,Flash appeal,2006-07-24,2006-10-23,2006,96520410,118959965,123
+LBN,,Not specified,,,,,,2006,,453175685,
+LBN,,Not specified,,,,,,2005,,7532909,
+LBN,,Not specified,,,,,,2004,,7638481,
+LBN,,Not specified,,,,,,2003,,889753,
+LBN,,Not specified,,,,,,2002,,3621092,
+LBN,,Not specified,,,,,,2001,,879314,
+LBN,,Not specified,,,,,,1999,,250000,
