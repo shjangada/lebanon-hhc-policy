@@ -19,6 +19,8 @@ empty columns; **mock** = synthetic. The app loads `data/processed/` first and f
 | cascade_baseline | 🔴 mock | 5 | (mock) | mock |
 | staffing_referrals | 🔴 mock | 9 | (mock) | mock |
 | conflict_exposure | ✅ real | 222 |  | D03 |
+| funding_flows | ✅ real | 134 |  | D06 |
+| funding_requirements | ✅ real | 102 |  | D06 |
 | governance_capacity | 🔴 mock | 60 | (mock) | mock |
 
 ## Coverage of the 222 Beqaa cadasters (five districts)

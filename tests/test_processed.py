@@ -144,3 +144,20 @@ def test_acled_and_env_are_gitignored():
     gi = (ROOT / ".gitignore").read_text()
     assert ".env\n" in gi and "data/raw/conflict_events/acled/" in gi and (ROOT / ".env.example").exists()
     assert "=" in (ROOT / ".env.example").read_text() and all(l.split("=", 1)[1].strip() == "" for l in (ROOT / ".env.example").read_text().splitlines() if "=" in l and not l.startswith("#"))
+
+
+def test_haus_2024_appendix_transcription():
+    f = PROC / "haus_2024.csv"
+    if not f.exists():
+        pytest.skip("run `make ingest`")
+    d = pd.read_csv(f)
+    assert not d.is_mock.any() and (d.source_id == "HAUS2024").all() and d.url.notna().all()
+    two = d[d.transcribed_by.str.contains("pass 2")]
+    assert len(two) >= 30 and two.transcription_checked.all()                     # the two passes agreed on every text figure
+    assert not d[d.transcribed_by.str.contains("once")].transcription_checked.any()  # chart values read once are NOT marked checked
+    hv = d.set_index("indicator").value
+    assert 0 < hv["anc_4plus_share"] < 100 and hv["delivery_in_hospital_share"] + hv["delivery_other_facility_share"] + hv["delivery_at_home_share"] <= 100.5
+    assert 20 < hv["acute_symptom_diarrhoea_vomiting"] < 40
+    cb = pd.read_csv(PROC / "cascade_baseline_long.csv")
+    h = cb[cb.source_citation.astype(str).str.contains("HAUS")]
+    assert set(h.step) == {"p_any_anc", "p_anc4", "p_facility_delivery", "p_postnatal"} and h.loc[h.step == "p_facility_delivery", "transcription_checked"].eq(False).all()

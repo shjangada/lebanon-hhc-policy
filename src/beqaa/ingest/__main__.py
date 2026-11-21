@@ -4,7 +4,7 @@ Runs the converters in dependency order. Each converter is idempotent and writes
 import importlib
 import sys
 
-ORDER = ["cadasters_population", "facilities", "conflict", "vulnerability", "funding_flows", "funding_requirements", "hdx_access"]
+ORDER = ["cadasters_population", "facilities", "conflict", "vulnerability", "funding_flows", "funding_requirements", "hdx_access", "haus_2024"]
 OPTIONAL = ["lhf_allocations", "facility_status", "soil_sites", "official_severity", "interventions", "crop_transfer", "cascade_baseline", "vasyr_msna",
             "governance", "mobile_units", "acled", "checks", "report"]
 

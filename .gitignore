@@ -48,3 +48,4 @@ data/raw/msna/*.pdf
 !data/processed/_unmatched.csv
 !data/processed/unfpa_cost_lines.csv
 !data/processed/funding_requirements.csv
+!data/processed/haus_2024.csv
