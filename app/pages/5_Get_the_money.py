@@ -8,7 +8,7 @@ import streamlit as st
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 import common as C  # noqa: E402
-from beqaa import chat_llm, eligibility, escrow, funding_finder as ff, m2_need_score as m2, m4_exposure, narrative, research_gaps  # noqa: E402
+from beqaa import chat_llm, eligibility, escrow, funding_finder as ff, io, m2_need_score as m2, m4_exposure, narrative, research_gaps  # noqa: E402
 
 f = ff.annotate(ff.load_funding())
 a, b, c = st.columns(3)
@@ -99,6 +99,24 @@ except Exception as e:                                   # keep the page usable 
 with st.expander("Funding-flow data sources (where real allocation data comes from)"):
     st.dataframe(ff.load_datasets(), hide_index=True, width="stretch", column_config={"url": st.column_config.LinkColumn("url", display_text="open")})
     st.caption("data/registry/funding_datasets.csv: datasets, not grants. CBPF / FTS are already processed (`make ingest`) and drive Page 1.")
+
+st.subheader("Attach a health rider to projects that are already funded")
+PROC = io.PROCESSED
+rid = pd.read_csv(PROC / "riders.csv") if (PROC / "riders.csv").exists() else None
+if rid is None:
+    st.info("Data pending: run the pipeline (riders).")
+else:
+    st.caption("A rider = testing, a trigger to screening and referral at the nearest MoPH-list centre, and worker protection, priced from sourced unit prices. Sample counts and screenings are assumptions (parameters), not facts; "
+               "centre positions are village centroids. Projects at governorate or national level (e.g. BALADNA, the GATE grants) need site lists from the implementer first.")
+    for r in rid.sort_values(["attachability_score", "rider_cost_central_usd"], ascending=[False, True]).itertuples():
+        pct = f"{r.rider_pct_of_budget_central:.1%} of the project budget" if pd.notna(r.rider_pct_of_budget_central) else "project budget not known"
+        with st.expander(f"{r.project_id}: {r.name[:90]}  |  rider ${r.rider_cost_low_usd:,}-{r.rider_cost_high_usd:,}  |  page verified: {r.verified}"):
+            st.markdown(f"**Funder:** {r.funder}  \n**Implementers:** {r.implementers}  \n**Hook:** {r.hook_type}  \n"
+                        f"**Rider cost:** ${r.rider_cost_low_usd:,} / ${r.rider_cost_central_usd:,} / ${r.rider_cost_high_usd:,} (low / central / high), {pct}  \n"
+                        f"**Nearest centre:** {r.nearest_phc} ({r.phc_minutes:.0f} min, {'network centre' if r.phc_in_network else 'not in network list'}; position = village centroid)  \n"
+                        f"**Soil findings in the district(s):** {r.soil_findings or 'none sampled'}  \n**Parameters:** {r.parameters}  \n"
+                        + (f"**Not priced (no sourced unit price):** {r.unpriced_items}  \n" if isinstance(r.unpriced_items, str) and r.unpriced_items else "")
+                        + ("**Centre load flag:** the rider adds more than 10% of the centre's assumed yearly capacity.  \n" if r.referral_load_flag else ""))
 
 st.subheader("Ask the registry (optional chat)")
 LLM_CAP = int(os.environ.get("CHAT_MAX_LLM_QUESTIONS", "10"))      # per browser session: protects the API key on a public deployment
