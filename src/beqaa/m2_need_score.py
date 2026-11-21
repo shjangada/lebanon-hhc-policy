@@ -80,19 +80,24 @@ def raw_indicators(d0: float = 30, demand_col: str = "women_15_49", include_unre
     # environment: soil hotspot proximity (tier x distance decay) + nitrate
     # M4 -> M2 link: soil tiers (Cr tier depends on the assumed Cr(VI) share; default precautionary) decay with distance (15 km)
     sites = m4_exposure.screen_sites(cr6_for_tier=cr6_for_tier)
-    prox, spec_unc, rung_b, hq_near = [], [], [], []
+    prox, spec_unc, rung_b, hq_near, nearest = [], [], [], [], []
     for r in df.itertuples():
         v = u = b = h = 0.0
+        dmin = np.inf
         for s in sites.itertuples():
             if np.isnan(s.lat):
                 continue
-            decay = max(0.0, 1 - _hav(r.lat, r.lon, s.lat, s.lon) / 15.0)
+            dist = _hav(r.lat, r.lon, s.lat, s.lon)
+            dmin = min(dmin, dist)
+            decay = max(0.0, 1 - dist / 15.0)
             v = max(v, s.tier * decay)
             u = max(u, float(s.speciation_decisive) * decay)          # nearby result whose tier hinges on Cr(VI) speciation
             b = max(b, float(s.evidence_rung == "b") * decay)         # plausible pathway, health effect not demonstrated
             if not np.isnan(s.hq_high):
                 h = max(h, s.hq_high * decay)
-        prox.append(v); spec_unc.append(u); rung_b.append(b); hq_near.append(h)
+        prox.append(v); spec_unc.append(u); rung_b.append(b); hq_near.append(h); nearest.append(dmin)
+    df["nearest_soil_site_km"] = nearest
+    df["soil_sampled_nearby"] = df.nearest_soil_site_km < 15.0         # a result within the 15 km decay radius exists
     df["soil_hotspot_proximity"] = prox
     df["speciation_uncertainty_nearby"] = spec_unc
     df["rung_b_exposure_nearby"] = rung_b
@@ -100,6 +105,7 @@ def raw_indicators(d0: float = 30, demand_col: str = "women_15_49", include_unre
     nit = m4_exposure.nitrate_by_cadaster()
     df = df.merge(nit, on="cadaster_id", how="left")
     df["nitrate_imputed"] = df.nitrate_mg_l.isna()
+    df["env_evidence"] = df.soil_sampled_nearby | ~df.nitrate_imputed        # any environmental measurement for this cadaster at all
     df["nitrate_mg_l"] = df.nitrate_mg_l.fillna(df.groupby("district").nitrate_mg_l.transform("median")).fillna(df.nitrate_mg_l.median())
     # NGO-dependency stress (not a Need Score domain; drives the escrow switch): 1 - share funds managed locally (latest actual year)
     g = gov[~gov.projected.astype(bool)]
@@ -125,11 +131,33 @@ def apply_quantile_anchors(spec: dict, raw: pd.DataFrame, lo: float = 0.10, hi: 
     return spec
 
 
+def domain_matrix(scored: pd.DataFrame, domains: list[str] | None = None) -> np.ndarray:
+    """Cadaster x domain scores; the environment column is NaN where there is no environmental evidence (see compute(env_unknown=))."""
+    doms = domains or DOMAINS
+    return np.column_stack([scored["D_environment_known"].values if d == "environment" and "D_environment_known" in scored else scored[f"D_{d}"].values for d in doms])
+
+
+def aggregate_scores(D: np.ndarray, w: np.ndarray, agg: str = "arithmetic") -> np.ndarray:
+    """Need score from a (cadasters x domains) matrix with NaN = unknown: weights are re-normalised per cadaster over the domains that have evidence."""
+    ok = ~np.isnan(D)
+    W = np.where(ok, w, 0.0)
+    W = W / W.sum(axis=1, keepdims=True)
+    Dz = np.where(ok, D, 0.0)
+    if agg == "geometric":
+        return np.exp((np.where(ok, np.log(np.clip(Dz, 1e-3, 1)), 0.0) * W).sum(axis=1))
+    if agg == "max":
+        return np.where(ok, D, -np.inf).max(axis=1)
+    return (Dz * W).sum(axis=1)
+
+
 def compute(raw: pd.DataFrame, weights: dict | None = None, spec: dict | None = None, geometric: bool = False,
             domains_on: list[str] | None = None, exclude_indicators: list[str] | None = None,
-            aggregation: str | None = None, normalization: str = "goalpost") -> pd.DataFrame:
+            aggregation: str | None = None, normalization: str = "goalpost", env_unknown: str = "unknown") -> pd.DataFrame:
     """aggregation: arithmetic (default) | geometric | max (JIAF-style 'worst domain'); normalization: goalpost (default, safe/crisis anchors)
-    | percentile (SVI-style rank within the cadasters). See docs/METHODS_DECISIONS.md D2-D4."""
+    | percentile (SVI-style rank within the cadasters). See docs/METHODS_DECISIONS.md D2-D4.
+    env_unknown: what an UNSAMPLED cadaster (no soil result within 15 km and no measured well) gets for the environment domain.
+      unknown (default): D_environment_known = NaN and that cadaster's other domains are re-weighted (no evidence is not evidence of safety);
+      zero: legacy behaviour (unsampled = no exposure); conflict_prior: use the conflict-incident score as a strike-damage proxy prior."""
     aggregation = aggregation or ("geometric" if geometric else "arithmetic")
     spec = spec or load_spec()
     w = dict(weights or spec["domain_weights"])
@@ -154,14 +182,21 @@ def compute(raw: pd.DataFrame, weights: dict | None = None, spec: dict | None = 
                 out[col] = score_indicator(raw[ind["name"]], ind["safe"], ind["crisis"])
             cols.append(col)
         out[f"D_{d}"] = out[cols].mean(axis=1, skipna=True) if cols else 0.0
-    D = out[[f"D_{d}" for d in on]].values
+    gap = ~out["env_evidence"].astype(bool) if "env_evidence" in out else pd.Series(False, index=out.index)
+    out["env_evidence_gap"] = gap
+    out["D_environment_known"] = out["D_environment"].where(~gap)
+    if env_unknown == "zero":
+        out.loc[gap, "D_environment"] = 0.0
+        out["D_environment_known"] = out["D_environment"]
+    elif env_unknown == "conflict_prior" and "s_conflict_incidents" in out:
+        out.loc[gap, "D_environment"] = out.loc[gap, "s_conflict_incidents"]
+        out["D_environment_known"] = out["D_environment"]
+    else:                                                         # unknown: keep a plain 0 in D_environment for charts, but score without the domain
+        out["D_environment_known"] = out["D_environment"].where(~gap)
+        out.loc[gap, "D_environment"] = 0.0
+    D = np.column_stack([out["D_environment_known"].values if d == "environment" else out[f"D_{d}"].values for d in on])
     wv = np.array([wn[d] for d in on])
-    if aggregation == "geometric":
-        out["need_score"] = np.exp((np.log(np.clip(D, 1e-3, 1)) * wv).sum(axis=1))
-    elif aggregation == "max":
-        out["need_score"] = D.max(axis=1)
-    else:
-        out["need_score"] = (D * wv).sum(axis=1)
+    out["need_score"] = aggregate_scores(D, wv, aggregation)      # per-cadaster re-weighting over the domains that have evidence
     out["rank"] = out.need_score.rank(ascending=False, method="min").astype(int)
     t = spec["tiers"]
     out["tier"] = np.where(out.need_score >= t["high"], "High", np.where(out.need_score >= t["moderate"], "Moderate", "Low"))
@@ -180,13 +215,10 @@ def robustness(raw: pd.DataFrame, n: int = 5000, seed: int = 42, top_k: int | No
     k = top_k or spec["top_k"]
     base = compute(raw, spec=spec, geometric=geometric, domains_on=domains_on)
     on = [d for d in (domains_on or DOMAINS)]
-    D = base[[f"D_{d}" for d in on]].values
+    D = domain_matrix(base, on)
     rng = np.random.default_rng(seed)
     W = rng.dirichlet(np.ones(len(on)), n)                       # n x d
-    if geometric:
-        S = np.exp(np.log(np.clip(D, 1e-3, 1)) @ W.T)
-    else:
-        S = D @ W.T                                               # cadaster x draws
+    S = np.column_stack([aggregate_scores(D, W[j], "geometric" if geometric else "arithmetic") for j in range(n)])   # cadaster x draws
     ranks = (-S).argsort(axis=0).argsort(axis=0) + 1
     out = base[["cadaster_id", "cadaster_name", "district", "need_score", "rank"]].copy()
     out["p_top_tier"] = (ranks <= k).mean(axis=1)
