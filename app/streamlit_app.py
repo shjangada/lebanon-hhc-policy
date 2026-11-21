@@ -1,5 +1,6 @@
 """Beqaa Health Prioritization dashboard. Run: make app"""
 import altair as alt
+import numpy as np
 import pandas as pd
 import pydeck as pdk
 import streamlit as st
@@ -109,7 +110,7 @@ h3{margin-top:0;padding-top:0}
 .takeaway{font-size:1.02rem;margin:-.2rem 0 .6rem 0}
 </style>""", unsafe_allow_html=True)
 
-NAV = [("s1", "1 Priority"), ("s2", "2 Options"), ("s3", "3 Allocation"), ("s4", "4 Exposure"), ("s5", "5 Funding"), ("s6", "6 Robustness"), ("ref", "Evidence")]
+NAV = [("s1", "1 Priority"), ("sa", "2 Access"), ("s2", "3 Options"), ("s3", "4 Allocation"), ("s4", "5 Exposure"), ("s5", "6 Funding"), ("s6", "7 Robustness"), ("ref", "Evidence")]
 NAV_HTML = "<div class='nav'>" + "".join(f"<a href='#{i}'>{t}</a>" for i, t in NAV) + "</div>"
 st.sidebar.markdown("**Jump to**")
 st.sidebar.markdown(NAV_HTML.replace("<div class='nav'>", "<div class='nav' style='line-height:2'>"), unsafe_allow_html=True)
@@ -117,6 +118,7 @@ st.sidebar.markdown(NAV_HTML.replace("<div class='nav'>", "<div class='nav' styl
 
 PURPOSE = {
     "s1": "Ranks cadasters by need, so money is aimed at the places and groups that need care most. Includes access by group and how robust the ranking is.",
+    "sa": "Shows where care is hard to reach: supply, population and travel time for each cadaster, before the war and now, with facility status dated and unknown shown grey.",
     "s2": "Compares what each intervention would achieve for a given budget: reach, cost, who it might exclude, and other side effects.",
     "s3": "Tests who should decide how funds are spent (community, top-down, per capita) and who administers them as measured capacity grows (escrow).",
     "s4": "Screens soil and water findings for plausible health exposure and sets the protective action each tier triggers.",
@@ -232,13 +234,111 @@ with section("s1", "1 · Priority",
         st.caption("Each row changes one methodological choice (aggregation, normalisation, weights, dropped domain) and compares with the default. "
                    "Low overlap = that choice drives the priority list, so report it as contested. Rationale and precedents: docs/METHODS_DECISIONS.md.")
 
-# ---------------- 2. What to fund ----------------
+# ---------------- 2. Access ----------------
+ACC_METRICS = {"E2SFCA access (capacity per 1,000 women)": ("access", True), "Facilities in catchment per 10k people": ("facilities_per_10k", True),
+               "Travel time to nearest PHC (min)": ("min_phc", False), "Travel time to nearest hospital (min)": ("min_hospital", False),
+               "Beyond 30 min of a PHC (yes/no)": ("beyond_30_phc", False), "Beyond 60 min of a hospital (yes/no)": ("beyond_60_hospital", False)}
+STATE_COLOR = {"functional": [30, 150, 70, 235], "partial": [235, 150, 20, 235], "closed": [200, 30, 30, 235], "damaged": [110, 10, 10, 235], "unknown": [140, 140, 140, 235]}
+ac_a, ac_b, ac_c = st.session_state.get("acc_metric", list(ACC_METRICS)[0]), st.session_state.get("acc_scn", "Current (latest dated status)"), st.session_state.get("acc_unknown", "functional")
+PANEL = m1_access.access_panel(d0, 1.0 if ac_c == "functional" else 0.0)
+_k, _hi = ACC_METRICS[ac_a]
+_scn = "prewar" if ac_b.startswith("Pre-war") else "current"
+_col = f"{_k}_{_scn}"
+_lost = PANEL.access_lost_pct.mean()
+_beyond = int(PANEL["beyond_30_phc_current"].sum())
+with section("sa", "2 · Access",
+             f"Access has fallen by <b>{PANEL.access_lost_pct.mean():.0%}</b> on average since the pre-war baseline; <b>{_beyond}</b> of {len(PANEL)} cadasters are now beyond 30 minutes of a PHC "
+             f"({int(PANEL['beyond_30_phc_prewar'].sum())} before the war). Status is dated for {int((m1_access.facility_state(io.load_dataset('facilities').df) != 'unknown').sum())} "
+             f"of {len(io.load_dataset('facilities').df)} facilities; the rest are grey."):
+    c1, c2, c3 = st.columns([3, 2, 2])
+    c1.selectbox("Metric", list(ACC_METRICS), key="acc_metric")
+    c2.radio("Period", ["Pre-war baseline (2023)", "Current (latest dated status)"], index=1, key="acc_scn", horizontal=False)
+    c3.radio("Facilities with no dated status count as", ["functional", "not functional"], key="acc_unknown", help="They are drawn grey either way; this only changes the modelled supply.")
+    vals = PANEL[_col].astype(float)
+    rng_ = max(vals.max() - vals.min(), 1e-9)
+    bad = (1 - (vals - vals.min()) / rng_) if _hi else ((vals - vals.min()) / rng_)
+    P = PANEL.assign(_bad=bad.fillna(0), _val=vals.round(2))
+    picked = None
+    try:                                                   # selection state from the previous run (bar click or map click); never breaks the page
+        bar = st.session_state.get("acc_bar")
+        mp_ = st.session_state.get("acc_map")
+        if bar and bar["selection"]["pick"]:
+            picked = bar["selection"]["pick"][0].get("cadaster_name")
+        elif mp_ and mp_["selection"]["objects"]:
+            for objs in mp_["selection"]["objects"].values():
+                if objs and objs[0].get("cadaster_name"):
+                    picked = objs[0]["cadaster_name"]
+                    break
+    except Exception:
+        picked = None
+    P["_r"] = (255 * P._bad).astype(int); P["_g"] = (190 * (1 - P._bad)).astype(int)
+    P["_rad"] = P.population_total.pow(0.5) * 22
+    layers_a = [pdk.Layer("ScatterplotLayer", P, id="cad", get_position=["lon", "lat"], get_radius="_rad", get_fill_color=["_r", "_g", 40, 170], pickable=True,
+                          stroked=True, get_line_color=[255, 255, 255, 120], line_width_min_pixels=1)]
+    if picked:
+        layers_a.append(pdk.Layer("ScatterplotLayer", P[P.cadaster_name == picked], get_position=["lon", "lat"], get_radius="_rad", filled=False, stroked=True,
+                                  get_line_color=[0, 0, 0, 255], line_width_min_pixels=4))
+    facs = io.load_dataset("facilities").df.copy()
+    facs["state"] = m1_access.facility_state(facs)
+    facs["_c"] = facs.state.map(STATE_COLOR)
+    facs["_rad"] = np.where(facs["type"] == "mobile", 1800, 1100)
+    facs["_label"] = facs.name + " | " + facs.state.map(m1_access.STATE_LABELS) + " | " + facs.get("status_date", "").astype(str).replace("", "no date")
+    layers_a.append(pdk.Layer("ScatterplotLayer", facs, id="fac", get_position=["lon", "lat"], get_radius="_rad", get_fill_color="_c", pickable=True,
+                              stroked=True, get_line_color=[0, 0, 0, 255], line_width_min_pixels=1))
+    if st.session_state.get("acc_soil", False):
+        s_ = sites_df(cr6, VER).dropna(subset=["lat"]).assign(_c=lambda d: d.tier.map({0: [120, 120, 120, 220], 1: [240, 190, 0, 230], 2: [130, 0, 160, 240]}))
+        layers_a.append(pdk.Layer("ScatterplotLayer", s_, get_position=["lon", "lat"], get_radius=2300, get_fill_color="_c", stroked=True, get_line_color=[255, 255, 255, 255]))
+    if IS_MOCK:
+        layers_a.append(pdk.Layer("TextLayer", pd.DataFrame({"lat": [P.lat.mean()], "lon": [P.lon.mean()], "t": ["MOCK DATA"]}), get_position=["lon", "lat"], get_text="t",
+                                  get_size=60, get_color=[220, 0, 0, 120]))
+    ml, mr = st.columns([3, 2])
+    with ml:
+        st.pydeck_chart(pdk.Deck(layers=layers_a, initial_view_state=pdk.ViewState(latitude=P.lat.mean(), longitude=P.lon.mean(), zoom=7.6),
+                                 tooltip={"text": "{cadaster_name}\n{_val}\n{_label}"}), on_select="rerun", selection_mode="single-object", key="acc_map")
+        st.markdown("<span style='font-size:0.85rem'>Cadaster colour: green = better, red = worse for the chosen metric. Facilities: "
+                    "<span style='color:#1e9646'>●</span> functional · <span style='color:#eb9614'>●</span> partially functional · <span style='color:#c81e1e'>●</span> closed · "
+                    "<span style='color:#6e0a0a'>●</span> damaged · <span style='color:#8c8c8c'>●</span> unknown (no dated source). Large dots = mobile units (part-time).</span>",
+                    unsafe_allow_html=True)
+        st.checkbox("Overlay soil results (M4 exposure tier)", False, key="acc_soil")
+    with mr:
+        top_n = P.sort_values("_bad", ascending=False).head(15)
+        base = alt.Chart(top_n).encode(y=alt.Y("cadaster_name:N", sort="-x", title=None), x=alt.X("_val:Q", title=ac_a.split(" (")[0]),
+                                       color=alt.condition(alt.datum.cadaster_name == (picked or ""), alt.value("#111"), alt.value("#c0392b")),
+                                       tooltip=["cadaster_name", "district", "_val"])
+        sel = alt.selection_point(name="pick", fields=["cadaster_name"])
+        st.altair_chart(wm(base.mark_bar().add_params(sel), 420, 400), on_select="rerun", key="acc_bar")
+        st.caption("Fifteen cadasters with the worst value for this metric (same metric and period as the map). Click a bar or a map dot to highlight it in both.")
+    d_sum = m1_access.district_summary(PANEL)
+    st.markdown("**Before the war vs now, by district** (population-weighted)")
+    dt = d_sum.assign(d_phc=lambda d: d.min_phc_current - d.min_phc_prewar, d_hosp=lambda d: d.min_hospital_current - d.min_hospital_prewar)
+    st.dataframe(pretty(dt[["district", "population", "access_prewar", "access_current", "access_lost_pct", "min_phc_prewar", "min_phc_current", "min_hospital_prewar", "min_hospital_current",
+                            "share_beyond_30_phc_current", "share_beyond_60_hospital_current"]].round(2),
+                        district="District", population="Population", access_prewar="Access pre-war", access_current="Access now", access_lost_pct="Access lost",
+                        min_phc_prewar="PHC min pre-war", min_phc_current="PHC min now", min_hospital_prewar="Hospital min pre-war", min_hospital_current="Hospital min now",
+                        share_beyond_30_phc_current="Beyond 30 min (PHC)", share_beyond_60_hospital_current="Beyond 60 min (hospital)"), hide_index=True, width="stretch")
+    st.caption("Thresholds (30 min to a PHC, 60 min to a hospital) are assumptions. Pre-war = all fixed facilities at full capacity; now = capacity by dated functional status (partial = half, mobile units = hours per week / 40).")
+    vo = m1_access.validate_vs_official(PANEL)
+    with st.expander(f"Validation: access ranking vs official health severity (Spearman ρ = {vo['rho']:.2f})"):
+        st.dataframe(pretty(vo["table"].round(2), district="District", deficit="Access deficit", health_severity="Official health severity",
+                            rank_access_deficit="Rank by access deficit", rank_official_health="Rank by official severity", rank_diff="Rank gap"), hide_index=True, width="stretch")
+        st.caption("Disagreements (rank gap of 2 or more) are the finding: they mark where district-level severity and cadaster-level access diverge. "
+                   + ("Official severity is mock here, so ρ is illustrative." if vo["is_mock"] else ""))
+    tg = m2.exposure_access_targets(scored)
+    with st.expander(f"Exposure × access: {len(tg)} cadasters with high exposure and low access (core target list)"):
+        st.dataframe(pretty(tg[["cadaster_name", "district", "D_environment", "access_deficit", "need_score"]].round(2), cadaster_name="Cadaster", district="District",
+                            D_environment="Exposure (M4 tier score)", access_deficit="Access deficit", need_score="Need score"), hide_index=True, width="stretch")
+        st.caption("Exposure tiers are screening-level (rung a/b), never demonstrated harm. Thresholds: exposure >= 0.33, access deficit >= 50% (assumptions).")
+    with st.expander("Layer dates and sources (every layer is date-stamped)"):
+        ld = m1_access.layer_dates()
+        st.dataframe(pretty(ld, layer="Layer", date="Date", source="Source", is_mock="Mock", note="Note"), hide_index=True, width="stretch")
+
+# ---------------- 3. What to fund ----------------
 iv, _ = io.load_dataset("interventions")
 tier_name = budget_label if budget_label != "Custom" else f"${budget:,.0f}"
 pick = st.session_state.get("pick", ["transport_vouchers", "chw_women_orgs"])
 ev = m5_options.evaluate(pick, budget) if pick else None
 best = ev.sort_values("extra_pathways_median", ascending=False).iloc[0] if ev is not None and len(ev) else None
-with section("s2", "2 · Options",
+with section("s2", "3 · Options",
              (f"Best of your picks: <b>{best.label}</b>, about {best.extra_pathways_median:,.0f} extra completed care pathways "
               f"(range {best.extra_pathways_p05:,.0f}–{best.extra_pathways_p95:,.0f})." if best is not None else "Pick interventions to compare.")):
     feas = m5_options.feasibility_table().set_index("intervention_id")
@@ -281,7 +381,7 @@ sched, esum, warns = escrow.run(scored, max(budget, 10_000), top_k, floor, rules
                                 env_weight=env_w, need_min=need_min, yoy_gain=yoy, max_level="MoPH" if allow_moph else escrow.DEFAULT_MAX_LEVEL)
 sm = summ.set_index("regime")
 held = esum.held_usd.sum() / max(esum.held_usd.sum() + esum.released_usd.sum(), 1)
-with section("s3", "3 · Allocation",
+with section("s3", "4 · Allocation",
              f"Pilot test arms, not results: with these assumptions the community arm reaches <b>{sm.loc['community', 'women_reached'] / sm.loc['top_down', 'women_reached']:.0%}</b> of the women top-down does. "
              f"Escrow holds back <b>{held:.0%}</b> of funds; <b>{esum.share_lebanese_managed.iloc[-1]:.0%}</b> is administered by Lebanese organisations by {int(esum.year.max())}."):
     l, r = st.columns(2)
@@ -360,7 +460,7 @@ with section("s3", "3 · Allocation",
 sites = sites_df(cr6, VER)
 tor = m4_exposure.tornado()
 n_t2 = int((sites.tier >= 2).sum())
-with section("s4", "4 · Exposure",
+with section("s4", "5 · Exposure",
              f"{n_t2} of {len(sites)} soil results reach tier 2 (plausible exposure pathway, rung b); none is confirmed harm (rung c). "
              f"Biggest uncertainty: <b>{tor.iloc[0].driver.split(' (')[0].lower()}</b>."):
     e1, e2 = st.columns(2)
@@ -399,7 +499,7 @@ res = ff.rank(pool_f, ["health", "maternal"])
 if rank_mode.startswith("Community"):
     res = ff.rank_involvement(res)
 res = res.head(8)
-with section("s5", "5 · Funding",
+with section("s5", "6 · Funding",
              f"{len(res)} funds shown; top match: <b>{res.name.iloc[0]}</b> ({res.channel.iloc[0]}, {res.involvement_level.iloc[0]})." if len(res) else "No active match."):
     c1, c2, c3 = st.columns(3)
     c1.toggle("Show closed annual calls as 'expected next round'", False, key="next_round")
@@ -456,7 +556,7 @@ rb_n = st.session_state.get("rb_n", 300)
 RB = robust(rb_n, VER)
 _core = RB["rank"]["core"]
 _pol = RB["regret"]
-with section("s6", "6 · Robustness",
+with section("s6", "7 · Robustness",
              (f"<b>{len(_core)}</b> cadaster(s) stay in the top {RB['rank']['top_k']} in at least {RB['rank']['threshold']:.0%} of draws and in every scenario: <b>{', '.join(_core)}</b>. "
               if _core else "<b>No cadaster</b> holds a top-k place across every scenario: the priority list is not robust. ")
              + f"Allocation policy with the smallest worst-case regret: <b>{_pol['minimax_policy'].replace('_', ' ')}</b>"

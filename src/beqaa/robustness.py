@@ -31,8 +31,8 @@ def load_uncertainty(path=None) -> dict:
 def _access_columns(raw: pd.DataFrame, fac: pd.DataFrame, tt: pd.DataFrame, d0: float, baseline_median: float) -> pd.DataFrame:
     """Recompute the access-dependent Need Score columns for modified facilities / travel times."""
     pop, _ = load_dataset("population")
-    open_f = fac[(fac.status_2026 == "open") & (fac.capacity_weekly > 0)]
-    cur = m1_access.e2sfca(pop, open_f.assign(status_2026="open"), tt, d0, "women_15_49", "all", "current_2026")
+    open_f = m1_access.effective_facilities(fac)
+    cur = m1_access.e2sfca(pop, open_f.assign(status_2026="open", status_date="2026-01-01", hours_per_week=np.nan), tt, d0, "women_15_49", "all", "current_2026")
     out = raw.drop(columns=["access_current", "access_deficit", "phc_30", "anc_share_30min", "phc_per_50k"]).merge(
         cur[["cadaster_id", "access"]].rename(columns={"access": "access_current"}), on="cadaster_id")
     out["access_deficit"] = 1 - (out.access_current / baseline_median).clip(0, 1)

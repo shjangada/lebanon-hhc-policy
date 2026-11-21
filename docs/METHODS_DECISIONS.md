@@ -84,6 +84,9 @@ Nitrate: cadasters without a well take the district median (flagged `nitrate_imp
 **Correction made:** we had attributed the Gaussian form to Luo & Qi (2009). They used stepped travel-time zones; continuous decay (e.g. Gaussian) came in later work (to cite properly: verify). The stepped weights in the code (1, 0.68, 0.22) are from memory: verify against S36.
 **Why Gaussian:** avoids arbitrary zone edges. **Test:** d0 sensitivity and the stepped variant.
 
+### D9b. Facility status and the access panel
+A facility is **never treated as functional without a dated source**: no `status_date` means *unknown* (drawn grey; credited at full capacity in the optimistic view, zero in the pessimistic view, user-selectable). Partially functional facilities count at 50% capacity (assumption, ASSUMPTION flag; to test in robustness). Mobile units are part-time facilities: effective capacity = capacity × hours per week ÷ 40. Pre-war baseline = all fixed facilities at full capacity. Access thresholds (30 min to a PHC, 60 min to a hospital) are assumptions to be cited to WHO or the access-literature before the memo uses them. OSM-derived facilities carry no dated status, so on real data they are all *unknown* until a HeRAMS / Health Sector functionality update is loaded. Validation: Spearman ρ between the district ranking by access deficit and official health severity; the disagreements are reported as findings.
+
 ### D10. Robustness protocol (what we report)
 1. Rank stability under 5,000 random domain-weight draws (`p_top_tier`, rank 5th–95th percentile).
 2. Method sensitivity (`method_sensitivity()`): geometric and max aggregation, percentile normalisation, three heavy-weight variants, drop-one-domain, drop unregistered workers. Reported as Spearman correlation, top-k overlap and maximum rank shift against the reference.

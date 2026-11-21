@@ -24,6 +24,8 @@ MOCK-BAA-01,MOCK-PHC-22,40.7,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-01,MOCK-HUB-1,13.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-01,MOCK-HUB-2,56.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-01,MOCK-HUB-3,91.6,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-01,MOCK-MMU-1,8.1,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-01,MOCK-MMU-2,120.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-02,MOCK-PHC-01,75.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-02,MOCK-PHC-02,45.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-02,MOCK-PHC-03,136.9,True,MOCK (synthetic),2026-11-21,,mock
@@ -49,6 +51,8 @@ MOCK-BAA-02,MOCK-PHC-22,61.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-02,MOCK-HUB-1,11.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-02,MOCK-HUB-2,76.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-02,MOCK-HUB-3,78.0,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-02,MOCK-MMU-1,15.8,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-02,MOCK-MMU-2,138.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-03,MOCK-PHC-01,38.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-03,MOCK-PHC-02,3.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-03,MOCK-PHC-03,95.2,True,MOCK (synthetic),2026-11-21,,mock
@@ -74,6 +78,8 @@ MOCK-BAA-03,MOCK-PHC-22,29.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-03,MOCK-HUB-1,31.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-03,MOCK-HUB-2,40.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-03,MOCK-HUB-3,119.3,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-03,MOCK-MMU-1,29.1,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-03,MOCK-MMU-2,97.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-04,MOCK-PHC-01,59.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-04,MOCK-PHC-02,32.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-04,MOCK-PHC-03,121.6,True,MOCK (synthetic),2026-11-21,,mock
@@ -99,6 +105,8 @@ MOCK-BAA-04,MOCK-PHC-22,45.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-04,MOCK-HUB-1,5.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-04,MOCK-HUB-2,61.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-04,MOCK-HUB-3,90.3,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-04,MOCK-MMU-1,0.0,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-04,MOCK-MMU-2,123.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-05,MOCK-PHC-01,54.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-05,MOCK-PHC-02,28.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-05,MOCK-PHC-03,116.3,True,MOCK (synthetic),2026-11-21,,mock
@@ -124,6 +132,8 @@ MOCK-BAA-05,MOCK-PHC-22,39.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-05,MOCK-HUB-1,11.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-05,MOCK-HUB-2,55.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-05,MOCK-HUB-3,94.4,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-05,MOCK-MMU-1,6.1,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-05,MOCK-MMU-2,118.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-06,MOCK-PHC-01,75.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-06,MOCK-PHC-02,45.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-06,MOCK-PHC-03,136.8,True,MOCK (synthetic),2026-11-21,,mock
@@ -149,6 +159,8 @@ MOCK-BAA-06,MOCK-PHC-22,61.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-06,MOCK-HUB-1,12.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-06,MOCK-HUB-2,76.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-06,MOCK-HUB-3,76.9,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-06,MOCK-MMU-1,15.3,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-06,MOCK-MMU-2,138.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-07,MOCK-PHC-01,72.7,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-07,MOCK-PHC-02,39.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-07,MOCK-PHC-03,132.2,True,MOCK (synthetic),2026-11-21,,mock
@@ -174,6 +186,8 @@ MOCK-BAA-07,MOCK-PHC-22,59.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-07,MOCK-HUB-1,10.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-07,MOCK-HUB-2,74.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-07,MOCK-HUB-3,86.1,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-07,MOCK-MMU-1,15.6,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-07,MOCK-MMU-2,134.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-08,MOCK-PHC-01,58.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-08,MOCK-PHC-02,34.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-08,MOCK-PHC-03,121.1,True,MOCK (synthetic),2026-11-21,,mock
@@ -199,6 +213,8 @@ MOCK-BAA-08,MOCK-PHC-22,43.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-08,MOCK-HUB-1,12.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-08,MOCK-HUB-2,59.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-BAA-08,MOCK-HUB-3,88.8,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-08,MOCK-MMU-1,7.3,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-08,MOCK-MMU-2,123.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-01,MOCK-PHC-01,143.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-01,MOCK-PHC-02,123.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-01,MOCK-PHC-03,207.2,True,MOCK (synthetic),2026-11-21,,mock
@@ -224,6 +240,8 @@ MOCK-HER-01,MOCK-PHC-22,128.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-01,MOCK-HUB-1,90.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-01,MOCK-HUB-2,143.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-01,MOCK-HUB-3,11.4,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-01,MOCK-MMU-1,91.3,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-01,MOCK-MMU-2,209.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-02,MOCK-PHC-01,153.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-02,MOCK-PHC-02,132.7,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-02,MOCK-PHC-03,218.0,True,MOCK (synthetic),2026-11-21,,mock
@@ -249,6 +267,8 @@ MOCK-HER-02,MOCK-PHC-22,139.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-02,MOCK-HUB-1,99.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-02,MOCK-HUB-2,154.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-02,MOCK-HUB-3,11.4,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-02,MOCK-MMU-1,100.7,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-02,MOCK-MMU-2,219.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-03,MOCK-PHC-01,138.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-03,MOCK-PHC-02,117.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-03,MOCK-PHC-03,202.7,True,MOCK (synthetic),2026-11-21,,mock
@@ -274,6 +294,8 @@ MOCK-HER-03,MOCK-PHC-22,123.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-03,MOCK-HUB-1,84.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-03,MOCK-HUB-2,139.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-03,MOCK-HUB-3,7.7,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-03,MOCK-MMU-1,85.3,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-03,MOCK-MMU-2,204.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-04,MOCK-PHC-01,157.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-04,MOCK-PHC-02,136.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-04,MOCK-PHC-03,221.2,True,MOCK (synthetic),2026-11-21,,mock
@@ -299,6 +321,8 @@ MOCK-HER-04,MOCK-PHC-22,142.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-04,MOCK-HUB-1,103.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-04,MOCK-HUB-2,157.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-04,MOCK-HUB-3,16.0,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-04,MOCK-MMU-1,104.5,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-04,MOCK-MMU-2,223.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-05,MOCK-PHC-01,138.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-05,MOCK-PHC-02,115.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-05,MOCK-PHC-03,202.1,True,MOCK (synthetic),2026-11-21,,mock
@@ -324,6 +348,8 @@ MOCK-HER-05,MOCK-PHC-22,123.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-05,MOCK-HUB-1,82.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-05,MOCK-HUB-2,139.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-05,MOCK-HUB-3,6.7,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-05,MOCK-MMU-1,83.6,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-05,MOCK-MMU-2,204.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-06,MOCK-PHC-01,152.7,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-06,MOCK-PHC-02,130.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-06,MOCK-PHC-03,216.7,True,MOCK (synthetic),2026-11-21,,mock
@@ -349,6 +375,8 @@ MOCK-HER-06,MOCK-PHC-22,137.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-06,MOCK-HUB-1,96.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-06,MOCK-HUB-2,153.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-06,MOCK-HUB-3,8.0,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-06,MOCK-MMU-1,98.2,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-06,MOCK-MMU-2,218.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-07,MOCK-PHC-01,151.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-07,MOCK-PHC-02,129.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-07,MOCK-PHC-03,215.9,True,MOCK (synthetic),2026-11-21,,mock
@@ -374,6 +402,8 @@ MOCK-HER-07,MOCK-PHC-22,137.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-07,MOCK-HUB-1,95.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-07,MOCK-HUB-2,152.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-07,MOCK-HUB-3,7.1,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-07,MOCK-MMU-1,97.0,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-07,MOCK-MMU-2,217.7,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-08,MOCK-PHC-01,166.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-08,MOCK-PHC-02,147.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-08,MOCK-PHC-03,230.1,True,MOCK (synthetic),2026-11-21,,mock
@@ -399,6 +429,8 @@ MOCK-HER-08,MOCK-PHC-22,151.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-08,MOCK-HUB-1,114.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-08,MOCK-HUB-2,166.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-HER-08,MOCK-HUB-3,28.2,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-08,MOCK-MMU-1,115.1,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-08,MOCK-MMU-2,231.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-01,MOCK-PHC-01,12.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-01,MOCK-PHC-02,49.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-01,MOCK-PHC-03,53.6,True,MOCK (synthetic),2026-11-21,,mock
@@ -424,6 +456,8 @@ MOCK-ZAH-01,MOCK-PHC-22,26.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-01,MOCK-HUB-1,76.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-01,MOCK-HUB-2,11.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-01,MOCK-HUB-3,156.0,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-01,MOCK-MMU-1,72.1,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-01,MOCK-MMU-2,55.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-02,MOCK-PHC-01,13.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-02,MOCK-PHC-02,27.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-02,MOCK-PHC-03,77.0,True,MOCK (synthetic),2026-11-21,,mock
@@ -449,6 +483,8 @@ MOCK-ZAH-02,MOCK-PHC-22,3.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-02,MOCK-HUB-1,50.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-02,MOCK-HUB-2,14.7,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-02,MOCK-HUB-3,131.8,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-02,MOCK-MMU-1,46.4,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-02,MOCK-MMU-2,78.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-03,MOCK-PHC-01,11.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-03,MOCK-PHC-02,48.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-03,MOCK-PHC-03,58.2,True,MOCK (synthetic),2026-11-21,,mock
@@ -474,6 +510,8 @@ MOCK-ZAH-03,MOCK-PHC-22,23.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-03,MOCK-HUB-1,73.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-03,MOCK-HUB-2,9.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-03,MOCK-HUB-3,152.1,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-03,MOCK-MMU-1,69.5,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-03,MOCK-MMU-2,59.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-04,MOCK-PHC-01,11.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-04,MOCK-PHC-02,35.7,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-04,MOCK-PHC-03,59.1,True,MOCK (synthetic),2026-11-21,,mock
@@ -499,6 +537,8 @@ MOCK-ZAH-04,MOCK-PHC-22,22.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-04,MOCK-HUB-1,66.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-04,MOCK-HUB-2,12.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-04,MOCK-HUB-3,150.4,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-04,MOCK-MMU-1,62.6,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-04,MOCK-MMU-2,61.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-05,MOCK-PHC-01,11.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-05,MOCK-PHC-02,34.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-05,MOCK-PHC-03,75.0,True,MOCK (synthetic),2026-11-21,,mock
@@ -524,6 +564,8 @@ MOCK-ZAH-05,MOCK-PHC-22,5.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-05,MOCK-HUB-1,55.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-05,MOCK-HUB-2,11.7,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-05,MOCK-HUB-3,134.1,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-05,MOCK-MMU-1,51.0,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-05,MOCK-MMU-2,76.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-06,MOCK-PHC-01,8.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-06,MOCK-PHC-02,39.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-06,MOCK-PHC-03,57.8,True,MOCK (synthetic),2026-11-21,,mock
@@ -549,6 +591,8 @@ MOCK-ZAH-06,MOCK-PHC-22,21.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-06,MOCK-HUB-1,68.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-06,MOCK-HUB-2,8.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-06,MOCK-HUB-3,151.0,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-06,MOCK-MMU-1,64.4,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-06,MOCK-MMU-2,59.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-07,MOCK-PHC-01,2.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-07,MOCK-PHC-02,37.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-07,MOCK-PHC-03,66.2,True,MOCK (synthetic),2026-11-21,,mock
@@ -574,6 +618,8 @@ MOCK-ZAH-07,MOCK-PHC-22,12.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-07,MOCK-HUB-1,62.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-07,MOCK-HUB-2,3.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-07,MOCK-HUB-3,142.8,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-07,MOCK-MMU-1,58.2,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-07,MOCK-MMU-2,68.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-08,MOCK-PHC-01,12.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-08,MOCK-PHC-02,37.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-08,MOCK-PHC-03,74.8,True,MOCK (synthetic),2026-11-21,,mock
@@ -599,6 +645,8 @@ MOCK-ZAH-08,MOCK-PHC-22,8.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-08,MOCK-HUB-1,57.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-08,MOCK-HUB-2,12.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-ZAH-08,MOCK-HUB-3,134.9,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-08,MOCK-MMU-1,53.3,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-08,MOCK-MMU-2,76.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-01,MOCK-PHC-01,49.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-01,MOCK-PHC-02,79.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-01,MOCK-PHC-03,15.1,True,MOCK (synthetic),2026-11-21,,mock
@@ -624,6 +672,8 @@ MOCK-WES-01,MOCK-PHC-22,64.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-01,MOCK-HUB-1,111.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-01,MOCK-HUB-2,48.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-01,MOCK-HUB-3,194.1,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-01,MOCK-MMU-1,107.6,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-01,MOCK-MMU-2,16.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-02,MOCK-PHC-01,50.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-02,MOCK-PHC-02,78.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-02,MOCK-PHC-03,14.9,True,MOCK (synthetic),2026-11-21,,mock
@@ -649,6 +699,8 @@ MOCK-WES-02,MOCK-PHC-22,65.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-02,MOCK-HUB-1,110.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-02,MOCK-HUB-2,49.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-02,MOCK-HUB-3,194.8,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-02,MOCK-MMU-1,107.1,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-02,MOCK-MMU-2,16.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-03,MOCK-PHC-01,75.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-03,MOCK-PHC-02,101.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-03,MOCK-PHC-03,14.0,True,MOCK (synthetic),2026-11-21,,mock
@@ -674,6 +726,8 @@ MOCK-WES-03,MOCK-PHC-22,90.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-03,MOCK-HUB-1,134.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-03,MOCK-HUB-2,74.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-03,MOCK-HUB-3,219.5,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-03,MOCK-MMU-1,131.1,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-03,MOCK-MMU-2,13.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-04,MOCK-PHC-01,66.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-04,MOCK-PHC-02,95.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-04,MOCK-PHC-03,2.1,True,MOCK (synthetic),2026-11-21,,mock
@@ -699,6 +753,8 @@ MOCK-WES-04,MOCK-PHC-22,80.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-04,MOCK-HUB-1,127.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-04,MOCK-HUB-2,65.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-04,MOCK-HUB-3,210.7,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-04,MOCK-MMU-1,123.6,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-04,MOCK-MMU-2,0.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-05,MOCK-PHC-01,54.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-05,MOCK-PHC-02,76.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-05,MOCK-PHC-03,21.3,True,MOCK (synthetic),2026-11-21,,mock
@@ -724,6 +780,8 @@ MOCK-WES-05,MOCK-PHC-22,68.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-05,MOCK-HUB-1,109.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-05,MOCK-HUB-2,54.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-05,MOCK-HUB-3,196.3,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-05,MOCK-MMU-1,107.1,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-05,MOCK-MMU-2,23.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-06,MOCK-PHC-01,63.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-06,MOCK-PHC-02,86.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-06,MOCK-PHC-03,16.8,True,MOCK (synthetic),2026-11-21,,mock
@@ -749,6 +807,8 @@ MOCK-WES-06,MOCK-PHC-22,77.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-06,MOCK-HUB-1,119.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-06,MOCK-HUB-2,62.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-06,MOCK-HUB-3,205.8,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-06,MOCK-MMU-1,116.6,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-06,MOCK-MMU-2,18.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-07,MOCK-PHC-01,78.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-07,MOCK-PHC-02,103.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-07,MOCK-PHC-03,16.9,True,MOCK (synthetic),2026-11-21,,mock
@@ -774,6 +834,8 @@ MOCK-WES-07,MOCK-PHC-22,92.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-07,MOCK-HUB-1,136.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-07,MOCK-HUB-2,77.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-07,MOCK-HUB-3,222.1,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-07,MOCK-MMU-1,133.6,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-07,MOCK-MMU-2,16.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-08,MOCK-PHC-01,52.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-08,MOCK-PHC-02,79.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-08,MOCK-PHC-03,13.5,True,MOCK (synthetic),2026-11-21,,mock
@@ -799,6 +861,8 @@ MOCK-WES-08,MOCK-PHC-22,66.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-08,MOCK-HUB-1,111.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-08,MOCK-HUB-2,51.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-WES-08,MOCK-HUB-3,196.5,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-08,MOCK-MMU-1,108.6,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-08,MOCK-MMU-2,15.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-01,MOCK-PHC-01,66.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-01,MOCK-PHC-02,82.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-01,MOCK-PHC-03,32.1,True,MOCK (synthetic),2026-11-21,,mock
@@ -824,6 +888,8 @@ MOCK-RAC-01,MOCK-PHC-22,79.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-01,MOCK-HUB-1,116.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-01,MOCK-HUB-2,66.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-01,MOCK-HUB-3,204.0,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-01,MOCK-MMU-1,113.9,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-01,MOCK-MMU-2,33.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-02,MOCK-PHC-01,81.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-02,MOCK-PHC-02,101.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-02,MOCK-PHC-03,30.3,True,MOCK (synthetic),2026-11-21,,mock
@@ -849,6 +915,8 @@ MOCK-RAC-02,MOCK-PHC-22,95.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-02,MOCK-HUB-1,134.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-02,MOCK-HUB-2,81.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-02,MOCK-HUB-3,222.4,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-02,MOCK-MMU-1,132.5,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-02,MOCK-MMU-2,30.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-03,MOCK-PHC-01,65.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-03,MOCK-PHC-02,86.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-03,MOCK-PHC-03,21.6,True,MOCK (synthetic),2026-11-21,,mock
@@ -874,6 +942,8 @@ MOCK-RAC-03,MOCK-PHC-22,79.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-03,MOCK-HUB-1,120.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-03,MOCK-HUB-2,65.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-03,MOCK-HUB-3,207.1,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-03,MOCK-MMU-1,117.6,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-03,MOCK-MMU-2,22.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-04,MOCK-PHC-01,95.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-04,MOCK-PHC-02,115.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-04,MOCK-PHC-03,38.6,True,MOCK (synthetic),2026-11-21,,mock
@@ -899,6 +969,8 @@ MOCK-RAC-04,MOCK-PHC-22,109.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-04,MOCK-HUB-1,149.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-04,MOCK-HUB-2,94.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-04,MOCK-HUB-3,236.4,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-04,MOCK-MMU-1,146.6,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-04,MOCK-MMU-2,38.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-05,MOCK-PHC-01,87.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-05,MOCK-PHC-02,102.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-05,MOCK-PHC-03,42.4,True,MOCK (synthetic),2026-11-21,,mock
@@ -924,6 +996,8 @@ MOCK-RAC-05,MOCK-PHC-22,100.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-05,MOCK-HUB-1,136.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-05,MOCK-HUB-2,87.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-05,MOCK-HUB-3,224.6,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-05,MOCK-MMU-1,134.3,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-05,MOCK-MMU-2,42.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-06,MOCK-PHC-01,73.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-06,MOCK-PHC-02,89.2,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-06,MOCK-PHC-03,34.6,True,MOCK (synthetic),2026-11-21,,mock
@@ -949,6 +1023,8 @@ MOCK-RAC-06,MOCK-PHC-22,86.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-06,MOCK-HUB-1,123.1,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-06,MOCK-HUB-2,73.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-06,MOCK-HUB-3,211.1,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-06,MOCK-MMU-1,121.0,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-06,MOCK-MMU-2,35.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-07,MOCK-PHC-01,81.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-07,MOCK-PHC-02,98.5,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-07,MOCK-PHC-03,35.1,True,MOCK (synthetic),2026-11-21,,mock
@@ -974,6 +1050,8 @@ MOCK-RAC-07,MOCK-PHC-22,94.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-07,MOCK-HUB-1,132.3,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-07,MOCK-HUB-2,81.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-07,MOCK-HUB-3,220.3,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-07,MOCK-MMU-1,130.2,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-07,MOCK-MMU-2,35.6,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-08,MOCK-PHC-01,69.0,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-08,MOCK-PHC-02,89.8,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-08,MOCK-PHC-03,22.1,True,MOCK (synthetic),2026-11-21,,mock
@@ -999,3 +1077,5 @@ MOCK-RAC-08,MOCK-PHC-22,82.9,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-08,MOCK-HUB-1,123.4,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-08,MOCK-HUB-2,68.7,True,MOCK (synthetic),2026-11-21,,mock
 MOCK-RAC-08,MOCK-HUB-3,210.4,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-08,MOCK-MMU-1,120.8,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-08,MOCK-MMU-2,23.1,True,MOCK (synthetic),2026-11-21,,mock
