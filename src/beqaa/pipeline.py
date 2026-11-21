@@ -57,6 +57,8 @@ def run(verbose: bool = True) -> dict:
     detail.to_csv(PROC / "allocation_detail.csv", index=False)
     allocation.by_district(detail).to_csv(PROC / "allocation_by_district.csv", index=False)
     esc, esc_sum, warn = escrow.run(scored)
+    from . import theme_kpi
+    theme_kpi.kpi_table(scored=scored).to_csv(PROC / "theme_kpi.csv", index=False)                  # year x scenario: the theme KPI projection and who holds the money
     rb = robustness.run_all()                                           # N draws per scenario (data/params/uncertainty.yaml), fixed seed
     rb["rank"]["per_cadaster"].to_csv(PROC / "robust_rank_per_cadaster.csv", index=False)
     rb["rank"]["scenarios"].to_csv(PROC / "robust_rank_scenarios.csv", index=False)

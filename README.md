@@ -33,29 +33,41 @@ The Makefile uses `.venv/bin/python` (override with `make PY=python3 ...`).
 | **Escrow & funding switch** (`escrow.py`): need floor + capacity tranche, editable thresholds, administrator ladder INGO → national NGO → Union of Municipalities (MoPH co-governs, not assumed to administer by 2030; renewed-escalation scenario), lock-out and gaming warnings, restricted vs unrestricted | Q3, Q5 | M2 scores, governance_capacity and staffing_referrals (mock **scenario inputs**: no public source, the pilot would measure them) | Runs on mock; thresholds are assumptions |
 | **Funding finder + registry chat** (`funding_finder.py`, `chat.py`): rank registry rows, recency and "fits escrow?" flags; grounded retrieval that refuses when nothing matches | Q3 | `data/registry/*.csv` (8 funding rows, 7 org rows to verify) | Registry rows from team research 2026-11-21; re-check before use |
 
-Dashboard: one page with seven sections (Priority · Access · Options · Allocation · Exposure · Funding · Robustness) plus Evidence. Interventions carry a feasibility filter (F1–F8) from `docs/FEASIBILITY.md`. Every mock file is listed in `data/registry/mock_provenance.csv` with the real source it stands in for and how obtainable it is (a test enforces this).
+Dashboard: five question-led pages (1 Money now · 2 Where should it go · 3 Who holds it · 4 Does it keep reaching people · 5 Where to get it) plus Methods (the detailed model views). Interventions carry a feasibility filter (F1–F8) from `docs/FEASIBILITY.md`. Every mock file is listed in `data/registry/mock_provenance.csv` with the real source it stands in for and how obtainable it is (a test enforces this).
 
 Not built yet: M3 network simulation, Workforce & network page, Pilot design page (stepped-wedge, PDIA log), case-study cards, notebook appendix, LLM layer for the registry chat.
 
-## Data status
-The app and pipeline load `data/processed/` (real, from `python -m beqaa.ingest all`) first and fall back to `data/mock/` per dataset (`BEQAA_DATA=mock` forces mock). Badges: ✅ real · 🟡 partly real (assumed or missing fields) · 🔴 mock. Details, coverage and reasons: `docs/DATA_STATUS.md`; what changes when real inputs replace mock: `docs/MOCK_VS_REAL.md`; what needs a person: `docs/MANUAL_STEPS.md`.
+## Data status: what is real and what is fake so far
+**Short version:** the places, population, conflict incidents, food insecurity, official severity, funding flows, soil (5 villages) and crop transfer factors are real. Costs, cascade rates, staffing, water quality and district governance capacity are still mock or assumed, so the model outputs are **not findings yet**.
 
-| Dataset | Raw file | Status |
-|---|---|---|
-| cadasters | `cadasters.csv` | ✅ real |
-| population | `population.csv` | 🟡 partly real |
-| facilities | `facilities.csv` | 🟡 partly real |
-| travel_time | `travel_time.csv` | 🟡 partly real |
-| vulnerability | `vulnerability.csv` | 🟡 partly real |
-| official_severity | `official_severity.csv` | ✅ real |
-| soil_sites | `soil_sites.csv` | 🟡 partly real |
-| water_quality | `water_quality.csv` | 🔴 mock |
-| crop_transfer | `crop_transfer.csv` | ✅ real |
-| interventions | `interventions.csv` | 🔴 mock |
-| cascade_baseline | `cascade_baseline.csv` | 🔴 mock |
-| staffing_referrals | `staffing_referrals.csv` | 🔴 mock |
-| conflict_exposure | `conflict_exposure.csv` | ✅ real |
-| governance_capacity | `governance_capacity.csv` | 🔴 mock |
+The app and pipeline load `data/processed/` (real, from `make ingest`) first and fall back to `data/mock/` per dataset (`BEQAA_DATA=mock` forces mock). Badges: ✅ real · 🟡 partly real (some fields assumed, modelled or empty) · 🔴 mock · ⚪ missing (no mock exists, nothing is invented).
+
+| Dataset | Status | What is real | What is still assumed, mock or missing |
+|---|---|---|---|
+| cadasters | ✅ real | 222 real admin-3 areas (COD-AB) in Baalbek, Hermel, Zahle, West Bekaa, Rachaya, with p-codes, Arabic names, area, centroid | nothing (2 zero-population areas dropped and logged) |
+| population | 🟡 partly real | LRP 2026 totals by group, WorldPop 1 km spread, IOM DTM displaced; sums match LRP district totals | how each group is spread inside a district (modelled); registered vs unregistered Syrians (assumption) |
+| facilities | 🟡 partly real | OSM hospitals/clinics (41) placed in cadasters; dated status for 2 hospitals (WHO sitreps, matched by name) | OSM has only ~15% of the 61 MoPH-network PHCs; capacity, ANC offering, MoPH-network flag are assumptions; PHC status unknown |
+| travel_time | 🟡 partly real | cadaster-to-facility minutes; cross-checked against the HDX accessibility file (Spearman 0.90 by district) | speeds are an assumption (straight line × 1.3 / 40 km/h); no road network |
+| vulnerability | 🟡 partly real | IPC phase 3+ share by district (Sep 2026); VASyR 'below SMEB' by governorate (Syrian households, extra columns) | female-headed households, access barriers, insurance: no district source, left empty |
+| official_severity | ✅ real | LRP Addendum JIAF / health severity classes for all 26 districts (hand-transcribed) | FSA composite printed for only 8 Severity-4 districts; other 18 empty |
+| soil_sites | 🟡 partly real | CNRS-L/MoE Cr, total P, one Pb value for 5 Beqaa villages | no coordinates in the report: villages located by name at cadaster centroids; 4 villages unmatched; Cr(VI) share unknown |
+| water_quality | 🔴 mock | nothing | all mock: needs a data request to the Litani River Authority |
+| crop_transfer | ✅ real | Abi Saab et al. 2022 printed BAFs for Cr, Ni, Zn, Cu, Cd by crop and season | no Pb or As; pooled means only |
+| interventions | 🔴 mock | nothing | all mock: the UNFPA appeal has no unit costs; needs quotes (AUB lab, mobile unit, CHW stipends) |
+| cascade_baseline | 🔴 mock | sourced ANC/delivery rates in cascade_baseline_long.csv (VASyR national for Syrians, 2 verified rows) | M5 still uses a mock step x group table; referral completion has no source |
+| staffing_referrals | 🔴 mock | nothing | mock scenario input: no public source (pilot-measured) |
+| conflict_exposure | ✅ real | LRP conflict incidents per admin-3 (Oct 2023 - Jul 2025) | ACLED events for the last 30/90 days not loaded (API access returned HTTP 403) |
+| governance_capacity | 🔴 mock | national anchors only (WGI 29.9/100, state health share 13.4%) | district series is mock: the UN-Habitat assessment publishes national aggregates only |
+| funding_flows | ✅ real | OCHA FTS funding by year, cluster, recipient type | FTS cannot split national from international NGOs (LHF file does) |
+| funding_requirements | ✅ real | OCHA FTS requirements and % funded (Flash Appeal 2026: 54%; Health cluster 60%) | nothing |
+
+**Registries (real, with source URLs and verified dates):** `funding_registry.csv` (22 funds), `org_registry.csv`, `sources.csv` (55+ sources), `state_capacity_sources.csv`, `workforce_sources.csv`. Rows marked `to_verify` are not yet checked against the primary source.
+
+**Hand transcriptions** (`transcribed/`, two passes each, page references): WHO sitreps, UNFPA appeal lines, LRP severity maps, CNRS soil, Abi Saab, VASyR/MSNA, UN-Habitat RMA, Citizen Budget. Both passes were made by one agent, so `checked=True` means "no typo found", not "verified by a second person".
+
+**Assumptions that are not data** (all in the dashboard's assumptions log): Need Score anchors and weights, community local-fit and capture, escrow thresholds and ladder weights, scenario effect multipliers, access thresholds (30 / 60 min), the Syrian registered/unregistered split.
+
+Details and coverage: `docs/DATA_STATUS.md` · what changes when real inputs replace mock: `docs/MOCK_VS_REAL.md` · what needs a person: `docs/MANUAL_STEPS.md`.
 
 ## Principles (short)
 Every number has a source and a status (`verified` / `assumption` / `mock`). Equity by group is reported in every model. Ranges and rank stability, not single numbers. Environmental claims carry rung a/b/c and nothing is ever tagged c without health data. One command rebuilds everything, with fixed seeds.

@@ -7,7 +7,7 @@ from beqaa import io
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 
-@pytest.mark.parametrize("name", sorted(io.DATASETS))
+@pytest.mark.parametrize("name", sorted(set(io.DATASETS) - io.REAL_ONLY))
 def test_mock_loads_and_flagged(name):
     df, is_mock = io.load_dataset(name)
     assert is_mock and len(df) > 0 and df["is_mock"].all()
@@ -21,7 +21,8 @@ def test_real_overrides_mock(tmp_path):
 
 def test_status_all_mock_without_raw(tmp_path):
     assert io.overall_mode(tmp_path) == "MOCK"
-    assert io.data_status(tmp_path).status.str.contains("🔴").all()
+    st = io.data_status(tmp_path)
+    assert st[~st.dataset.isin(io.REAL_ONLY)].status.str.contains("🔴").all()
 
 
 def test_unknown_dataset():
