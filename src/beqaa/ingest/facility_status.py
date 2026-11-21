@@ -48,9 +48,7 @@ def apply(fac: pd.DataFrame, src: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFr
 def run() -> dict:
     fac = pd.read_csv(PROCESSED / "facilities.csv", dtype={"cadaster_id": str, "facility_id": str})
     fac["status_2026"] = fac["status_2026"].fillna("") if "status_2026" in fac.columns else ""
-    for c in ("functional_status", "status_date", "status_source"):
-        fac[c] = ""                                                       # idempotent: rebuild from blank
-    fac["status_2026"] = ""
+    # keep statuses already set by the facility base (MoPH list carries 3 dated ones); sitrep matches overwrite by name below
     out, matched, unmatched = apply(fac, sources())
     log_unmatched("facility_status", "facility_name", unmatched, "named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts")
     out.to_csv(PROCESSED / "facilities.csv", index=False)

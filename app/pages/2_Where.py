@@ -108,7 +108,7 @@ with g1:
                                            color=alt.Color("period:N", title=None, scale=alt.Scale(domain=["Pre-war", "Now"], range=["#aab7b8", "#c0392b"])), yOffset="period:N",
                                            tooltip=["cadaster_name", "period", alt.Tooltip("access:Q", format=".1f")])
     st.altair_chart(C.wm(ch, 400, 340), use_container_width=False)
-    st.caption("Ten cadasters that lost the most access since the pre-war baseline. Facilities come from OSM (about 15% of MoPH-network PHCs), so levels are understated; the ranking of losses is what to read.")
+    st.caption("Ten cadasters that lost the most access since the pre-war baseline. Facilities are the MoPH list (PHCCs located at village centroids), and only 4 have a dated 2026 status, so read the ranking of losses, not the levels.")
 with g2:
     sc = P.assign(target=(P.D_environment >= 0.33) & (P.access_deficit >= 0.5))
     pts = alt.Chart(sc).mark_circle(opacity=0.7).encode(x=alt.X("access_deficit:Q", title="access deficit (share of pre-war access lost)", scale=alt.Scale(domain=[0, 1])),
@@ -148,6 +148,6 @@ with st.expander("Layer dates and sources (every layer is date-stamped)"):
 d_sum = m1_access.district_summary(panel)
 with st.expander("Before the war vs now, by district"):
     st.dataframe(d_sum.round(2), hide_index=True, width="stretch")
-    st.caption("Thresholds (30 min to a PHC, 60 min to a hospital) are assumptions. Facilities come from OSM (about 15% of the MoPH-network PHCs), so access is understated.")
+    st.caption("Thresholds (30 min to a PHC, 60 min to a hospital) are assumptions. Facilities are the MoPH list; PHCC positions are village centroids.")
 if C.women_lens():
     st.caption("Women lens: safe-birth need = women 15-49 × access deficit × (1 + exposure). Women are the delivery channel and the outcome (safe pregnancy and birth), not the most needy group overall: women and girls are about 53% of remaining IDPs, roughly proportional.")

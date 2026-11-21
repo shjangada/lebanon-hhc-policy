@@ -87,7 +87,7 @@ empty columns; **mock** = synthetic. The app loads `data/processed/` first and f
 - **cascade_baseline**: published rates cover only some steps and groups (VASyR national for Syrians; AlArab PHC-attendee sample); the sourced rows are in `data/processed/cascade_baseline_long.csv`. Referral completion has no source.
 - **water_quality**: needs a data request (Litani River Authority). **staffing_referrals, governance_capacity**: no public source; scenario inputs for the escrow, to be measured in the pilot. The UN-Habitat municipal assessment publishes only national aggregates (`docs/ADMIN_CAPACITY_INDEX.md`).
 - **vulnerability**: only IPC at district level; VASyR gives governorate-level 'below SMEB' for Syrian households only (extra columns); female-headed households, access barriers and insurance have no district source and stay empty.
-- **facilities**: OSM covers about 15% of the 61 MoPH-network PHCs; capacity, ANC offering and MoPH-network flags are assumptions; only 2 hospitals have a dated status (WHO sitreps name hospitals without locations; matched by name).
+- **facilities**: MoPH locator + PHC network list (97 facilities; 59 network PHCCs placed, 29 hospitals). Hospitals sit at their OSM-matched positions; PHCCs only at their village centroid (1-5 km). Capacity and ANC offering are assumptions; only 4 facilities have a dated 2026 status (WHO sitreps and MSF name hospitals without locations; matched by name).
 - **soil_sites**: 5 villages located by NAME at cadaster centroids (the report has no coordinates; 4 villages unmatched are logged); Cr, total P and one Pb value above the detection limit; Cr(VI) share unknown.
 - **population**: the within-district spread of every group is modelled (WorldPop); registered vs unregistered Syrians is an assumption (LRP planning figure vs UNHCR records).
 - **conflict**: LRP incidents (to Jul 2025) are loaded; ACLED events need the account's API access (the token request returned HTTP 403, see `docs/MANUAL_STEPS.md`).
@@ -153,7 +153,7 @@ Top-10 on real inputs: {', '.join(f"{a} ({b})" for a, b in zip(r['top10'].cadast
 ## Read these differences with care
 - **All real top-10 cadasters are in one district (Baalbek).** Drivers on real inputs: Baalbek's district IPC share and conflict incidents are high, and the environment domain only sees the **five villages that have a published soil result**: a cadaster nobody sampled scores 0 on exposure, and absence of sampling is not evidence of safety. This is a data-availability artefact until soil and water sampling is extended.
 - Group access gaps are not observable: within a district every group is spread over cadasters in proportion to total population (no cadaster-level group data exist), so spatial access is identical across groups (ratio 1.00). Legal and financial barriers enter only through the care cascade, which is still mock.
-- Facilities come from OSM (about 15% of the MoPH-network PHCs), so access is understated, most strongly where OSM coverage is thin.
+- Facilities are the MoPH list (97 rows). PHCC positions are village centroids; only 4 facilities have a dated status.
 
 Note for `docs/FEASIBILITY.md` section 0: its warning that results depend on mock data still stands: population, vulnerability (district IPC only), facilities (OSM, 15% of PHCs) and soil (five villages) are now real or partly real,
 but costs, cascade rates, staffing, governance capacity and water quality are still mock or assumed.

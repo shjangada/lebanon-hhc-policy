@@ -48,6 +48,6 @@ def test_facilities_converter_and_coverage():
     assert len(fac) > 0 and fac.facility_id.is_unique and set(fac.type) <= {"PHC", "hospital_hub"} and fac.cadaster_id.isin(cad.cadaster_id).all()
     assert (fac.status == "assumption").all()
     cov = fc.coverage(fac, cad)
-    assert cov.iloc[-1].phc_in_mophnetwork_lrp2026 == 61 and 0 <= cov.iloc[-1].coverage < 1      # OSM covers a fraction of the MoPH network
+    assert cov.iloc[-1].phc_in_mophnetwork_lrp2026 == 61 and 0.9 <= cov.iloc[-1].coverage <= 1.2      # MoPH list (62 network PHCCs + 6 locator-only, minus 3 without coordinates) vs LRP's 61
     tt = fc.build_travel_time(cad.head(3), fac.head(4))
     assert len(tt) == 12 and (tt.minutes >= 0).all()

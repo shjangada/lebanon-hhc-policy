@@ -17,7 +17,7 @@ from shapely.geometry import shape
 from shapely.strtree import STRtree
 
 from .cadasters_population import _admin3
-from .common import DERIVED, DISTRICT_LABEL, RAW, provenance
+from .common import DERIVED, DISTRICT_LABEL, RAW, log_unmatched, provenance
 
 CAPACITY = {"hospital_hub": 2000, "PHC": 300}          # weekly consultations (assumption, same orders of magnitude as the mock)
 TYPE_MAP = {"hospital": "hospital_hub", "clinic": "PHC", "centre": "PHC", "doctors": "PHC"}
@@ -28,7 +28,58 @@ def _osm():
     return json.loads(z.read("health_facilities.geojson"))["features"]
 
 
+MOPH = RAW / "facilities" / "moph_bekaa" / "moph_facilities_bekaa.csv"
+MOPH_TYPE = {"PHCC": "PHC", "hospital_public": "hospital_hub", "hospital_private": "hospital_hub"}
+MOPH_STATUS = {"functional": "open", "partially damaged": "partial"}
+
+
+def build_facilities_moph(cad: pd.DataFrame | None = None) -> pd.DataFrame:
+    """MoPH locator + 2025 PHC-network list (97 facilities in the five districts), replacing OSM as the facility base.
+    Hospitals are located by their OSM-matched coordinates; PHCCs only by the village centroid in their MoPH address (coord_confidence=village, 1-5 km
+    uncertainty) because no PHCC has a facility-level position. Status stays blank (unknown) unless a dated 2026 source names the facility."""
+    feats = _admin3()
+    geoms = [shape(f["geometry"]) for f in feats]
+    pcodes = [f["properties"]["adm3_pcode"] for f in feats]
+    tree = STRtree(geoms)
+    keep = set(cad.cadaster_id) if cad is not None else set(pcodes)
+    raw = pd.read_csv(MOPH)
+    rows, dropped = [], []
+    for r in raw.itertuples():
+        facility = pd.notna(r.lat)
+        lat, lon = (r.lat, r.lon) if facility else (r.village_lat, r.village_lon)
+        if pd.isna(lat):
+            dropped.append(f"{r.facility_id} ({r.village})")
+            continue
+        pt = shape({"type": "Point", "coordinates": [lon, lat]})
+        hit = [i for i in tree.query(pt) if geoms[i].contains(pt) and pcodes[i] in keep]
+        if not hit:
+            dropped.append(f"{r.facility_id} ({r.village}): outside the five districts' cadasters")
+            continue
+        kind = MOPH_TYPE[r.type]
+        fs = str(r.functional_status)
+        st = next((v for k, v in MOPH_STATUS.items() if fs.startswith(k)), "")
+        rows.append({"facility_id": r.facility_id, "name": r.name_en if isinstance(r.name_en, str) else r.name_ar, "type": kind, "cadaster_id": pcodes[hit[0]],
+                     "lat": round(float(lat), 5), "lon": round(float(lon), 5), "capacity_weekly": CAPACITY[kind], "status_2026": st,
+                     "offers_anc": True, "in_mophnetwork": r.moph_network == "yes", "osm_amenity": "", "name_ar": r.name_ar,
+                     "functional_status": "" if fs == "unknown" else fs, "status_date": "" if pd.isna(r.status_date) else r.status_date,
+                     "status_source": "" if pd.isna(r.status_source_url) else r.status_source_url,
+                     "has_solar_backup": float("nan"), "power_source": "unknown", "hours_per_week": float("nan"),
+                     "coord_confidence": r.coord_confidence if facility else "village", "moph_facility_type": r.type,
+                     "assumed_fields": "capacity_weekly;offers_anc" + ("" if facility else ";location(village centroid)")})
+    if dropped:
+        log_unmatched("facilities_moph", "facility", dropped, "MoPH facility with no usable coordinate or outside the five districts")
+    df = pd.DataFrame(rows)
+    return provenance(df, "MoPH Health Facility Locator + MoPH PHC network list 27/03/2025 (62 network PHCCs, 6 public and 23 private hospitals); capacity and ANC offering are assumptions; PHCC position = village centroid",
+                      "2026-11-21", "assumption", "https://www.moph.gov.lb/en/HealthFacilities/index/0/20379/8", "S04")
+
+
 def build_facilities(cad: pd.DataFrame | None = None) -> pd.DataFrame:
+    if MOPH.exists():
+        return build_facilities_moph(cad)
+    return build_facilities_osm(cad)
+
+
+def build_facilities_osm(cad: pd.DataFrame | None = None) -> pd.DataFrame:
     feats = _admin3()
     geoms = [shape(f["geometry"]) for f in feats]
     pcodes = [f["properties"]["adm3_pcode"] for f in feats]
@@ -64,10 +115,10 @@ def coverage(fac: pd.DataFrame, cad: pd.DataFrame) -> pd.DataFrame:
     out = []
     for real, label in DISTRICT_LABEL.items():
         n = int((f[(f.district == label)].type == "PHC").sum())
-        out.append({"district": label, "phc_in_osm": n, "phc_in_mophnetwork_lrp2026": int(lrp[real]), "coverage": round(n / lrp[real], 2),
-                    "hospitals_in_osm": int((f[(f.district == label)].type == "hospital_hub").sum())})
+        out.append({"district": label, "phc_in_list": n, "phc_in_mophnetwork_lrp2026": int(lrp[real]), "coverage": round(n / lrp[real], 2),
+                    "hospitals_in_list": int((f[(f.district == label)].type == "hospital_hub").sum())})
     c = pd.DataFrame(out)
-    c.loc[len(c)] = ["TOTAL", c.phc_in_osm.sum(), c.phc_in_mophnetwork_lrp2026.sum(), round(c.phc_in_osm.sum() / c.phc_in_mophnetwork_lrp2026.sum(), 2), c.hospitals_in_osm.sum()]
+    c.loc[len(c)] = ["TOTAL", c.phc_in_list.sum(), c.phc_in_mophnetwork_lrp2026.sum(), round(c.phc_in_list.sum() / c.phc_in_mophnetwork_lrp2026.sum(), 2), c.hospitals_in_list.sum()]
     return c
 
 

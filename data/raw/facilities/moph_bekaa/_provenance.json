@@ -1,0 +1,62 @@
+{
+  "dataset": "moph_facilities_bekaa.csv",
+  "retrieved_on": "2026-11-21",
+  "n_rows": 97,
+  "scope": "Cazas Zahle, West Bekaa, Rachaya (Bekaa governorate); Baalbek, Hermel (Baalbek-Hermel governorate). Types: PHC centres, public hospitals, private hospitals.",
+  "sources": [
+    {
+      "id": "moph_locator",
+      "name": "MoPH Health Facility Locator (facility_type=1 public hospitals, 8 private hospitals, 4 PHC centers), all pages, plus each facility detail page",
+      "url": "https://www.moph.gov.lb/en/HealthFacilities/index/0/20379/8",
+      "method": "Browser on user device; in-page fetch() of every list page per type (public 2 pages, private 5, PHC 8), filtered client-side to the 5 cazas (caza spellings: Zahle/زحلة, West Bekaa/البقاع الغربي, Rachaya/راشيا, Baalbek/BAALBECK/Baalabak/بعلبك, Hermel/HERMEL/الهرمل); detail pages parsed for Address/Status/Ownership/beds. NB the site's own district filter misses rows with variant caza spellings (e.g. Baalbeck governmental hospital).",
+      "fields": "name_en, name_ar, caza, address, phone, registry status, beds"
+    },
+    {
+      "id": "moph_phc_network_2025",
+      "name": "MoPH 'مراكز شبكة الرعاية الصحية الاولية' PDF, header date 27/03/2025 (327 centres nationally; Bekaa 36, Baalbek-Hermel 26)",
+      "url": "https://moph.gov.lb/userfiles/files/HealthCareSystem/PHC/phcc.pdf",
+      "method": "Direct download blocked by egress proxy and the URL returned 404 from the browser on 2026-11-21; content obtained via two independent WebFetch text extractions which agreed on all names/addresses; transcribed to network_2025.py. Phone numbers in the PDF are written right-to-left (e.g. 508484-08) and were normalised to 08-508484. Matched to locator rows manually by village + name (32 matches).",
+      "caveat": "Text-extraction route; spot-check against the PDF before publication. MoPH 2025 Annual PHC Dashboard reports 37 Bekaa and 28 Baalbek-Hermel network centres, i.e. 3 more than this March-2025 list — those are missing here."
+    },
+    {
+      "id": "who_sitrep_21",
+      "url": "https://www.emro.who.int/images/stories/lebanon/Lebanon-Emergency-Sitrep-21-2026.pdf",
+      "date": "2026-04-24",
+      "used_for": "Bekaa Gharbi (West Bekaa) Hospital partial damage; national count 46 PHCCs closed (no names/locations)"
+    },
+    {
+      "id": "who_sitrep_23",
+      "url": "https://www.emro.who.int/images/stories/lebanon/Lebanon-Emergency-Sitrep-23-2026.pdf",
+      "date": "2026-05-08",
+      "used_for": "Bekaa Gharbi Hospital still listed with partial damage; ~41 PHCCs closed nationally (no names)"
+    },
+    {
+      "id": "health_sector_sitrep_7",
+      "url": "https://reliefweb.int/report/lebanon/lebanon-health-sector-emergency-situation-report-issue-7-april-20-2026",
+      "date": "2026-04-20",
+      "used_for": "context only: 51 PHCCs closed, 8 operating for chronic/emergency only nationally; no facility names"
+    },
+    {
+      "id": "msf_bekaa",
+      "url": "https://www.doctorswithoutborders.org/latest/lives-upended-lebanons-bekaa-valley",
+      "date": "2026-08-18",
+      "used_for": "Baalbek Governmental Hospital (MSF PICU set-up) and Libano-Francais Hospital Zahle ('existing operational hospital') functional"
+    },
+    {
+      "id": "osm_nominatim",
+      "url": "https://nominatim.openstreetmap.org/",
+      "date": "2026-11-21",
+      "method": "Run from browser tab on nominatim origin, 1.2 s between requests, viewbox 35.55,33.30-36.75,34.75 bounded, countrycodes=lb. Facility queries: English (and Arabic for hospitals) names; accepted only amenity=hospital results whose OSM name matches the MoPH name. 21/29 hospitals matched; 0/68 PHC centres matched. Village centroid queries (Arabic village from MoPH address) stored separately in village_lat/village_lon — NOT facility locations.",
+      "licence": "ODbL, © OpenStreetMap contributors"
+    }
+  ],
+  "coord_confidence": {
+    "high": "OSM hospital name matches MoPH name and OSM locality agrees with MoPH address",
+    "medium": "name partially matches or OSM locality differs from MoPH address (noted in coord_source)"
+  },
+  "not_found": [
+    "No dispensaries: neither the MoPH locator nor the network PDF has a 'dispensary' category for these cazas; MoPH 'مستوصفات' are folded into PHC/locator lists or not published.",
+    "No facility-level 2026 closure list for Bekaa/Baalbek-Hermel: WHO/Health Sector sitreps give national closed-PHCC counts only (43 on 5 Mar 2026 rising to 59 on 10 Apr, 46 on 24 Apr, ~41 on 8 May); WHO sitrep 1 has a map of closed PHCCs (image only)."
+  ],
+  "generator_scripts": "~/work_fac/{build_master.py,finalize.py,network_2025.py,moph_dir_raw.json,geo.json} on device VM (not in repo)"
+}

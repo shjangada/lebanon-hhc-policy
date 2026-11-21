@@ -29,3 +29,6 @@ Until then: the public HDX ACLED file gives **district-level, monthly** counts o
 - **Soil coordinates and sample-level values:** the CNRS-L report lists BE sample IDs but no coordinates and no ID-to-value link. Ask CNRS-L/MoE for Table 2.3 with coordinates.
 - **Roads (HDX `hotosm_lbn_roads`)** for our own travel times: **not done.** Travel times are straight-line x 1.3 / 40 km/h (assumption); the HDX accessibility file agrees at district level (Spearman 0.90 on the share within 30 minutes of a PHC), but district-level agreement is weak evidence for cadaster-level times.
 - **Pb / As crop transfer:** Abi Saab et al. 2022 covers Cr, Ni, Zn, Cu, Cd only.
+
+## Verify by hand: MoPH facility list
+The PHC network list was read through web extraction (the PDF could not be downloaded). Check `name_en`/`name_ar`/phones in `data/raw/facilities/moph_bekaa/moph_facilities_bekaa.csv` against <https://moph.gov.lb/userfiles/files/HealthCareSystem/PHC/phcc.pdf> (404 on 2026-11-21; ask MoPH for the current list). About 3 newer network centres are missing; 3 PHCCs have no village coordinate.
