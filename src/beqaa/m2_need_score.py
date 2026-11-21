@@ -100,27 +100,56 @@ def raw_indicators(d0: float = 30, demand_col: str = "women_15_49", include_unre
     return df
 
 
+def apply_quantile_anchors(spec: dict, raw: pd.DataFrame, lo: float = 0.10, hi: float = 0.90) -> dict:
+    """Decision D6: where no published threshold exists (anchor: quantile), set safe/crisis to the 10th/90th percentile of the real data
+    (goalposts observed in the data, as the HDI does with min/max). Direction (higher/lower is worse) is kept."""
+    import copy
+    spec = copy.deepcopy(spec)
+    for inds in spec["domains"].values():
+        for ind in inds:
+            if ind.get("anchor") == "quantile" and ind["name"] in raw.columns:
+                a, b = float(raw[ind["name"]].quantile(lo)), float(raw[ind["name"]].quantile(hi))
+                if b > a:
+                    ind["safe"], ind["crisis"] = (a, b) if ind["crisis"] > ind["safe"] else (b, a)
+                    ind["status"] = "assumption (data-derived anchors)"
+    return spec
+
+
 def compute(raw: pd.DataFrame, weights: dict | None = None, spec: dict | None = None, geometric: bool = False,
-            domains_on: list[str] | None = None, exclude_indicators: list[str] | None = None) -> pd.DataFrame:
+            domains_on: list[str] | None = None, exclude_indicators: list[str] | None = None,
+            aggregation: str | None = None, normalization: str = "goalpost") -> pd.DataFrame:
+    """aggregation: arithmetic (default) | geometric | max (JIAF-style 'worst domain'); normalization: goalpost (default, safe/crisis anchors)
+    | percentile (SVI-style rank within the cadasters). See docs/METHODS_DECISIONS.md D2-D4."""
+    aggregation = aggregation or ("geometric" if geometric else "arithmetic")
     spec = spec or load_spec()
     w = dict(weights or spec["domain_weights"])
     on = [d for d in (domains_on or DOMAINS) if w.get(d, 0) > 0]
     tot = sum(w[d] for d in on)
     wn = {d: w[d] / tot for d in on}
     out = raw.copy()
+    skipped = []
     for d in DOMAINS:
         cols = []
         for ind in spec["domains"][d]:
             if exclude_indicators and ind["name"] in exclude_indicators:
                 continue
+            if ind["name"] not in raw.columns:         # stale cached/old data lacking a newer indicator: skip it visibly instead of crashing
+                skipped.append(ind["name"])
+                continue
             col = f"s_{ind['name']}"
-            out[col] = score_indicator(raw[ind["name"]], ind["safe"], ind["crisis"])
+            if normalization == "percentile":
+                pr = raw[ind["name"]].rank(pct=True, method="average")
+                out[col] = pr if ind["crisis"] > ind["safe"] else 1 - pr
+            else:
+                out[col] = score_indicator(raw[ind["name"]], ind["safe"], ind["crisis"])
             cols.append(col)
         out[f"D_{d}"] = out[cols].mean(axis=1, skipna=True) if cols else 0.0
     D = out[[f"D_{d}" for d in on]].values
     wv = np.array([wn[d] for d in on])
-    if geometric:
+    if aggregation == "geometric":
         out["need_score"] = np.exp((np.log(np.clip(D, 1e-3, 1)) * wv).sum(axis=1))
+    elif aggregation == "max":
+        out["need_score"] = D.max(axis=1)
     else:
         out["need_score"] = (D * wv).sum(axis=1)
     out["rank"] = out.need_score.rank(ascending=False, method="min").astype(int)
@@ -130,6 +159,7 @@ def compute(raw: pd.DataFrame, weights: dict | None = None, spec: dict | None = 
     out["stress_need"] = out.need_score
     out["stress_environment"] = out["D_environment"]
     out.attrs["weights_used"] = wn
+    out.attrs["skipped_indicators"] = skipped
     return out
 
 
@@ -192,3 +222,29 @@ def triggers() -> pd.DataFrame:
          "Biannual review"),
         ("Low", "Monitor only; re-score on any closure / displacement shock", "Annual review"),
     ], columns=["tier", "response_package", "review"])
+
+
+def method_sensitivity(raw: pd.DataFrame, spec: dict | None = None, top_k: int | None = None) -> pd.DataFrame:
+    """Does the ranking depend on our methodological choices? (JRC handbook: test alternative normalisation, aggregation, weights, exclusions.)
+    Each variant is compared with the reference configuration (goalpost normalisation, arithmetic mean, spec weights)."""
+    from scipy.stats import spearmanr
+    spec = spec or load_spec()
+    k = top_k or spec["top_k"]
+    ref = compute(raw, spec=spec)
+    ref_top = set(ref.nsmallest(k, "rank").cadaster_id)
+    variants = {"reference": {}, "aggregation: geometric": {"aggregation": "geometric"}, "aggregation: max (worst domain, JIAF-style)": {"aggregation": "max"},
+                "normalisation: percentile rank (SVI-style)": {"normalization": "percentile"},
+                "weights: vulnerability-heavy (0.4)": {"weights": {"clinical_demand": 0.2, "capacity_strain": 0.2, "vulnerability": 0.4, "environment": 0.2}},
+                "weights: access-heavy (0.4)": {"weights": {"clinical_demand": 0.2, "capacity_strain": 0.4, "vulnerability": 0.2, "environment": 0.2}},
+                "weights: clinical-heavy (0.4)": {"weights": {"clinical_demand": 0.4, "capacity_strain": 0.2, "vulnerability": 0.2, "environment": 0.2}}}
+    for d in DOMAINS:
+        variants[f"drop domain: {d}"] = {"domains_on": [x for x in DOMAINS if x != d]}
+    variants["drop indicator: unregistered_workers_share"] = {"exclude_indicators": ["unregistered_workers_share"]}
+    rows = []
+    for name, kw in variants.items():
+        s = compute(raw, spec=spec, **kw)
+        top = set(s.nsmallest(k, "rank").cadaster_id)
+        rows.append({"variant": name, "spearman_vs_reference": float(spearmanr(ref.need_score, s.need_score)[0]),
+                     "top_k_retained": len(top & ref_top), "top_k": k, "top_k_jaccard": len(top & ref_top) / len(top | ref_top),
+                     "max_rank_shift": int((s["rank"] - ref["rank"]).abs().max()), "is_mock": bool(raw.is_mock.all())})
+    return pd.DataFrame(rows)

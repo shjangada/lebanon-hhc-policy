@@ -143,3 +143,32 @@ def test_escrow_max_level_escalation_and_capacity_cap():
 def test_allocation_sensitivity_grid():
     g = allocation.sensitivity(m2.compute(m2.raw_indicators()), 100_000)
     assert g.shape == (4, 4) and (g.values > 0).all()
+
+
+def test_method_sensitivity_and_aggregation_options():
+    raw = m2.raw_indicators()
+    ms = m2.method_sensitivity(raw)
+    assert ms.iloc[0].variant == "reference" and ms.iloc[0].spearman_vs_reference == 1.0 and ms.iloc[0].top_k_retained == ms.iloc[0].top_k
+    assert ms.spearman_vs_reference.between(-1, 1).all() and ms.top_k_jaccard.between(0, 1).all() and len(ms) >= 10
+    for agg in ("arithmetic", "geometric", "max"):
+        assert m2.compute(raw, aggregation=agg).need_score.between(0, 1).all()
+    assert m2.compute(raw, normalization="percentile").need_score.between(0, 1).all()
+
+
+def test_default_weights_equal_and_quantile_anchors():
+    spec = m2.load_spec()
+    assert len(set(spec["domain_weights"].values())) == 1                                  # D4: equal by default
+    raw = m2.raw_indicators()
+    new = m2.apply_quantile_anchors(spec, raw)
+    q = [i for inds in new["domains"].values() for i in inds if i.get("anchor") == "quantile"]
+    assert q and all(i["safe"] != i["crisis"] for i in q)
+    assert m2.compute(raw, spec=new).need_score.between(0, 1).all()
+    phc = next(i for i in spec["domains"]["capacity_strain"] if i["name"] == "phc_per_50k")
+    assert (phc["safe"], phc["crisis"]) == (3, 0.5) and phc["anchor"] == "published"
+
+
+def test_stale_data_missing_an_indicator_does_not_crash():
+    """A cached frame built before an indicator existed (e.g. after switching branches) must be skipped visibly, not raise KeyError."""
+    raw = m2.raw_indicators().drop(columns=["conflict_incidents"])
+    s = m2.compute(raw)
+    assert s.attrs["skipped_indicators"] == ["conflict_incidents"] and s.need_score.between(0, 1).all()
