@@ -1,0 +1,34 @@
+# Narrative: the health rider (for the dashboard flow, memo and pitch)
+
+**One line.** The money is already in Beqaa's fields; health is not attached to it. A small rider on projects that are already funded, run by Lebanese organisations, can turn environmental recovery into accessible care, with control moving to Lebanese hands as capacity is shown.
+
+The Beqaa Valley here means five districts (Zahle, West Bekaa, Rachaya, Baalbek, Hermel), a physical region and not the Bekaa governorate alone. Every number carries a source id (`data/registry/sources.csv`) or an assumption label; ranges and status are in `docs/EVIDENCE_TABLE.md`.
+
+## The five beats
+1. **Why Beqaa.** About 861,000 people (LRP 2026) in 222 cadasters; 1,030 conflict incidents recorded between Oct 2023 and Jul 2025 (LRP; the 2026 war is not in this series); 65 primary-care centres and 29 hospitals in the MoPH list; moderate or severe food insecurity 44.3% nationally in 2024 (FAO via World Bank, national only). Older figures are labelled old (for example 42% of cultivated area, c. 2000, reported). Soil results exist for 5 villages (rung a). Government pays 13.4% of health spending (SC02).
+2. **Where the money goes today.** 37 inventoried projects (water, agriculture, livelihoods); none found that tests soil or screens people for exposure (desk search, to confirm). The LHF's share to national NGOs is 38% to 47% in 2023-2026, but only 0% / 5.3% / 0% (2024-2026) for health projects whose title names Beqaa (a proxy; projects not naming Beqaa are missed). Globally 4.3% of funding went directly to local actors in 2025 against a 25% pledge (ALNAP, S45). FTS health totals look incomplete and are not quoted.
+3. **The gap.** Chromium 110-230 mg/kg in four villages and lead 230 mg/kg in Bouday (rung a; rung b in the model). A plausible crop and work route exists: the hazard quotient runs from 0.27 to 280 depending on the Cr(VI) share, which nobody has measured. No health effect is shown: (c) is not established. Farm workers, including displaced Syrians without status, are the most exposed and the least counted.
+4. **The proposal.** A **rider** (testing, trigger, screening and referral at the nearest MoPH-list centre, worker protection) on funded projects, costing about $3,800 to $4,200 each (0.5% to 0.9% of the budget where known; sample counts are assumptions). Run by a local consortium led by an existing primary-care operator (candidate: Amel, to verify), with women-led and farming cooperatives on the committee; financed from the host projects' own safeguard or OHS lines where allowed, plus a ring-fenced Beqaa window in the LHF. Control moves INGO to national NGO to union of municipalities to MoPH as pre-agreed thresholds are met (Gavi-style); at national-anchor capacity growth of +0.03 a year the union rung is reached about 2029 (scenario).
+5. **Why it holds up, and what could break it.** Small cost per rider; break-evens are explicit (below); the pilot measures what is unknown (Cr(VI) share, referral completion, posts filled, capacity, reach of unregistered workers). Outside our control: renewed conflict (scenario S1), funding cuts (S2), staff loss (S4), and funders refusing scope creep.
+
+## Options compared
+| Option | What it is | Impact | Cost | Feasibility | Equity | Uncertainty |
+|---|---|---|---|---|---|---|
+| A. Status quo | agriculture, water and health funded in silos, INGO-led | none on exposure: no trigger from findings to care | no new cost | high (it is what happens) | low: workers outside registers are missed; control stays foreign | low |
+| B. New standalone health programme | separate donor screening programme | could screen more people | highest and unsourced; new money while the LRP is 39% funded and the Flash Appeal 54% | low: new money, a parallel system, F1 fails | medium if designed well | high |
+| **C. Riders + local consortium + escrow** | testing and referral attached to funded projects, Lebanese-led | targeted at places with a funded project, a soil finding and high need; effect sizes are placeholders except CHW (0 to +16.9 points on ANC, non-Lebanon) | about $4k per rider; CHW $12-54k per 10 CHW-years (sourced) | medium-high: no new public money, existing institutions; depends on funder eligibility and on a pilot | highest by design (all workers regardless of status), but unproven: between-group gaps are unobservable | high |
+
+Scoring is qualitative judgement from the model outputs and sourced costs, not a computed score. **What would flip it:** with community priorities as modelled the community arm loses to the status quo at every tested value; in the best case it wins only if capture < 5.6% or local fit > 1.48 (`breakeven.csv`). Option C's allocation rule is therefore a pilot hypothesis, while the rider itself does not depend on it.
+
+## Collateral-damage check (every recommendation)
+- **Money pegged to landowners misses Syrian workers:** require services and protection for all workers regardless of status; track the share of services used by unregistered workers (anonymous community-ID tally); unobservable from public data today.
+- **Stigma and market harm from test results:** results go to households and the clinic first; no public release by village without consent.
+- **Overloading centres:** the rider is flagged when it adds more than 10% of a centre's assumed yearly capacity.
+- **Capture and elite control:** committee seats for women (30%) and workers (10%), published quarterly spend, third-party spot checks (escrow rules).
+- **Dependency and parallel systems:** the rider uses existing MoPH-list centres and existing project channels; no new clinics; control moves to Lebanese entities by pre-agreed thresholds.
+- **Funder refusal:** use the projects' own safeguard or OHS lines where allowed; otherwise the ring-fenced window.
+- **Indicator gaming:** referral completion and posts filled are self-reported: sampled audits before any tranche.
+- **Scope:** air pollution and generators are real but outside a land and water rider (limitation).
+
+## Pitch line
+About 70% of Lebanon's wastewater is discharged untreated (CDR/MoEW, reported), and nitrates have been measured in Beqaa groundwater (2007-09 and 2023 studies, to verify). Chromium was found in the soil of four Beqaa villages. A Beirut birth cohort detects toxic metals in newborns' cord blood (to verify). Yet none of 37 funded projects we found in Beqaa tests the water or soil people farm and drink, or links what it finds to a clinic.

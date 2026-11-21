@@ -55,3 +55,14 @@ def test_assumptions_doc_quotes_the_breakevens():
     b = pd.read_csv(f)
     b = b[(b.kind == "allocation") & b.priorities.str.startswith("community picks") & (b.comparison == "community vs status quo")].set_index("parameter")
     assert f"{b.loc['capture', 'flips_at'] * 100:.1f}%" in doc and f"{b.loc['local_fit', 'flips_at']:.2f}" in doc
+
+
+def test_memo_docs_exist_and_never_claim_a_health_effect():
+    import pathlib
+    docs = pathlib.Path(__file__).resolve().parents[1] / "docs"
+    for f in ("EVIDENCE_TABLE.md", "STAKEHOLDERS.md", "NARRATIVE.md", "RIDER_SHORTLIST.md", "HEADLINE_AUDIT.md", "ASSUMPTIONS_PILOT.md"):
+        assert (docs / f).exists(), f
+    ev = (docs / "EVIDENCE_TABLE.md").read_text()
+    rows = [l for l in ev.splitlines() if l.startswith("| ") and l[2].isdigit()]
+    assert rows and not any(" | c | " in r and "Beqaa" in r.split(" | c | ")[1] for r in rows)       # no rung (c) for Beqaa
+    assert "white phosphorus" in ev and "not white phosphorus" in ev.lower() or "Total P is not white phosphorus" in ev
