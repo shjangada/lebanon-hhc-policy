@@ -60,7 +60,7 @@ The app and pipeline load `data/processed/` (real, from `make ingest`) first and
 | soil_sites | 🟡 partly real | CNRS-L/MoE Cr, total P, one Pb value for 5 Beqaa villages | no coordinates in the report: villages located by name at cadaster centroids; 4 villages unmatched; Cr(VI) share unknown |
 | water_quality | 🔴 mock | nothing | all mock: needs a data request to the Litani River Authority |
 | crop_transfer | ✅ real | Abi Saab et al. 2022 printed BAFs for Cr, Ni, Zn, Cu, Cd by crop and season | no Pb or As; pooled means only |
-| interventions | 🔴 mock | nothing | all mock: the UNFPA appeal has no unit costs; needs quotes (AUB lab, mobile unit, CHW stipends) |
+| interventions | 🟡 partly real | costs of 3 of 8 options derived from 48 sourced unit prices (`data/raw/costs`, `docs/COSTS.md`) | effects, reach and risk columns are assumptions; 5 options have no published cost (hub-spoke e-referral, vouchers, water truck, biochar, Cr(VI) speciation) |
 | cascade_baseline | 🔴 mock | sourced ANC/delivery rates in cascade_baseline_long.csv (VASyR national for Syrians, 2 verified rows) | M5 still uses a mock step x group table; referral completion has no source |
 | staffing_referrals | 🔴 mock | nothing | mock scenario input: no public source (pilot-measured) |
 | conflict_exposure | ✅ real | LRP conflict incidents per admin-3 (Oct 2023 - Jul 2025) | ACLED events for the last 30/90 days not loaded (API access returned HTTP 403) |

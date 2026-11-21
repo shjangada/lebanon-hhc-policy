@@ -108,12 +108,13 @@ def dataset_badge(name: str, raw_dir: pathlib.Path | None = None, processed_dir:
     pdir = processed_dir if processed_dir is not None else (PROCESSED if (raw_dir == RAW and _mode() == "auto") else None)
     if pdir is not None and (pdir / fname).exists():
         df = pd.read_csv(pdir / fname)
-        if "is_mock" in df.columns and df["is_mock"].astype(bool).any():
+        if "is_mock" in df.columns and df["is_mock"].astype(bool).all():
             return "mock"
+        mixed = "is_mock" in df.columns and df["is_mock"].astype(bool).any()        # some rows real (e.g. intervention costs derived from sourced prices), some still mock
         st = set(df["status"].dropna().astype(str)) if "status" in df.columns else set()
         data_cols = [c for c in df.columns if c not in ("is_mock", "source_id", "source", "source_date", "url", "status", "level", "areas", "analysis_date", "assumed_fields")]
         has_nan_col = bool(df[data_cols].isna().all().any()) if data_cols else False
-        if st & {"partial", "assumption", "missing"} or "assumed_fields" in df.columns or has_nan_col:
+        if mixed or st & {"partial", "assumption", "missing"} or "assumed_fields" in df.columns or has_nan_col:
             return "partly real"
         return "real"
     return "missing" if name in REAL_ONLY else "mock"

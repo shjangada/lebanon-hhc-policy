@@ -51,3 +51,5 @@ data/raw/msna/*.pdf
 !data/processed/unfpa_cost_lines.csv
 !data/processed/funding_requirements.csv
 !data/processed/haus_2024.csv
+!data/processed/interventions.csv
+!data/processed/cost_ranges.csv
