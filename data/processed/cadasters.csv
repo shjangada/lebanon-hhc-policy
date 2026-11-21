@@ -1,0 +1,223 @@
+cadaster_id,cadaster_name,cadaster_name_ar,district,district_pcode,district_name_cod,governorate,governorate_pcode,lat,lon,area_km2,is_mock,source_id,source,source_date,url,status
+53127,Aadous,عدّوس,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.02543,36.15563,1.979,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53217,Aain Baalbek,العين,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.22379,36.38561,8.782,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53115,Aain Bourday,عين بورداي,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.97171,36.214,18.976,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53163,Aain Es-Siyaa Chadoura,حصن الشادورا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.95315,36.27693,24.484,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53131,Aamchki,عمشكي,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.99371,36.30648,55.459,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53231,Aarsal,عرسال,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.14889,36.46961,316.897,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53377,Aaynata Baalbek,عيناتا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.18851,36.07361,45.963,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53111,Baalbek,بعلبك,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.0131,36.20655,37.425,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53221,Bajjaje,بجاجة,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.22847,36.34226,6.322,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53344,Barqa,برقا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.18024,36.13717,19.523,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53333,Bechouat,بشوات,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.15125,36.13441,14.327,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53411,Bednayel Baalbak,بدنايل,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.9369,35.95274,50.277,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53417,Beit Chama,بيت شاما,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.92661,36.02443,5.722,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53459,Bouday,بوداي,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.06092,36.05639,59.887,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53453,Brital,بريتال,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.93484,36.17762,42.969,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53375,Btedaai,بتدعي,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.10922,36.10032,12.988,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53469,Chaaibeh,جبل الشعيبة,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.9229,36.26015,17.539,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53274,Chaat,شعت,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.14471,36.25562,27.486,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53467,Chlifa,شليفا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.08253,36.10223,17.256,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53429,Chmistar,شمسطار,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.96575,35.9997,24.272,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53366,Dar El-Ouassaa,دار الواسعة,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.10771,36.05619,5.834,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53311,Deir El-Ahmar,دير الاحمر,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.1228,36.12105,41.469,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53244,Deir Mar Maroun Baalbek,دير مار مارون بعلبك,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.35251,36.39756,6.175,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53119,Douris,دوريس,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.98641,36.16475,19.274,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53214,Fekehe,فاكهة,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.24852,36.38693,59.044,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53183,Hadath Baalbek,حدت الهرمل,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.00739,36.03593,30.953,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53247,Halbata,حلباتا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.25926,36.23912,16.514,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53463,Ham,حام,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.86551,36.21801,15.402,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53159,Haouch El-Dehab,حوش الدهب,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.03636,36.11825,4.875,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53431,Haouch En-Nabi,حوش النبي,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.93294,36.06297,1.765,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53419,Haouch Er-Rafqa,حوش الرافقة,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.9133,36.04449,5.712,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53433,Haouch Snaid,حوش سنيد,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.93126,36.08164,8.847,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53135,Haouch Tall Safiyeh,حوش تل صفية,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.02252,36.13645,5.049,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53151,Haouche Barada,حوش بردى,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.01114,36.11608,6.095,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53451,Haour Taala,حور تعلا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.9089,36.16944,22.943,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53264,Harabta,حربتا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.21659,36.2402,66.336,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53441,Hizzine,حزين,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.96956,36.09453,4.477,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53123,Iaat,ايعات,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.0535,36.1575,28.454,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53171,Jebaa,جبعا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.01967,36.02442,6.648,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53447,Jenta,جنتا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.83726,36.0968,12.954,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53427,Kfar Dabach,كفر دبش,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.94032,36.04108,5.115,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53179,Kfar Dane,كفر دان,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.01751,36.05659,11.421,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+54175,Kharayeb El-Hermel,الخرائب,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.23576,36.2917,5.55,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53443,Khodr Baalbek,خضر,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.90916,36.1171,7.007,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53455,Khreibet Baalbek,خريبة,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.87862,36.16674,22.212,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53322,Kneisset Baalbek,كنيسة,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.12317,36.17994,17.53,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53234,Laboueh,لبوة,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.18979,36.34799,22.819,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53461,Maaraboun,معربون,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.84792,36.19688,10.804,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53147,Majdaloun,مجدلون,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.98992,36.12007,10.383,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53155,Maqneh,مقنة,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.07751,36.20149,28.782,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53457,Mazraat beit Mchaik,مزرعة بيت مشيك,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.06448,35.99092,12.975,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53251,Moqraq,المقرق,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.16032,36.33225,14.925,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53421,Mousrayeh,مطحنة مصراية,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.91329,36.05266,2.611,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53271,Nabha Ed-Damdoum,نبحا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.21426,36.17181,92.038,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53471,Nabi Chbay,النبي سباط,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.93496,36.23316,1.018,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53445,Nabi Chit,نبي شيت,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.89003,36.10827,17.721,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53224,Nabi Osmane,نبي عثمان,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.21115,36.37022,10.678,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53143,Nahleh baalbek,نحله,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.05016,36.33036,123.384,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+54183,Ouadi El-Aaoss,وادي القصص,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.24628,36.23788,12.757,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53241,Qaa Baalbek,القاع,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.33339,36.45894,12.916,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53257,Qaa Baayoun,قاع بعيون,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.32453,36.51693,70.779,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53267,Qaa Jouar Maqiyé,قاع جوار مكية,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.39229,36.51888,24.662,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53254,Qaa Ouadi El-Khanzir,قاع وادي الخنزير,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.38843,36.46636,64.783,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53277,Qarha Baalbek,قرحا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.16531,36.20944,4.154,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53413,Qsarnaba,قصرنابا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.90619,35.99846,6.511,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53281,Ram Baalbek,الرام,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.17519,36.17751,7.018,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53227,Ras Baalbek Ech-Charqi,راس بعلبك الشرقي,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.26217,36.50237,57.902,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53211,Ras Baalbek Es-Sahel,راس بعلبك,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.29494,36.41049,67.647,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53355,Riha,ريحا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.14286,36.19817,13.41,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53167,Saaideh,سعيدة,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.02595,36.07565,5.931,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53261,Sbouba,صبوبا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.22202,36.28599,5.741,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53437,Serraaine Et-Tahta,سرعين التحتا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.88698,36.0676,23.551,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53423,Slouqi,سلوقي,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.97185,35.94624,16.55,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53139,Taibet Baalbek,طيبة بعلبك,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.9617,36.14777,17.504,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53439,Talia,طليا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.94547,36.09398,7.69,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53435,Taraiya,طاريا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.99074,35.99767,51.149,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53415,Temnine El-Faouqa,تمنين الفوقا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.911,35.98052,10.944,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53425,Temnine Et-Tahta,تمنين التحتا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.87804,36.00374,7.432,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53475,Tfail,طفيل,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.86061,36.33753,29.567,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53449,Yahfoufa,يحفوفا,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,33.85409,36.13033,12.271,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53388,Yammouneh,يمونة,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.12793,36.0353,29.514,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53284,Youmine,يونين,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.10522,36.28045,77.597,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+53237,Zabboud,زبود,Baalbek,LB21,Baalbek,Baalbek-Hermel,LB8,34.23941,36.31307,7.874,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+54127,Charbine El-Hermel,شربين,Hermel,LB22,El Hermel,Baalbek-Hermel,LB8,34.46416,36.31495,69.74,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+54111,Hermel,هرمل,Hermel,LB22,El Hermel,Baalbek-Hermel,LB8,34.4272,36.40959,131.129,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+54159,Hermel Jbab,هرمل جباب,Hermel,LB22,El Hermel,Baalbek-Hermel,LB8,34.34437,36.21619,74.982,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+54167,Maaysra El-Hermel,معيصرة,Hermel,LB22,El Hermel,Baalbek-Hermel,LB8,34.27257,36.29062,6.051,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+54114,Michaa Mrajhineh,سويدية,Hermel,LB22,El Hermel,Baalbek-Hermel,LB8,34.40593,36.2134,52.454,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+54151,Ouadi Faara,وادي فعرا,Hermel,LB22,El Hermel,Baalbek-Hermel,LB8,34.27821,36.23381,26.937,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+54135,Ras Baalbek El Gharbi,راس بعلبك الغربي,Hermel,LB22,El Hermel,Baalbek-Hermel,LB8,34.30758,36.26001,54.112,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+54143,Ras Baalbek Ouadi Faara,راس بعلبك وادي فعرا,Hermel,LB22,El Hermel,Baalbek-Hermel,LB8,34.30273,36.3473,19.368,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+54119,Zighrine,زغرين,Hermel,LB22,El Hermel,Baalbek-Hermel,LB8,34.38501,36.32051,93.726,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55167,Aain Aarab Rachaiya,عين عرب,Rachaya,LB23,Rachaya,Bekaa,LB2,33.57946,35.88707,11.052,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55171,Aain Aata,عين عطا,Rachaya,LB23,Rachaya,Bekaa,LB2,33.43448,35.78619,15.781,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55147,Aain Rouha,عين حرشة,Rachaya,LB23,Rachaya,Bekaa,LB2,33.45777,35.78036,7.869,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55114,Aaqabet Rachaya,عقبة راشيّا,Rachaya,LB23,Rachaya,Bekaa,LB2,33.51129,35.80806,6.294,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55117,Aayha,عيحا,Rachaya,LB23,Rachaya,Bekaa,LB2,33.48711,35.90255,42.957,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55194,Aayta El-Foukhar,عيتا الفخار,Rachaya,LB23,Rachaya,Bekaa,LB2,33.64342,35.90938,25.821,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55177,Bakka,بكا,Rachaya,LB23,Rachaya,Bekaa,LB2,33.59724,35.92456,6.175,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55121,Bakkifac Rachaya,بكيفا راشيا,Rachaya,LB23,Rachaya,Bekaa,LB2,33.49208,35.8062,8.372,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55127,Beit Lahia,بيت لهيا,Rachaya,LB23,Rachaya,Bekaa,LB2,33.48555,35.79258,3.918,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55164,Biret Rachaiya,بيرة راشّيا,Rachaya,LB23,Rachaya,Bekaa,LB2,33.60222,35.82976,20.075,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55124,Dahr El-Ahmar,ضهر الاحمر,Rachaya,LB23,Rachaya,Bekaa,LB2,33.53479,35.84178,9.98,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55187,Deir El-Aachayer,دير العشاير,Rachaya,LB23,Rachaya,Bekaa,LB2,33.55919,36.00906,23.026,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55161,Haouch El Qinnabeh Rachaiya,حوش القنعبة,Rachaya,LB23,Rachaya,Bekaa,LB2,33.47806,35.76461,7.564,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55197,Helouet Rachaiya,حلوة,Rachaya,LB23,Rachaya,Bekaa,LB2,33.60728,36.00953,18.256,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55144,Kaoukaba Bou Arab,كوكبا,Rachaya,LB23,Rachaya,Bekaa,LB2,33.53505,35.77751,5.071,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55137,Kfar Denis,كفر دنيس,Rachaya,LB23,Rachaya,Bekaa,LB2,33.55207,35.85419,7.019,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55154,Kfar Lichki,كفر مشكي,Rachaya,LB23,Rachaya,Bekaa,LB2,33.51121,35.74722,17.927,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55134,Kfar Qouq,كفرقوق,Rachaya,LB23,Rachaya,Bekaa,LB2,33.54555,35.91903,55.445,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55151,Khirbet Rouha,خربة روحا,Rachaya,LB23,Rachaya,Bekaa,LB2,33.5762,35.84831,14.368,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55174,Majdel Balhis,مجدل بلهيص,Rachaya,LB23,Rachaya,Bekaa,LB2,33.5385,35.73749,20.035,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55181,Mdoukha,مدوخا,Rachaya,LB23,Rachaya,Bekaa,LB2,33.60864,35.88993,15.176,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55141,Mhaiydseh Rachaiya,محيدثه,Rachaya,LB23,Rachaya,Bekaa,LB2,33.5584,35.79526,14.24,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55199,Nabi Safa,نبي صفا,Rachaya,LB23,Rachaya,Bekaa,LB2,33.49796,35.74312,8.131,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55111,Rachaiya,راشيّا الوادي,Rachaya,LB23,Rachaya,Bekaa,LB2,33.47492,35.8417,61.267,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55157,Rafid Rachaiya,الرافد راشيا,Rachaya,LB23,Rachaya,Bekaa,LB2,33.57509,35.8075,8.002,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55191,Selsata (Mazraat Deir El-Aachaiyer),مزرعة سلساتا,Rachaya,LB23,Rachaya,Bekaa,LB2,33.58289,35.98883,2.539,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55131,Tannoura,تنورة,Rachaya,LB23,Rachaya,Bekaa,LB2,33.47051,35.80011,4.283,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+55184,Yanta,ينطا,Rachaya,LB23,Rachaya,Bekaa,LB2,33.60215,35.95558,33.755,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52116,Aain Et-Tineh BG,عين التينة بقاع الغربي,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.49271,35.63644,6.755,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52146,Aain Zebdeh,عين زبدة,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.62681,35.69952,5.231,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52176,Aammiq BG,عميق,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.72446,35.79077,17.34,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52161,Aana,عانا,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.68341,35.7691,14.936,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52121,Aaytanit,عيتنيت,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.56403,35.67214,13.802,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52224,Baaloul BG,بعلول,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.5878,35.7492,12.509,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52126,Bab Mareaa,باب مارع,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.58826,35.67649,6.345,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52181,Chebrqiyet Aammiq,شبرقية عميق,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.71113,35.81237,6.864,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52251,Dakoueh,دكوة,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.69215,35.87445,7.997,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52131,Deir Aain Ej-Jaouzeh,دير عين الجوزة,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.59334,35.7,3.082,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52166,Deir Tahniche,دير طحنيش,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.69952,35.77026,3.892,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52227,Ghazzeh,غزة,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.67343,35.82771,7.691,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52254,Haouch El-Harime,حوش الحريمة,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.71443,35.85916,5.748,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52271,Harimeh Es-Soughra,حريمة الصغرى,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.73299,35.87521,4.591,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52257,Jazira BG,الجزيرة,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.72535,35.84542,4.072,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52211,Joubb Jannine,جب جنين,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.63559,35.79439,15.744,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52156,Kafraiya BG,كفريا بقاع الغربي,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.66037,35.73745,17.445,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52217,Kamed El-Laouz,كامد اللوز,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.62481,35.82217,15.496,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52234,Khiara,الخيارة,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.68934,35.84662,9.161,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52247,Khiara El-Aatiqa,خيارة العتيقة,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.70993,35.83353,2.358,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52151,Khirbet Qanafar,خربة قنافار,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.63771,35.72538,21.426,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52214,Lala,لالا,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.60853,35.76168,13.738,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52274,Libbaya BG,لبايا,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.47882,35.71268,12.386,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52141,Loussa,لوسيا,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.45751,35.65019,9.403,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52111,Machghara,مشغرة,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.52473,35.6598,24.292,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52244,Manara (Hammara) BG,حمارة,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.65681,35.89139,14.124,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52171,Mansoura BG,المنصورة,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.67888,35.80654,7.806,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52277,Marj BG,المرج,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.75845,35.87324,8.763,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52287,Maydoun,ميدون,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.46133,35.63105,10.521,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52261,Ouaqf BG,الوقف بقاع الغربي,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.73641,35.84602,2.711,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52237,Qaraaoun,القرعون,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.56455,35.72288,25.58,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52291,Qelaya,قلايا,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.44035,35.66292,5.571,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52295,Raouda (Istabel),روضة إسطبل,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.74657,35.89217,5.7,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52136,Saghbine,صغبين,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.60925,35.69441,14.647,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52267,Sohmor,سحمر,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.50833,35.69257,11.409,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52241,Soltan Yacoub el Aradi,سلطان يعقوب أراضي,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.6734,35.86826,1.704,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52264,Souairi,صويري,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.6856,35.90899,14.098,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52231,Soultan Yaacoub Faouqa,سلطان يعقوب الفوقا,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.65432,35.84887,11.648,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52221,Tall Znoub,تل زنوب,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.65914,35.77598,7.794,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52281,Yohmor BG,يحمر بقاع الغربي,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.48054,35.67544,8.981,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+52284,Zilaya,زلايا,West Bekaa,LB24,West Bekaa,Bekaa,LB2,33.45784,35.67329,2.714,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51377,Aain Kfar Zabad,عين كفر زبد,Zahle,LB25,Zahle,Bekaa,LB2,33.79108,36.01042,4.974,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51323,Aali En-Nahri,علي النهري,Zahle,LB25,Zahle,Bekaa,LB2,33.86221,36.02738,4.196,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51281,Aanjar (Haouch Moussa),عنجر,Zahle,LB25,Zahle,Bekaa,LB2,33.7404,35.93236,16.216,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51163,Ablah,ابلح,Zahle,LB25,Zahle,Bekaa,LB2,33.86523,35.96944,5.985,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51267,Barr Elias,بر الياس,Zahle,LB25,Zahle,Bekaa,LB2,33.77673,35.92864,24.183,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51244,Bouarej,بوارج,Zahle,LB25,Zahle,Bekaa,LB2,33.81762,35.81195,3.468,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51247,Chebrqiyet Tabet,شبرقية تابت,Zahle,LB25,Zahle,Bekaa,LB2,33.77786,35.87133,1.007,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51211,Chtaura,شتورا,Zahle,LB25,Zahle,Bekaa,LB2,33.81497,35.85711,1.533,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51383,Dalhamiyet Zahleh,دلهميه,Zahle,LB25,Zahle,Bekaa,LB2,33.81738,35.96015,5.235,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51347,Deir El-Ghazal,دير الغزال,Zahle,LB25,Zahle,Bekaa,LB2,33.82393,36.04763,6.955,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51139,Fourzol,فرزل,Zahle,LB25,Zahle,Bekaa,LB2,33.8632,35.94977,16.952,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51335,Haouch El-Aamara,تل العمارة,Zahle,LB25,Zahle,Bekaa,LB2,33.85659,35.98652,0.95,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51329,Haouch El-Ghanam,حوش الغنم,Zahle,LB25,Zahle,Bekaa,LB2,33.87332,36.03072,2.76,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51251,Haouch Es-Siyadeh,حوش الصيادي,Zahle,LB25,Zahle,Bekaa,LB2,33.76928,35.82163,1.401,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51317,Haouch Hala,حوش حالا,Zahle,LB25,Zahle,Bekaa,LB2,33.84708,35.99347,5.719,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51237,Haouch Mandara,حوش مندره,Zahle,LB25,Zahle,Bekaa,LB2,33.77527,35.85831,3.989,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51264,Haouch Qayssar,قيصر,Zahle,LB25,Zahle,Bekaa,LB2,33.76214,35.81502,1.305,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51157,Hazerta,حزرتا,Zahle,LB25,Zahle,Bekaa,LB2,33.87666,35.86779,6.663,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51341,Hoshmosh,حشمش,Zahle,LB25,Zahle,Bekaa,LB2,33.82912,36.01331,7.069,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51224,Jdita,جديتا,Zahle,LB25,Zahle,Bekaa,LB2,33.81561,35.84681,6.188,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51389,Kfarzabad,كفر زبد,Zahle,LB25,Zahle,Bekaa,LB2,33.7638,35.98137,24.644,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51184,Ksara,كسارة,Zahle,LB25,Zahle,Bekaa,LB2,33.82629,35.89179,0.221,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51284,Majdel Aanjar,مجدل عنجر,Zahle,LB25,Zahle,Bekaa,LB2,33.71086,35.91932,25.323,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51217,Makseh,مكسة,Zahle,LB25,Zahle,Bekaa,LB2,33.8006,35.84257,4.457,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51371,Massa,مسا,Zahle,LB25,Zahle,Bekaa,LB2,33.84802,36.0593,7.026,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51185,Mazraat Er-Remtaniyeh,الرمطانية,Zahle,LB25,Zahle,Bekaa,LB2,33.83647,35.81785,9.233,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51241,Mrayjat Zahleh,مريجات,Zahle,LB25,Zahle,Bekaa,LB2,33.80799,35.80573,4.716,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51271,Mzaraat Zahleh,مزرعة زحلة,Zahle,LB25,Zahle,Bekaa,LB2,33.76839,35.8071,0.895,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51151,Nabi Ayla,نبي ايلا,Zahle,LB25,Zahle,Bekaa,LB2,33.87605,35.97402,4.152,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51354,Nasriyet Rizk,ناصرية رزق,Zahle,LB25,Zahle,Bekaa,LB2,33.86023,36.07369,7.241,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51287,Nasriyet Zahleh,ناصرية زحلة,Zahle,LB25,Zahle,Bekaa,LB2,33.75224,35.8508,1.713,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51177,Niha Zahleh,نيحا زحلة,Zahle,LB25,Zahle,Bekaa,LB2,33.89622,35.96189,9.705,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51257,Ouadi Ed-Delm,وادي الدلم,Zahle,LB25,Zahle,Bekaa,LB2,33.79972,35.78983,6.425,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51189,Ouadi El-Aarayech,وادي العرايش,Zahle,LB25,Zahle,Bekaa,LB2,33.87099,35.90678,6.551,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51173,Qaa Er-Rim,قاع الريم,Zahle,LB25,Zahle,Bekaa,LB2,33.901,35.89821,29.961,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51234,Qabb Elias,قب الياس,Zahle,LB25,Zahle,Bekaa,LB2,33.77924,35.83405,13.034,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51353,Qoussaya,قوسايا,Zahle,LB25,Zahle,Bekaa,LB2,33.79875,36.03808,18.077,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51359,Raait,رعيت,Zahle,LB25,Zahle,Bekaa,LB2,33.83911,36.03939,5.307,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51311,Riyaq,رياق,Zahle,LB25,Zahle,Bekaa,LB2,33.85182,36.01689,3.32,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51231,Saadnayel,سعدنايل,Zahle,LB25,Zahle,Bekaa,LB2,33.81409,35.89036,5.468,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51221,Taalbaya,تعلبايا,Zahle,LB25,Zahle,Bekaa,LB2,33.81038,35.873,5.039,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51227,Taanayel,تعنايل,Zahle,LB25,Zahle,Bekaa,LB2,33.78873,35.87904,5.989,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51274,Tcheflik Eddé Haouch,تشفلك اده حوش,Zahle,LB25,Zahle,Bekaa,LB2,33.75497,35.80431,2.81,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51261,Tcheflik Qiqano,تشفلك قيقانو,Zahle,LB25,Zahle,Bekaa,LB2,33.7559,35.82979,1.981,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51277,Tell El-Akhdar,تل الاخضر,Zahle,LB25,Zahle,Bekaa,LB2,33.73706,35.82696,6.698,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51365,Terbol Zahleh,تربل,Zahle,LB25,Zahle,Bekaa,LB2,33.81085,35.98559,16.713,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51145,Touaite Zahleh,تويتي,Zahle,LB25,Zahle,Bekaa,LB2,33.85682,35.8442,16.339,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51133,Zahleh Aradi,زحلة أراضي,Zahle,LB25,Zahle,Bekaa,LB2,33.84539,35.88121,15.319,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51119,Zahleh El-Berbara,بربارة زحلة,Zahle,LB25,Zahle,Bekaa,LB2,33.8511,35.8985,0.214,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51121,Zahleh El-Maallaqa,زحلة معلقة أراضي,Zahle,LB25,Zahle,Bekaa,LB2,33.84422,35.91708,0.617,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51111,Zahleh El-Midane,زحلة,Zahle,LB25,Zahle,Bekaa,LB2,33.84743,35.90466,0.302,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51117,Zahleh Er-Rassiyeh,الراسية,Zahle,LB25,Zahle,Bekaa,LB2,33.84921,35.89575,0.108,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51131,Zahleh Haouch El-Oumara,تل شيحا,Zahle,LB25,Zahle,Bekaa,LB2,33.83398,35.91087,1.432,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51113,Zahleh Haouch Ez-Zaraane,حوش الزراعنة,Zahle,LB25,Zahle,Bekaa,LB2,33.84464,35.90968,0.248,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51125,Zahleh Maallaqa Aradi,مدينة الصناعية,Zahle,LB25,Zahle,Bekaa,LB2,33.83201,35.93763,19.843,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51127,Zahlé Haouch El-Oumara Aradi,زحلة حوش الامراء أراضي,Zahle,LB25,Zahle,Bekaa,LB2,33.80927,35.91089,14.482,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51123,Zahlé Mar Antonios,زحلة مار أنطونيوس,Zahle,LB25,Zahle,Bekaa,LB2,33.84774,35.89883,0.033,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51135,Zahlé Mar Elias,مار الياس زحلة,Zahle,LB25,Zahle,Bekaa,LB2,33.84437,35.89821,0.184,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51115,Zahlé Mar Gerges,زحلة مار جرجس,Zahle,LB25,Zahle,Bekaa,LB2,33.8442,35.90398,0.194,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51129,Zahlé Saydet En-Najat,زحلة سيدة النجاة,Zahle,LB25,Zahle,Bekaa,LB2,33.84568,35.89452,0.156,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified
+51214,Zebdoul,زبدل,Zahle,LB25,Zahle,Bekaa,LB2,33.81345,35.83901,0.931,False,D01,OCHA COD-AB Lebanon admin 3 (D01),2026-01-26,https://data.humdata.org/dataset/cod-ab-lbn,verified

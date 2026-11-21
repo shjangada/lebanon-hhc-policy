@@ -1,0 +1,34 @@
+source,level,name,note
+cadasters_population,admin3,53465,dropped: zero WorldPop population in polygon
+cadasters_population,admin3,53473,dropped: zero WorldPop population in polygon
+facility_status,facility_name,Al Borj Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Al Hayat,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Al Hayat Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Al Najdeh Chaabiyeh Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Al Sahel,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Al-Najda,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Bahman,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Bahman Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Bekaa Gharbi Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Bent Jbeil Governmental Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Bint Jbeil Public Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Hasbaya,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Hasbaya Governmental Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Hiram Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Hiram-Tyr,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Jabal Amel,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Jabal Amel Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Labib Medical Center,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Lebanese Italian Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Mays al-Jabal Public Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Nabatieh Governmental Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Nabatiyeh Public Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Osayran Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,RHUH,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Ragheb Harb Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Salah Ghandour Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Tebnin Governmental Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+facility_status,facility_name,Tebnin Public Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+soil_sites,village,Bedneyil,CNRS village not matched to a COD-AB admin-3 cadaster in scope
+soil_sites,village,Nabi Rchad,CNRS village not matched to a COD-AB admin-3 cadaster in scope
+soil_sites,village,Temnin,CNRS village not matched to a COD-AB admin-3 cadaster in scope

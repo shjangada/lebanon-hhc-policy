@@ -48,10 +48,13 @@ def build_facilities(cad: pd.DataFrame | None = None) -> pd.DataFrame:
         name = p.get("name_en") or p.get("name") or p.get("name_latin") or f"unnamed {kind}"
         rows.append({"facility_id": "OSM-" + str(p["id"]).replace("/", "-"), "name": name, "type": kind, "cadaster_id": pcodes[hit[0]],
                      "lat": round(pt.y, 5), "lon": round(pt.x, 5), "capacity_weekly": CAPACITY[kind], "status_2026": "open",
-                     "offers_anc": True, "in_mophnetwork": False})
+                     "offers_anc": True, "in_mophnetwork": False, "osm_amenity": p.get("amenity") or p.get("healthcare"), "name_ar": p.get("name_ar"),
+                     "functional_status": "", "status_date": "", "status_source": "", "has_solar_backup": float("nan"), "power_source": "unknown",
+                     "hours_per_week": float("nan"),
+                     "assumed_fields": "capacity_weekly;offers_anc;in_mophnetwork"})
     df = pd.DataFrame(rows).drop_duplicates("facility_id").reset_index(drop=True)
     return provenance(df, "OSM health facilities via HOT/HDX (D02); capacity, status, ANC and MoPH-network flags are assumptions", "2026-11-15", "assumption",
-                      "https://data.humdata.org/dataset/hotosm_lbn_health_facilities")
+                      "https://data.humdata.org/dataset/hotosm_lbn_health_facilities", "D02")
 
 
 def coverage(fac: pd.DataFrame, cad: pd.DataFrame) -> pd.DataFrame:
@@ -77,7 +80,7 @@ def _hav(a, b, c, d):
 def build_travel_time(cad: pd.DataFrame, fac: pd.DataFrame) -> pd.DataFrame:
     rows = [{"cadaster_id": r.cadaster_id, "facility_id": f.facility_id, "minutes": round(_hav(r.lat, r.lon, f.lat, f.lon) * 1.3 / 40 * 60, 1)}
             for r in cad.itertuples() for f in fac.itertuples()]
-    return provenance(pd.DataFrame(rows), "Straight-line x 1.3 detour / 40 km/h between cadaster centroid and facility (assumption)", "2026-11-21", "assumption")
+    return provenance(pd.DataFrame(rows), "Straight-line x 1.3 detour / 40 km/h between cadaster centroid and facility (assumption)", "2026-11-21", "assumption", source_id="D01+D02")
 
 
 def run() -> dict:
