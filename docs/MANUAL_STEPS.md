@@ -32,3 +32,6 @@ Until then: the public HDX ACLED file gives **district-level, monthly** counts o
 
 ## Verify by hand: MoPH facility list
 The PHC network list was read through web extraction (the PDF could not be downloaded). Check `name_en`/`name_ar`/phones in `data/raw/facilities/moph_bekaa/moph_facilities_bekaa.csv` against <https://moph.gov.lb/userfiles/files/HealthCareSystem/PHC/phcc.pdf> (404 on 2026-11-21; ask MoPH for the current list). About 3 newer network centres are missing; 3 PHCCs have no village coordinate.
+
+## ACLED outcome (2026-11-21)
+The OAuth token request now sends the documented `scope=authenticated` and still returns HTTP 403 (stopped, not retried in a loop). A browser call with the account's cookie session did return data, and its `data_query_restrictions` show `date_recency: 12 months` (events up to 2025-11-21 only, restricted countries/regions list empty). So this account tier gives **no 2026 events**: the planned "last 30/90/365 days" access flag cannot be built from it even if OAuth worked. Options: (a) keep the LRP incident counts (to Jul 2025) as the conflict layer; (b) ask ACLED for a research tier with current data; (c) use the HDX ACLED district-month file (district level, as of 18 Nov 2026) for a fallback. Do not commit ACLED data.

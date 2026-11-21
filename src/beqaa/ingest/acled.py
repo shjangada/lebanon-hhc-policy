@@ -49,7 +49,7 @@ def get_token() -> str:
     email, pw = os.environ.get("ACLED_EMAIL"), os.environ.get("ACLED_PASSWORD")
     if not email or not pw:
         raise AcledAuthError("ACLED_EMAIL / ACLED_PASSWORD not set (copy .env.example to .env and fill them in)")
-    body = urllib.parse.urlencode({"username": email, "password": pw, "grant_type": "password", "client_id": "acled"}).encode()
+    body = urllib.parse.urlencode({"username": email, "password": pw, "grant_type": "password", "client_id": "acled", "scope": "authenticated"}).encode()
     try:
         with urllib.request.urlopen(urllib.request.Request(TOKEN_URL, data=body, headers={"Content-Type": "application/x-www-form-urlencoded"}), timeout=60) as r:
             return json.loads(r.read())["access_token"]                       # held in memory only
