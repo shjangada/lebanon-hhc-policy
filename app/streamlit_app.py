@@ -181,6 +181,20 @@ with section("s1", "1 · Priority & access",
         k = st.slider("Mobile units k", 1, 6, 3)
         st.dataframe(m1_access.mobile_unit_sites(k, d0).drop(columns=["is_mock"]), hide_index=True)
 
+    with st.expander("Resilience: power source and conflict exposure of open facilities"):
+        thr = st.slider("Conflict-exposed = at least this many incidents in the cadaster since Oct 2023", 1, 40, 15, key="conf_thr")
+        fr = m1_access.facility_risk(thr)
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Open facilities", len(fr))
+        c2.metric("On grid power only", int(fr.grid_only.sum()), help="Grid supplies ~4-6 h/day: needs generator or solar")
+        c3.metric("In conflict-exposed cadasters", int(fr.conflict_exposed.sum()), help="Fixed assets that should be pausable")
+        pz = m1_access.access_if_exposed_pause(d0, "women_15_49", thr).sort_values("pct_lost", ascending=False)
+        st.markdown(f"**If the {int(pz.n_paused_facilities.iloc[0])} exposed facilities paused, access falls most in:**")
+        st.dataframe(pretty(pz[["cadaster_name", "district", "pct_lost"]].head(8).assign(pct_lost=lambda d: (d.pct_lost * 100).round(0)),
+                            cadaster_name="Cadaster", district="District", pct_lost="Access lost (%)"), hide_index=True, width="stretch")
+        st.caption("Power source is mock (pilot-measured); conflict incidents are mock counts standing in for the LRP 2026 admin-3 incident table. "
+                   "Conflict exposure is also a Need Score indicator (vulnerability domain).")
+
 # ---------------- 2. What to fund ----------------
 iv, _ = io.load_dataset("interventions")
 tier_name = budget_label if budget_label != "Custom" else f"${budget:,.0f}"
