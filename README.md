@@ -1,6 +1,6 @@
 # Beqaa Health Prioritization Framework & Dashboard
 
-2026 MIT Policy Hackathon (Born Global Foundation / Impossible Lebanon). Full brief: `CLAUDE.md`.
+2026 MIT Policy Hackathon (Born Global Foundation / Impossible Lebanon). 
 
 **Theme:** an adaptive funding switch for Beqaa primary care. Money follows measured need, and administrative control shifts from foreign NGOs to Lebanese entities (municipalities → MoPH) as measured capacity improves. Horizon 2030.
 
