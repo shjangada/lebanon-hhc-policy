@@ -92,7 +92,7 @@ A recommendation stays in the memo only if it passes all eight. Add these as col
 1. Add F1–F8 columns to `interventions.csv` (`needs_new_public_money`, `pausable`, `grid_power_dependent`, `needs_new_doctors`, `existing_institution`, `requires_id`, `funding_window`, `indicator_source`) and filter on them in M5 and the dashboard.
 2. Recalibrate `governance_capacity` projections: cap year-on-year gains (e.g., ≤0.05/yr) and default the 2030 administrator to national NGO / Union of Municipalities, not MoPH. Add a "renewed escalation" scenario that drops capacity.
 3. Replace mock costs with sourced unit costs: UNFPA/WHO appeal lines for mobile units, an AUB quote for speciation, WASH sector costs for water trucking, IRC/UNFPA stipends for CHWs.
-4. Add a **power** column to facilities (grid / generator / solar) and a **security** exposure flag (distance to 2026 strike locations) to M1/M2.
+4. **(done)** Add a **power** column to facilities (grid / generator / solar) and a **security** exposure flag (distance to 2026 strike locations) to M1/M2.
 5. Change the community-allocation framing in the dashboard from "result" to "pilot test arm", and show the assumption sensitivity (capture 0.1–0.4, local fit 1.0–1.3).
 6. Verify the `Mansuri & Rao 2013` citation (marked "from memory") and add the 3ie WP30 and Cochrane 2021 citations to `sources.csv`.
 7. Load `data_catalog.csv` (30 sources) into `data/registry/sources.csv`.
