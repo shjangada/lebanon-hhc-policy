@@ -25,7 +25,6 @@ DATASETS = {
     "cascade_baseline": "cascade_baseline.csv",
     "staffing_referrals": "staffing_referrals.csv",
     "governance_capacity": "governance_capacity.csv",
-    "funding_flows": "funding_flows.csv",
 }
 
 
