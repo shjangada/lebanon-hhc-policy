@@ -1,0 +1,16 @@
+item,unit,unit_cost,currency,quantity,people_targeted,total_usd,period,page,table_or_figure,transcribed_by,checked,notes
+Sexual and reproductive health,programme budget,,USD,,150000,11000000,March-August 2026,7,Funding Requirements table,claude_agent,,pass2
+Gender-based violence,programme budget,,USD,,300000,10000000,March-August 2026,7,Funding Requirements table,claude_agent,,pass2
+Data and information management,programme budget,,USD,,,2000000,March-August 2026,7,Funding Requirements table,claude_agent,,pass2
+Youth engagement,programme budget,,USD,,,2000000,March-August 2026,7,Funding Requirements table,claude_agent,,pass2
+Total Flash Appeal,appeal total,,USD,,450000,25000000,March-August 2026,7,Funding Requirements table,claude_agent,,pass2
+UNFPA overall appeal Lebanon Response Plan 2026,appeal total,,USD,,,30000000,2026 (not stated further),7,Funding Requirements text,claude_agent,,pass2
+Dignity kits,kit,,,28000,,,March-August 2026,4,GBV priority 7 text,claude_agent,,pass2
+Baby kits,kit,,,,,,March-August 2026,3,SRH priority 5 text,claude_agent,,pass2
+IARH kits,kit,,,,,,March-August 2026,3,SRH priority 2 text,claude_agent,,pass2
+Mobile medical units,unit,,,,,,March-August 2026,3,SRH priority 3 text,claude_agent,,pass2
+Midwives deployed,midwife,,,,,,March-August 2026,4,SRH priority 6 text,claude_agent,,pass2
+PHC subsidies,subsidy,,,,,,March-August 2026,4,SRH priority 7 text,claude_agent,,pass2
+Secondary-care cost-sharing,delivery/case,,,,,,March-August 2026,3,SRH priority 1 text,claude_agent,,pass2
+Cash assistance,person,,,,2300,,March-August 2026,6,Expected Outcomes,claude_agent,,pass2
+Transport,,,,,,,March-August 2026,,,claude_agent,,pass2

@@ -1,6 +1,6 @@
 PY ?= .venv/bin/python
 
-.PHONY: mock all app test readme
+.PHONY: mock all app test readme ingest
 mock:
 	$(PY) scripts/make_mock_data.py
 
@@ -15,3 +15,6 @@ test: mock
 
 readme:
 	$(PY) -c "from beqaa.io import readme_status_table as t; print(t())"
+
+ingest:
+	$(PY) -m beqaa.ingest all

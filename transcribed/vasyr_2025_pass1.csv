@@ -1,0 +1,28 @@
+geography_level,geography_name,indicator,value,page,table_or_figure,assistance
+national,Lebanon,below_smeb_pct,53,74,BELOW SMEB BY GOVERNORATE (TOTAL),with
+national,Lebanon,below_smeb_pct,60,74,BELOW SMEB BY GOVERNORATE (TOTAL),without
+governorate,Akkar,below_smeb_pct,63,74,BELOW SMEB BY GOVERNORATE,with
+governorate,Akkar,below_smeb_pct,80,74,BELOW SMEB BY GOVERNORATE,without
+governorate,Baalbek-Hermel,below_smeb_pct,66,74,BELOW SMEB BY GOVERNORATE,with
+governorate,Baalbek-Hermel,below_smeb_pct,78,74,BELOW SMEB BY GOVERNORATE,without
+governorate,Beirut,below_smeb_pct,51,74,BELOW SMEB BY GOVERNORATE,with
+governorate,Beirut,below_smeb_pct,52,74,BELOW SMEB BY GOVERNORATE,without
+governorate,Bekaa,below_smeb_pct,61,74,BELOW SMEB BY GOVERNORATE,with
+governorate,Bekaa,below_smeb_pct,66,74,BELOW SMEB BY GOVERNORATE,without
+governorate,El Nabatieh,below_smeb_pct,34,74,BELOW SMEB BY GOVERNORATE,with
+governorate,El Nabatieh,below_smeb_pct,47,74,BELOW SMEB BY GOVERNORATE,without
+governorate,Mount Lebanon,below_smeb_pct,50,74,BELOW SMEB BY GOVERNORATE,with
+governorate,Mount Lebanon,below_smeb_pct,52,74,BELOW SMEB BY GOVERNORATE,without
+governorate,North Lebanon,below_smeb_pct,45,74,BELOW SMEB BY GOVERNORATE,with
+governorate,North Lebanon,below_smeb_pct,51,74,BELOW SMEB BY GOVERNORATE,without
+governorate,South Lebanon,below_smeb_pct,31,74,BELOW SMEB BY GOVERNORATE,with
+governorate,South Lebanon,below_smeb_pct,36,74,BELOW SMEB BY GOVERNORATE,without
+national,Lebanon,female_headed_hh_pct,20,6,HEAD OF HOUSEHOLD,
+national,Lebanon,individuals_with_health_need_last_3m_pct,11.7,50,INDIVIDUAL HEALTH CARE,
+national,Lebanon,individuals_with_need_who_received_care_pct,82,50,INDIVIDUAL HEALTH CARE,
+national,Lebanon,hh_with_member_with_health_issue_pct,32,52,HOUSEHOLD HEALTH CARE,
+national,Lebanon,hh_members_received_required_care_pct,86,52,HOUSEHOLD HEALTH CARE,
+national,Lebanon,hh_able_to_access_needed_medication_pct,89,52,HOUSEHOLD HEALTH CARE,
+national,Lebanon,women_15_49_gave_birth_past_2y_pct,24,53,REPRODUCTIVE HEALTH,
+national,Lebanon,women_with_more_than_four_anc_visits_pct,54,53,REPRODUCTIVE HEALTH,
+national,Lebanon,women_gave_birth_in_health_facility_pct,98,53,REPRODUCTIVE HEALTH,

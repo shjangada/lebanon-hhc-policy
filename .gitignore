@@ -12,3 +12,38 @@ data/processed/*
 !data/processed/.gitkeep
 .ipynb_checkpoints/
 outputs/figures/*.png
+
+# --- ingest rules ---
+.claude/
+# ACLED terms forbid redistributing raw data: keep ACLED files and ACLED-derived processed counts out of git
+data/raw/conflict_events/acled/
+data/raw/conflict_events/hdx/acled_*
+data/processed/conflict_events*.csv
+# >5 MB raw files are re-downloadable (scripts/fetch_sources.py) or manual
+data/raw/lhf/global_cbpf_project_summary.csv
+data/raw/unhabitat_rma/*.pdf
+data/raw/msna/*.pdf
+# real processed datasets are committed (pipeline outputs m1_/m2_/... stay ignored)
+!data/processed/cadasters.csv
+!data/processed/cadasters.geojson
+!data/processed/cadasters_national.csv
+!data/processed/population.csv
+!data/processed/facilities.csv
+!data/processed/facilities_coverage.csv
+!data/processed/travel_time.csv
+!data/processed/travel_time_hdx_access.csv
+!data/processed/conflict_exposure.csv
+!data/processed/vulnerability.csv
+!data/processed/funding_flows.csv
+!data/processed/funding_flows_health_dependency.csv
+!data/processed/official_severity.csv
+!data/processed/soil_sites.csv
+!data/processed/crop_transfer.csv
+!data/processed/cascade_baseline_long.csv
+!data/processed/lhf_allocations.csv
+!data/processed/lhf_projects.csv
+!data/processed/lhf_national_ngo_share_by_year.csv
+!data/processed/mobile_units.csv
+!data/processed/name_crosswalk.csv
+!data/processed/_unmatched.csv
+!data/processed/unfpa_cost_lines.csv

@@ -1,0 +1,42 @@
+[
+  {
+    "file": "UNFPA_Lebanon_SitRep_8July-7August_2026.pdf",
+    "url": "https://www.unfpa.org/sites/default/files/resource-pdf/Lebanon%20SitRep_8%20July-7%20August.pdf",
+    "retrieved": "2026-11-21",
+    "license": "UNFPA public report",
+    "sha256": "a3a4e5d82aae0472e5cbf43a031866408f4115e2069dd3fa71dc41ec76bd67ec",
+    "note": ""
+  },
+  {
+    "file": "UNFPA_Lebanon_SitRep_9-22June_2026.pdf",
+    "url": "https://www.unfpa.org/sites/default/files/resource-pdf/UNFPA%20Lebanon%20Situation%20Report%20%289-22%20June%202026%29.pdf",
+    "retrieved": "2026-11-21",
+    "license": "UNFPA public report",
+    "sha256": "d71a8284ea1b3b2c52ce9443c79813c2cff06724580839bcba6c704108372b7c",
+    "note": ""
+  },
+  {
+    "file": "Project_HOPE_Lebanon_SitRep_9_2026.pdf",
+    "url": "https://www.projecthope.org/wp-content/uploads/2026/07/Project-HOPE-Lebanon-2026-Response-SitRep-9.pdf",
+    "retrieved": "2026-11-21",
+    "license": "Project HOPE public report",
+    "sha256": "41ada76900bc7f7fe72c771dbf17b69f694efe54e0d9903f13c8fd211fb07865",
+    "note": "units in Saida/Hasbaya-Nabatieh per search snippet; not Bekaa"
+  },
+  {
+    "file": "MSF_lives-upended-lebanons-bekaa-valley_2026-08-18.html",
+    "url": "https://www.doctorswithoutborders.org/latest/lives-upended-lebanons-bekaa-valley",
+    "retrieved": "2026-11-21",
+    "license": "MSF web page, all rights reserved",
+    "sha256": "18c64fea0696d5550f67f0de1e8db5c8a3f32fe61c2047de8c7602e6df9ebff6",
+    "note": "article date 2026-08-18"
+  },
+  {
+    "file": "SAMS_lebanon_situation_report_March2026.pdf",
+    "url": "https://sams-usa.net/reports/sams-lebanon-situation-report-7/sams-lebanon-situation-report-sams-march-2026",
+    "retrieved": "2026-11-21",
+    "license": "SAMS public report",
+    "sha256": "7d69bdcab3c60a8f24fa9bd747eb5164e08cfbdb6346b8357ee6adc1881d77aa",
+    "note": "text not extracted"
+  }
+]

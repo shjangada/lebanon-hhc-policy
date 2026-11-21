@@ -10,6 +10,7 @@
 ```
 python3 -m venv .venv && source .venv/bin/activate && pip install -e . pytest
 make mock     # generate MOCK data in data/mock/
+make ingest   # convert raw downloads to real datasets in data/processed/ (python -m beqaa.ingest all)
 make all      # mock + full pipeline -> data/processed/ and outputs/figures/
 make test     # mock + pytest (30 tests)
 make app      # Streamlit dashboard at http://localhost:8501
@@ -37,27 +38,24 @@ Dashboard: one page with seven sections (Priority · Access · Options · Alloca
 Not built yet: M3 network simulation, Workforce & network page, Pilot design page (stepped-wedge, PDIA log), case-study cards, notebook appendix, LLM layer for the registry chat.
 
 ## Data status
-`data/raw/` holds real files; anything missing falls back to `data/mock/`.
+The app and pipeline load `data/processed/` (real, from `python -m beqaa.ingest all`) first and fall back to `data/mock/` per dataset (`BEQAA_DATA=mock` forces mock). Badges: ✅ real · 🟡 partly real (assumed or missing fields) · 🔴 mock. Details, coverage and reasons: `docs/DATA_STATUS.md`; what changes when real inputs replace mock: `docs/MOCK_VS_REAL.md`; what needs a person: `docs/MANUAL_STEPS.md`.
 
 | Dataset | Raw file | Status |
 |---|---|---|
-| cadasters | `data/raw/cadasters.csv` | 🔴 mock |
-| population | `data/raw/population.csv` | 🔴 mock |
-| facilities | `data/raw/facilities.csv` | 🔴 mock |
-| travel_time | `data/raw/travel_time.csv` | 🔴 mock |
-| vulnerability | `data/raw/vulnerability.csv` | 🔴 mock |
-| official_severity | `data/raw/official_severity.csv` | 🔴 mock |
-| soil_sites | `data/raw/soil_sites.csv` | 🔴 mock |
-| water_quality | `data/raw/water_quality.csv` | 🔴 mock |
-| crop_transfer | `data/raw/crop_transfer.csv` | 🔴 mock |
-| interventions | `data/raw/interventions.csv` | 🔴 mock |
-| cascade_baseline | `data/raw/cascade_baseline.csv` | 🔴 mock |
-| staffing_referrals | `data/raw/staffing_referrals.csv` | 🔴 mock |
-| governance_capacity | `data/raw/governance_capacity.csv` | 🔴 mock |
-
-Reference series (do not affect the REAL/MOCK mode): wdi_population (Lebanon national series) in `data/raw/worldbank_population/` is ✅ real. It is national total population 1960–2025 for all countries (World Bank WDI), used for the Lebanon time series and as a national sanity check for cadaster populations. It is **not** cadaster-level, so it cannot replace `population.csv`.
-
-Download checklist for the remaining real files: `scripts/fetch_real_data.md`.
+| cadasters | `cadasters.csv` | ✅ real |
+| population | `population.csv` | 🟡 partly real |
+| facilities | `facilities.csv` | 🟡 partly real |
+| travel_time | `travel_time.csv` | 🟡 partly real |
+| vulnerability | `vulnerability.csv` | 🟡 partly real |
+| official_severity | `official_severity.csv` | ✅ real |
+| soil_sites | `soil_sites.csv` | 🟡 partly real |
+| water_quality | `water_quality.csv` | 🔴 mock |
+| crop_transfer | `crop_transfer.csv` | ✅ real |
+| interventions | `interventions.csv` | 🔴 mock |
+| cascade_baseline | `cascade_baseline.csv` | 🔴 mock |
+| staffing_referrals | `staffing_referrals.csv` | 🔴 mock |
+| conflict_exposure | `conflict_exposure.csv` | ✅ real |
+| governance_capacity | `governance_capacity.csv` | 🔴 mock |
 
 ## Principles (short)
 Every number has a source and a status (`verified` / `assumption` / `mock`). Equity by group is reported in every model. Ranges and rank stability, not single numbers. Environmental claims carry rung a/b/c and nothing is ever tagged c without health data. One command rebuilds everything, with fixed seeds.

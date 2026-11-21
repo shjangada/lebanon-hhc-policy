@@ -1,0 +1,9 @@
+site_name,parameter,value_mg_kg,cadaster_id,lat,lon,source,evidence_rung,is_mock_location,source_date,url,status,is_mock
+Rayak,total_P,1858,52176,33.72446,35.79077,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,2026-11-21,,mock,True
+Rayak,total_P,970,53167,34.02595,36.07565,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,2026-11-21,,mock,True
+Rayak,Cr,220,53264,34.21659,36.2402,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,2026-11-21,,mock,True
+Chemstar,Cr,230,52281,33.48054,35.67544,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,2026-11-21,,mock,True
+Chemstar,total_P,628,52121,33.56403,35.67214,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,2026-11-21,,mock,True
+Bouday,Pb,230,52231,33.65432,35.84887,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,2026-11-21,,mock,True
+Bouday,Cr,140,55194,33.64342,35.90938,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,2026-11-21,,mock,True
+Ksarnaba,Cr,170,55121,33.49208,35.8062,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,2026-11-21,,mock,True

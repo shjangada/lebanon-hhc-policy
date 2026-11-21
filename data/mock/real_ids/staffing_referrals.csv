@@ -1,0 +1,10 @@
+facility_id,posts_budgeted,posts_filled,has_family_physician,staff_left_last_12m,referral_sent_month,referral_completed_month,is_mock,source,source_date,url,status
+OSM-way-457977650,12,11,False,0,76,42,True,MOCK (synthetic),2026-11-21,,mock
+OSM-way-463329523,12,9,False,1,51,24,True,MOCK (synthetic),2026-11-21,,mock
+OSM-node-4492365189,12,4,False,2,58,27,True,MOCK (synthetic),2026-11-21,,mock
+OSM-node-13396996682,12,11,False,1,77,17,True,MOCK (synthetic),2026-11-21,,mock
+OSM-way-779565667,4,3,False,2,29,16,True,MOCK (synthetic),2026-11-21,,mock
+OSM-node-8245813288,12,6,False,1,18,6,True,MOCK (synthetic),2026-11-21,,mock
+OSM-node-8119016157,13,11,False,3,58,13,True,MOCK (synthetic),2026-11-21,,mock
+OSM-way-909343583,6,2,False,2,25,16,True,MOCK (synthetic),2026-11-21,,mock
+OSM-way-885988514,5,3,True,0,11,5,True,MOCK (synthetic),2026-11-21,,mock

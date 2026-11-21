@@ -1,0 +1,74 @@
+geography_level,geography_name,district,governorate,indicator,value,unit,page,table_or_figure,transcribed_by,checked,notes
+national_sample,38 responding municipalities (all Lebanon),,,municipalities_responded,38,count,13,text,agent pass1 (PDF text layer),,of 59 targeted; 21 did not participate
+national_sample,38 responding municipalities (all Lebanon),,,municipalities_targeted,59,count,12,text,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,pop_increase_since_march_2026_any,94,pct_of_municipalities,15,Figure 1,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,pop_increase_significant,76,pct_of_municipalities,15,Figure 1,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,operations_disrupted_any,89,pct_of_municipalities,16,Figure 2,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,operations_disruption_moderate,37,pct_of_municipalities,16,Figure 2,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,operations_disruption_severe,34,pct_of_municipalities,16,Figure 2,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,operations_barely_functioning,18,pct_of_municipalities,16,Figure 2,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,disruption_driver_service_demand_from_IDPs,82,pct_of_34_disrupted_municipalities,16,Figure 3,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,disruption_driver_budget_constraints,68,pct_of_34_disrupted_municipalities,16,Figure 3,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,disruption_driver_lack_of_equipment,47,pct_of_34_disrupted_municipalities,16,Figure 3,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,disruption_driver_fuel_shortages,35,pct_of_34_disrupted_municipalities,16,Figure 3,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,disruption_driver_municipal_staff_shortages,24,pct_of_34_disrupted_municipalities,16,Figure 3,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,disruption_driver_security_restrictions,6,pct_of_34_disrupted_municipalities,16,Figure 3,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,disruption_driver_physical_damage_to_assets,6,pct_of_34_disrupted_municipalities,16,Figure 3,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,disruption_driver_other,3,pct_of_34_disrupted_municipalities,16,Figure 3,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,municipalities_with_asset_damage,24,pct_of_municipalities,17,text,agent pass1 (PDF text layer),,9 municipalities
+national_sample,38 responding municipalities (all Lebanon),,,buildings_damaged_or_destroyed_in_affected_munis,1407,count,17,text,agent pass1 (PDF text layer),,"approx 1,100 in Tyre"
+national_sample,38 responding municipalities (all Lebanon),,,damaged_assets_owned_or_managed_by_municipality,67,pct_of_damaged_assets,17,text,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,staff_per_municipality_minimum,2,staff,19,text,agent pass1 (PDF text layer),,several municipalities
+national_sample,38 responding municipalities (all Lebanon),,,staff_Beirut,1200,staff,19,text,agent pass1 (PDF text layer),,approx
+national_sample,38 responding municipalities (all Lebanon),,,staff_range_majority,5-50,staff,19,text,agent pass1 (PDF text layer),,majority of municipalities
+national_sample,38 responding municipalities (all Lebanon),,,staff_profile_present_police_security,97,pct_of_municipalities,19,Figure 5,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,staff_profile_present_administrative_clerical,89,pct_of_municipalities,19,Figure 5,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,staff_profile_present_accountants_financial,45,pct_of_municipalities,19,Figure 5,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,staff_profile_present_drivers,45,pct_of_municipalities,19,Figure 5,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,staff_profile_present_engineers,34,pct_of_municipalities,19,Figure 5,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,staff_profile_present_other_operations,34,pct_of_municipalities,19,Figure 5,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,staff_profile_present_IT_information_mgmt,21,pct_of_municipalities,19,Figure 5,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,staff_profile_present_social_workers,8,pct_of_municipalities,19,Figure 5,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,staff_profile_present_architects,5,pct_of_municipalities,19,Figure 5,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,staff_profile_present_community_mobilizers,3,pct_of_municipalities,19,Figure 5,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,staff_profile_present_urban_planners,3,pct_of_municipalities,19,Figure 5,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,staff_profile_present_project_managers,0,pct_of_municipalities,19,Figure 5,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,staff_profile_present_others,18,pct_of_municipalities,19,Figure 5,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,task_identifying_registering_IDPs,95,pct_of_municipalities,20,Figure 6,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,task_sharing_data_with_partners,84,pct_of_municipalities,20,Figure 6,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,challenge_basic_services_pressure,95,pct_of_municipalities,23,Figure 9,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,challenge_social_services_pressure,61,pct_of_municipalities,24,Figure 9,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,challenge_housing_shelter,55,pct_of_municipalities,24,Figure 9,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,service_under_greatest_pressure_solid_waste,76,pct_of_municipalities,23,Figure 10,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,service_under_greatest_pressure_wastewater,66,pct_of_municipalities,23,Figure 10,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,service_under_greatest_pressure_water_supply,63,pct_of_municipalities,23,Figure 10,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,service_under_greatest_pressure_electricity_generators,34,pct_of_municipalities,23,Figure 10,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,service_under_greatest_pressure_streetlighting,34,pct_of_municipalities,23,Figure 10,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,waste_accumulation_increased_significantly,76,pct_of_municipalities,23,text,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,spending_increased_any,79,pct_of_municipalities,27,Figure 15,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,spending_increased_significantly,42,pct_of_municipalities,27,Figure 15,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,spending_increase_area_waste_management,77,pct_of_municipalities_with_increase,27,Figure 16,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,spending_increase_area_water_supply,45,pct_of_municipalities_with_increase,27,Figure 16,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,spending_increase_area_fuel,45,pct_of_municipalities_with_increase,27,Figure 16,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,spending_increase_area_staff_overtime,45,pct_of_municipalities_with_increase,27,Figure 16,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,spending_increase_area_infrastructure_repairs,39,pct_of_municipalities_with_increase,27,Figure 16,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,received_no_support_since_escalation,79,pct_of_municipalities,27,text,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,received_little_support,13,pct_of_municipalities,27,text,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,received_some_support,8,pct_of_municipalities,27,text,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,support_provider_volunteers,75,pct_of_8_municipalities_that_received_support,28,text,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,support_provider_central_government,63,pct_of_8_municipalities_that_received_support,28,text,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,support_provider_NGOs_local_intl,50,pct_of_8_municipalities_that_received_support,28,text,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,priority_need_financial_support,53,pct_of_municipalities,29,Figure 17,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,priority_need_new_municipal_staff,3,pct_of_municipalities,29,Figure 17,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,priority_need_municipal_staff_training,3,pct_of_municipalities,29,Figure 17,agent pass1 (PDF text layer),,
+national_sample,38 responding municipalities (all Lebanon),,,priority_need_solid_waste_mgmt,55,pct_of_municipalities,29,Figure 17,agent pass1 (PDF text layer),,
+municipality,Deir El-Ahmar,Baalbek,Baalbek-Hermel,in_survey_list_annex,1,flag,36,Annex,agent pass1 (PDF text layer),,municipality-level indicator values NOT published; list membership only
+municipality,Ras Baalbek,Baalbek,Baalbek-Hermel,in_survey_list_annex,1,flag,36,Annex,agent pass1 (PDF text layer),,municipality-level indicator values NOT published; list membership only
+municipality,Hermel,Hermel,Baalbek-Hermel,in_survey_list_annex,1,flag,36,Annex,agent pass1 (PDF text layer),,municipality-level indicator values NOT published; list membership only
+municipality,Ghazzeh,West Bekaa,Bekaa,in_survey_list_annex,1,flag,36,Annex,agent pass1 (PDF text layer),,municipality-level indicator values NOT published; list membership only
+municipality,Chtaura,Zahleh,Bekaa,in_survey_list_annex,1,flag,36,Annex,agent pass1 (PDF text layer),,municipality-level indicator values NOT published; list membership only
+municipality,Hazerta,Zahleh,Bekaa,in_survey_list_annex,1,flag,36,Annex,agent pass1 (PDF text layer),,municipality-level indicator values NOT published; list membership only
+municipality,Bar Elias,Zahleh,Bekaa,in_survey_list_annex,1,flag,36,Annex,agent pass1 (PDF text layer),,municipality-level indicator values NOT published; list membership only
+municipality,Majdel Anjar,Zahleh,Bekaa,in_survey_list_annex,1,flag,36,Annex,agent pass1 (PDF text layer),,municipality-level indicator values NOT published; list membership only
+municipality,Qab Elias-Ouadi El-Delm,Zahleh,Bekaa,in_survey_list_annex,1,flag,36,Annex,agent pass1 (PDF text layer),,municipality-level indicator values NOT published; list membership only
+municipality,Kfarzabad,Zahleh,Bekaa,in_survey_list_annex,1,flag,36,Annex,agent pass1 (PDF text layer),,municipality-level indicator values NOT published; list membership only

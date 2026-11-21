@@ -1,0 +1,301 @@
+admin_level,name,indicator,value
+district,Akkar,jiaf_severity,2
+district,Tripoli,jiaf_severity,2
+district,El Minieh-Dennie,jiaf_severity,2
+district,El Koura,jiaf_severity,2
+district,Zgharta,jiaf_severity,2
+district,Bcharre,jiaf_severity,1
+district,El Batroun,jiaf_severity,1
+district,Jbeil,jiaf_severity,2
+district,Kesrwane,jiaf_severity,2
+district,El Meten,jiaf_severity,2
+district,Beirut,jiaf_severity,4
+district,Baabda,jiaf_severity,3
+district,Aley,jiaf_severity,3
+district,Chouf,jiaf_severity,3
+district,Saida,jiaf_severity,4
+district,Jezzine,jiaf_severity,3
+district,El Nabatieh,jiaf_severity,4
+district,Sour,jiaf_severity,4
+district,Bent Jbeil,jiaf_severity,4
+district,Marjaayoun,jiaf_severity,4
+district,Hasbaya,jiaf_severity,3
+district,West Bekaa,jiaf_severity,3
+district,Zahle,jiaf_severity,3
+district,Rachaya,jiaf_severity,2
+district,Baalbek,jiaf_severity,3
+district,El Hermel,jiaf_severity,3
+district,Akkar,sector_severity_education,2
+district,Tripoli,sector_severity_education,2
+district,El Minieh-Dennie,sector_severity_education,2
+district,El Koura,sector_severity_education,2
+district,Zgharta,sector_severity_education,2
+district,Bcharre,sector_severity_education,2
+district,El Batroun,sector_severity_education,2
+district,Jbeil,sector_severity_education,2
+district,Kesrwane,sector_severity_education,2
+district,El Meten,sector_severity_education,3
+district,Beirut,sector_severity_education,3
+district,Baabda,sector_severity_education,3
+district,Aley,sector_severity_education,2
+district,Chouf,sector_severity_education,3
+district,Saida,sector_severity_education,4
+district,Jezzine,sector_severity_education,3
+district,El Nabatieh,sector_severity_education,4
+district,Sour,sector_severity_education,4
+district,Bent Jbeil,sector_severity_education,4
+district,Marjaayoun,sector_severity_education,4
+district,Hasbaya,sector_severity_education,4
+district,West Bekaa,sector_severity_education,3
+district,Zahle,sector_severity_education,3
+district,Rachaya,sector_severity_education,3
+district,Baalbek,sector_severity_education,2
+district,El Hermel,sector_severity_education,2
+district,Akkar,sector_severity_food_security,3
+district,Tripoli,sector_severity_food_security,2
+district,El Minieh-Dennie,sector_severity_food_security,3
+district,El Koura,sector_severity_food_security,2
+district,Zgharta,sector_severity_food_security,2
+district,Bcharre,sector_severity_food_security,2
+district,El Batroun,sector_severity_food_security,2
+district,Jbeil,sector_severity_food_security,2
+district,Kesrwane,sector_severity_food_security,2
+district,El Meten,sector_severity_food_security,2
+district,Beirut,sector_severity_food_security,4
+district,Baabda,sector_severity_food_security,4
+district,Aley,sector_severity_food_security,4
+district,Chouf,sector_severity_food_security,3
+district,Saida,sector_severity_food_security,3
+district,Jezzine,sector_severity_food_security,3
+district,El Nabatieh,sector_severity_food_security,4
+district,Sour,sector_severity_food_security,4
+district,Bent Jbeil,sector_severity_food_security,4
+district,Marjaayoun,sector_severity_food_security,4
+district,Hasbaya,sector_severity_food_security,4
+district,West Bekaa,sector_severity_food_security,3
+district,Zahle,sector_severity_food_security,3
+district,Rachaya,sector_severity_food_security,3
+district,Baalbek,sector_severity_food_security,4
+district,El Hermel,sector_severity_food_security,4
+district,Akkar,health_severity,4
+district,Tripoli,health_severity,4
+district,El Minieh-Dennie,health_severity,2
+district,El Koura,health_severity,2
+district,Zgharta,health_severity,2
+district,Bcharre,health_severity,2
+district,El Batroun,health_severity,2
+district,Jbeil,health_severity,2
+district,Kesrwane,health_severity,2
+district,El Meten,health_severity,2
+district,Beirut,health_severity,4
+district,Baabda,health_severity,3
+district,Aley,health_severity,3
+district,Chouf,health_severity,2
+district,Saida,health_severity,4
+district,Jezzine,health_severity,2
+district,El Nabatieh,health_severity,4
+district,Sour,health_severity,4
+district,Bent Jbeil,health_severity,4
+district,Marjaayoun,health_severity,4
+district,Hasbaya,health_severity,3
+district,West Bekaa,health_severity,4
+district,Zahle,health_severity,3
+district,Rachaya,health_severity,3
+district,Baalbek,health_severity,4
+district,El Hermel,health_severity,4
+district,Akkar,sector_severity_nutrition,3
+district,Tripoli,sector_severity_nutrition,3
+district,El Minieh-Dennie,sector_severity_nutrition,3
+district,El Koura,sector_severity_nutrition,3
+district,Zgharta,sector_severity_nutrition,2
+district,Bcharre,sector_severity_nutrition,2
+district,El Batroun,sector_severity_nutrition,2
+district,Jbeil,sector_severity_nutrition,2
+district,Kesrwane,sector_severity_nutrition,2
+district,El Meten,sector_severity_nutrition,2
+district,Beirut,sector_severity_nutrition,2
+district,Baabda,sector_severity_nutrition,3
+district,Aley,sector_severity_nutrition,2
+district,Chouf,sector_severity_nutrition,2
+district,Saida,sector_severity_nutrition,3
+district,Jezzine,sector_severity_nutrition,2
+district,El Nabatieh,sector_severity_nutrition,3
+district,Sour,sector_severity_nutrition,3
+district,Bent Jbeil,sector_severity_nutrition,3
+district,Marjaayoun,sector_severity_nutrition,3
+district,Hasbaya,sector_severity_nutrition,3
+district,West Bekaa,sector_severity_nutrition,3
+district,Zahle,sector_severity_nutrition,3
+district,Rachaya,sector_severity_nutrition,2
+district,Baalbek,sector_severity_nutrition,3
+district,El Hermel,sector_severity_nutrition,3
+district,Akkar,sector_severity_livelihoods,2
+district,Tripoli,sector_severity_livelihoods,1
+district,El Minieh-Dennie,sector_severity_livelihoods,2
+district,El Koura,sector_severity_livelihoods,2
+district,Zgharta,sector_severity_livelihoods,1
+district,Bcharre,sector_severity_livelihoods,1
+district,El Batroun,sector_severity_livelihoods,2
+district,Jbeil,sector_severity_livelihoods,3
+district,Kesrwane,sector_severity_livelihoods,2
+district,El Meten,sector_severity_livelihoods,2
+district,Beirut,sector_severity_livelihoods,3
+district,Baabda,sector_severity_livelihoods,3
+district,Aley,sector_severity_livelihoods,3
+district,Chouf,sector_severity_livelihoods,3
+district,Saida,sector_severity_livelihoods,3
+district,Jezzine,sector_severity_livelihoods,3
+district,El Nabatieh,sector_severity_livelihoods,2
+district,Sour,sector_severity_livelihoods,3
+district,Bent Jbeil,sector_severity_livelihoods,2
+district,Marjaayoun,sector_severity_livelihoods,2
+district,Hasbaya,sector_severity_livelihoods,2
+district,West Bekaa,sector_severity_livelihoods,2
+district,Zahle,sector_severity_livelihoods,2
+district,Rachaya,sector_severity_livelihoods,2
+district,Baalbek,sector_severity_livelihoods,2
+district,El Hermel,sector_severity_livelihoods,3
+district,Akkar,sector_severity_protection,2
+district,Tripoli,sector_severity_protection,2
+district,El Minieh-Dennie,sector_severity_protection,2
+district,El Koura,sector_severity_protection,2
+district,Zgharta,sector_severity_protection,3
+district,Bcharre,sector_severity_protection,1
+district,El Batroun,sector_severity_protection,1
+district,Jbeil,sector_severity_protection,2
+district,Kesrwane,sector_severity_protection,2
+district,El Meten,sector_severity_protection,3
+district,Beirut,sector_severity_protection,4
+district,Baabda,sector_severity_protection,4
+district,Aley,sector_severity_protection,3
+district,Chouf,sector_severity_protection,3
+district,Saida,sector_severity_protection,4
+district,Jezzine,sector_severity_protection,3
+district,El Nabatieh,sector_severity_protection,5
+district,Sour,sector_severity_protection,4
+district,Bent Jbeil,sector_severity_protection,5
+district,Marjaayoun,sector_severity_protection,4
+district,Hasbaya,sector_severity_protection,4
+district,West Bekaa,sector_severity_protection,3
+district,Zahle,sector_severity_protection,3
+district,Rachaya,sector_severity_protection,2
+district,Baalbek,sector_severity_protection,4
+district,El Hermel,sector_severity_protection,3
+district,Akkar,sector_severity_shelter,1
+district,Tripoli,sector_severity_shelter,1
+district,El Minieh-Dennie,sector_severity_shelter,1
+district,El Koura,sector_severity_shelter,1
+district,Zgharta,sector_severity_shelter,1
+district,Bcharre,sector_severity_shelter,1
+district,El Batroun,sector_severity_shelter,1
+district,Jbeil,sector_severity_shelter,1
+district,Kesrwane,sector_severity_shelter,1
+district,El Meten,sector_severity_shelter,1
+district,Beirut,sector_severity_shelter,4
+district,Baabda,sector_severity_shelter,4
+district,Aley,sector_severity_shelter,2
+district,Chouf,sector_severity_shelter,3
+district,Saida,sector_severity_shelter,4
+district,Jezzine,sector_severity_shelter,4
+district,El Nabatieh,sector_severity_shelter,4
+district,Sour,sector_severity_shelter,4
+district,Bent Jbeil,sector_severity_shelter,4
+district,Marjaayoun,sector_severity_shelter,3
+district,Hasbaya,sector_severity_shelter,3
+district,West Bekaa,sector_severity_shelter,2
+district,Zahle,sector_severity_shelter,1
+district,Rachaya,sector_severity_shelter,2
+district,Baalbek,sector_severity_shelter,3
+district,El Hermel,sector_severity_shelter,4
+district,Akkar,sector_severity_social_stability,1
+district,Tripoli,sector_severity_social_stability,1
+district,El Minieh-Dennie,sector_severity_social_stability,1
+district,El Koura,sector_severity_social_stability,2
+district,Zgharta,sector_severity_social_stability,1
+district,Bcharre,sector_severity_social_stability,1
+district,El Batroun,sector_severity_social_stability,1
+district,Jbeil,sector_severity_social_stability,1
+district,Kesrwane,sector_severity_social_stability,2
+district,El Meten,sector_severity_social_stability,2
+district,Beirut,sector_severity_social_stability,1
+district,Baabda,sector_severity_social_stability,1
+district,Aley,sector_severity_social_stability,2
+district,Chouf,sector_severity_social_stability,1
+district,Saida,sector_severity_social_stability,4
+district,Jezzine,sector_severity_social_stability,4
+district,El Nabatieh,sector_severity_social_stability,4
+district,Sour,sector_severity_social_stability,4
+district,Bent Jbeil,sector_severity_social_stability,4
+district,Marjaayoun,sector_severity_social_stability,4
+district,Hasbaya,sector_severity_social_stability,4
+district,West Bekaa,sector_severity_social_stability,4
+district,Zahle,sector_severity_social_stability,4
+district,Rachaya,sector_severity_social_stability,4
+district,Baalbek,sector_severity_social_stability,4
+district,El Hermel,sector_severity_social_stability,4
+district,Akkar,sector_severity_wash,2
+district,Tripoli,sector_severity_wash,2
+district,El Minieh-Dennie,sector_severity_wash,2
+district,El Koura,sector_severity_wash,1
+district,Zgharta,sector_severity_wash,2
+district,Bcharre,sector_severity_wash,1
+district,El Batroun,sector_severity_wash,1
+district,Jbeil,sector_severity_wash,2
+district,Kesrwane,sector_severity_wash,1
+district,El Meten,sector_severity_wash,2
+district,Beirut,sector_severity_wash,3
+district,Baabda,sector_severity_wash,3
+district,Aley,sector_severity_wash,3
+district,Chouf,sector_severity_wash,3
+district,Saida,sector_severity_wash,3
+district,Jezzine,sector_severity_wash,2
+district,El Nabatieh,sector_severity_wash,4
+district,Sour,sector_severity_wash,4
+district,Bent Jbeil,sector_severity_wash,4
+district,Marjaayoun,sector_severity_wash,3
+district,Hasbaya,sector_severity_wash,3
+district,West Bekaa,sector_severity_wash,2
+district,Zahle,sector_severity_wash,2
+district,Rachaya,sector_severity_wash,2
+district,Baalbek,sector_severity_wash,2
+district,El Hermel,sector_severity_wash,2
+district,Akkar,fsa_composite_severity,
+district,Tripoli,fsa_composite_severity,
+district,El Minieh-Dennie,fsa_composite_severity,
+district,El Koura,fsa_composite_severity,
+district,Zgharta,fsa_composite_severity,
+district,Bcharre,fsa_composite_severity,
+district,El Batroun,fsa_composite_severity,
+district,Jbeil,fsa_composite_severity,
+district,Kesrwane,fsa_composite_severity,
+district,El Meten,fsa_composite_severity,
+district,Beirut,fsa_composite_severity,
+district,Baabda,fsa_composite_severity,4
+district,Aley,fsa_composite_severity,4
+district,Chouf,fsa_composite_severity,
+district,Saida,fsa_composite_severity,
+district,Jezzine,fsa_composite_severity,
+district,El Nabatieh,fsa_composite_severity,4
+district,Sour,fsa_composite_severity,4
+district,Bent Jbeil,fsa_composite_severity,4
+district,Marjaayoun,fsa_composite_severity,4
+district,Hasbaya,fsa_composite_severity,
+district,West Bekaa,fsa_composite_severity,
+district,Zahle,fsa_composite_severity,
+district,Rachaya,fsa_composite_severity,
+district,Baalbek,fsa_composite_severity,4
+district,El Hermel,fsa_composite_severity,4
+national,Lebanon,pin_total,1204384
+national,Lebanon,pin_total_humanitarian,765267
+national,Lebanon,pin_total_stabilization,658000
+national,Lebanon,pin_education,327000
+national,Lebanon,pin_food_security,813000
+national,Lebanon,pin_health,1200000
+national,Lebanon,pin_nutrition,60300
+national,Lebanon,pin_livelihoods,94000
+national,Lebanon,pin_protection,900000
+national,Lebanon,pin_child_protection,385000
+national,Lebanon,pin_gbv,650000
+national,Lebanon,pin_shelter,940000
+national,Lebanon,pin_social_stability,555000
+national,Lebanon,pin_wash,921000

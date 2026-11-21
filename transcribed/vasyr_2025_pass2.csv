@@ -1,0 +1,28 @@
+geography_level,geography_name,indicator,value,page,assistance
+national,Lebanon,below_smeb_pct,53,74,with
+national,Lebanon,below_smeb_pct,60,74,without
+governorate,Akkar,below_smeb_pct,63,74,with
+governorate,Akkar,below_smeb_pct,80,74,without
+governorate,Baalbek-Hermel,below_smeb_pct,66,74,with
+governorate,Baalbek-Hermel,below_smeb_pct,78,74,without
+governorate,Beirut,below_smeb_pct,51,74,with
+governorate,Beirut,below_smeb_pct,52,74,without
+governorate,Bekaa,below_smeb_pct,61,74,with
+governorate,Bekaa,below_smeb_pct,66,74,without
+governorate,El Nabatieh,below_smeb_pct,34,74,with
+governorate,El Nabatieh,below_smeb_pct,47,74,without
+governorate,Mount Lebanon,below_smeb_pct,50,74,with
+governorate,Mount Lebanon,below_smeb_pct,52,74,without
+governorate,North Lebanon,below_smeb_pct,45,74,with
+governorate,North Lebanon,below_smeb_pct,51,74,without
+governorate,South Lebanon,below_smeb_pct,31,74,with
+governorate,South Lebanon,below_smeb_pct,36,74,without
+national,Lebanon,female_headed_hh_pct,20,6,
+national,Lebanon,individuals_with_health_need_last_3m_pct,11.7,50,
+national,Lebanon,individuals_with_need_who_received_care_pct,82,50,
+national,Lebanon,hh_with_member_with_health_issue_pct,32,52,
+national,Lebanon,hh_members_received_required_care_pct,86,52,
+national,Lebanon,hh_able_to_access_needed_medication_pct,89,52,
+national,Lebanon,women_15_49_gave_birth_past_2y_pct,24,53,
+national,Lebanon,women_with_more_than_four_anc_visits_pct,54,53,
+national,Lebanon,women_gave_birth_in_health_facility_pct,98,53,

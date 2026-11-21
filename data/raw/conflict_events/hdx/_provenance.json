@@ -1,0 +1,18 @@
+[
+  {
+    "file": "acled_lbn_political_violence_by_month-year_as-of-18nov2026.xlsx",
+    "url": "https://data.humdata.org/dataset/721ed656-56c1-4d85-a79f-0bf5979c0b5f/resource/48d9deb2-680a-43d5-bd90-af5e34872b53/download/lebanon_hrp_political_violence_events_and_fatalities_by_month-year_as-of-18nov2026.xlsx",
+    "retrieved": "2026-11-21",
+    "license": "HDX 'Other'; ACLED Terms of Use & Attribution Policy (https://acleddata.com/terms-of-use/): attribution required, no redistribution of raw data, no competing products",
+    "sha256": "c72a980c26a714e8e45d9f27f1d0d51a0e7580976d66a0b7c48213569fd0a3e2",
+    "note": "HDX dataset lebanon-acled-conflict-data; aggregated Admin2 x month events+fatalities, Jan 2016 - Nov 2026; NO event dates/coordinates"
+  },
+  {
+    "file": "ucdp_conflict_data_lbn.csv",
+    "url": "https://data.humdata.org/dataset/956c9285-5fae-4570-b4f1-cc5716421a54/resource/273c0110-6219-4a5c-b5b0-4ca64fadf341/download/conflict_data_lbn.csv",
+    "retrieved": "2026-11-21",
+    "license": "CC BY-IGO (Uppsala Conflict Data Program, UCDP GED)",
+    "sha256": "eb2847cfc7c4e91d82975cfaeaf8742621d54104e476bb7daacdf5f6fc5ffebd",
+    "note": "HDX dataset ucdp-data-for-lebanon; 2385 events 1989-01-01..2024-12-25; has lat/lon, adm_1, adm_2, date_start/end, deaths; ends before the 2026 war"
+  }
+]

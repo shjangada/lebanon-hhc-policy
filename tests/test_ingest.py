@@ -18,8 +18,8 @@ def test_default_mode_is_consistent_mock():
 def test_mixed_real_and_mock_is_detected(monkeypatch, tmp_path):
     d = tmp_path
     pd.DataFrame({"cadaster_id": ["X1"], "cadaster_name": ["x"], "district": ["a"], "lat": [1.0], "lon": [1.0]}).to_csv(d / "cadasters.csv", index=False)
-    monkeypatch.setattr(io, "DERIVED", d)
-    monkeypatch.setenv("BEQAA_DATA", "derived")
+    monkeypatch.setattr(io, "PROCESSED", d)
+    monkeypatch.delenv("BEQAA_DATA", raising=False)               # auto mode: processed first, mock otherwise
     assert io.validate_consistency()                      # real cadasters + mock population/vulnerability: flagged
 
 
