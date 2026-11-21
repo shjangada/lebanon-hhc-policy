@@ -81,7 +81,7 @@ h3{margin-top:0;padding-top:0}
 .takeaway{font-size:1.02rem;margin:-.2rem 0 .6rem 0}
 </style>""", unsafe_allow_html=True)
 
-NAV = [("s1", "1 Where"), ("s2", "2 What to fund"), ("s3", "3 Who decides"), ("s4", "4 Soil & water"), ("s5", "5 Funders"), ("ref", "Evidence & data")]
+NAV = [("s1", "1 Priority & access"), ("s2", "2 Options & budget"), ("s3", "3 Allocation & escrow"), ("s4", "4 Soil & water triggers"), ("s5", "5 Funding sources"), ("ref", "Evidence & data")]
 NAV_HTML = "<div class='nav'>" + "".join(f"<a href='#{i}'>{t}</a>" for i, t in NAV) + "</div>"
 st.sidebar.markdown("**Jump to**")
 st.sidebar.markdown(NAV_HTML.replace("<div class='nav'>", "<div class='nav' style='line-height:2'>"), unsafe_allow_html=True)
@@ -126,7 +126,7 @@ top = scored.merge(rob[["cadaster_id", "p_top_tier", "rank_p05", "rank_p95"]], o
 stable = rob[rob.p_top_tier >= 0.9].cadaster_name.tolist()
 
 # ---------------- 1. Where ----------------
-with section("s1", "1 · Where to act, and whose access is most constrained",
+with section("s1", "1 · Priority & access",
              f"Highest need: <b>{top.cadaster_name.iloc[0]}</b>, {top.cadaster_name.iloc[1]}, {top.cadaster_name.iloc[2]}. "
              f"{('Stable across weightings: ' + ', '.join(stable)) if stable else 'Ranking is sensitive to the weights.'}"):
     left, right = st.columns([3, 2])
@@ -178,7 +178,7 @@ tier_name = budget_label if budget_label != "Custom" else f"${budget:,.0f}"
 pick = st.session_state.get("pick", ["transport_vouchers", "chw_women_orgs"])
 ev = m5_options.evaluate(pick, budget) if pick else None
 best = ev.sort_values("extra_pathways_median", ascending=False).iloc[0] if ev is not None and len(ev) else None
-with section("s2", f"2 · What {tier_name} buys",
+with section("s2", "2 · Options & budget",
              (f"Best of your picks: <b>{best.label}</b>, about {best.extra_pathways_median:,.0f} extra completed care pathways "
               f"(range {best.extra_pathways_p05:,.0f}–{best.extra_pathways_p95:,.0f})." if best is not None else "Pick interventions to compare.")):
     pick = st.multiselect("Compare up to 3 interventions", list(iv.intervention_id), default=pick, max_selections=3, key="pick",
@@ -206,7 +206,7 @@ summ, det = allocation.simulate(scored, budget, top_k, {"local_fit_multiplier": 
 sched, esum, warns = escrow.run(scored, max(budget, 10_000), top_k, floor, rules=rules, unrestricted=unres)
 sm = summ.set_index("regime")
 held = esum.held_usd.sum() / max(esum.held_usd.sum() + esum.released_usd.sum(), 1)
-with section("s3", "3 · Who decides, and who administers",
+with section("s3", "3 · Allocation & escrow",
              f"Community-decided allocation reaches <b>{sm.loc['community', 'women_reached'] / sm.loc['top_down', 'women_reached']:.0%}</b> of the women top-down does under these assumptions; "
              f"escrow holds back <b>{held:.0%}</b> of funds and ends at <b>{esum.share_managed_locally.iloc[-1]:.0%}</b> locally administered by {int(esum.year.max())}."):
     l, r = st.columns(2)
@@ -240,7 +240,7 @@ with section("s3", "3 · Who decides, and who administers",
 sites = sites_df()
 tor = m4_exposure.tornado()
 n_t2 = int((sites.tier >= 2).sum())
-with section("s4", "4 · What a soil or water finding triggers",
+with section("s4", "4 · Soil & water triggers",
              f"{n_t2} of {len(sites)} soil results reach tier 2 (plausible exposure pathway, rung b); none is confirmed harm (rung c). "
              f"Biggest uncertainty: <b>{tor.iloc[0].driver.split(' (')[0].lower()}</b>."):
     e1, e2 = st.columns(2)
@@ -260,7 +260,7 @@ with section("s4", "4 · What a soil or water finding triggers",
 # ---------------- 5. Funders ----------------
 f = funding()
 res = ff.rank(ff.filter_funding(f, None, False, True), ["health", "maternal"]).head(5)
-with section("s5", "5 · Funders and partners to approach",
+with section("s5", "5 · Funding sources",
              f"{len(res)} active or recent funds match health and maternal care; top match: <b>{res.name.iloc[0]}</b> ({res.channel.iloc[0]})." if len(res) else "No active match."):
     st.dataframe(pretty(res[["name", "funder", "channel", "recency_flag", "fits_escrow", "url", "verified_on"]], name="Fund", funder="Funder", channel="Channel",
                         recency_flag="Status", fits_escrow="Fits escrow?", url="Source", verified_on="Verified"),
