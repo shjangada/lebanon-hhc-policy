@@ -7,7 +7,8 @@ Regimes over the top-k Need Score cadasters for a fixed budget:
      priority weights choose the intervention; effectiveness x `local_fit_multiplier`; funds lost to capture.
 The effect of local decision-making is an ASSUMPTION with a literature range, NOT an estimate: community-driven
 development reviews find mixed effects on service delivery and elite-capture risks (e.g. Mansuri & Rao 2013,
-'Localizing Development', World Bank: citation from memory, status: verify). Community priority weights are MOCK.
+'Localizing Development: Does Participation Work?', World Bank 2013, DOI 10.1596/978-0-8213-8256-1: verified, sources.csv S35;
+3ie WP30 2018, S26). Community priority weights are MOCK.
 """
 from __future__ import annotations
 
