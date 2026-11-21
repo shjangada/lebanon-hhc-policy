@@ -1,0 +1,23 @@
+{
+  "source_id": "D01",
+  "title": "Lebanon subnational administrative boundaries (COD-AB)",
+  "publisher": "OCHA / HDX",
+  "license": "CC BY-IGO",
+  "retrieved": "2026-11-21",
+  "files": [
+    {
+      "file": "lbn_admin_boundaries.geojson.zip",
+      "url": "https://data.humdata.org/dataset/569beba7-bad7-4951-a19d-468a035461cd/resource/81ca0135-b5c9-46e0-a546-f0bdd6d7fd42/download/lbn_admin_boundaries.geojson.zip",
+      "bytes": 21517871,
+      "sha256": "635d0c9ca51be5499e16f4873b99d2624da064a74dbd01f86032321ddaf049d3"
+    },
+    {
+      "file": "lbn_admin_boundaries.xlsx",
+      "url": "https://data.humdata.org/dataset/569beba7-bad7-4951-a19d-468a035461cd/resource/83dae3aa-1047-4019-9ca2-a5709810ad21/download/lbn_admin_boundaries.xlsx",
+      "bytes": 573642,
+      "sha256": "02d9bdbc54963bff92c813cd200e15fcdbb3e5436f98a4dc7d5b8be1c4855aba"
+    }
+  ],
+  "hdx_last_modified": "2026-01-26T15:45:23.455585",
+  "hdx_page": "https://data.humdata.org/dataset/cod-ab-lbn"
+}

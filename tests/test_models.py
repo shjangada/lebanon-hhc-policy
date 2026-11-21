@@ -95,3 +95,13 @@ def test_chatbot_refuses_without_match_and_cites_rows():
 def test_wdi_lebanon_series():
     d = io.load_wdi_population("LBN")
     assert d is None or (d.population.between(1e6, 1e7).all() and 2019 in set(d.year))
+
+
+def test_every_mock_file_declares_a_real_source():
+    """Keeps mock data honest: each mock file must say where the real data would come from and how obtainable it is."""
+    import pathlib
+    root = pathlib.Path(__file__).resolve().parents[1]
+    prov = pd.read_csv(root / "data" / "registry" / "mock_provenance.csv")
+    files = {f.name for f in (root / "data" / "mock").glob("*.csv")}
+    assert files == set(prov.mock_file), (files ^ set(prov.mock_file))
+    assert set(prov.obtainability) <= {"public_download", "public_download+transcribe", "transcribe", "partner_request", "literature", "pilot_measured"}

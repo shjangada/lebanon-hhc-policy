@@ -122,11 +122,8 @@ def compute(raw: pd.DataFrame, weights: dict | None = None, spec: dict | None = 
     out["rank"] = out.need_score.rank(ascending=False, method="min").astype(int)
     t = spec["tiers"]
     out["tier"] = np.where(out.need_score >= t["high"], "High", np.where(out.need_score >= t["moderate"], "Moderate", "Low"))
-    # stress layers (0-1) for the map selector
+    # stress layers (0-1) for the map selector (providership/referral/NGO-dependency layers removed: no public source)
     out["stress_need"] = out.need_score
-    out["stress_providership"] = score_indicator(out.posts_unfilled_share, 0.10, 0.60)
-    out["stress_referral"] = score_indicator(out.referral_incompletion, 0.20, 0.80)
-    out["stress_ngo_dependency"] = out.ngo_dependency.clip(0, 1)
     out["stress_environment"] = out["D_environment"]
     out.attrs["weights_used"] = wn
     return out

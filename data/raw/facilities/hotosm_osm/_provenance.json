@@ -1,0 +1,23 @@
+{
+  "source_id": "D02",
+  "title": "Health facilities of Lebanon (OSM via HOT)",
+  "publisher": "HOT / HDX",
+  "license": "ODbL",
+  "retrieved": "2026-11-21",
+  "files": [
+    {
+      "file": "hotosm_lbn_health_facilities_report.html",
+      "url": "https://production-raw-data-api.s3.amazonaws.com/ISO3/LBN/health_facilities/hotosm_lbn_health_facilities_report.html",
+      "bytes": 35904,
+      "sha256": "f679af2d66ee178639477b0d842a2296b5df349abefd9a8a576ed2db4d543865"
+    },
+    {
+      "file": "hotosm_lbn_health_facilities_osm_geojson.zip",
+      "url": "https://production-raw-data-api.s3.amazonaws.com/ISO3/LBN/health_facilities/hotosm_lbn_health_facilities_osm_geojson.zip",
+      "bytes": 113914,
+      "sha256": "9eb2e6861de82934c9da883ef79f7757ce4dc2122f429cca0e822180a5e5856f"
+    }
+  ],
+  "hdx_last_modified": "2026-11-16T02:06:51.012568",
+  "hdx_page": "https://data.humdata.org/dataset/hotosm_lbn_health_facilities"
+}

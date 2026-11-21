@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Health Facilities of Lebanon</title>
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/pmtiles@3.2.1/dist/pmtiles.js"></script>
+<style>
+:root {
+  --fg: #1a1a1a;
+  --muted: #6b6b6b;
+  --line: #e4e4e4;
+  --bg: #ffffff;
+  --bar-bg: #f1f5f9;
+  --tab-active: #1a1a1a;
+  --tab-idle: #6b6b6b;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+body {
+  font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 28px 24px 64px;
+}
+.tab-input { position: absolute; opacity: 0; pointer-events: none; }
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em;
+     color: var(--muted); margin: 32px 0 10px; font-weight: 600; }
+.ratio-bar { display: flex; height: 6px; border-radius: 2px; overflow: hidden;
+             background: var(--bar-bg); margin-top: 8px; }
+.ratio-bar > i { display: block; height: 100%; }
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+        background: var(--line); margin: 18px 0 0; border: 1px solid var(--line); }
+.kpi { background: var(--bg); padding: 14px 16px; }
+.kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em;
+             color: var(--muted); }
+.kpi-value { font-size: 18px; font-weight: 600; line-height: 1.2; margin-top: 4px;
+             font-variant-numeric: tabular-nums; }
+.kpi-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line);
+         vertical-align: top; }
+th { font-weight: 600; color: var(--muted); font-size: 11px;
+     text-transform: uppercase; letter-spacing: 0.04em; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.col-name { font-family: var(--mono); }
+.bar { background: var(--bar-bg); border-radius: 2px; height: 6px;
+       position: relative; overflow: hidden; min-width: 80px; }
+.bar > i { display: block; height: 100%; }
+td.bar-cell { width: 30%; padding-top: 13px; }
+.well { background: #22c55e; } .partial { background: #eab308; } .rare { background: #ef4444; }
+.share { background: #9ca3af; }
+.coverage-legend { font-size: 12px; color: var(--muted); display: flex; gap: 14px;
+                   flex-wrap: wrap; margin: 0 0 6px; }
+.coverage-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px;
+                     margin-right: 4px; vertical-align: -1px; }
+.note, .muted { color: var(--muted); } .note { font-size: 12px; margin: 8px 0 0; }
+.top-values { color: var(--muted); font-size: 12px; min-width: 220px; }
+.top-values code { font-family: var(--mono); color: var(--fg);
+                   background: #f4f4f5; padding: 1px 5px; border-radius: 3px; }
+.top-values .count { color: var(--muted); }
+.about { margin-top: 40px; border-top: 1px solid var(--line); display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
+.about dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin: 0;
+            font-size: 13px; }
+.about dt { color: var(--muted); } .about dd { margin: 0; overflow-wrap: anywhere; }
+.code-links { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; font-size: 12px; }
+.code-links span { display: block; color: var(--muted); }
+.code-links code { font-family: var(--mono); font-size: 11px; word-break: break-all; }
+.snippet-label { margin: 12px 0 4px; font-size: 12px; color: var(--muted); }
+.snippet { margin: 0; padding: 8px 10px; background: #f4f4f5; border-radius: 3px;
+           font: 11px/1.5 var(--mono); overflow-x: auto; white-space: pre; }
+.temporal { padding: 6px 10px; background: #fafafa;
+            border-left: 3px solid var(--line); border-radius: 2px;
+            font-size: 12px; color: var(--muted); margin-top: 8px; }
+.temporal-label { font-weight: 600; color: var(--fg);
+                  text-transform: uppercase; letter-spacing: 0.04em; font-size: 11px; }
+.temporal-range { font-variant-numeric: tabular-nums; color: var(--fg); }
+.temporal-arrow { color: var(--muted); }
+.temporal-meta code { font-family: var(--mono); background: #f4f4f5;
+                      padding: 1px 4px; border-radius: 3px; color: var(--fg); }
+
+span.sw { display: inline-block; width: 11px; height: 11px; border-radius: 2px;
+          margin-right: 8px; vertical-align: -1px; }
+#map { width: 100%; height: calc(100vh - 210px); min-height: 380px;
+       border: 1px solid var(--line); border-radius: 3px; background: #eef1f4; }
+.map-wrap { position: relative; }
+.legend { position: absolute; left: 10px; bottom: 10px; margin: 0; padding: 0;
+          background: rgba(255, 255, 255, 0.95); border: 1px solid var(--line);
+          border-radius: 3px; font-size: 12px; max-height: calc(100% - 20px);
+          display: flex; flex-direction: column; overflow-y: auto; }
+.legend summary { list-style: none; cursor: pointer; padding: 8px 11px; font-weight: 600;
+                  display: flex; align-items: center; gap: 8px;
+                  position: sticky; top: 0; z-index: 1; background: #fff; }
+.legend summary::-webkit-details-marker { display: none; }
+.legend summary::after { content: "\25be"; margin-left: auto; color: var(--muted); }
+.legend[open] summary::after { content: "\25b4"; }
+.legend-actions { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 11px 8px; }
+.legend-actions button { font: inherit; font-size: 11px; padding: 4px 9px; cursor: pointer;
+          border: 1px solid var(--line); border-radius: 3px; background: var(--bg);
+          color: var(--fg); }
+.legend-actions button:hover { border-color: var(--accent); color: var(--accent); }
+.legend-actions button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.legend ul { list-style: none; margin: 0; padding: 0 11px 9px; line-height: 1.75; }
+.legend li { white-space: nowrap; }
+.legend label { display: flex; align-items: center; cursor: pointer; }
+.legend input { margin: 0 7px 0 0; cursor: pointer; accent-color: var(--accent); }
+.legend-count { margin-left: 7px; color: var(--muted); font-variant-numeric: tabular-nums;
+                font-size: 11px; }
+.maplibregl-popup { z-index: 3; }
+.maplibregl-popup-content { border-top: 3px solid var(--popup); padding: 10px 12px; }
+.maplibregl-popup-content b { color: var(--fg); }
+.popup-features { overflow-y: auto; }
+.popup-features section + section { border-top: 1px solid var(--line); margin-top: 8px;
+                                    padding-top: 8px; }
+table.popup { border-collapse: collapse; margin-top: 6px; font-size: 12px; }
+table.popup th { text-align: left; color: var(--muted); font-weight: 400; font-size: 12px;
+                 text-transform: none; letter-spacing: 0; font-family: var(--mono);
+                 padding: 2px 10px 2px 0; white-space: nowrap; }
+table.popup td { font-family: var(--mono); padding: 2px 0; word-break: break-word; }
+.legend .sw.outline { background: transparent; border: 2px solid var(--boundary); }
+.hovercard { position: absolute; pointer-events: none; z-index: 5; display: none;
+             background: rgba(26, 26, 26, 0.92); color: #fff; font-size: 12px;
+             padding: 5px 9px; border-radius: 3px; max-width: 240px; }
+.hovercard .hc-layer { display: block; font-size: 10px; text-transform: uppercase;
+             letter-spacing: 0.05em; opacity: 0.75; }
+
+body { max-width: 1180px; }
+.ds-head { margin: 0 0 16px; }
+.ds-head h1 { font-size: 22px; margin: 0 0 6px; letter-spacing: -0.01em; }
+.ds-meta { color: var(--muted); font-size: 13px; margin: 0; }
+.ds-meta b { color: var(--fg); font-weight: 600; }
+.ds-meta a { color: inherit; }
+.related { font-size: 13px; color: var(--muted); margin: -8px 0 16px; line-height: 1.7; }
+.related a { color: var(--fg); }
+.switcher { display: flex; gap: 2px; border-bottom: 1px solid var(--line); margin: 0 0 20px; }
+.switcher label { padding: 9px 16px; cursor: pointer; color: var(--tab-idle); font-weight: 600;
+                  font-size: 13px; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.switcher label:hover { color: var(--fg); }
+.view { display: none; }
+.split { display: grid; grid-template-columns: 252px 1fr; gap: 24px; align-items: start; }
+.split.single { grid-template-columns: minmax(0, 1fr); }
+.layer-views { min-width: 0; }
+.layer-list { border: 1px solid var(--line); border-radius: 3px; overflow: hidden;
+              position: sticky; top: 14px; }
+.layer-list label { display: flex; align-items: center; gap: 8px; padding: 9px 12px;
+                    cursor: pointer; border-bottom: 1px solid var(--line); font-size: 13px; }
+.layer-list label:last-child { border-bottom: 0; }
+.layer-list label:hover { background: #fafafa; }
+.layer-list .lc { margin-left: auto; font-variant-numeric: tabular-nums; font-size: 11px;
+                  color: var(--muted); }
+.layer-view { display: none; }
+.detail-head { display: flex; align-items: center; justify-content: space-between; gap: 16px;
+               flex-wrap: wrap; padding: 0 0 13px; border-bottom: 1px solid var(--line);
+               margin: 0 0 18px; }
+.detail-head h3 { margin: 0; font-size: 16px; }
+select.fmt { font: inherit; font-size: 12px; padding: 5px 7px; border: 1px solid var(--line);
+             border-radius: 3px; background: var(--bg); color: var(--fg); max-width: 240px; }
+a.dl-btn { display: inline-block; margin-left: 6px; padding: 6px 13px; font-size: 12px;
+           font-weight: 600; color: #fff; background: var(--accent); border-radius: 3px;
+           text-decoration: none; }
+a.dl-btn:hover { filter: brightness(0.9); }
+a.dl-btn:focus-visible, select.fmt:focus-visible { outline: 2px solid var(--accent);
+           outline-offset: 2px; }
+.table-scroll { overflow-x: auto; }
+@media (max-width: 860px) {
+  body { padding: 18px 14px 44px; }
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  .split { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .about { grid-template-columns: minmax(0, 1fr); }
+  .layer-list { position: static; max-height: 210px; overflow-y: auto; }
+  #map { height: 62vh; min-height: 320px; }
+  .switcher label { flex: 1; text-align: center; padding: 10px 8px; }
+}
+@media (max-width: 480px) {
+  .kpis { grid-template-columns: 1fr; }
+  /* The percentage already says what the bar draws, and the values need the width. */
+  .bar-cell { display: none; }
+  .top-values { min-width: 0; }
+  .top-values code { overflow-wrap: anywhere; }
+  .ds-head h1 { font-size: 18px; }
+  .legend { left: 8px; right: auto; top: 8px; bottom: auto; max-width: calc(100% - 60px);
+            max-height: 45%; }
+  .legend li { white-space: normal; }
+  a.dl-btn, select.fmt { font-size: 13px; padding: 8px 12px; }
+  select.fmt { max-width: none; flex: 1; }
+  .detail-head .detail-dl { display: flex; width: 100%; gap: 6px; }
+  a.dl-btn { margin-left: 0; }
+}
+:root { --accent: #cc2936; --popup: #cc2936; --boundary: #e11d48; } #view-data:checked ~ .switcher label[for="view-data"], #view-map:checked ~ .switcher label[for="view-map"] { color: var(--tab-active); border-bottom-color: var(--accent); } #view-data:focus-visible ~ .switcher label[for="view-data"], #view-map:focus-visible ~ .switcher label[for="view-map"] { outline: 2px solid var(--accent); outline-offset: 2px; } #view-data:checked ~ .views .view-data { display: block; } #view-map:checked ~ .views .view-map { display: block; } #layer-health_facilities-osm:checked ~ .split .lv-health_facilities-osm { display: block; } #layer-health_facilities-osm:checked ~ .split .layer-list label[for="layer-health_facilities-osm"] { background: color-mix(in srgb, var(--accent) 10%, white); font-weight: 600; box-shadow: inset 3px 0 0 var(--accent); } #layer-health_facilities-osm:focus-visible ~ .split .layer-list label[for="layer-health_facilities-osm"] { outline: 2px solid var(--accent); outline-offset: -2px; }</style>
+</head>
+<body>
+<div class="ds-head"><h1>Health Facilities of Lebanon</h1><p class="ds-meta"><b>1,392</b> features &middot; OpenStreetMap 2026-11-15 &middot; <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener">Open Database License (ODC-ODbL)</a></p></div>
+<p class="related">More for this area: <a href="https://data.humdata.org/dataset/hotosm_lbn_buildings" target="_blank" rel="noopener">Buildings</a> &middot; <a href="https://data.humdata.org/dataset/hotosm_lbn_roads" target="_blank" rel="noopener">Roads</a> &middot; <a href="https://data.humdata.org/dataset/hotosm_lbn_waterways" target="_blank" rel="noopener">Waterways</a> &middot; <a href="https://data.humdata.org/dataset/hotosm_lbn_education_facilities" target="_blank" rel="noopener">Education Facilities</a> &middot; <a href="https://data.humdata.org/dataset/hotosm_lbn_populated_places" target="_blank" rel="noopener">Populated Places</a> &middot; <a href="https://data.humdata.org/dataset/hotosm_lbn_financial_services" target="_blank" rel="noopener">Financial Services</a> &middot; <a href="https://data.humdata.org/dataset/hotosm_lbn_airports" target="_blank" rel="noopener">Airports</a> &middot; <a href="https://data.humdata.org/dataset/hotosm_lbn_sea_ports" target="_blank" rel="noopener">Ports and Ferry Terminals</a> &middot; <a href="https://data.humdata.org/dataset/hotosm_lbn_points_of_interest" target="_blank" rel="noopener">Points of Interest</a> &middot; <a href="https://data.humdata.org/dataset/hotosm_lbn_cultural_places" target="_blank" rel="noopener">Cultural Places</a></p>
+<input type="radio" name="view" id="view-data" class="tab-input" checked><input type="radio" name="view" id="view-map" class="tab-input"><div class="switcher"><label for="view-data">Data</label><label for="view-map">Map</label></div><div class="views"><section class="view view-data"><input type="radio" name="layer" id="layer-health_facilities-osm" class="tab-input" checked disabled><div class="split single"><div class="layer-views"><div class="layer-view lv-health_facilities-osm"><div class="detail-head"><div class="detail-dl"><select class="fmt" aria-label="Download format for Health Facilities (OSM)"><option value="https://production-raw-data-api.s3.amazonaws.com/ISO3/LBN/health_facilities/hotosm_lbn_health_facilities_osm_gpkg.zip">GeoPackage (154.9 kB)</option><option value="https://production-raw-data-api.s3.amazonaws.com/ISO3/LBN/health_facilities/hotosm_lbn_health_facilities_osm_shp.zip">Shapefile (145.7 kB)</option><option value="https://production-raw-data-api.s3.amazonaws.com/ISO3/LBN/health_facilities/hotosm_lbn_health_facilities_osm_geojson.zip">GeoJSON (113.9 kB)</option><option value="https://production-raw-data-api.s3.amazonaws.com/ISO3/LBN/health_facilities/hotosm_lbn_health_facilities_osm_kml.zip">KML (129.9 kB)</option><option value="https://production-raw-data-api.s3.amazonaws.com/ISO3/LBN/_layers/osm/health_facilities.parquet">GeoParquet (171.7 kB)</option><option value="https://production-raw-data-api.s3.amazonaws.com/ISO3/LBN/health_facilities/hotosm_lbn_health_facilities_osm.pmtiles">Vector Tiles (723.8 kB)</option></select><a class="dl-btn" href="https://production-raw-data-api.s3.amazonaws.com/ISO3/LBN/health_facilities/hotosm_lbn_health_facilities_osm_gpkg.zip" download>Download</a></div></div><div class="kpis"><div class="kpi"><div class="kpi-label">Geometry</div><div class="kpi-value">86.49%</div><div class="kpi-sub">points, 188 other</div></div><div class="kpi"><div class="kpi-label">Attributes filled</div><div class="kpi-value">6 of 13</div><div class="kpi-sub">at least half filled; 0 partial, 7 sparse</div><div class="ratio-bar"><i class="well" style="width:46.15%"></i><i class="partial" style="width:0.00%"></i><i class="rare" style="width:53.85%"></i></div></div><div class="kpi"><div class="kpi-label">Admin tagging</div><div class="kpi-value">100.00%</div><div class="kpi-sub">to adm3</div></div><div class="kpi"><div class="kpi-label">Languages</div><div class="kpi-value">3</div><div class="kpi-sub">local, en, ar</div></div></div>
+<h2>Geometry types</h2><div class="table-scroll"><table><thead><tr><th>Type</th><th class="num">Features</th><th class="num">Share</th><th class="bar-cell"></th></tr></thead><tbody><tr><td>Points</td><td class="num">1,204</td><td class="num">86.49%</td><td class="bar-cell"><div class="bar"><i class="share" style="width:86.49%"></i></div></td></tr><tr><td>Polygons</td><td class="num">188</td><td class="num">13.51%</td><td class="bar-cell"><div class="bar"><i class="share" style="width:13.51%"></i></div></td></tr></tbody></table></div>
+<h2>Admin coverage</h2><div class="table-scroll"><table><thead><tr><th>Level</th><th class="num">Tagged</th><th class="bar-cell"></th></tr></thead><tbody><tr><td>adm0</td><td class="num">100.00%</td><td class="bar-cell"><div class="bar"><i class="well" style="width:100.00%"></i></div></td></tr><tr><td>adm1</td><td class="num">100.00%</td><td class="bar-cell"><div class="bar"><i class="well" style="width:100.00%"></i></div></td></tr><tr><td>adm2</td><td class="num">100.00%</td><td class="bar-cell"><div class="bar"><i class="well" style="width:100.00%"></i></div></td></tr><tr><td>adm3</td><td class="num">100.00%</td><td class="bar-cell"><div class="bar"><i class="well" style="width:100.00%"></i></div></td></tr></tbody></table></div>
+<h2>Attributes</h2><div class="coverage-legend"><span><i class="well"></i>50% or more filled</span><span><i class="partial"></i>25 to 50%</span><span><i class="rare"></i>under 25%</span></div><div class="table-scroll"><table><thead><tr><th>Column</th><th class="num">Filled</th><th class="bar-cell"></th><th>Common values</th></tr></thead><tbody><tr><td><span class="col-name">amenity</span></td><td class="num">97.49%</td><td class="bar-cell"><div class="bar"><i class="well" style="width:97.49%"></i></div></td><td class="top-values"><code>pharmacy</code> <span class="count">1,031</span> &middot; <code>hospital</code> <span class="count">201</span> &middot; <code>clinic</code> <span class="count">62</span> &middot; <code>doctors</code> <span class="count">33</span> &middot; <code>dentist</code> <span class="count">30</span></td></tr><tr><td><span class="col-name">name_latin</span></td><td class="num">93.89%</td><td class="bar-cell"><div class="bar"><i class="well" style="width:93.89%"></i></div></td><td class="top-values"><span class="muted">1,275 distinct values</span></td></tr><tr><td><span class="col-name">name</span></td><td class="num">93.39%</td><td class="bar-cell"><div class="bar"><i class="well" style="width:93.39%"></i></div></td><td class="top-values"><span class="muted">1,270 distinct values</span></td></tr><tr><td><span class="col-name">healthcare</span></td><td class="num">72.63%</td><td class="bar-cell"><div class="bar"><i class="well" style="width:72.63%"></i></div></td><td class="top-values"><code>pharmacy</code> <span class="count">714</span> &middot; <code>hospital</code> <span class="count">171</span> &middot; <code>clinic</code> <span class="count">49</span> &middot; <code>doctor</code> <span class="count">26</span> &middot; <code>dentist</code> <span class="count">24</span></td></tr><tr><td><span class="col-name">name_en</span></td><td class="num">52.37%</td><td class="bar-cell"><div class="bar"><i class="well" style="width:52.37%"></i></div></td><td class="top-values"><code>Lebanese Red Cross</code> <span class="count">3</span> &middot; <code>Wafaa (Al)</code> <span class="count">2</span> &middot; <code>St. Antoine</code> <span class="count">2</span> &middot; <code>Pharmacie Nada</code> <span class="count">2</span> &middot; <code>Diaa</code> <span class="count">2</span></td></tr><tr><td><span class="col-name">name_ar</span></td><td class="num">52.08%</td><td class="bar-cell"><div class="bar"><i class="well" style="width:52.08%"></i></div></td><td class="top-values"><code>الصليب الأحمر اللبناني</code> <span class="count">4</span> &middot; <code>مار تقلا</code> <span class="count">2</span> &middot; <code>كليمونصو</code> <span class="count">2</span> &middot; <code>فارما لايف</code> <span class="count">2</span> &middot; <code>جابر</code> <span class="count">2</span></td></tr><tr><td><span class="col-name">addr_city</span></td><td class="num">10.99%</td><td class="bar-cell"><div class="bar"><i class="rare" style="width:10.99%"></i></div></td><td class="top-values"><code>بيروت</code> <span class="count">13</span> &middot; <code>برجا</code> <span class="count">8</span> &middot; <code>صيدا</code> <span class="count">8</span> &middot; <code>Beyrouth</code> <span class="count">7</span> &middot; <code>ذوق مكايل</code> <span class="count">5</span></td></tr><tr><td><span class="col-name">building</span></td><td class="num">6.25%</td><td class="bar-cell"><div class="bar"><i class="rare" style="width:6.25%"></i></div></td><td class="top-values"><code>yes</code> <span class="count">66</span> &middot; <code>hospital</code> <span class="count">18</span> &middot; <code>healthcare</code> <span class="count">2</span> &middot; <code>detached</code> <span class="count">1</span></td></tr><tr><td><span class="col-name">healthcare_speciality</span></td><td class="num">1.44%</td><td class="bar-cell"><div class="bar"><i class="rare" style="width:1.44%"></i></div></td><td class="top-values"><code>Mikati Medical Imaging Center</code> <span class="count">1</span> &middot; <code>anesthesiology;cardiology;endocrinology;gastroenterology;general;general_internal_medicine;hematology;oncology;nephrology;pulmonary_medicine;rheumatology;cardiothoracic_surgery;general_surgery;neurosurgery;ophthalmology;orthopedic_surgery;otolaryngology</code> <span class="count">1</span> &middot; <code>blood_check;radiology</code> <span class="count">1</span> &middot; <code>handicapped</code> <span class="count">1</span> &middot; <code>general;vaccination;emergency;surgery</code> <span class="count">1</span></td></tr><tr><td><span class="col-name">operator_type</span></td><td class="num">1.08%</td><td class="bar-cell"><div class="bar"><i class="rare" style="width:1.08%"></i></div></td><td class="top-values"><code>public</code> <span class="count">6</span> &middot; <code>private</code> <span class="count">5</span> &middot; <code>business</code> <span class="count">1</span> &middot; <code>military</code> <span class="count">1</span> &middot; <code>religious</code> <span class="count">1</span></td></tr><tr><td><span class="col-name">source</span></td><td class="num">0.07%</td><td class="bar-cell"><div class="bar"><i class="rare" style="width:0.07%"></i></div></td><td class="top-values"><code>Bing</code> <span class="count">1</span></td></tr><tr><td><span class="col-name">capacity_persons</span></td><td class="num">0.00%</td><td class="bar-cell"><div class="bar"><i class="rare" style="width:0.00%"></i></div></td><td class="top-values"><span class="muted">empty</span></td></tr><tr><td><span class="col-name">addr_full</span></td><td class="num">0.00%</td><td class="bar-cell"><div class="bar"><i class="rare" style="width:0.00%"></i></div></td><td class="top-values"><span class="muted">empty</span></td></tr></tbody></table></div>
+<div class="about"><section><h2>About this data</h2><dl><dt>Data</dt><dd>OpenStreetMap (Geofabrik LBN 2026-11-15)</dd><dt>Snapshot</dt><dd>2026-11-15</dd><dt>Boundary</dt><dd>geoBoundaries gbOpen ADM0 (buffered +10000m, simplified 1000m)</dd><dt>P-codes</dt><dd>fieldmaps.io edge-matched humanitarian, 2025-07-29</dd><dt>Latin names</dt><dd>transliterated with unidecode</dd><dt>Licence</dt><dd><a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener">Open Database License (ODC-ODbL)</a></dd><dt>HDX dataset</dt><dd><a href="https://data.humdata.org/dataset/hotosm_lbn_health_facilities" target="_blank" rel="noopener">https://data.humdata.org/dataset/hotosm_lbn_health_facilities</a></dd><dt>Built</dt><dd>2026-11-16T02:06:43Z, oex 0.4.30</dd></dl></section><section><h2>Use in code</h2><ul class="code-links"><li><span>STAC Item</span><a href="https://production-raw-data-api.s3.amazonaws.com/ISO3/LBN/health_facilities/hotosm_lbn_health_facilities_osm_item.json" target="_blank" rel="noopener"><code>https://production-raw-data-api.s3.amazonaws.com/ISO3/LBN/health_facilities/hotosm_lbn_health_facilities_osm_item.json</code></a></li><li><span>GeoParquet</span><a href="https://production-raw-data-api.s3.amazonaws.com/ISO3/LBN/_layers/osm/health_facilities.parquet" target="_blank" rel="noopener"><code>https://production-raw-data-api.s3.amazonaws.com/ISO3/LBN/_layers/osm/health_facilities.parquet</code></a></li><li><span>Vector tiles (PMTiles)</span><a href="https://production-raw-data-api.s3.amazonaws.com/ISO3/LBN/health_facilities/hotosm_lbn_health_facilities_osm.pmtiles" target="_blank" rel="noopener"><code>https://production-raw-data-api.s3.amazonaws.com/ISO3/LBN/health_facilities/hotosm_lbn_health_facilities_osm.pmtiles</code></a></li></ul><p class="snippet-label">DuckDB</p><pre class="snippet"><code>SELECT * FROM &#x27;https://production-raw-data-api.s3.amazonaws.com/ISO3/LBN/_layers/osm/health_facilities.parquet&#x27;
+WHERE bbox.xmin &gt;= 35.00 AND bbox.xmax &lt;= 36.73
+  AND bbox.ymin &gt;= 32.96 AND bbox.ymax &lt;= 34.79
+LIMIT 10;</code></pre></section></div></div></div></div></section><section class="view view-map"><div class="map-wrap"><div id="map"></div><div class="hovercard" id="hovercard"></div><details class="legend" open><summary>Layers (1)</summary><div class="legend-actions"><button type="button" data-zoom title="Zoom to the ticked layers">Zoom</button></div><ul><li><label><input type="checkbox" checked data-key="health_facilities-osm"><span class="sw" style="background:#e6194B"></span>Health Facilities (OSM)<span class="legend-count">1.4k</span></label></li></ul></details></div>
+<script>
+const protocol = new pmtiles.Protocol();
+maplibregl.addProtocol('pmtiles', protocol.tile);
+const map = new maplibregl.Map({
+  container: 'map',
+  style: {
+    version: 8,
+    sources: {
+      basemap: { type: 'raster', tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], tileSize: 256,
+                  attribution: "(c) OpenStreetMap contributors" },
+      src0: { type: 'vector', url: "pmtiles://https://production-raw-data-api.s3.amazonaws.com/ISO3/LBN/health_facilities/hotosm_lbn_health_facilities_osm.pmtiles", attribution: "" }
+    },
+    layers: [
+      { id: 'basemap', type: 'raster', source: 'basemap',
+         paint: { 'raster-opacity': 0.6, 'raster-saturation': -1 } },
+      { id: "health_facilities-osm-fill", type: 'fill', source: 'src0', 'source-layer': "health_facilities", filter: ['==', ['geometry-type'], 'Polygon'], paint: { 'fill-color': "#e6194B", 'fill-opacity': 0.5, 'fill-outline-color': 'rgba(26, 26, 26, 0.55)' } },
+      { id: "health_facilities-osm-casing", type: 'line', source: 'src0', 'source-layer': "health_facilities", filter: ['==', ['geometry-type'], 'LineString'], paint: { 'line-color': 'rgba(26, 26, 26, 0.55)', 'line-width': ['interpolate', ['linear'], ['zoom'], 6, 1.6, 10, 2.4, 14, 3.8] } },
+      { id: "health_facilities-osm-line", type: 'line', source: 'src0', 'source-layer': "health_facilities", filter: ['==', ['geometry-type'], 'LineString'], paint: { 'line-color': "#e6194B", 'line-width': ['interpolate', ['linear'], ['zoom'], 6, 0.8, 10, 1.4, 14, 2.5] } },
+      { id: "health_facilities-osm-point", type: 'circle', source: 'src0', 'source-layer': "health_facilities", filter: ['==', ['geometry-type'], 'Point'], paint: { 'circle-color': "#e6194B", 'circle-radius': ['interpolate', ['linear'], ['zoom'], 6, 2, 10, 3, 12, 4, 16, 6], 'circle-stroke-width': ['interpolate', ['linear'], ['zoom'], 6, 0.4, 12, 1], 'circle-stroke-color': '#1a1a1a' } }
+    ]
+  }
+});
+const areaBounds = [35.001315133749074, 32.96168297155476, 36.72749078528528, 34.783603624838214];
+const boundsOfKey = {"health_facilities-osm": [35.001315133749074, 32.96168297155476, 36.72749078528528, 34.783603624838214]};
+map.addControl(new maplibregl.NavigationControl());
+map.addControl(new maplibregl.FullscreenControl());
+
+// Each entry owns its polygon, outline, line and point style layers, so a checkbox is a
+// visibility flip on those.
+const suffixes = ['fill', 'casing', 'line', 'point'];
+const toggles = document.querySelectorAll('.legend input');
+
+function applyToggle(toggle) {
+  const visibility = toggle.checked ? 'visible' : 'none';
+  if (toggle.dataset.key === 'aoi') {
+    if (map.getLayer('aoi-line')) map.setLayoutProperty('aoi-line', 'visibility', visibility);
+    return;
+  }
+  for (const suffix of suffixes) {
+    const id = `${toggle.dataset.key}-${suffix}`;
+    if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', visibility);
+  }
+}
+toggles.forEach((t) => t.addEventListener('change', () => applyToggle(t)));
+document.querySelectorAll('.legend-actions button[data-all]').forEach((button) => {
+  button.addEventListener('click', () => {
+    const on = button.dataset.all === 'on';
+    toggles.forEach((t) => { t.checked = on; applyToggle(t); });
+  });
+});
+
+// Framing leaves room for the open legend, or closes it when it would cover a third of the
+// map, and for the zoom buttons on the right.
+function framePadding() {
+  const legend = document.querySelector('.legend');
+  const legendWidth = legend && legend.open ? legend.offsetWidth + 34 : 0;
+  if (legendWidth > map.getContainer().clientWidth / 3) legend.open = false;
+  return { top: 24, right: 60, bottom: 24, left: legendWidth && legend.open ? legendWidth : 24 };
+}
+function fitTo(bounds, duration) {
+  if (!bounds) return;
+  map.fitBounds([[bounds[0], bounds[1]], [bounds[2], bounds[3]]],
+                { padding: framePadding(), duration: duration, maxZoom: 16 });
+}
+// Zooms to the ticked layers, or back to the whole area when none is ticked.
+document.querySelectorAll('.legend-actions button[data-zoom]').forEach((button) => {
+  button.addEventListener('click', () => {
+    const picked = Array.from(toggles)
+      .filter((t) => t.checked && boundsOfKey[t.dataset.key])
+      .map((t) => boundsOfKey[t.dataset.key]);
+    if (!picked.length) { fitTo(areaBounds, 600); return; }
+    fitTo([Math.min(...picked.map((b) => b[0])), Math.min(...picked.map((b) => b[1])),
+           Math.max(...picked.map((b) => b[2])), Math.max(...picked.map((b) => b[3]))], 600);
+  });
+});
+
+// Inspecting a feature is how you check the attribute coverage the table reports.
+const labelOfLayer = {"health_facilities-osm-fill": "Health Facilities (OSM)", "health_facilities-osm-casing": "Health Facilities (OSM)", "health_facilities-osm-line": "Health Facilities (OSM)", "health_facilities-osm-point": "Health Facilities (OSM)"};
+const colorOfLayer = {"health_facilities-osm-fill": "#e6194B", "health_facilities-osm-casing": "#e6194B", "health_facilities-osm-line": "#e6194B", "health_facilities-osm-point": "#e6194B"};
+const sharedLayers = new Set([]);
+const layerIds = Object.keys(labelOfLayer);
+const hovercard = document.getElementById('hovercard');
+
+// Hovering names the feature; clicking opens everything it carries.
+// The hover card would cover an open popup's title, so it waits until the popup closes.
+let openPopup = null;
+map.on('mousemove', layerIds, (event) => {
+  const hit = event.features && event.features[0];
+  if (!hit || openPopup) return;
+  map.getCanvas().style.cursor = 'pointer';
+  const name = hit.properties.name || '(no name)';
+  hovercard.textContent = '';
+  const layerName = document.createElement('span');
+  layerName.className = 'hc-layer';
+  layerName.textContent = labelOfLayer[hit.layer.id];
+  const label = document.createElement('b');
+  label.textContent = name;
+  hovercard.append(layerName, label);
+  hovercard.style.display = 'block';
+  // Near the right edge the card flips to the cursor's left, so the map does not cut it off.
+  const flip = event.point.x + 14 + hovercard.offsetWidth > map.getContainer().clientWidth;
+  hovercard.style.left = (flip ? event.point.x - 14 - hovercard.offsetWidth : event.point.x + 14) + 'px';
+  hovercard.style.top = (event.point.y + 14) + 'px';
+});
+map.on('mouseleave', layerIds, () => {
+  map.getCanvas().style.cursor = '';
+  hovercard.style.display = 'none';
+});
+
+map.on('click', (event) => {
+  // Every feature under the cursor, with slack so thin lines and small points are hit.
+  const { x, y } = event.point;
+  const hits = map.queryRenderedFeatures([[x - 4, y - 4], [x + 4, y + 4]], { layers: layerIds });
+  // A line comes back from both its casing and line layers, and a feature once per tile.
+  const seen = new Set();
+  const features = hits.filter((hit) => {
+    const key = labelOfLayer[hit.layer.id] + JSON.stringify(hit.properties);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+  if (!features.length) return;
+  const content = document.createElement('div');
+  content.className = 'popup-features';
+  // Sized from the map, so the popup's last rows stay inside it on a short phone screen.
+  content.style.maxHeight = Math.round(map.getContainer().clientHeight * 0.45) + 'px';
+  features.forEach((hit) => content.append(featureBlock(hit)));
+  hovercard.style.display = 'none';
+  const popup = new maplibregl.Popup({ maxWidth: 'min(340px, calc(100vw - 48px))' })
+    .setLngLat(event.lngLat)
+    .setDOMContent(content)
+    .addTo(map);
+  // The previous popup closes after this one opens, so only this popup may clear the flag.
+  openPopup = popup;
+  popup.on('close', () => { if (openPopup === popup) openPopup = null; });
+  popup.getElement().querySelector('.maplibregl-popup-content')
+    .style.borderTopColor = colorOfLayer[features[0].layer.id];
+});
+
+function featureBlock(hit) {
+  // Tag values are editable by anyone, so they are written as text, never as markup.
+  const block = document.createElement('section');
+  const title = document.createElement('b');
+  const swatch = document.createElement('span');
+  swatch.className = 'sw';
+  swatch.style.background = colorOfLayer[hit.layer.id];
+  title.append(swatch, labelOfLayer[hit.layer.id]);
+  const table = document.createElement('table');
+  table.className = 'popup';
+  // On a shared tileset, category and source name the layer the title already gives.
+  const repeatsTitle = (key) => sharedLayers.has(hit.layer.id) && (key === 'category' || key === 'source');
+  Object.entries(hit.properties)
+    .filter(([key, value]) => value !== null && value !== '' && !repeatsTitle(key))
+    .forEach(([key, value]) => {
+      const row = table.insertRow();
+      const header = document.createElement('th');
+      header.textContent = key;
+      row.append(header);
+      row.insertCell().textContent = value;
+    });
+  if (!table.rows.length) table.insertRow().insertCell().textContent = '(no attributes)';
+  block.append(title, table);
+  return block;
+}
+
+// The map is built in a hidden tab, so it is framed the first time it has a size.
+let framed = false;
+function frameMap() {
+  if (framed || !map.getContainer().clientWidth) return;
+  framed = true;
+  fitTo(areaBounds, 0);
+}
+map.on('load', () => { frameMap(); toggles.forEach(applyToggle); });
+</script>
+</section></div>
+<script>
+document.querySelectorAll('select.fmt').forEach((select) => {
+  select.addEventListener('change', () => {
+    select.nextElementSibling.setAttribute('href', select.value);
+  });
+});
+const mapTab = document.getElementById('view-map');
+// The map is laid out while its view is hidden, so it needs its size back when shown.
+if (mapTab) mapTab.addEventListener('change', () => { map.resize(); frameMap(); });
+</script>
+</body>
+</html>

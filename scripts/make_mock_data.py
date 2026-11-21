@@ -170,9 +170,4 @@ for d in districts:
                    "transparent_reporting": bool(rng.random() > 0.5)})
 save(pd.DataFrame(gc), "governance_capacity.csv")
 
-# Funding flows by channel (MOCK amounts; channel structure mirrors real reporting) for the dependency chart.
-ch = ["UN agencies", "INGOs", "National NGOs", "Government (direct)", "Municipalities"]
-ff = [{"year": y, "channel": c, "usd_m": round(float(rng.uniform(5, 60) * (0.5 if c in ("Government (direct)", "Municipalities") else 1)), 1)}
-      for y in range(2019, 2027) for c in ch]
-save(pd.DataFrame(ff), "funding_flows.csv")
 print("MOCK data written to", OUT)

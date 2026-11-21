@@ -1,0 +1,35 @@
+{
+  "source_id": "D07",
+  "title": "Lebanon accessibility indicators (PHC and hospital access)",
+  "publisher": "HDX (CC BY-SA)",
+  "license": "CC BY-SA",
+  "retrieved": "2026-11-21",
+  "files": [
+    {
+      "file": "LBN_hospitals_access_long.csv",
+      "url": "https://hot.storage.heigit.org/heigit-hdx-public/access/lbn/LBN_hospitals_access_long.csv",
+      "bytes": 242140,
+      "sha256": "3b1fd93d4966d633eaa4cdb3c18b4b75859a2b59073934da49551d8468092d9b"
+    },
+    {
+      "file": "LBN_hospitals_access_wide.csv",
+      "url": "https://hot.storage.heigit.org/heigit-hdx-public/access/lbn/LBN_hospitals_access_wide.csv",
+      "bytes": 80418,
+      "sha256": "4c24e51bb11c6767a31cc6a1a1536c79bc3a80242ddc356162987b0c77f52d49"
+    },
+    {
+      "file": "LBN_primary_healthcare_access_long.csv",
+      "url": "https://hot.storage.heigit.org/heigit-hdx-public/access/lbn/LBN_primary_healthcare_access_long.csv",
+      "bytes": 266027,
+      "sha256": "1fa1d4d880e8831964a5934dfd8658000dea75f76945a1a02ffc702e66eb3463"
+    },
+    {
+      "file": "LBN_primary_healthcare_access_wide.csv",
+      "url": "https://hot.storage.heigit.org/heigit-hdx-public/access/lbn/LBN_primary_healthcare_access_wide.csv",
+      "bytes": 84865,
+      "sha256": "eba9118363d6690c53f9fa53d994990abb9c61ba77deba0023b9123d4b623155"
+    }
+  ],
+  "hdx_last_modified": "2026-02-25T18:30:49.668040",
+  "hdx_page": "https://data.humdata.org/dataset/lebanon-accessibility-indicators"
+}

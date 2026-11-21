@@ -1,0 +1,17 @@
+{
+  "source_id": "D08",
+  "title": "WorldPop age and sex structures 2025 (1 km)",
+  "publisher": "WorldPop / HDX",
+  "license": "CC BY",
+  "retrieved": "2026-11-21",
+  "files": [
+    {
+      "file": "lbn_agesex_structures_2025_CN_1km_R2025A_UA_v1.zip",
+      "url": "https://data.worldpop.org/GIS/AgeSex_structures/Global_2015_2030/R2025A/2025/LBN/v1/1km_ua/lbn_agesex_structures_2025_CN_1km_R2025A_UA_v1.zip",
+      "bytes": 4020053,
+      "sha256": "82140d5b8a225475bad7cb83cb0cab57829ec329d655e15c8402e87598f4ccb1"
+    }
+  ],
+  "hdx_last_modified": "2025-09-01T00:00:00",
+  "hdx_page": "https://data.humdata.org/dataset/worldpop-age-and-gender-structures-2015-2030-lbn"
+}

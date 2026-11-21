@@ -1,5 +1,6 @@
 # Indicator spec for M2. s = clip((x - safe)/(crisis - safe), 0, 1)  (direction is encoded by safe vs crisis order).
 # status: verified | assumption | mock.  Starting point: Lebanon Health Sector severity/PiN thresholds (2024 annex);
+# Removed for now (no public source; re-add when MoPH/NGO data exist): posts_unfilled_share, referral_incompletion (staffing_referrals).
 # deviations documented in the `source` field. ALL safe/crisis values are assumptions unless marked verified.
 domain_weights: {clinical_demand: 0.25, capacity_strain: 0.30, vulnerability: 0.30, environment: 0.15}  # assumption
 tiers: {high: 0.66, moderate: 0.33}   # assumption, exposed as sliders in the app
@@ -12,8 +13,6 @@ domains:
     - {name: access_deficit, safe: 0.0, crisis: 1.0, level: cadaster, source: "M1: 1 - current access / pre-2026 median access", status: assumption}
     - {name: phc_per_50k, safe: 2, crisis: 0, level: cadaster, source: "Health Sector threshold: 2 PHC per 50,000 (open PHCs within 30 min)", status: verified}
     - {name: anc_share_30min, safe: 1.0, crisis: 0.0, level: cadaster, source: "share of open facilities within 30 min offering ANC", status: assumption}
-    - {name: posts_unfilled_share, safe: 0.10, crisis: 0.60, level: facility, source: "staffing_referrals (providership stress)", status: assumption}
-    - {name: referral_incompletion, safe: 0.20, crisis: 0.80, level: facility, source: "1 - completed/sent referrals (disjointed-referral stress)", status: assumption}
   vulnerability:
     - {name: ipc3plus_share, safe: 0.05, crisis: 0.40, level: district, source: IPC Lebanon, status: assumption}
     - {name: unable_to_access_care_share, safe: 0.05, crisis: 0.20, level: district, source: "Health Sector sector threshold 20%", status: assumption}

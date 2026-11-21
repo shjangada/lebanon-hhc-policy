@@ -1,0 +1,29 @@
+{
+  "source_id": "D06",
+  "title": "FTS Lebanon requirements and funding",
+  "publisher": "OCHA FTS / HDX",
+  "license": "CC BY-IGO",
+  "retrieved": "2026-11-21",
+  "files": [
+    {
+      "file": "fts_requirements_funding_lbn.csv",
+      "url": "https://data.humdata.org/dataset/cb3c3eb3-72e1-4a0a-a826-b4a6b2f0c003/resource/907148b5-ab9e-4142-9af7-0fe218e3bacc/download/fts_requirements_funding_lbn.csv",
+      "bytes": 4814,
+      "sha256": "e390f56ddf8c4bbf4c1959fe77da27c695dac11ea1f36f964ae36daf9301eaf1"
+    },
+    {
+      "file": "fts_requirements_funding_cluster_lbn.csv",
+      "url": "https://data.humdata.org/dataset/cb3c3eb3-72e1-4a0a-a826-b4a6b2f0c003/resource/b5549b41-6841-4c41-a45b-64f9e2b1be52/download/fts_requirements_funding_cluster_lbn.csv",
+      "bytes": 11152,
+      "sha256": "406737f39f6de4fe777d258d7893163093b509ea41b7e3b15d05289efaa279a4"
+    },
+    {
+      "file": "fts_incoming_funding_lbn.csv",
+      "url": "https://data.humdata.org/dataset/cb3c3eb3-72e1-4a0a-a826-b4a6b2f0c003/resource/dfabc300-9e81-4d7a-adee-d92922c9bdbf/download/fts_incoming_funding_lbn.csv",
+      "bytes": 459985,
+      "sha256": "d17c7169ce1d615c3a1cda0928dbbc808992e93f3fc9e47e5a5b50f0a89e736a"
+    }
+  ],
+  "hdx_last_modified": "2026-11-20T05:10:55.005696",
+  "hdx_page": "https://data.humdata.org/dataset/lbn-requirements-and-funding-data"
+}

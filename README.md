@@ -22,15 +22,14 @@ The Makefile uses `.venv/bin/python` (override with `make PY=python3 ...`).
 |---|---|---|---|
 | **M1 Access** (`m1_access.py`): E2SFCA, pre-2026 vs 2026 closures, d0 sensitivity, mobile-unit siting (MCLP) | Q1: whose access is most constrained? | population, facilities, travel_time, cadasters | Runs on mock |
 | **Group access** (`equity.py` + M1): access by host / displaced Lebanese / registered displaced Syrians / unregistered workers (est.) / women 15–49, gap vs host; optional demand weighting by group (WorldPop age/sex share × displacement counts × multiplier) | Q1, Q5: equity gaps | population (+ displacement columns) | Runs on mock; mock groups are near-uniform, so gaps are small until real data |
-| **M2 Need Score** (`m2_need_score.py`): 4 domains, 5,000 Dirichlet weight draws → `p_top_tier` and rank intervals; comparison with JIAF/FSA district severity; stress layers (need, providership, referral, NGO dependency, environment) | Q1, Q5: where to prioritise | M1 output, M4 tiers, vulnerability, staffing_referrals, governance_capacity, water_quality, official_severity | Runs on mock; weights, thresholds and safe/crisis values are **assumptions** |
+| **M2 Need Score** (`m2_need_score.py`): 4 domains, 5,000 Dirichlet weight draws → `p_top_tier` and rank intervals; comparison with JIAF/FSA district severity; map layers (need, environment) | Q1, Q5: where to prioritise | M1 output, M4 tiers, vulnerability, water_quality, official_severity | Runs on mock; weights, thresholds and safe/crisis values are **assumptions** |
 | **M4 Exposure screen** (`m4_exposure.py`): HQ ranges (Cr speciation unknown), Pb vs EPA screening level, Monte Carlo, tornado (what evidence would change the response), tiers 0–3 with a/b/c evidence rungs | Q2, Q4 | soil_sites, crop_transfer, exposure_params.yaml | Soil **values are real** (CNRS-L/MoE 2026), **locations mock**; reference doses need confirming in EPA IRIS |
 | **M5 Options & budget** (`m5_options.py`): $1k / $100k / $1M tiers, fundable-or-not, Monte Carlo extra completed pathways, cost per pathway, equity-gap change, collateral-damage checklist | Q3 | interventions, cascade_baseline | Runs on mock; costs and lifts are **mock** |
 | **Community allocation** (`allocation.py`): top-down vs per-capita vs community-decided with capture safeguards | Q3 (team theme) | M2 scores, M5 effects, mock community priorities | Effect of local choice is an **assumption** (range 1.0–1.3), not an estimate |
-| **Escrow & funding switch** (`escrow.py`): need floor + capacity tranche, editable thresholds, administrator ladder INGO → national NGO → municipality → MoPH, lock-out and gaming warnings, restricted vs unrestricted | Q3, Q5 | M2 scores, governance_capacity, staffing_referrals | Runs on mock; thresholds are assumptions |
+| **Escrow & funding switch** (`escrow.py`): need floor + capacity tranche, editable thresholds, administrator ladder INGO → national NGO → municipality → MoPH, lock-out and gaming warnings, restricted vs unrestricted | Q3, Q5 | M2 scores, governance_capacity and staffing_referrals (mock **scenario inputs**: no public source, the pilot would measure them) | Runs on mock; thresholds are assumptions |
 | **Funding finder + registry chat** (`funding_finder.py`, `chat.py`): rank registry rows, recency and "fits escrow?" flags; grounded retrieval that refuses when nothing matches | Q3 | `data/registry/*.csv` (8 funding rows, 7 org rows to verify) | Registry rows from team research 2026-11-21; re-check before use |
-| **Story timeline** (dashboard page 0) | context | governance_capacity (mock), **World Bank WDI Lebanon population (real)** | WDI series is real |
 
-Dashboard pages: Story timeline · Overview · Priority map · Access · Options & budget · Community allocation · Environment & evidence · Funding finder · Escrow & funding switch · Ask the registry · Assumptions log. A 2030-indicators panel sits at the bottom of every page.
+Dashboard: one page with five sections (Priority & access · Options & budget · Allocation & escrow · Soil & water triggers · Funding sources) plus evidence, assumptions and data in expanders. Every mock file is listed in `data/registry/mock_provenance.csv` with the real source it stands in for and how obtainable it is (a test enforces this).
 
 Not built yet: M3 network simulation, Workforce & network page, Pilot design page (stepped-wedge, PDIA log), case-study cards, notebook appendix, LLM layer for the registry chat.
 
@@ -52,7 +51,6 @@ Not built yet: M3 network simulation, Workforce & network page, Pilot design pag
 | cascade_baseline | `data/raw/cascade_baseline.csv` | 🔴 mock |
 | staffing_referrals | `data/raw/staffing_referrals.csv` | 🔴 mock |
 | governance_capacity | `data/raw/governance_capacity.csv` | 🔴 mock |
-| funding_flows | `data/raw/funding_flows.csv` | 🔴 mock |
 
 Reference series (do not affect the REAL/MOCK mode): wdi_population (Lebanon national series) in `data/raw/worldbank_population/` is ✅ real. It is national total population 1960–2025 for all countries (World Bank WDI), used for the Lebanon time series and as a national sanity check for cadaster populations. It is **not** cadaster-level, so it cannot replace `population.csv`.
 
