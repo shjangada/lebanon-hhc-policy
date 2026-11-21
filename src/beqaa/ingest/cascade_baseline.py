@@ -10,10 +10,12 @@ from .common import PROCESSED, ROOT, provenance
 
 def build() -> pd.DataFrame:
     t = pd.read_csv(ROOT / "transcribed" / "cascade_baseline_sources.csv")
+    from .haus_2024 import cascade_rows
+    t = pd.concat([t, cascade_rows()], ignore_index=True)                      # HAUS 2024: Syrian refugees, national
     t["value_fraction"] = [v / 100.0 if str(u).strip().startswith("%") and pd.notna(v) else v for v, u in zip(t.value, t.unit)]
     t["value_status"] = ["missing" if pd.isna(v) else ("verified" if bool(c) else "unverified") for v, c in zip(t.value, t.checked)]
     out = t[["step", "group", "value_fraction", "unit", "geography", "year", "source_citation", "url", "page", "checked", "value_status", "notes"]].rename(columns={"checked": "transcription_checked"})
-    return provenance(out, "published ANC / delivery rates (VASyR 2025, Benage 2015, AlArab 2023, MSNA 2025)", "2025-12-31", "partial", "", "VASyR/Benage/AlArab")
+    return provenance(out, "published ANC / delivery rates (VASyR 2025, HAUS 2024, Benage 2015, AlArab 2023, MSNA 2025)", "2025-12-31", "partial", "", "VASyR/Benage/AlArab")
 
 
 def run() -> dict:

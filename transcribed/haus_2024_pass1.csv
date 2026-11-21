@@ -1,0 +1,35 @@
+indicator,value,unit,topic,page
+households_interviewed,62.0,% of called households,survey,6
+household_members,6910.0,people,survey,7
+respondents_bekaa_share,31.5,% of respondents,survey,7
+anc_any_share,81.3,% of women pregnant in last 2 years,ANC any,8
+anc_4plus_share,69.1,% of women who delivered and attended ANC,ANC 4+,8
+anc_no_access_reason_fees,52.2,% of women not accessing ANC,ANC barrier,8
+anc_no_access_reason_not_necessary,31.9,% of women not accessing ANC,ANC barrier,8
+anc_at_phc_share,57.7,% of ANC users,ANC where,8
+anc_at_private_clinic_share,36.7,% of ANC users,ANC where,8
+anc_paid_share,78.6,% of ANC users,ANC cost,8
+delivery_in_hospital_share,90.0,% of women who delivered,delivery,8
+delivery_other_facility_share,7.7,% of women who delivered,delivery,8
+delivery_at_home_share,0.6,% of women who delivered,delivery,8
+caesarean_share,35.6,% of women who delivered,delivery,9
+pnc_sought_share,36.1,% of women who delivered,PNC,9
+pnc_not_sought_not_necessary,67.0,% of women not seeking PNC,PNC barrier,9
+households_with_chronic_member,40.3,% of households,chronic,10
+chronic_condition_individuals,12.0,% of household members,chronic,11
+chronic_asthma_pulmonary,16.7,% of those with a chronic condition,chronic type,11
+chronic_hypertension,11.8,% of those with a chronic condition,chronic type,11
+chronic_diabetes,14.3,% of those with a chronic condition,chronic type,11
+chronic_heart_disease,6.0,% of those with a chronic condition,chronic type,11
+chronic_physical_disability,4.1,% of those with a chronic condition,chronic type,11
+chronic_thyroid,3.6,% of those with a chronic condition,chronic type,11
+chronic_kidney,3.2,% of those with a chronic condition,chronic type,11
+chronic_care_accessed_3m,54.77,% of those with a chronic condition,chronic access,11
+chronic_care_at_pharmacy,43.4,% of those who accessed care,chronic where,11
+chronic_care_at_phc,40.9,% of those who accessed care,chronic where,11
+chronic_care_at_private_clinic,9.7,% of those who accessed care,chronic where,11
+chronic_care_paid_share,80.3,% of those who accessed care,chronic cost,11
+service_not_received_could_not_afford_fees,42.3,% of those who sought but did not receive services,access barrier,13
+service_not_received_center_could_not_offer,38.5,% of those who sought but did not receive services,access barrier,13
+acute_illness_last_month,12.0,% of respondents,acute,26
+acute_sought_care_share,75.7,% of those with acute illness,acute,26
