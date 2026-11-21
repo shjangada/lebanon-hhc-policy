@@ -62,9 +62,18 @@ def badges(datasets: list[str]) -> str:
     return " · ".join(f"{d} {BADGE[io.dataset_badge(d)].split(' ')[0]}" for d in datasets)
 
 
+ONE_PAGE = False        # set by the entry file when the sections are stacked on one scrolling page
+ANCHORS: dict = {}
+
+
 def header(title: str, sentence: narrative.Sentence | str, datasets: list[str], purpose: str = "") -> None:
     """Short title, what the page is for, one plain-language answer built from current outputs, and the real / partly real / mock badge of every dataset the page uses."""
-    st.title(title)
+    if ONE_PAGE:
+        st.markdown(f'<a id="{ANCHORS.get(title, "sec")}"></a>', unsafe_allow_html=True)
+        st.divider()
+        st.header(title)
+    else:
+        st.title(title)
     if purpose:
         st.caption(purpose)
     if isinstance(sentence, str):
