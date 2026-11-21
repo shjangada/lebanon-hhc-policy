@@ -40,3 +40,18 @@ def test_escrow_breakevens_follow_the_rules():
     t = breakeven.escrow_breakevens()
     assert set(t.threshold) == {"referral completion", "posts filled", "transparent reporting", "district admin capacity"}
     assert "40%" in t.loc[t.threshold == "referral completion", "release_needs"].iloc[0]
+
+
+def test_assumptions_doc_quotes_the_breakevens():
+    """docs/ASSUMPTIONS_PILOT.md quotes the break-even numbers: they must match the computed table (rounded)."""
+    import pathlib
+
+    import pandas as pd
+    root = pathlib.Path(__file__).resolve().parents[1]
+    doc = (root / "docs" / "ASSUMPTIONS_PILOT.md").read_text()
+    f = root / "data" / "processed" / "breakeven.csv"
+    if not f.exists():
+        pytest.skip("run the pipeline first")
+    b = pd.read_csv(f)
+    b = b[(b.kind == "allocation") & b.priorities.str.startswith("community picks") & (b.comparison == "community vs status quo")].set_index("parameter")
+    assert f"{b.loc['capture', 'flips_at'] * 100:.1f}%" in doc and f"{b.loc['local_fit', 'flips_at']:.2f}" in doc

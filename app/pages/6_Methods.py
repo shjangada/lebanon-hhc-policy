@@ -14,7 +14,7 @@ except ImportError:                    # pragma: no cover
     go = None
 
 MODE = io.overall_mode()
-IS_MOCK = MODE != "REAL"
+IS_MOCK = io.any_mock()          # red watermark only while a dataset is entirely mock
 CFG = m2.load_spec()
 
 
@@ -55,6 +55,16 @@ def sites_df(cr6, ver):
 def funding(ver):
     return ff.annotate(ff.load_funding())
 
+
+# ---------------- documents that back the headline views ----------------
+st.title("Methods")
+st.caption("Documents behind the dashboard: what each output rests on, and what the pilot must measure. Detailed model views follow below.")
+_docs = io.ROOT / "docs"
+for _title, _file in (("Assumptions to pilot (what we assume, what the pilot measures, what changes if wrong)", "ASSUMPTIONS_PILOT.md"),
+                      ("Headline audit (inputs behind every output and their status)", "HEADLINE_AUDIT.md")):
+    with st.expander(_title):
+        _p = _docs / _file
+        st.markdown(_p.read_text() if _p.exists() else f"{_file} not found")
 
 # ---------------- sidebar: global controls ----------------
 st.sidebar.markdown("**Scenario**")
