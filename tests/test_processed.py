@@ -101,7 +101,7 @@ def test_loader_prefers_processed_and_falls_back_to_mock(monkeypatch):
     monkeypatch.delenv("BEQAA_DATA", raising=False)
     if (PROC / "cadasters.csv").exists():
         assert io.load_dataset("cadasters").is_mock is False and io.dataset_badge("cadasters") in ("real", "partly real")
-    assert io.load_dataset("interventions").is_mock is True and io.dataset_badge("interventions") == "mock"          # no real source
+    assert io.load_dataset("interventions").is_mock is True and io.dataset_badge("interventions") == "partly real"     # 3 of 8 costs derived from sourced unit prices (ingest/costs.py); effects and the rest stay assumptions
     monkeypatch.setenv("BEQAA_DATA", "mock")
     assert io.load_dataset("cadasters").is_mock is True
 

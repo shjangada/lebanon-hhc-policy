@@ -83,7 +83,7 @@ empty columns; **mock** = synthetic. The app loads `data/processed/` first and f
 {_md(c)}
 
 ## Why things are still mock or partial
-- **interventions**: the UNFPA appeal has no unit costs; needs partner quotes (AUB speciation lab, mobile unit, CHW stipends).
+- **interventions**: 3 of 8 costs are derived from sourced unit prices (CHW pay, soil/water lab prices, mobile unit as a per-consultation proxy); the other 5 stay mock (no published unit cost); effects and reach are assumptions everywhere. See docs/COSTS.md.
 - **cascade_baseline**: published rates cover only some steps and groups (VASyR national for Syrians; AlArab PHC-attendee sample); the sourced rows are in `data/processed/cascade_baseline_long.csv`. Referral completion has no source.
 - **water_quality**: needs a data request (Litani River Authority). **staffing_referrals, governance_capacity**: no public source; scenario inputs for the escrow, to be measured in the pilot. The UN-Habitat municipal assessment publishes only national aggregates (`docs/ADMIN_CAPACITY_INDEX.md`).
 - **vulnerability**: only IPC at district level; VASyR gives governorate-level 'below SMEB' for Syrian households only (extra columns); female-headed households, access barriers and insurance have no district source and stay empty.
