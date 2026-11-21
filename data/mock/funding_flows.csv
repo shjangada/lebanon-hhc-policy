@@ -1,0 +1,41 @@
+year,channel,usd_m,is_mock,source,source_date,url,status
+2019,UN agencies,33.6,True,MOCK (synthetic),2026-11-21,,mock
+2019,INGOs,27.4,True,MOCK (synthetic),2026-11-21,,mock
+2019,National NGOs,10.2,True,MOCK (synthetic),2026-11-21,,mock
+2019,Government (direct),27.0,True,MOCK (synthetic),2026-11-21,,mock
+2019,Municipalities,13.4,True,MOCK (synthetic),2026-11-21,,mock
+2020,UN agencies,42.5,True,MOCK (synthetic),2026-11-21,,mock
+2020,INGOs,13.2,True,MOCK (synthetic),2026-11-21,,mock
+2020,National NGOs,57.9,True,MOCK (synthetic),2026-11-21,,mock
+2020,Government (direct),7.4,True,MOCK (synthetic),2026-11-21,,mock
+2020,Municipalities,8.0,True,MOCK (synthetic),2026-11-21,,mock
+2021,UN agencies,52.2,True,MOCK (synthetic),2026-11-21,,mock
+2021,INGOs,55.2,True,MOCK (synthetic),2026-11-21,,mock
+2021,National NGOs,16.7,True,MOCK (synthetic),2026-11-21,,mock
+2021,Government (direct),15.4,True,MOCK (synthetic),2026-11-21,,mock
+2021,Municipalities,22.7,True,MOCK (synthetic),2026-11-21,,mock
+2022,UN agencies,53.3,True,MOCK (synthetic),2026-11-21,,mock
+2022,INGOs,25.8,True,MOCK (synthetic),2026-11-21,,mock
+2022,National NGOs,33.4,True,MOCK (synthetic),2026-11-21,,mock
+2022,Government (direct),22.9,True,MOCK (synthetic),2026-11-21,,mock
+2022,Municipalities,22.6,True,MOCK (synthetic),2026-11-21,,mock
+2023,UN agencies,48.1,True,MOCK (synthetic),2026-11-21,,mock
+2023,INGOs,36.3,True,MOCK (synthetic),2026-11-21,,mock
+2023,National NGOs,10.8,True,MOCK (synthetic),2026-11-21,,mock
+2023,Government (direct),27.4,True,MOCK (synthetic),2026-11-21,,mock
+2023,Municipalities,26.3,True,MOCK (synthetic),2026-11-21,,mock
+2024,UN agencies,48.9,True,MOCK (synthetic),2026-11-21,,mock
+2024,INGOs,10.5,True,MOCK (synthetic),2026-11-21,,mock
+2024,National NGOs,16.2,True,MOCK (synthetic),2026-11-21,,mock
+2024,Government (direct),22.9,True,MOCK (synthetic),2026-11-21,,mock
+2024,Municipalities,3.1,True,MOCK (synthetic),2026-11-21,,mock
+2025,UN agencies,58.9,True,MOCK (synthetic),2026-11-21,,mock
+2025,INGOs,25.7,True,MOCK (synthetic),2026-11-21,,mock
+2025,National NGOs,44.6,True,MOCK (synthetic),2026-11-21,,mock
+2025,Government (direct),26.9,True,MOCK (synthetic),2026-11-21,,mock
+2025,Municipalities,13.4,True,MOCK (synthetic),2026-11-21,,mock
+2026,UN agencies,22.6,True,MOCK (synthetic),2026-11-21,,mock
+2026,INGOs,38.5,True,MOCK (synthetic),2026-11-21,,mock
+2026,National NGOs,37.0,True,MOCK (synthetic),2026-11-21,,mock
+2026,Government (direct),13.8,True,MOCK (synthetic),2026-11-21,,mock
+2026,Municipalities,19.0,True,MOCK (synthetic),2026-11-21,,mock

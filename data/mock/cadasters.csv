@@ -1,0 +1,41 @@
+cadaster_id,cadaster_name,district,governorate,lat,lon,is_mock,source,source_date,url,status
+MOCK-BAA-01,Baalbek mock town 1,Baalbek,Baalbek-Hermel,34.01828,36.1376,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-02,Baalbek mock town 2,Baalbek,Baalbek-Hermel,34.04503,36.25643,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-03,Baalbek mock town 3,Baalbek,Baalbek-Hermel,33.88294,36.12187,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-04,Baalbek mock town 4,Baalbek,Baalbek-Hermel,34.00767,36.18103,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-05,Baalbek mock town 5,Baalbek,Baalbek-Hermel,33.99899,36.14882,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-06,Baalbek mock town 6,Baalbek,Baalbek-Hermel,34.05276,36.24667,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-07,Baalbek mock town 7,Baalbek,Baalbek-Hermel,34.00396,36.26763,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-BAA-08,Baalbek mock town 8,Baalbek,Baalbek-Hermel,34.02805,36.14844,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-01,Hermel mock town 1,Hermel,Baalbek-Hermel,34.41213,36.32247,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-02,Hermel mock town 2,Hermel,Baalbek-Hermel,34.44271,36.377,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-03,Hermel mock town 3,Hermel,Baalbek-Hermel,34.37891,36.33914,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-04,Hermel mock town 4,Hermel,Baalbek-Hermel,34.46335,36.37073,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-05,Hermel mock town 5,Hermel,Baalbek-Hermel,34.3643,36.35887,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-06,Hermel mock town 6,Hermel,Baalbek-Hermel,34.42194,36.40193,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-07,Hermel mock town 7,Hermel,Baalbek-Hermel,34.41476,36.40585,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HER-08,Hermel mock town 8,Hermel,Baalbek-Hermel,34.5185,36.35562,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-01,Zahle mock town 1,Zahle,Bekaa,33.81927,35.85117,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-02,Zahle mock town 2,Zahle,Bekaa,33.88696,35.96774,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-03,Zahle mock town 3,Zahle,Bekaa,33.84316,35.84959,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-04,Zahle mock town 4,Zahle,Bekaa,33.80053,35.93904,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-05,Zahle mock town 5,Zahle,Bekaa,33.8946,35.93259,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-06,Zahle mock town 6,Zahle,Bekaa,33.81007,35.91393,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-07,Zahle mock town 7,Zahle,Bekaa,33.857,35.91312,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-ZAH-08,Zahle mock town 8,Zahle,Bekaa,33.90229,35.91342,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-01,West Bekaa mock town 1,West Bekaa,Bekaa,33.66073,35.75405,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-02,West Bekaa mock town 2,West Bekaa,Bekaa,33.63735,35.78788,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-03,West Bekaa mock town 3,West Bekaa,Bekaa,33.53257,35.73082,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-04,West Bekaa mock town 4,West Bekaa,Bekaa,33.59178,35.71167,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-05,West Bekaa mock town 5,West Bekaa,Bekaa,33.60349,35.8397,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-06,West Bekaa mock town 6,West Bekaa,Bekaa,33.56805,35.8081,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-07,West Bekaa mock town 7,West Bekaa,Bekaa,33.51903,35.72991,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WES-08,West Bekaa mock town 8,West Bekaa,Bekaa,33.62977,35.78517,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-01,Rachaya mock town 1,Rachaya,Bekaa,33.54267,35.8876,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-02,Rachaya mock town 2,Rachaya,Bekaa,33.47908,35.81226,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-03,Rachaya mock town 3,Rachaya,Bekaa,33.55148,35.82852,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-04,Rachaya mock town 4,Rachaya,Bekaa,33.42346,35.772,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-05,Rachaya mock town 5,Rachaya,Bekaa,33.44483,35.86983,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-06,Rachaya mock town 6,Rachaya,Bekaa,33.50855,35.88143,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-07,Rachaya mock town 7,Rachaya,Bekaa,33.47436,35.84951,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-RAC-08,Rachaya mock town 8,Rachaya,Bekaa,33.53754,35.82144,True,MOCK (synthetic),2026-11-21,,mock

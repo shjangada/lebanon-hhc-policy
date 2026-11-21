@@ -1,0 +1,5 @@
+source_id,title,org,date,url,notes
+S001,CNRS-L/MoE soil report Ch. II + Table 2.3,CNRS-L / Ministry of Environment,2026-04,,Beqaa = BE sample IDs; basis for soil_sites values
+S002,Barake Hoshide Samaha et al. grapevine-inspired PHC framework,,,,Need Score has no formula/weights in paper
+S003,Abi Saab et al. 2022 Water 14:1437,,2022,,Beqaa crop transfer trial
+S004,LRP 2026 Addendum,Gov of Lebanon + UN,2026-09,https://data.unhcr.org,JIAF 2.0 severity maps

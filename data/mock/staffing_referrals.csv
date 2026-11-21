@@ -1,0 +1,23 @@
+facility_id,posts_budgeted,posts_filled,has_family_physician,staff_left_last_12m,referral_sent_month,referral_completed_month,is_mock,source,source_date,url,status
+MOCK-PHC-01,5,2,False,3,71,27,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-02,6,3,True,2,78,17,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-03,5,3,False,1,70,17,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-04,8,4,False,3,42,22,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-05,13,11,False,0,32,17,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-06,9,6,False,3,78,45,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-07,11,9,False,0,26,16,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-08,8,7,False,1,38,21,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-09,4,2,False,3,15,9,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-10,4,3,True,2,65,14,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-11,6,4,False,3,55,17,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-12,6,5,False,2,15,7,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-13,12,7,False,2,25,15,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-14,12,8,True,1,48,9,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-15,12,8,False,0,47,21,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-16,10,4,True,0,66,35,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-17,9,5,False,1,28,6,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-18,10,9,True,0,74,29,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-19,8,6,False,2,41,26,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-20,10,5,False,3,67,35,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-21,11,6,False,3,26,8,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-22,11,5,False,1,12,7,True,MOCK (synthetic),2026-11-21,,mock

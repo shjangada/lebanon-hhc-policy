@@ -1,0 +1,4 @@
+# All values are assumptions until replaced.
+budget_tiers_usd: {starter: 1000, small: 100000, large: 1000000}
+access: {d0_minutes: [15, 30, 60], baseline: baseline_pre2026, current: current_2026}
+displacement_shock: {extra_displaced_share: 0.05}

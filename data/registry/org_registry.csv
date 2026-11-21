@@ -1,0 +1,8 @@
+org_id,name,type,geography,sectors,works_with_unregistered_workers,women_led,contact_route,url,status,notes
+O001,Lebanese League for Women in Business (LLWB),women's org,Lebanon,economic empowerment,to_verify,yes,,,to_verify,
+O002,American University of Beirut,university,Lebanon,soil testing; public health,to_verify,,,,to_verify,
+O003,BU Center for Forced Displacement,university,,displacement research,to_verify,,,,to_verify,
+O004,Amel Association,local NGO,Lebanon,health; protection,to_verify,,,,to_verify,
+O005,Municipalities and Unions of Municipalities (Beqaa districts),municipality,Beqaa,local governance,to_verify,,,,to_verify,
+O006,Social Development Centres (MoSA),government,Lebanon,social services,to_verify,,,,to_verify,
+O007,Farmer cooperatives (MoA farmer registry),cooperative,Beqaa,agriculture,to_verify,,,,to_verify,
