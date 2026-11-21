@@ -3,6 +3,7 @@
     python scripts/fetch_sources.py            # fetch anything missing
     python scripts/fetch_sources.py --refresh  # re-download everything
     python scripts/fetch_sources.py --check    # report HDX 'last_modified' vs the copy on disk
+    python scripts/fetch_sources.py --restore-pdfs  # re-download PDFs that are not stored in git (urls + sha256 from each _provenance.json)
 
 Downloaded files are treated as UNTRUSTED DATA: this script only saves bytes (plus a provenance JSON); it never
 opens, unzips or executes them. Inspect with `python -I`. Public sources only; no credentials.
@@ -33,11 +34,41 @@ def hdx_package(pkg: str) -> dict:
     return json.loads(get(f"https://data.humdata.org/api/3/action/package_show?id={pkg}", 30))["result"]
 
 
+def restore_pdfs() -> None:
+    """PDFs are not committed (third-party licences vary). Every data/raw/*/_provenance.json lists file, url and sha256: re-fetch what is missing and verify the hash."""
+    for prov in sorted(RAW.glob("**/_provenance.json")):
+        d = json.loads(prov.read_text())
+        entries = d if isinstance(d, list) else d.get("files", [d] if "file" in d else [])
+        for e in entries:
+            if not isinstance(e, dict):
+                continue
+            name, url = e.get("file"), e.get("url")
+            if not name or not name.lower().endswith(".pdf"):
+                continue
+            dest = prov.parent / name
+            if dest.exists():
+                continue
+            if not url:
+                print(f"MANUAL  {dest.relative_to(RAW)}: no url recorded (supplied by the team); see docs/MANUAL_STEPS.md")
+                continue
+            try:
+                blob = get(url)
+            except Exception as ex:
+                print(f"FAILED  {name}: {ex}")
+                continue
+            ok = not e.get("sha256") or hashlib.sha256(blob).hexdigest() == e["sha256"]
+            dest.write_bytes(blob)
+            print(f"{'ok     ' if ok else 'CHANGED'} {dest.relative_to(RAW)} ({len(blob):,} bytes){'' if ok else ' (sha256 differs from the recorded copy: re-check the transcription)'}")
+
+
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--restore-pdfs", action="store_true")
     ap.add_argument("--refresh", action="store_true")
     ap.add_argument("--check", action="store_true")
     a = ap.parse_args()
+    if a.restore_pdfs:
+        return restore_pdfs()
     for row in csv.DictReader(open(MANIFEST)):
         if row["status"] not in ("downloaded", "to_download"):
             continue

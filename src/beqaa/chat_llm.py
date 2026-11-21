@@ -45,12 +45,12 @@ def get_client():
     return anthropic.Anthropic()
 
 
-def ask(question: str, history: list[dict] | None = None, client=None, context: str = "") -> dict:
+def ask(question: str, history: list[dict] | None = None, client=None, context: str = "", use_llm: bool = True) -> dict:
     """Returns {answer, citations, trace, invalid_ids, mode}. `history` = prior plain-text turns [{role, content}]."""
-    client = client or get_client()
+    client = (client or get_client()) if use_llm else None      # use_llm=False: never call the API, even when a key exists
     if client is None:
         r = chat.answer(question)
-        return {"answer": r["answer"], "citations": r["citations"], "trace": [], "invalid_ids": [], "mode": "retrieval-only (no API key)"}
+        return {"answer": r["answer"], "citations": r["citations"], "trace": [], "invalid_ids": [], "mode": "retrieval-only (no API key or LLM off)"}
     messages = list(history or []) + [{"role": "user", "content": (f"[Current project context: {context}]\n\n" if context else "") + question}]
     trace = []
     for _ in range(MAX_TURNS):

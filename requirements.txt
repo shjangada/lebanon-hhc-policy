@@ -4,7 +4,13 @@ pyyaml
 scipy
 matplotlib
 streamlit
-scipy
-pytest
-anthropic
+altair
 plotly
+pydeck
+shapely
+rasterio
+openpyxl
+pyarrow
+pypdf
+anthropic
+pytest

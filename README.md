@@ -76,5 +76,33 @@ The app and pipeline load `data/processed/` (real, from `make ingest`) first and
 
 Details and coverage: `docs/DATA_STATUS.md` · what changes when real inputs replace mock: `docs/MOCK_VS_REAL.md` · what needs a person: `docs/MANUAL_STEPS.md`.
 
+## Data we use and what it is for
+
+One row per downloaded source (`data/registry/data_manifest.csv`; licences and refresh cadence are there). Real/mock status per dataset is in the table above.
+
+| ID | Source | Publisher | Licence | What it feeds | Why we use it |
+|---|---|---|---|---|---|
+| D01 | Lebanon subnational administrative boundaries (COD-AB) | OCHA / HDX | CC BY-IGO | all (cadaster/district geometry and names) | Real district/cadaster names and polygons replace synthetic cadasters |
+| D02 | Health facilities of Lebanon (OSM via HOT) | HOT / HDX | ODbL | M1 access; M2 capacity strain | Facility coordinates and types updated 2026-11; no 2026 open/closed status or capacity |
+| D03 | LRP 2026 population package | GoL/UN LRP / HDX | CC BY | M1 demand; M2 clinical demand and equity groups | Official population by group (displaced Syrians; the gap to UNHCR records is the unregistered proxy S11) |
+| D04 | IOM DTM Lebanon (admin 0-2) from API | IOM DTM / HDX | Other (see HDX page) | M1/M2 displaced population by district | Current IDP and returnee counts (S06) |
+| D05 | IPC acute food insecurity: Lebanon | IPC / HDX | CC0 | M2 vulnerability (ipc3plus_share) | District-level IPC phase shares (S13) |
+| D06 | FTS Lebanon requirements and funding | OCHA FTS / HDX | CC BY-IGO | Funding finder; dependency metric (money by recipient type) | Real funding by year and recipient (S19) |
+| D07 | Lebanon accessibility indicators (PHC and hospital access) | HDX (CC BY-SA) | CC BY-SA | M1 cross-check of travel-time and access | Independent PHC/hospital access metrics to sanity-check our E2SFCA |
+| D08 | WorldPop age and sex structures 2025 (1 km) | WorldPop / HDX | CC BY | M1 women 15-49 share (S09) | 100 m rasters (210 MB each) skipped; 1 km is enough for cadaster shares |
+| S03 | WHO Lebanon Emergency Sitrep #23 (closed facilities map) | WHO EMRO | WHO | M1 closure scenario | Only facility-closure map found; closed facilities must be transcribed by hand |
+| S08 | MoPH estimated resident population by age group and nationality 2024 | MoPH | MoPH | M1 demand weights (women 15-49 share by nationality) | URL from the catalog now returns 404; the LRP 2026 package (D03) already gives age/sex by nationality per governorate |
+| S27 | CNRS-L/MoE post-war recovery report (Ch. II soil) | CNRS-L / MoE | as published | M4 exposure; M2 environment | Only Beqaa soil values (site values must be transcribed from Table 2.3) |
+| S28 | Abi Saab et al. 2022 (Water 14(9):1437) | LARI / IWMI | CC BY | M4 crop transfer factors | PDF saved manually 2026-11-21; transcribe transfer factors |
+| F07 | UNFPA Flash Appeal for Lebanon (Mar-Aug 2026) | UNFPA | as published | Funding registry F007; M5 cost lines | Maternal/SRH figures and appeal lines |
+| D09 | LHF / CBPF project summary (Lebanon fund 71) | OCHA CBPF / HDX | CC BY | governance baseline (national NGO share of LHF) | Partner type per project: share to national NGOs by year |
+| D10 | VASyR 2025 and MSNA 2025 (UNHCR/WFP/UNICEF; REACH/UN Women) | UNHCR / UN Women | not stated | M2 vulnerability | Governorate-level below-SMEB for Syrian households; district tables not published |
+| D11 | WHO EMRO Lebanon sitreps #24-30 and UNICEF SitRep 5 | WHO / UNICEF | as published | facility status | Hospital damage/closure names (no locations); PHC totals only |
+| D12 | UCDP GED Lebanon and HDX ACLED admin-2 monthly | UCDP / ACLED via HDX | CC BY-IGO (UCDP); ACLED terms (do not redistribute) | S1 escalation scenario | UCDP stops 2024; ACLED file is district x month |
+| D13 | UN-Habitat Lebanon Rapid Municipal Assessment 2026; Citizen Budget 2026; WB WGI; IMF TA report | UN-Habitat / MoF / WB / IMF | as published | state capacity | National aggregates only; MoPH budget; SC01/W19 checks |
+| D14 | UNHCR HAUS 2024 report (supplied by the team) | UNHCR Lebanon | not stated | appendix; cascade sources | Reasons refugee households seek care; ANC/delivery/PNC cascade for Syrian refugees; cost barriers |
+
+Third-party PDFs (sitreps, VASyR, MSNA, HAUS, IMF, Abi Saab and others) are used to hand-transcribe values into `transcribed/` and are **not stored in git**: `python scripts/fetch_sources.py --restore-pdfs` re-downloads them from the URLs and sha256 hashes in each `data/raw/*/_provenance.json`. ACLED is not used until API access works (`docs/DEPLOY.md`).
+
 ## Principles (short)
 Every number has a source and a status (`verified` / `assumption` / `mock`). Equity by group is reported in every model. Ranges and rank stability, not single numbers. Environmental claims carry rung a/b/c and nothing is ever tagged c without health data. One command rebuilds everything, with fixed seeds.
