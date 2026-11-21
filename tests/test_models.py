@@ -105,3 +105,19 @@ def test_every_mock_file_declares_a_real_source():
     files = {f.name for f in (root / "data" / "mock").glob("*.csv")}
     assert files == set(prov.mock_file), (files ^ set(prov.mock_file))
     assert set(prov.obtainability) <= {"public_download", "public_download+transcribe", "transcribe", "partner_request", "literature", "pilot_measured"}
+
+
+def test_facility_risk_and_pause_scenario():
+    r = m1_access.facility_risk(15)
+    assert {"power_source", "conflict_exposed", "needs_backup_or_pause_plan"} <= set(r.columns) and len(r) > 0
+    p = m1_access.access_if_exposed_pause(30, "women_15_49", 15)
+    assert (p.access_lost_to_pause >= -1e-12).all()
+    none = m1_access.access_if_exposed_pause(30, "women_15_49", 10_000)          # nothing exposed -> nothing lost
+    assert none.access_lost_to_pause.abs().max() < 1e-12
+
+
+def test_conflict_indicator_in_need_score():
+    raw = m2.raw_indicators()
+    assert "conflict_incidents" in raw.columns and raw.conflict_incidents.ge(0).all()
+    s = m2.compute(raw)
+    assert "s_conflict_incidents" in s.columns and s.need_score.between(0, 1).all()

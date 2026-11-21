@@ -45,13 +45,15 @@ def decay(t: np.ndarray, d0: float, kind: str = "gaussian") -> np.ndarray:
 
 
 def e2sfca(pop: pd.DataFrame, fac: pd.DataFrame, tt: pd.DataFrame, d0: float = 30, demand_col: str = "women_15_49",
-           facilities: str = "all", scenario: str = "current_2026", kind: str = "gaussian") -> pd.DataFrame:
+           facilities: str = "all", scenario: str = "current_2026", kind: str = "gaussian", exclude: set | None = None) -> pd.DataFrame:
     """Return per-cadaster access A_i (capacity per person) for one scenario."""
     f = fac.copy()
     if scenario == "current_2026":
         f = f[f.status_2026 == "open"]
     elif scenario != "baseline_pre2026":
         raise ValueError(scenario)
+    if exclude:
+        f = f[~f.facility_id.isin(exclude)]
     if facilities == "offers_anc":
         f = f[f.offers_anc.astype(bool)]
     cad_ids = list(pop.cadaster_id)
@@ -161,3 +163,45 @@ def mobile_unit_sites(k: int = 3, d0: float = 30, min_district_share: float = 0.
     out["d0"] = d0
     out["is_mock"] = True if pop["is_mock"].all() else False
     return out.reset_index(drop=True)
+
+
+def facility_risk(conflict_threshold: int = 15) -> pd.DataFrame:
+    """Open facilities with power source and conflict exposure of their cadaster. Fixed assets in exposed cadasters, or on grid power only,
+    are the ones that must be pausable / backed up (docs/FEASIBILITY.md F2, F3). Hubs without a cadaster take the nearest cadaster's exposure."""
+    fac, mock = load_dataset("facilities")
+    cad, _ = load_dataset("cadasters")
+    ce, _ = load_dataset("conflict_exposure")
+    f = fac[fac.status_2026 == "open"].copy()
+    cadx = cad.merge(ce[["cadaster_id", "conflict_incidents"]], on="cadaster_id")
+    inc = []
+    for r in f.itertuples():
+        if isinstance(r.cadaster_id, str) and r.cadaster_id in set(cadx.cadaster_id):
+            inc.append(float(cadx.set_index("cadaster_id").loc[r.cadaster_id, "conflict_incidents"]))
+        else:
+            d = ((cadx.lat - r.lat) ** 2 + (cadx.lon - r.lon) ** 2)
+            inc.append(float(cadx.loc[d.idxmin(), "conflict_incidents"]))
+    f["conflict_incidents"] = inc
+    f["conflict_exposed"] = f.conflict_incidents >= conflict_threshold
+    f["grid_only"] = f.power_source == "grid_only"
+    f["needs_backup_or_pause_plan"] = f.conflict_exposed | f.grid_only
+    f["is_mock"] = bool(mock)
+    return f[["facility_id", "name", "type", "power_source", "conflict_incidents", "conflict_exposed", "grid_only", "needs_backup_or_pause_plan", "offers_anc", "is_mock"]]
+
+
+def access_if_exposed_pause(d0: float = 30, demand_col: str = "women_15_49", conflict_threshold: int = 15) -> pd.DataFrame:
+    """Resilience scenario: facilities in conflict-exposed cadasters pause. Compare access with current_2026."""
+    pop, _ = load_dataset("population")
+    fac, _ = load_dataset("facilities")
+    tt, _ = load_dataset("travel_time")
+    cad, _ = load_dataset("cadasters")
+    risk = facility_risk(conflict_threshold)
+    paused = set(risk[risk.conflict_exposed].facility_id)
+    cur = e2sfca(pop, fac, tt, d0, demand_col, "all", "current_2026")
+    pau = e2sfca(pop, fac, tt, d0, demand_col, "all", "current_2026", exclude=paused)
+    out = cad[["cadaster_id", "cadaster_name", "district"]].merge(cur[["cadaster_id", "access"]].rename(columns={"access": "access_current"})).merge(
+        pau[["cadaster_id", "access"]].rename(columns={"access": "access_if_paused"}))
+    out["access_lost_to_pause"] = out.access_current - out.access_if_paused
+    out["pct_lost"] = np.where(out.access_current > 0, out.access_lost_to_pause / out.access_current, 0.0)
+    out["n_paused_facilities"] = len(paused)
+    out["is_mock"] = True if pop["is_mock"].all() else False
+    return out
