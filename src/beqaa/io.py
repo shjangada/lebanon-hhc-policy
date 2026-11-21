@@ -1,6 +1,7 @@
 """Dataset loader: real file from data/raw/ if present, else mock from data/mock/."""
 from __future__ import annotations
 
+import os
 import pathlib
 from dataclasses import dataclass
 
@@ -9,6 +10,7 @@ import pandas as pd
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 RAW = ROOT / "data" / "raw"
 MOCK = ROOT / "data" / "mock"
+DERIVED = ROOT / "data" / "derived"      # converters' output (python -m beqaa.ingest); used only when BEQAA_DATA=derived
 
 # dataset name -> raw file name (see CLAUDE.md section 4)
 DATASETS = {
@@ -47,6 +49,11 @@ def load_dataset(name: str, raw_dir: pathlib.Path | None = None, mock_dir: pathl
         if "is_mock" not in df.columns:
             df["is_mock"] = False
         return Loaded(df, False)
+    if os.environ.get("BEQAA_DATA") == "derived" and (DERIVED / DATASETS[name]).exists() and mock_dir == MOCK:
+        df = pd.read_csv(DERIVED / DATASETS[name])
+        if "is_mock" not in df.columns:
+            df["is_mock"] = False
+        return Loaded(df, bool(df["is_mock"].any()))
     mock = mock_dir / DATASETS[name]
     if not mock.exists():
         raise FileNotFoundError(f"No real ({raw}) or mock ({mock}) file for '{name}'. Run `make mock`.")
@@ -113,3 +120,26 @@ def reference_status() -> pd.DataFrame:
     ok = (WDI_DIR / "wdi_population_total_by_country.csv").exists()
     return pd.DataFrame([("wdi_population (Lebanon national series)", "data/raw/worldbank_population/", "✅ real" if ok else "🔴 missing")],
                         columns=["dataset", "raw_file", "status"])
+
+
+CADASTER_KEYED = ["population", "vulnerability", "conflict_exposure", "travel_time", "facilities"]
+
+
+def validate_consistency() -> list[str]:
+    """Datasets keyed by cadaster_id must all use the same cadaster set. Mixing real cadasters with mock files (or the reverse) breaks joins.
+    Returns a list of problems (empty = consistent)."""
+    ids = set(load_dataset("cadasters").df.cadaster_id)
+    problems = []
+    for name in CADASTER_KEYED:
+        if name not in DATASETS:
+            continue
+        try:
+            df = load_dataset(name).df
+        except FileNotFoundError:
+            continue
+        have = set(df.cadaster_id.dropna())
+        if name in ("population", "vulnerability", "conflict_exposure") and have != ids:
+            problems.append(f"{name}: {len(have ^ ids)} cadaster ids differ from cadasters ({len(have)} vs {len(ids)}). Mixed real/mock?")
+        elif name in ("travel_time", "facilities") and not have <= ids:
+            problems.append(f"{name}: {len(have - ids)} cadaster ids not in cadasters. Mixed real/mock?")
+    return problems

@@ -17,6 +17,9 @@ MEMO = ROOT / "outputs" / "memo"
 def run(verbose: bool = True) -> dict:
     for d in (PROC, FIG, MEMO):
         d.mkdir(parents=True, exist_ok=True)
+    problems = io.validate_consistency()
+    if problems:
+        raise SystemExit("Inconsistent datasets (set BEQAA_DATA=mock, or finish the converters):\n  " + "\n  ".join(problems))
     mode = io.overall_mode()
     is_mock = mode != "REAL"
     out = {}
