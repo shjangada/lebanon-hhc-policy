@@ -119,3 +119,6 @@ Community-decided allocation, local-fit multiplier (1.0–1.3), capture rate (0.
 
 ## 4. How to keep this current
 `python -m beqaa.pipeline` writes `data/processed/m2_method_sensitivity.csv` and `assumptions.csv` every run; the dashboard shows both. When a decision changes, edit the yaml (not the code), re-run, and update the relevant D-entry and the status table above.
+
+## D-env. Unsampled areas are unknown, not safe
+Only 5 villages have soil results, so most cadasters have no environmental evidence. Until now an unsampled cadaster scored 0 on the environment domain, which silently treated "not tested" as "no exposure". `m2.compute(env_unknown="unknown")` (default) now sets `D_environment_known = NaN` for cadasters with no soil result within the 15 km decay radius and no measured well, flags them `env_evidence_gap`, and re-weights the remaining domains for those cadasters. Alternatives: `zero` (legacy) and `conflict_prior` (conflict-incident score as a strike-damage proxy). **Finding on real inputs:** the top 10 stay all Baalbek under all three treatments, so the Baalbek concentration is driven by district-level IPC and conflict counts, not only by the environment gap. `D_environment` is kept as a 0-filled column for charts; scores use `D_environment_known`. The evidence gap is its own layer for the research-funding view (`research_gaps.py`).

@@ -113,7 +113,7 @@ def rank_robustness(n: int | None = None, seed: int | None = None, top_k: int | 
     for scn in scen_list:
         variants = _variants(None if scn == "baseline" else scn, unc, rng, cache)
         keys = list(variants)
-        Ds = {kk: m2.compute(variants[kk], spec=spec)[[f"D_{d}" for d in domains]].values for kk in keys}
+        Ds = {kk: m2.domain_matrix(m2.compute(variants[kk], spec=spec), domains) for kk in keys}
         # default-parameter ranking in this scenario (for Kendall tau): d0=30, cr6 default grid point nearest 0.1 (S6: 1.0)
         dk = (30, 1.0 if scn == "S6_worst_case_contamination" else 0.1)      # default parameters inside this scenario
         dflt = m2.compute(variants[dk], spec=spec)
@@ -136,12 +136,7 @@ def rank_robustness(n: int | None = None, seed: int | None = None, top_k: int | 
         for j in range(nd):
             D = Ds[keys[choice[j]]]
             w = W[j]
-            if agg[j] == "geometric":
-                S = np.exp(np.log(np.clip(D, 1e-3, 1)) @ w)
-            elif agg[j] == "max":
-                S = D.max(axis=1)
-            else:
-                S = D @ w
+            S = m2.aggregate_scores(D, w, agg[j])
             order = (-S).argsort()
             rk = np.empty(len(ids), dtype=int)
             rk[order] = np.arange(1, len(ids) + 1)

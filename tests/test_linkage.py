@@ -88,3 +88,22 @@ def test_research_candidates_link_only_registry_rows(scored_rob):
     ids = {i for s in c.registry_fund_ids for i in s.split("; ") if i}
     assert ids <= set(reg.index) and not (reg.loc[list(ids), "status"] == "closed").any()
     assert (c.need_score >= 0.33).all()
+
+
+def test_unsampled_environment_is_unknown_not_zero():
+    """A cadaster with no soil result within 15 km and no measured well has an evidence gap: its environment domain is NaN-known and the
+    other domains are re-weighted, so no evidence is not scored as 'no exposure' (legacy behaviour env_unknown='zero' is still available)."""
+    import numpy as np
+    from beqaa import m2_need_score as m2
+    raw = m2.raw_indicators()
+    spec = m2.apply_quantile_anchors(m2.load_spec(), raw)
+    u = m2.compute(raw, spec=spec)
+    z = m2.compute(raw, spec=spec, env_unknown="zero")
+    gap = u.env_evidence_gap
+    assert gap.any() and (~gap).any()
+    assert u.loc[gap, "D_environment_known"].isna().all() and u.loc[~gap, "D_environment_known"].notna().all()
+    assert u.need_score.between(0, 1).all()
+    # unsampled cadasters are not penalised for missing evidence: re-weighted scores differ from the zero-filled ones
+    assert not np.allclose(u.loc[gap, "need_score"], z.loc[gap, "need_score"])
+    # sampled cadasters are unchanged in their environment value
+    assert np.allclose(u.loc[~gap, "D_environment"], z.loc[~gap, "D_environment"])
