@@ -1,0 +1,7 @@
+metal,crop,transfer_factor,is_mock,source,source_date,url,status
+Cr,lettuce,0.02,True,MOCK (synthetic),2026-11-21,,mock
+Cr,potato,0.005,True,MOCK (synthetic),2026-11-21,,mock
+Pb,lettuce,0.03,True,MOCK (synthetic),2026-11-21,,mock
+Pb,potato,0.004,True,MOCK (synthetic),2026-11-21,,mock
+Cr,wheat,0.01,True,MOCK (synthetic),2026-11-21,,mock
+Pb,wheat,0.01,True,MOCK (synthetic),2026-11-21,,mock

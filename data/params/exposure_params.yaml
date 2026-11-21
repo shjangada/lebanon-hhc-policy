@@ -1,0 +1,10 @@
+# M4 parameters. status: verify = confirm in EPA IRIS before use in the memo.
+soil_ingestion_mg_per_day: {child: 200, adult: 100}   # EPA defaults, status: verify
+body_weight_kg: {child: 15, adult: 70}                # status: verify
+exposure_frequency: {days: 350, per: 365}             # status: verify
+rfd_mg_per_kg_day:
+  Cr_III: {value: 1.5, status: verify}
+  Cr_VI: {value: 0.003, status: verify}
+lead_soil_screening_level_ppm: {value: 200, source: EPA 2024 residential, status: verify}
+cr6_fraction: {low: 0.0, high: 1.0, status: assumption}   # key uncertainty
+food_intake_kg_per_day: {child: 0.15, adult: 0.30}   # leafy/root veg from local plots; assumption, status: assumption

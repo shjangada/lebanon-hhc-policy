@@ -1,0 +1,97 @@
+import numpy as np
+import pandas as pd
+import pytest
+
+from beqaa import allocation, chat, equity, escrow, io, m1_access, m2_need_score as m2, m4_exposure, m5_options, viz
+
+
+def test_e2sfca_conservation():
+    """Sum of demand-weighted access equals total capacity of facilities with demand in their catchment."""
+    pop, _ = io.load_dataset("population"); fac, _ = io.load_dataset("facilities"); tt, _ = io.load_dataset("travel_time")
+    for scen in ("baseline_pre2026", "current_2026"):
+        a = m1_access.e2sfca(pop, fac, tt, 30, "women_15_49", "all", scen)
+        f = fac if scen == "baseline_pre2026" else fac[fac.status_2026 == "open"]
+        T = tt[tt.facility_id.isin(f.facility_id)].pivot(index="cadaster_id", columns="facility_id", values="minutes")
+        has_demand = (T <= 30).any(axis=0)
+        cap = f.set_index("facility_id").loc[has_demand[has_demand].index, "capacity_weekly"].sum()
+        served = (a.access.values * pop.women_15_49.values).sum()
+        assert served == pytest.approx(cap, rel=1e-6)
+
+
+def test_closures_never_increase_access():
+    a = m1_access.access_by_cadaster()
+    assert (a.access_lost >= -1e-12).all()
+
+
+def test_group_access_and_weighted_demand():
+    acc = m1_access.access_by_cadaster(30, "weighted_women_15_49", demand_weights={"unregistered_workers_est": 2.0})
+    g = m1_access.group_access(acc)
+    assert set(g.group) == set(equity.GROUPS) and abs(g.set_index("group").loc["host_lebanese", "ratio_to_host"] - 1) < 1e-9
+
+
+def test_need_score_bounded_and_weights_sum():
+    spec = m2.load_spec()
+    assert sum(spec["domain_weights"].values()) == pytest.approx(1.0)
+    raw = m2.raw_indicators()
+    for geo in (False, True):
+        s = m2.compute(raw, geometric=geo)
+        assert s.need_score.between(0, 1).all()
+        assert sum(s.attrs["weights_used"].values()) == pytest.approx(1.0)
+
+
+def test_robustness_probabilities():
+    r = m2.robustness(m2.raw_indicators(), n=500)
+    assert r.p_top_tier.between(0, 1).all() and (r.rank_p05 <= r.rank_p95).all()
+    assert r.p_top_tier.sum() == pytest.approx(m2.load_spec()["top_k"], abs=1e-6)
+
+
+def test_chemstar_hq_sanity():
+    p = m4_exposure.load_params()
+    assert m4_exposure.cr_hq(230, "child", 0.0, 0, p) == pytest.approx(0.002, abs=5e-4)
+    assert m4_exposure.cr_hq(230, "child", 1.0, 0, p) == pytest.approx(0.98, abs=0.01)
+
+
+def test_no_site_gets_rung_c():
+    assert (m4_exposure.screen_sites().evidence_rung != "c").all()
+
+
+def test_m5_budget_tiers():
+    ft = m5_options.fundable_table(1000).set_index("intervention_id")
+    assert ft.loc["mobile_maternal_unit", "p_fundable"] == 0 and ft.loc["sunflower_biochar_plot", "p_fundable"] > 0.9
+    ev = m5_options.evaluate(["transport_vouchers"], 100_000)
+    assert ev.extra_pathways_median.iloc[0] > 0
+
+
+def test_allocation_three_regimes():
+    s, d = allocation.simulate(m2.compute(m2.raw_indicators()), 100_000)
+    assert set(s.regime) == set(allocation.REGIMES)
+    assert (s.equity_gap_after >= 0).all()
+    safe, _ = allocation.simulate(m2.compute(m2.raw_indicators()), 100_000, params={"women_seat_share": 0.3, "worker_seat_share": 0.3})
+    assert safe.set_index("regime").loc["community", "capture_loss_rate"] == 0
+
+
+def test_escrow_conserves_pool():
+    sc = m2.compute(m2.raw_indicators())
+    d, _, w = escrow.run(sc, 1_000_000, 8, 0.5)
+    assert (d.released_usd + d.held_in_escrow_usd).sum() == pytest.approx(1_000_000)
+    d2, _, _ = escrow.run(sc, 1_000_000, 8, 0.5, unrestricted=True)
+    assert d2.held_in_escrow_usd.sum() == 0
+
+
+def test_mock_watermark_on_mock_figures(tmp_path):
+    sc = m2.compute(m2.raw_indicators())
+    assert viz.watermark(__import__("matplotlib.pyplot", fromlist=["x"]).figure(), True) is not None
+    assert viz.watermark(__import__("matplotlib.pyplot", fromlist=["x"]).figure(), False) is None
+    viz.priority_map(sc, True, tmp_path / "f.png")
+    assert (tmp_path / "f.png").exists()
+
+
+def test_chatbot_refuses_without_match_and_cites_rows():
+    assert chat.answer("cryptocurrency mining subsidies")["answer"] == chat.NO_MATCH
+    a = chat.answer("World Bank LEAP health")
+    assert "F008" in a["citations"] and "http" in a["answer"]
+
+
+def test_wdi_lebanon_series():
+    d = io.load_wdi_population("LBN")
+    assert d is None or (d.population.between(1e6, 1e7).all() and 2019 in set(d.year))

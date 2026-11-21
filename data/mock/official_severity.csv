@@ -1,0 +1,6 @@
+district,jiaf_severity,health_severity,fsa_composite_severity,source_date,is_mock,source,url,status
+Baalbek,4,4,4,2026-11-21,True,MOCK (synthetic),,mock
+Hermel,4,4,5,2026-11-21,True,MOCK (synthetic),,mock
+Zahle,3,3,3,2026-11-21,True,MOCK (synthetic),,mock
+West Bekaa,3,2,3,2026-11-21,True,MOCK (synthetic),,mock
+Rachaya,3,3,2,2026-11-21,True,MOCK (synthetic),,mock

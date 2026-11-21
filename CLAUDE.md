@@ -1,0 +1,253 @@
+# CLAUDE.md: Beqaa Health Prioritization Framework & Dashboard
+
+> **For Claude Code.** This is the project brief. Read it fully before writing code. The `data/raw/` folder is empty for now; build everything against **mock data** first (section 5), with loaders that switch to real files as they arrive.
+
+---
+
+## 1. Context (read once)
+
+- **Event:** 2026 MIT Policy Hackathon, Born Global Foundation / Impossible Lebanon challenge: *"What international health policy should guide emergency assistance and recovery investment in the Beqaa Valley so that environmental recovery translates into accessible healthcare and healthier agricultural communities?"*
+- **Deliverables the team submits:** a 2–3 page policy memo plus appendix, and a 5-minute pitch. **This repo produces the analysis, figures and an appendix-ready notebook, plus an optional Streamlit demo.** Judges score reproducibility and defensibility, not app polish.
+- **The five official challenge questions** (organize every output around these):
+  1. Which healthcare need should receive priority, and whose access is most constrained?
+  2. How should soil, water, and food findings trigger health protection, clinical assessment, referral, or follow-up?
+  3. How can international assistance support local services and reach farming families, displaced workers, and host communities?
+  4. Which measures are justified now, what needs further investigation, and what evidence would change the response?
+  5. How should partners measure access, continuity of care, and equitable use of resources?
+- **Team's strategic focus:** build **local state capacity** over time and **reduce dependence on foreign intervention**. In the near term, route capital mainly through **local NGOs, municipalities and community structures**, with **communities deciding how funds are used** (participatory or community-driven allocation).
+- **Research foundation:** Barake, Hoshide, Samaha et al., *grapevine-inspired PHC framework* (Need Score, need-based redistribution, hub-and-spoke catchments, e-referral). The Need Score has **no formula, weights or thresholds** in the paper. We operationalize and test it.
+
+### What the challenge lead asked for (office hours)
+- **Concrete, niche, fundable.** "For $1,000, what could you actually start?" Go from ten ideas to three to one. Name the specific organization or person to approach.
+- **One overarching theme**, with 2–3 options shown as a **spread of choices** (not one blunt answer).
+- **Framing first:** "traditional method vs what we propose," then specifics.
+- **Collateral-damage check** on every recommendation (unintended consequences). This counts as a recommendation in itself.
+- **Not "sunshiny":** state what's outside the policy's control (renewed conflict, capture, funding cuts).
+- **Equity risk:** many Beqaa farm workers are **Syrians without legal status**. Money pegged to Lebanese landowners may never reach them, and **unregistered workers don't appear in statistics**.
+- **Funding sources from roughly the last six months only.**
+- **Wording:** Lebanese-facing text uses land- and community-based framing. Use the LRP term **"displaced Syrians"** rather than "refugees" in UI copy. Analysis still disaggregates by group.
+- **Biomimicry (optional, valued):** if used, specify **strategy, mechanism, function** (Biomimicry 3.8 / AskNature), not metaphor.
+
+---
+
+## 2. Non-negotiable principles
+
+1. **Every number traces to a source.** Each dataset row and each parameter carries a `source`, `source_date`, `url` and `status` (`verified` | `assumption` | `mock`). No source means it's an assumption, and it must be labelled as one.
+2. **Mock data is unmistakable.** Every mock file has `is_mock=True`. Every chart built on mock data shows a red **"MOCK DATA"** watermark. Never export a mock figure to `outputs/memo/`.
+3. **Evidence rungs.** Environmental claims are tagged `a` (environmental finding), `b` (plausible exposure pathway) or `c` (demonstrated health effect). Never present `a` or `b` as `c`.
+4. **Equity is a first-class output.** Every model reports results disaggregated by group: host Lebanese, displaced Lebanese, registered displaced Syrians, **unregistered workers (estimated)**, and women 15–49.
+5. **Robustness over precision.** Report ranges and rank stability, not single numbers.
+6. **The analysis serves the recommendation.** Don't add features that don't change a decision.
+7. **Reproducible.** One command rebuilds every output from `data/` (`make all` or `python -m beqaa.pipeline`). Fixed random seeds.
+
+---
+
+## 3. Repository layout
+
+```
+├── CLAUDE.md                  ← this file
+├── README.md                  ← how to run; data status table (auto-generated)
+├── pyproject.toml / requirements.txt
+├── Makefile                   ← make mock | make all | make app | make test
+├── data/
+│   ├── raw/                   ← REAL downloads go here (gitignore large files)
+│   ├── mock/                  ← generated by scripts/make_mock_data.py
+│   ├── registry/
+│   │   ├── funding_registry.csv   ← curated grants/appeals/funds (section 8)
+│   │   ├── org_registry.csv       ← local/peripheral implementers (section 8)
+│   │   └── sources.csv            ← every source used: id, title, org, date, url, notes
+│   ├── params/
+│   │   ├── need_score_indicators.yaml   ← indicators, safe/crisis thresholds, direction, source
+│   │   ├── exposure_params.yaml         ← EPA defaults, RfDs, transfer factors (status flags)
+│   │   └── scenarios.yaml               ← budgets, closures, displacement shocks
+│   └── processed/             ← pipeline outputs (parquet/csv)
+├── scripts/
+│   ├── make_mock_data.py
+│   └── fetch_real_data.md     ← manual download checklist (most sources need a browser/login)
+├── src/beqaa/
+│   ├── io.py                  ← load_dataset(name): real if present in data/raw, else mock; returns df + is_mock flag
+│   ├── m1_access.py
+│   ├── m2_need_score.py
+│   ├── m3_network_sim.py      ← optional
+│   ├── m4_exposure.py
+│   ├── m5_options.py
+│   ├── allocation.py          ← community / participatory allocation simulator
+│   ├── equity.py              ← disaggregation + gap metrics, shared by all models
+│   ├── funding_finder.py      ← filter + rank registry entries against priorities
+│   ├── chat.py                ← grounded chatbot over registries (optional)
+│   └── pipeline.py            ← runs M1→M4→M2→M5(→M3); writes data/processed + outputs/
+├── app/
+│   └── streamlit_app.py       ← multipage app (section 7)
+├── notebooks/
+│   └── appendix.ipynb         ← memo appendix: methods, parameters, results, sensitivity
+├── outputs/
+│   ├── figures/               ← all figures (mock ones watermarked)
+│   └── memo/                  ← ONLY real-data, memo-ready figures and tables
+└── tests/
+```
+
+---
+
+## 4. Datasets folder: expected real files (`data/raw/`)
+
+`io.load_dataset()` loads `data/raw/<file>` if it exists, else `data/mock/<file>`. The README data-status table shows ✅ real / 🟡 partial / 🔴 mock for each.
+
+| Dataset name | File (raw) | Columns (minimum) | Real source to fetch | Feeds |
+|---|---|---|---|---|
+| cadasters | `admin_boundaries/` (shp/geojson) + `cadasters.csv` | cadaster_id, cadaster_name, district, governorate, lat, lon, geometry | HDX COD-AB Lebanon (admin 1–3) | all |
+| population | `population.csv` (+ WorldPop rasters in `worldpop/`) | cadaster_id, population_total, women_15_49, pregnant_est, displaced, displaced_syrians_registered, unregistered_workers_est | WorldPop age/sex 100 m; IOM DTM (latest round); UNHCR registration by cadaster; unregistered workers = **assumption** (document method) | M1, M2, M3 |
+| facilities | `facilities.csv` | facility_id, name, type (PHC/hospital_hub/mobile), cadaster_id, lat, lon, capacity_weekly, status_2026, offers_anc, in_mophnetwork | MoPH Health Facility Locator; HDX "Lebanon PHCs" (2017); UNHCR PHC list 2018; WHO sitreps (closures map); Health Sector dashboards | M1, M3 |
+| travel_time | `travel_time.csv` | cadaster_id, facility_id, minutes | OSM via osmnx (compute) **or** Malaria Atlas Project travel-time-to-healthcare raster | M1, M3 |
+| vulnerability | `vulnerability.csv` | cadaster_id, ipc3plus_share, female_headed_hh_share, unable_to_access_care_share, no_insurance_share, level | IPC Lebanon (Dec 2025; Apr 2026 update); VASyR 2025 microdata; REACH MSNA 2025; LRP 2026 Addendum (JIAF 2.0 district severity) | M2 |
+| official_severity | `official_severity.csv` | district, jiaf_severity, health_severity, fsa_composite_severity, source_date | LRP 2026 Addendum (Sep–Dec 2026): JIAF 2.0 inter-sector severity maps; FSA Composite Conflict-Impact Food Security Index | M2 comparison |
+| soil_sites | `soil_sites.csv` | site_name, cadaster_id, lat, lon, parameter, value_mg_kg, source, evidence_rung | CNRS-L/MoE Apr 2026, Ch. II + Table 2.3 (Beqaa = BE sample IDs) | M4, M2 |
+| water_quality | `water_quality.csv` | site_id, cadaster_id, nitrate_mg_l, other params, date | Litani River Authority; Darwish et al. 2011; any 2025–26 monitoring | M2, M4 |
+| crop_transfer | `crop_transfer.csv` | metal, crop, transfer_factor, source | Abi Saab et al. 2022 (Water 14:1437), Beqaa trial | M4 |
+| interventions | `interventions.csv` | intervention_id, label, cost_low_usd, cost_high_usd, acts_on, people_low, people_high, source | UNFPA & WHO appeal lines; K2P/UNICEF PHC financing memo (Oct 2025); quotes from implementers | M5 |
+| cascade_baseline | `cascade_baseline.csv` | group, p_any_anc, p_anc4, p_facility_delivery, p_postnatal, p_referral_complete, source | Benage 2015; Tappis 2017; Conflict & Health 2023; VASyR 2025; **referral completion = assumption** | M3, M5 |
+
+---
+
+## 5. Mock data
+
+`python scripts/make_mock_data.py` (or `make mock`). It uses **real district names** with **synthetic cadasters**, real CNRS-L soil **values** at **mock locations**, and mock costs. It also emits `official_severity.csv`, `crop_transfer.csv` and `cascade_baseline.csv` (mock values, `is_mock=True`). Every mock file carries `is_mock`, `source`, `source_date`, `url`, `status=mock`.
+
+---
+
+## 6. Analysis modules
+
+All modules take dataframes from `io.load_dataset()` plus a params dict. They return tidy dataframes with an `is_mock` flag carried through. Each has unit tests on mock data.
+
+### M1: Spatial access (`m1_access.py`). Answers Q1.
+- **Method:** Enhanced 2-step floating catchment area (E2SFCA). Step 1: for each open facility j, R_j = capacity_j / Σ_k (pop_k × W(t_kj)) over cadasters within catchment d0. Step 2: A_i = Σ_j R_j × W(t_ij). W = Gaussian or stepped decay.
+- **Params:** d0 ∈ {15, 30, 60} min (sensitivity); demand population selectable (total / women_15_49 / pregnant_est); facility filter (all / offers_anc).
+- **Scenarios:** `baseline_pre2026` (all facilities open) vs `current_2026` (drop closed/damaged) → `access_lost`.
+- **Optional:** maximal covering location problem (PuLP): choose k mobile-unit sites from candidate cadasters to maximize covered women_15_49 within d0, with an optional equity constraint (minimum coverage per group).
+- **Outputs:** `access_by_cadaster` (A_i per scenario, rank, per-group access via equity.py), `mobile_unit_sites`.
+
+### M2: Beqaa Need Score (`m2_need_score.py`). Answers Q1, Q5.
+- **Implements Barake's description:** s = clip((x − safe)/(crisis − safe), 0, 1). Domain score = mean of its indicators. NeedScore = Σ w_d × D_d. Optional geometric mean (non-compensatory).
+- **Domains** (in `need_score_indicators.yaml`, each indicator with `safe`, `crisis`, `direction`, `level`, `source`, `status`):
+  - clinical_demand (pregnant_est per 1,000, …)
+  - capacity_strain (M1 access score inverted; PHC per 50,000, where the sector threshold is 2; % facilities offering ANC)
+  - vulnerability (ipc3plus_share, unable_to_access_care_share with sector threshold 20%, no_insurance_share, female_headed_hh_share, **unregistered_workers share**)
+  - **environment (new):** proximity to soil hotspot from M4 tiers, well nitrate vs 50 mg/L, …
+- **Start from the Lebanon Health Sector severity/PiN indicators and thresholds** (2024 annex: weights 30% resources / 70% services). Document deviations.
+- **Robustness:** 5,000 Dirichlet weight draws → `p_top_tier` per cadaster, rank intervals.
+- **Comparison:** join `official_severity` by district; report where our ranking differs from JIAF 2.0 / FSA composite and why (finer resolution, environment, equity).
+- **Tiers & triggers:** High ≥ 0.66 / Moderate 0.33–0.66 / Low < 0.33 (assumptions, exposed as sliders) → mapped response packages.
+
+### M3: Network simulation (`m3_network_sim.py`). Optional; answers Q3, Q5.
+- Mesa or SimPy. Agents: patients (pregnant women; group; barrier probabilities), PHCs (capacity, status, Need Score), hubs (capacity, counter-referral probability).
+- **Rule A (status quo):** fixed allocation, no catchments, untracked referrals. **Rule B (grapevine):** Need Score triggers outreach, capacity follows score, PHC→hub pairing, tracked referral loop.
+- **Parameter `staff_fill_rate`** (0–1): models clinicians unwilling to relocate. Rule B's redistribution only fills that share of new posts.
+- Shocks from `scenarios.yaml`. 52 weeks × ≥300 runs, seeded. Outputs: referral completion, ANC4 + facility delivery, travel time, equity gap, cost per completed pathway, with 90% intervals. **Present as a comparison of rules, not a forecast.**
+
+### M4: Exposure screen (`m4_exposure.py`). Answers Q2, Q4.
+- ADD_soil = C × IR × EF / BW (child IR 200 mg/d, BW 15 kg; adult IR 100 mg/d, BW 70 kg; EF 350/365). Crop pathway: C_crop = C_soil × TF; ADD_food = C_crop × intake / BW. HQ = ADD / RfD.
+- RfDs in `exposure_params.yaml` with `status: verify` (Cr(III) 1.5, Cr(VI) 0.003 mg/kg-d; confirm in EPA IRIS). Lead: compare against the EPA 2024 residential soil screening level, 200 ppm.
+- **Key uncertainty:** `cr6_fraction` ∈ [0, 1]. Report the HQ range. Sanity check: Chemstar Cr 230 ppm, child, gives HQ ≈ 0.002 (all Cr III) to ≈ 0.98 (all Cr VI).
+- Monte Carlo over TF, intake, cr6_fraction → tornado chart → "what evidence would change the response" (value-of-information ranking).
+- **Tiers:** 0 background / 1 elevated, no exposure shown / 2 plausible exposure / 3 confirmed. Each maps to actions (protective advice, washing water, targeted blood-lead screening, referral, land-use restriction). Every output row is tagged `evidence_rung`.
+
+### M5: Options & cost (`m5_options.py`). Answers Q3, the required options comparison, budget.
+- Cascade: pregnant → any ANC → ANC4 → facility delivery → postnatal + referral closed, by group, from `cascade_baseline`.
+- Each intervention shifts specific steps (ranges in `interventions.csv`). Monte Carlo → additional completed pathways, total cost, cost per pathway, equity gap change.
+- **Budget tiers:** `$1,000` (starter pilot) / `$100,000` / `$1,000,000` / custom. For each tier, show what's fundable and where it goes (top cadasters from M2).
+- **Collateral-damage checklist** per option (stored in `interventions.csv` or YAML): who could be excluded (e.g., unregistered workers), capture risk, dependency risk, displacement of local providers, conflict sensitivity. Displayed beside results.
+
+### Community allocation simulator (`allocation.py`). The team's theme.
+- Compare three allocation regimes for a fixed budget across top-tier cadasters: (1) **top-down by Need Score**, (2) **equal per capita**, (3) **community-decided**, where each cadaster's mock "community priority weights" (survey or participatory budgeting input) choose among interventions.
+- Report coverage, equity gaps and cost per outcome for each, and show **what local choice changes**. Mark clearly that the effect of local decision-making on outcomes is an **assumption with a literature range** (cite community-driven development reviews; don't overclaim).
+- Include capture safeguards as parameters (share reaching unregistered workers, share of decision seats held by women and workers).
+
+---
+
+## 7. Streamlit app (`app/streamlit_app.py`)
+
+Multipage. A global sidebar has: data mode banner (REAL / PARTIAL / MOCK), group filter, budget tier. Keep it simple and fast; precompute heavy runs in `pipeline.py` and cache.
+
+1. **Overview / framing.** "Traditional approach vs proposed approach" panel; the five challenge questions with links to where each is answered; data-status table.
+2. **Priority map.** Folium or pydeck map of cadasters colored by Need Score. Weight sliders per domain, threshold sliders, toggles (environment domain on/off; include unregistered workers; demand = women 15–49). Side table: top 10 with `p_top_tier`. Toggle to overlay facilities (open/closed) and soil sites (by tier). Comparison view against the official district severity.
+3. **Access.** M1 results: baseline vs 2026, access lost, catchment-size sensitivity, mobile-unit siting for a chosen k.
+4. **Options & budget.** M5: choose 2–3 interventions and a budget tier → table (reach, cost, cost per pathway, equity gap), tornado chart, collateral-damage checklist. Show the **$1,000 starter** options explicitly.
+5. **Community allocation.** allocation.py: compare top-down vs per-capita vs community-decided; sliders for safeguards.
+6. **Environment & evidence.** M4 table by site/metal with HQ ranges and tiers; the a/b/c evidence table (exportable for the memo); trigger protocol.
+7. **Funding finder.** Filter `funding_registry.csv` and `org_registry.csv` by sector, geography, modality (government / UN pooled / NGO / private), eligibility for local orgs, amount, deadline, recency (default: last 6 months). Rank against the current priorities (from pages 2/4). Every result shows its source URL and `verified_on` date.
+8. **Ask the registry (optional chatbot).** See section 9.
+9. **Assumptions log.** Every parameter with value, range, source and status; downloadable CSV for the memo appendix.
+
+---
+
+## 8. Registries (keep only verified rows as `status=verified`)
+
+`funding_registry.csv` columns: `fund_id, name, funder, amount, currency, period, sectors, geography, channel (gov|UN_pooled|INGO|NGO|private), local_org_eligible, how_to_access, url, announced_date, verified_on, status, notes`
+
+Seeded rows (verified by the team's research on 2026-11-21; re-check before use): EU support package 2nd tranche (€505M), EU direct grant to MoSA (€45M), EU local recovery & resilience (€25M of €110.5M), LHF reserve allocation ($15M, Mar 2026), LRP 2026 Addendum ($385.88M), WHO Flash Appeal ($10M), UNFPA Flash Appeal (updated), World Bank LEAP ($250M of $1B framework).
+
+`org_registry.csv` columns: `org_id, name, type, geography, sectors, works_with_unregistered_workers, women_led, contact_route, url, status, notes`. Seeded with status `to_verify` until checked: LLWB, AUB, BU Center for Forced Displacement, Amel Association, municipalities/Unions of Municipalities in Beqaa, MoSA Social Development Centres, farmer cooperatives (MoA registry).
+
+---
+
+## 9. Chatbot rules (if built)
+
+- **Grounded only:** answer exclusively from `funding_registry.csv`, `org_registry.csv`, `sources.csv` and current model outputs. Use retrieval over those rows plus an LLM (Claude API key from `.env`; never commit keys).
+- **Every claim cites a registry row (`fund_id`/`org_id`) with its URL.** If nothing matches: "No verified entry; add one to the registry," never an invented grant.
+- Show `verified_on` and flag anything older than 6 months.
+- Fabricated grants, sources or data disqualify the team (rubric). Treat that as a hard failure in tests.
+
+---
+
+## 10. Outputs for the memo
+
+`pipeline.py` writes (real data only for `outputs/memo/`):
+- `fig1_priority_map.png`: Need Score map with top-tier cadasters
+- `fig2_access_lost.png`: access before/after 2026 closures
+- `tab_options.csv`: options × (reach, cost, cost/pathway, equity gap, feasibility, uncertainty)
+- `tab_evidence.csv`: claim, rung (a/b/c), source
+- `tab_assumptions.csv`: all parameters with status
+- `robustness.txt`: e.g., "Cadasters X, Y, Z are top-tier in ≥90% of weightings"
+- `notebooks/appendix.ipynb` rendered to HTML/PDF
+
+---
+
+## 11. Order of work & acceptance criteria
+
+1. **Scaffold + mock data + io.py** with the real/mock switch and README data-status table. *Done when* `make mock && make test` passes. **(done)**
+   Steps 2–6 are implemented at barebones level on mock data (M1, M4, M2, M5, allocation, escrow, funding finder, chat, app pages 0–10). Not yet built: M3, Workforce page, Pilot design page, case-study cards, notebook.
+2. **M1** on mock. *Done when* access scores and the closure scenario render, and the catchment sensitivity runs.
+3. **M4** on mock (small). *Done when* the Chemstar sanity check passes (HQ ≈ 0.002 to 0.98).
+4. **M2** using M1 + M4. *Done when* rankings, `p_top_tier` and the official-severity comparison work.
+5. **M5 + allocation.py.** *Done when* budget tiers ($1k/$100k/$1M) and three allocation regimes produce tables with equity gaps.
+6. **Streamlit pages 1–7, 9.** *Done when* the app runs from `make app` with a visible MOCK banner.
+7. **Swap in real data** file by file; re-run; move real figures to `outputs/memo/`.
+8. **Optional:** M3 simulation, chatbot (page 8).
+
+**Tests to include:** E2SFCA conservation (Σ demand-weighted access ≈ total capacity within catchments); Need Score bounded in [0, 1]; weights sum to 1; HQ sanity values; mock watermark present on mock figures; chatbot refuses to answer when there's no registry match.
+
+---
+
+## 12. Open questions for the team (don't hard-code answers)
+
+- Final priority health need (default assumption: **maternal & continuing care**) and the single intervention theme.
+- Primary decision-maker / addressee (e.g., MoPH + WHO, CDR/LEAP, LHF, EU civil-society window, or a named local org).
+- How "community-decided" allocation is operationalized (municipal committees? women's organizations? cooperatives including workers?).
+- Method for estimating **unregistered workers** per cadaster (documented assumption).
+- Whether to include the sunflower + biochar / washing-water-truck **$1,000 starter** options in the main recommendation or as a side pilot.
+
+---
+
+## 13. Whiteboard additions (v2)
+
+**Theme:** an adaptive funding switch for Beqaa primary care. Money follows measured need, and administrative control shifts from foreign NGOs to Lebanese entities (municipalities → MoPH) as measured capacity improves. Horizon 2030; long-term goal is more state capacity and less foreign intervention.
+
+- **Page 0 · Story timeline:** 2019 crisis → 2020 blast → 2024 war → 2026 war → 2030; `admin_capacity_index` vs `share_funds_managed_locally` (projected dashed). Four stresses (high need, low providership, disjointed referrals, NGO dependency) each link to the page that measures them. *(built)*
+- **Page 2 · Priority map:** stress layer selector (need / providership / referral / NGO dependency / environment). *(built)*
+- **Escrow & funding switch (`escrow.py`):** pool, number of priority towns, need floor %, capacity tranche; editable threshold rules (referral completion ≥ X, posts filled ≥ Y, transparent reporting, admin capacity ≥ Z); output per town/year of $ released, administering level (INGO → national NGO → municipality → MoPH) and share managed locally; warnings for lock-outs and gameable indicators; restricted vs unrestricted toggle. *(built)*
+- **Workforce & network page** (staffing_referrals; `staff_fill_rate` slider feeding M3). *(todo)*
+- **Pilot design page:** pick pilot towns, stepped-wedge rollout table, editable PDIA log (problem → action → result → adaptation). *(todo)*
+- **Funding finder:** "fits escrow?" flag and funding_flows chart (dependency metric). *(built)*
+- **2030 indicators panel (every page footer):** share of funds managed locally; referral completion; clinics reporting a Need Score; posts filled / retention; access gap between groups; days from soil finding to protective action. *(built; some baselines n/a)*
+- **New datasets (mock now, real later):** `staffing_referrals`, `governance_capacity`, `funding_flows` (columns in `scripts/make_mock_data.py`).
+- **Group-weighted demand (M1):** `weighted_women_15_49` = women 15–49 per group (WorldPop age/sex share × displacement counts) × group multiplier; per-group access compared with host Lebanese. *(built)*
+- **Case-study panel (static, cited):** Sierra Leone (post-Ebola geospatial health-worker deployment), Syria (where doctors stayed), Ecuador (verify: rural service requirement), PDIA, Ostrom/polycentric governance, Scott's *Seeing Like a State*, Lebanon learning-sites paper. Each card has a link and a "what we borrow" line; no claims without a citation. *(todo)*
