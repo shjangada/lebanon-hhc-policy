@@ -2,6 +2,9 @@
 
 Everything real lives in `data/raw/`; everything synthetic lives in `data/mock/` and is flagged `is_mock`. The dashboard uses a real file instead of a mock one **only when it exists under the schema name** in `data/raw/` (e.g. `data/raw/population.csv`, see `src/beqaa/io.py`). The downloads below are the *raw sources*. Converting them into those schema files is the next step, so the app still reports **MOCK** today.
 
+## From raw downloads to model inputs
+`python -m beqaa.ingest` converts the raw downloads into the project's dataset schemas in `data/derived/` (each row carries source, date and status). The app and pipeline use them only with `BEQAA_DATA=derived`, because every cadaster-keyed dataset must use the same cadaster set: `io.validate_consistency()` stops the pipeline if real and mock files are mixed. Converters done: **cadasters** (real admin-3 areas for the five Beqaa districts) and **population** (WorldPop distribution rescaled to LRP 2026 district totals; women 15–49 from the LRP age tables; displaced from the latest DTM round; registered vs unregistered Syrians from the LRP-vs-UNHCR gap, **an assumption**). Still mock: facilities, travel_time, vulnerability, conflict exposure.
+
 ## Keeping it up to date
 ```
 python scripts/fetch_sources.py            # download anything in data/registry/data_manifest.csv that is missing
