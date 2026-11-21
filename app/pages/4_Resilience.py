@@ -84,8 +84,15 @@ rg = alt.Chart(pol["summary"]).mark_bar().encode(y=alt.Y("policy:N", sort="x", t
 st.altair_chart(C.wm(rg, 560, 200), use_container_width=False)
 st.caption("The green policy has the smallest worst-case regret. Mock costs and community priorities drive the gaps.")
 
-st.subheader("Breakpoints: where does the recommendation flip?")
-st.dataframe(C.pretty(RB["breakpoints"][["priorities", "assumption", "reading"]], priorities="Community priorities", assumption="Assumption", reading="Reading"), hide_index=True, width="stretch")
+st.subheader("Break-evens: what has to be true")
+from beqaa import breakeven  # noqa: E402
+BE = breakeven.run(RB["scored"])
+alloc = BE["allocation"]
+alloc = alloc[alloc.priorities.str.startswith("community picks") | (alloc.parameter == "alignment")]
+st.dataframe(C.pretty(alloc[["comparison", "reading"]], comparison="Comparison", reading="Break-even (everything else at the centre of its range)"), hide_index=True, width="stretch")
+st.caption("Status quo = money follows current facility capacity. With community priorities as modelled (a placeholder) the community arm loses to both alternatives at every tested value; the rows above give the best case, where communities choose the most cost-effective option. "
+           "Capture, local fit and committee cost have no published Lebanon value, so these thresholds are the result, not a forecast.")
+st.dataframe(C.pretty(BE["escrow"][["threshold", "release_needs", "current_assumed", "reading"]], threshold="Release threshold", release_needs="Needs", current_assumed="Assumed now", reading="Reading"), hide_index=True, width="stretch")
 with st.expander("Scenario definitions and sources"):
     st.dataframe(pd.DataFrame([{"scenario": v["label"], "what changes": ", ".join(f"{k}={val}" for k, val in v.items() if k not in ("label", "status")), "status": v["status"]} for v in RB["unc"]["scenarios"].values()]),
                  hide_index=True, width="stretch")
