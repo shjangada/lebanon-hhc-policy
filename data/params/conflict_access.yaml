@@ -1,0 +1,4 @@
+# Rule for the 'access_degraded' flag (src/beqaa/ingest/acled.py). A cadaster is access-degraded if it had at least `min_events` ACLED events in the last `window_days`.
+# Both are assumptions (no standard exists); the robustness module can vary them. window_days must be one of 30, 90, 365.
+window_days: 30
+min_events: 1

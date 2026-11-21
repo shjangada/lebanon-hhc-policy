@@ -1,0 +1,27 @@
+district,jiaf_severity,health_severity,fsa_composite_severity,district_pcode,district_cod,transcription_checked,sector_severity_education,sector_severity_food_security,sector_severity_livelihoods,sector_severity_nutrition,sector_severity_protection,sector_severity_shelter,sector_severity_social_stability,sector_severity_wash,source_date,is_mock,source_id,source,url,status
+Akkar,2.0,4.0,,LB51,Akkar,True,2.0,3.0,2.0,3.0,2.0,1.0,1.0,2.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Aley,3.0,3.0,4.0,LB31,Aley,True,2.0,4.0,3.0,2.0,3.0,2.0,2.0,3.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Baabda,3.0,3.0,4.0,LB32,Baabda,True,3.0,4.0,3.0,3.0,4.0,4.0,1.0,3.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Baalbek,3.0,4.0,4.0,LB21,Baalbek,True,2.0,4.0,2.0,3.0,4.0,3.0,4.0,2.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Bcharre,1.0,2.0,,LB53,Bcharre,True,2.0,2.0,1.0,2.0,1.0,1.0,1.0,1.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Beirut,4.0,4.0,,LB11,Beirut,True,3.0,4.0,3.0,2.0,4.0,4.0,1.0,3.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Bent Jbeil,4.0,4.0,4.0,LB41,Bent Jbeil,True,4.0,4.0,2.0,3.0,5.0,4.0,4.0,4.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Chouf,3.0,2.0,,LB33,Chouf,True,3.0,3.0,3.0,2.0,3.0,3.0,1.0,3.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+El Batroun,1.0,2.0,,LB52,El Batroun,True,2.0,2.0,2.0,2.0,1.0,1.0,1.0,1.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Hermel,3.0,4.0,4.0,LB22,El Hermel,True,2.0,4.0,3.0,3.0,3.0,4.0,4.0,2.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+El Koura,2.0,2.0,,LB54,El Koura,True,2.0,2.0,2.0,3.0,2.0,1.0,2.0,1.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+El Meten,2.0,2.0,,LB36,El Meten,True,3.0,2.0,2.0,2.0,3.0,1.0,2.0,2.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+El Minieh-Dennie,2.0,2.0,,LB55,El Minieh-Dennie,True,2.0,3.0,2.0,3.0,2.0,1.0,1.0,2.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+El Nabatieh,4.0,4.0,4.0,LB44,El Nabatieh,True,4.0,4.0,2.0,3.0,5.0,4.0,4.0,4.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Hasbaya,3.0,3.0,,LB42,Hasbaya,True,4.0,4.0,2.0,3.0,4.0,3.0,4.0,3.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Jbeil,2.0,2.0,,LB34,Jbeil,True,2.0,2.0,3.0,2.0,2.0,1.0,1.0,2.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Jezzine,3.0,2.0,,LB62,Jezzine,True,3.0,3.0,3.0,2.0,3.0,4.0,4.0,2.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Kesrwane,2.0,2.0,,LB35,Kesrwane,True,2.0,2.0,2.0,2.0,2.0,1.0,2.0,1.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Marjaayoun,4.0,4.0,4.0,LB43,Marjaayoun,True,4.0,4.0,2.0,3.0,4.0,3.0,4.0,3.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Rachaya,2.0,3.0,,LB23,Rachaya,True,3.0,3.0,2.0,2.0,2.0,2.0,4.0,2.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Saida,4.0,4.0,,LB61,Saida,True,4.0,3.0,3.0,3.0,4.0,4.0,4.0,3.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Sour,4.0,4.0,4.0,LB63,Sour,True,4.0,4.0,3.0,3.0,4.0,4.0,4.0,4.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Tripoli,2.0,4.0,,LB56,Tripoli,True,2.0,2.0,1.0,3.0,2.0,1.0,1.0,2.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+West Bekaa,3.0,4.0,,LB24,West Bekaa,True,3.0,3.0,2.0,3.0,3.0,2.0,4.0,2.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Zahle,3.0,3.0,,LB25,Zahle,True,3.0,3.0,2.0,3.0,3.0,1.0,4.0,2.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
+Zgharta,2.0,2.0,,LB57,Zgharta,True,2.0,2.0,1.0,2.0,3.0,1.0,1.0,2.0,2026-09-01,False,S15,"LRP 2026 Addendum Sep-Dec 2026, severity maps (hand-transcribed classes 1-5, two passes)",,verified
