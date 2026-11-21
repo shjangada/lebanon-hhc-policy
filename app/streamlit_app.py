@@ -13,6 +13,25 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent / "src"))      # the beqaa package lives in src/ and is not pip-installed on Streamlit Cloud
 st.set_page_config(page_title="The UN funding line: Beqaa health", layout="wide")
 
+
+
+@st.cache_resource
+def _src_stamp() -> dict:
+    return {"t": 0.0}
+
+
+def _purge_stale_modules() -> None:
+    """A long-running server (Streamlit Cloud after a redeploy, or local) keeps old `beqaa.*` modules in memory, which raises AttributeError for functions added later.
+    When any file under src/beqaa changed since the last run, drop every cached `beqaa` module so the imports below load the current code."""
+    newest = max(f.stat().st_mtime for f in (HERE.parent / "src" / "beqaa").rglob("*.py"))
+    stamp = _src_stamp()
+    if newest > stamp["t"]:
+        for name in [m for m in sys.modules if m == "beqaa" or m.startswith("beqaa.")]:
+            del sys.modules[name]
+        stamp["t"] = newest
+
+
+_purge_stale_modules()
 import common  # noqa: E402
 
 importlib.reload(common)        # app/common.py is a plain module: reload it on every rerun so edits are never stale (the beqaa package is reloaded by Streamlit's watcher)
