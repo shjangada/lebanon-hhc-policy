@@ -52,7 +52,8 @@ for k in range(22):
                 "cadaster_id": c.cadaster_id, "lat": c.lat + rng.normal(0, 0.01), "lon": c.lon + rng.normal(0, 0.01),
                 "capacity_weekly": int(rng.integers(150, 900)),
                 "status_2026": rng.choice(["open", "open", "open", "closed", "damaged"]),
-                "offers_anc": bool(rng.random() > 0.3), "in_mophnetwork": bool(rng.random() > 0.4)})
+                "offers_anc": bool(rng.random() > 0.3), "in_mophnetwork": bool(rng.random() > 0.4),
+                "power_source": rng.choice(["grid_only", "generator", "generator", "solar"])})
 for k, (lat, lon, n) in enumerate([(34.006, 36.21, "Mock Baalbek hub"), (33.847, 35.902, "Mock Zahle hub"),
                                    (34.39, 36.38, "Mock Hermel hub")]):
     fac.append({"facility_id": f"MOCK-HUB-{k+1}", "name": n, "type": "hospital_hub", "cadaster_id": None,
@@ -113,6 +114,12 @@ tf = pd.DataFrame([("Cr", "lettuce", 0.02), ("Cr", "potato", 0.005), ("Pb", "let
                    ("Pb", "potato", 0.004), ("Cr", "wheat", 0.01), ("Pb", "wheat", 0.01)],
                   columns=["metal", "crop", "transfer_factor"])
 save(tf, "crop_transfer.csv")
+
+# Conflict exposure per cadaster (MOCK counts; real source: LRP 2026 package sheet "Conflict Incidents_adm3_Summary", incidents since Oct 2023).
+ce = cad[["cadaster_id"]].copy()
+dist_scale = {"Baalbek": 18, "Hermel": 14, "Zahle": 6, "West Bekaa": 8, "Rachaya": 4}
+ce["conflict_incidents"] = [int(rng.poisson(dist_scale[d])) for d in cad.district]
+save(ce, "conflict_exposure.csv")
 
 # Interventions. Cost/people are PER UNIT (see label). `steps` = cascade steps shifted (semicolon list);
 # lift_* = absolute uplift in step probability for people reached (MOCK ranges). `divisible` = can be bought in fractions.
