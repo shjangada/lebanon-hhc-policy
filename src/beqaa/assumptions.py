@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import pandas as pd
 
-from . import allocation, escrow, m1_access, m2_need_score, m4_exposure, m5_options
+from . import allocation, escrow, m1_access, m2_need_score, m4_exposure, m5_options, research_gaps, state_capacity
 from .io import ROOT
 import yaml
 
@@ -50,8 +50,24 @@ def build() -> pd.DataFrame:
             "Mansuri & Rao 2013, Localizing Development: Does Participation Work? (World Bank; sources.csv S35); 3ie WP30 2018 (S26): mixed evidence" if k == "local_fit_multiplier" else "assumption")
     add("allocation", "community priority weights", "Dirichlet(0.7) per cadaster", "", "MOCK (stand-in for survey / participatory budgeting)", "mock")
     for k, v in escrow.DEFAULT_RULES.items():
-        add("escrow", k, v, "editable", "assumption")
-    add("escrow", "admin level bands (capacity index)", escrow.BANDS, "INGO / national NGO / Union of Municipalities / MoPH (default ceiling: Union of Municipalities)", "assumption")
+        add("escrow", k, v, "editable", "national anchor SC01 (WGI GE 2025 = 29.9/100)" if k == "admin_capacity_min" else "assumption")
+    for k, v in escrow.NEED_GATE.items():
+        add("escrow", f"need_gate.{k}", v, "editable in app",
+            "M2 Moderate tier threshold" if k == "need_score_min" else
+            ("blend of M4 environmental exposure into priority (M2 already has a 0.15 environment domain)" if k == "env_priority_weight" else "assumption"))
+    add("escrow", "pool expected realisation", escrow.POOL["expected_realisation"], "", "LRP 2026: 39% funded (docs/FEASIBILITY.md §1)", "verified")
+    for r in escrow.LADDER.itertuples():
+        add("escrow", f"ladder band[{r.level}]", r.min_capacity, "", "SC01 notes: WGI GE 2023 low 28.0 / 2000 high 51.4" if r.level in ("National NGO", "MoPH")
+            else "assumption", "assumption")
+    nb = state_capacity.national_baseline()
+    add("state capacity", "national admin-capacity anchor (WGI GE / 100)", nb["admin_anchor"], f"year {nb['admin_anchor_year']}", "state_capacity_sources.csv SC01", nb["admin_anchor_status"])
+    add("state capacity", "government share of health spending", nb["fiscal_anchor"], f"year {nb['fiscal_anchor_year']}", "state_capacity_sources.csv SC02", nb["fiscal_anchor_status"])
+    add("state capacity", "district admin_capacity_index", "mock relative spread x national anchor", "replace with SC07 UN-Habitat 2026", "mock", "mock")
+    add("state capacity", "default projected capacity gain per year", escrow.DEFAULT_YOY_GAIN, f"0 to {escrow.MAX_YOY_CAPACITY_GAIN}", "assumption (cap from docs/FEASIBILITY.md §5)")
+    for k, v in research_gaps.GAP_WEIGHTS.items():
+        add("research gaps", f"gap weight[{k}]", v, "", "assumption")
+    add("research gaps", "candidate threshold (evidence_gap_score)", research_gaps.GAP_MIN, "", "assumption")
+    add("M4", "Cr(VI) share used for tiering", "1.0 (precautionary) unless set in app", "0-1", "assumption: until speciation results exist")
     add("escrow", "max administrator level", escrow.DEFAULT_MAX_LEVEL, "MoPH only as co-governor", "docs/FEASIBILITY.md (MoPH cannot be assumed to administer by 2030)")
     add("escrow", "max year-on-year capacity gain (projections)", escrow.MAX_YOY_CAPACITY_GAIN, "", "docs/FEASIBILITY.md")
     add("escrow", "local-control weights", escrow.LEVEL_LOCAL_WEIGHT, "", "assumption")

@@ -1,6 +1,6 @@
 """Community / participatory allocation simulator (the team's theme).
 
-Regimes over the top-k Need Score cadasters for a fixed budget:
+Regimes over the top-k priority cadasters (M2 need score blended with M4 environmental exposure; weight editable) for a fixed budget:
  (1) top_down: budget share ~ Need Score; central planner buys the most cost-effective intervention everywhere.
  (2) per_capita: budget share ~ population; same central-planner intervention.
  (3) community: budget share ~ Need Score (same as top-down, to isolate local choice); each cadaster's community
@@ -15,7 +15,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from . import equity, m5_options
+from . import equity, escrow, m5_options
 from .io import load_dataset
 
 REGIMES = ["top_down", "per_capita", "community"]
@@ -41,8 +41,10 @@ def capture_rate(p: dict) -> float:
 
 
 def simulate(scored: pd.DataFrame, budget: float, top_k: int = 8, params: dict | None = None, candidate: list[str] | None = None,
-             seed: int = 42) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Returns (summary per regime, per-cadaster detail)."""
+             seed: int = 42, env_weight: float | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Returns (summary per regime, per-cadaster detail).
+    Priority (selection of the top-k and the need-based shares) = escrow.priority_score: (1 - w) * M2 need + w * M4 environmental
+    exposure, with w = `env_weight` (default from data/params/escrow_params.yaml). w = 0 reproduces pure need-score allocation."""
     p = {**DEFAULTS, **(params or {})}
     iv, mock = load_dataset("interventions")
     pop, _ = load_dataset("population")
@@ -57,7 +59,8 @@ def simulate(scored: pd.DataFrame, budget: float, top_k: int = 8, params: dict |
     reach_w = {**m5_options.DEFAULT_REACH_W}
     reach_w["unregistered_workers_est"] = 0.5 * 2 * p["share_reaching_unregistered"]    # 0.5 default => 0.5
     gain_g = ue.pivot(index="intervention_id", columns="group", values="gain_per_woman").loc[cands]
-    top = scored.sort_values("need_score", ascending=False).head(top_k).merge(
+    scored = scored.assign(priority_score=escrow.priority_score(scored, env_weight))
+    top = scored.sort_values("priority_score", ascending=False).head(top_k).merge(
         pop[["cadaster_id", "population_total"]].rename(columns={"population_total": "pop_total"}), on="cadaster_id")
     gp = equity.group_pops(pop).set_index("cadaster_id")
     best = (gain_g.mean(axis=1) / cost_per_woman).idxmax()           # planner's most cost-effective intervention
@@ -65,7 +68,7 @@ def simulate(scored: pd.DataFrame, budget: float, top_k: int = 8, params: dict |
     cap = capture_rate(p)
     detail = []
     for regime in REGIMES:
-        share = (top.need_score / top.need_score.sum()) if regime != "per_capita" else (top.pop_total / top.pop_total.sum())
+        share = (top.priority_score / top.priority_score.sum()) if regime != "per_capita" else (top.pop_total / top.pop_total.sum())
         for r, sh in zip(top.itertuples(), share):
             b = budget * sh
             if regime == "community":
@@ -86,6 +89,7 @@ def simulate(scored: pd.DataFrame, budget: float, top_k: int = 8, params: dict |
                     pathways += reached * wts[g] * gain_g.loc[c, g] * eff_mult
             reached_total = sum(women.values())
             detail.append({"regime": regime, "cadaster_id": r.cadaster_id, "cadaster_name": r.cadaster_name, "district": r.district,
+                           "need_score": r.need_score, "priority_score": r.priority_score,
                            "budget_usd": b, "women_reached": reached_total, "pregnant_est": r.pregnant_est,
                            "coverage": min(1.0, reached_total / max(r.pregnant_est, 1)), "extra_pathways": pathways,
                            "top_intervention": best if regime != "community" else mix.idxmax(),
@@ -128,3 +132,9 @@ def sensitivity(scored: pd.DataFrame, budget: float, top_k: int = 8, captures=(0
             r = s.set_index("regime")
             rows.append({"capture_rate": c, "local_fit": f, "community_vs_top_down_pathways": r.loc["community", "extra_pathways"] / r.loc["top_down", "extra_pathways"]})
     return pd.DataFrame(rows).pivot(index="capture_rate", columns="local_fit", values="community_vs_top_down_pathways")
+
+
+def by_district(detail: pd.DataFrame) -> pd.DataFrame:
+    """Allocation per district and regime (for the P5 flow view)."""
+    return detail.groupby(["regime", "district"]).agg(budget_usd=("budget_usd", "sum"), women_reached=("women_reached", "sum"),
+                                                      cadasters=("cadaster_id", "nunique")).reset_index()
