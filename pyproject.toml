@@ -3,7 +3,7 @@ name = "beqaa"
 version = "0.1.0"
 description = "Beqaa Health Prioritization Framework & Dashboard"
 requires-python = ">=3.10"
-dependencies = ["numpy", "pandas", "pyyaml", "scipy", "matplotlib", "streamlit"]
+dependencies = ["numpy", "pandas", "pyyaml", "anthropic", "scipy", "matplotlib", "streamlit"]
 
 [project.optional-dependencies]
 dev = ["pytest"]
