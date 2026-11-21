@@ -1,0 +1,16 @@
+site_id,cadaster_id,nitrate_mg_l,date,is_mock,source,source_date,url,status
+MOCK-WELL-01,51264,124.0,2026-01-01,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WELL-02,53451,193.0,2026-01-01,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WELL-03,54135,129.0,2026-01-01,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WELL-04,55157,41.0,2026-01-01,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WELL-05,53211,161.0,2026-01-01,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WELL-06,52116,197.0,2026-01-01,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WELL-07,53254,196.0,2026-01-01,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WELL-08,53447,148.0,2026-01-01,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WELL-09,54151,242.0,2026-01-01,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WELL-10,53131,246.0,2026-01-01,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WELL-11,51113,229.0,2026-01-01,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WELL-12,51271,103.0,2026-01-01,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WELL-13,52176,77.0,2026-01-01,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WELL-14,54119,142.0,2026-01-01,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-WELL-15,55124,174.0,2026-01-01,True,MOCK (synthetic),2026-11-21,,mock

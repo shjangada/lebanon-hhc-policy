@@ -1,0 +1,66 @@
+[
+  {
+    "file": "Lebanon-Emergency-Sitrep-24-2026.pdf",
+    "url": "https://www.emro.who.int/images/stories/lebanon/Lebanon-Emergency-Sitrep-24-2026.pdf",
+    "retrieved": "2026-11-21",
+    "license": "WHO publication, no explicit licence found (public)",
+    "sha256": "ced6d1213ddbd00f9333d86d5a8b5ecbdeafaeafdcc64b75d00449a0e5a2eecb",
+    "note": "WHO EMRO Lebanon situation update #24"
+  },
+  {
+    "file": "Lebanon-Emergency-Sitrep-25-2026.pdf",
+    "url": "https://www.emro.who.int/images/stories/lebanon/Lebanon-Emergency-Sitrep-25-2026.pdf",
+    "retrieved": "2026-11-21",
+    "license": "WHO publication, no explicit licence found (public)",
+    "sha256": "3ff246ea80281690e4a34ccf3abc54e8d1f98aa036b243384be65c9e1e7326e2",
+    "note": "WHO EMRO Lebanon situation update #25"
+  },
+  {
+    "file": "Lebanon-Emergency-Sitrep-26-2026.pdf",
+    "url": "https://www.emro.who.int/images/stories/lebanon/Lebanon-Emergency-Sitrep-26-2026.pdf",
+    "retrieved": "2026-11-21",
+    "license": "WHO publication, no explicit licence found (public)",
+    "sha256": "e671e98563f0e258368d97e0709cb8441472c59c8a618ef78a2ad77ca9eac38e",
+    "note": "WHO EMRO Lebanon situation update #26"
+  },
+  {
+    "file": "Lebanon-Emergency-Sitrep-27-2026.pdf",
+    "url": "https://www.emro.who.int/images/stories/lebanon/Lebanon-Emergency-Sitrep-27-2026.pdf",
+    "retrieved": "2026-11-21",
+    "license": "WHO publication, no explicit licence found (public)",
+    "sha256": "45978e16a003d97c3fb042a7cf78e851f8105d217549ae3a37e8f53b8e2e9647",
+    "note": "WHO EMRO Lebanon situation update #27"
+  },
+  {
+    "file": "Lebanon-Emergency-Sitrep-28-2026.pdf",
+    "url": "https://www.emro.who.int/images/stories/lebanon/Lebanon-Emergency-Sitrep-28-2026.pdf",
+    "retrieved": "2026-11-21",
+    "license": "WHO publication, no explicit licence found (public)",
+    "sha256": "67c573bfa2acde373b756c022a3de1ede79f48710a7fa0bdebccaac9cfb074e0",
+    "note": "WHO EMRO Lebanon situation update #28"
+  },
+  {
+    "file": "Lebanon-Emergency-Sitrep-29-2026.pdf",
+    "url": "https://www.emro.who.int/images/stories/lebanon/Lebanon-Emergency-Sitrep-29-2026.pdf",
+    "retrieved": "2026-11-21",
+    "license": "WHO publication, no explicit licence found (public)",
+    "sha256": "0076475456cfde107cc565633ae3e9ccff7f161768f05da75b12aa0c9d1940f5",
+    "note": "WHO EMRO Lebanon situation update #29"
+  },
+  {
+    "file": "Lebanon-Emergency-Sitrep-30-2026.pdf",
+    "url": "https://www.emro.who.int/images/stories/lebanon/Lebanon-Emergency-Sitrep-30-2026.pdf",
+    "retrieved": "2026-11-21",
+    "license": "WHO publication, no explicit licence found (public)",
+    "sha256": "8055f01cc1a3e947999b5f1602050b1cc07c1e72ad55a76b7eb99dd41e42ee62",
+    "note": "WHO EMRO Lebanon situation update #30"
+  },
+  {
+    "file": "UNICEF_Lebanon_Humanitarian_SitRep_5_July2026.pdf",
+    "url": "https://www.unicef.org/media/184086/file/Lebanon-Humanitarian-Situation-Report-No.5,July-2026.pdf.pdf",
+    "retrieved": "2026-11-21",
+    "license": "UNICEF public report, no explicit licence found",
+    "sha256": "ca1967000c9625636d5631a90d66f15517ee41fdd20d406a086c99cfd7c73525",
+    "note": "figures as of 3 Aug 2026"
+  }
+]

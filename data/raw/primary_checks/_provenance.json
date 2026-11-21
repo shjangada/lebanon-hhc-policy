@@ -1,0 +1,48 @@
+{
+  "retrieved": "2026-11-21",
+  "note": "",
+  "files": [
+    {
+      "file": "wb_GOV_WGI_GE.SC.json",
+      "url": "https://api.worldbank.org/v2/country/LB/indicator/GOV_WGI_GE.SC?format=json&per_page=60",
+      "retrieved": "2026-11-21",
+      "license": "World Bank API, CC BY 4.0 per World Bank data terms (not restated in file)",
+      "sha256": "180c3c88af4c02b93f4ec577654508150b3d57dff44e63c270ae68e6afae8c88"
+    },
+    {
+      "file": "wb_GOV_WGI_GE.EST.json",
+      "url": "https://api.worldbank.org/v2/country/LB/indicator/GOV_WGI_GE.EST?format=json&per_page=60",
+      "retrieved": "2026-11-21",
+      "license": "same",
+      "sha256": "0c3bd492ce1a882e5c097c8ebbc9d11f9e81318af7154746846f680f2c3fd068"
+    },
+    {
+      "file": "wb_GOV_WGI_GE_SC.json",
+      "url": "https://api.worldbank.org/v2/country/LB/indicator/GOV_WGI_GE_SC?format=json&per_page=60",
+      "retrieved": "2026-11-21",
+      "license": "same",
+      "sha256": "56e0ea6e8be5bc82ec39726efef6424c57f9fc3388a6bc8ee72ab867f3a59b9d"
+    },
+    {
+      "file": "wb_GOV_WGI_GE.PER.RNK.json",
+      "url": "https://api.worldbank.org/v2/country/LB/indicator/GOV_WGI_GE.PER.RNK?format=json&per_page=60",
+      "retrieved": "2026-11-21",
+      "license": "API returned error 'Invalid value' (indicator code not valid)",
+      "sha256": "f230e5b6d8f652aa544aec29624faa117c27571ce309a7a474584e1cfeb45c1b"
+    },
+    {
+      "file": "imf_tarea2026019.pdf",
+      "url": "https://www.imf.org/-/media/files/publications/tar/2026/english/tarea2026019-source-pdf.pdf",
+      "retrieved": "2026-11-21",
+      "license": "IMF terms (not stated in file)",
+      "sha256": "b130ad444cf90296412aecdcc94d837c95effbc26c273e5763ecf959dbd1d372"
+    },
+    {
+      "file": "imf_tarea2026019.md",
+      "url": "https://www.imf.org/-/media/files/publications/tar/2026/english/tarea2026019-source-pdf.pdf.md",
+      "retrieved": "2026-11-21",
+      "license": "IMF machine-readable summary of the same report",
+      "sha256": "ca70e3a94c3a1143cd49cc01df3c98859f3c66c0e5a870aa6d337af1f3538c30"
+    }
+  ]
+}

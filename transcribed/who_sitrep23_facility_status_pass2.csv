@@ -1,0 +1,23 @@
+facility_name,facility_type,location_text,district,governorate,status,status_date,page,table_or_figure,transcribed_by,checked,notes
+Bint Jbeil Public Hospital,hospital,,,,closed_fully_non_operational,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Mays al-Jabal Public Hospital,hospital,,,,closed_fully_non_operational,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Salah Ghandour Hospital,hospital,,,,closed_fully_non_operational,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Al Sahel,hospital,,,,reopened,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Bahman,hospital,,,,reopened,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Al Borj Hospital,hospital,,,,reopened,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Hasbaya,hospital,,,,partially_damaged,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Bahman,hospital,,,,partially_damaged,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Jabal Amel,hospital,,,,partially_damaged,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Al-Najda,hospital,,,,partially_damaged,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Al Hayat,hospital,,,,partially_damaged,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Nabatiyeh Public Hospital,hospital,,,,partially_damaged,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Tebnin Public Hospital,hospital,,,,partially_damaged,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Bint Jbeil Public Hospital,hospital,,,,partially_damaged,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Ragheb Harb Hospital,hospital,,,,partially_damaged,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Salah Ghandour Hospital,hospital,,,,partially_damaged,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+RHUH,hospital,,,,partially_damaged,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Lebanese Italian Hospital,hospital,,,,partially_damaged,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Hiram-Tyr,hospital,,,,partially_damaged,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Bekaa Gharbi Hospital,hospital,,,,partially_damaged,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Labib Medical Center,medical center (listed among the 16 hospitals),,,,partially_damaged,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2
+Osayran Hospital,hospital,,,,partially_damaged,2026-05-08,4,"text bullets, 'Attack on healthcare and impact on health services'",claude_agent,,pass2

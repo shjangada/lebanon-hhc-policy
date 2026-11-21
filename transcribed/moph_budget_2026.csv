@@ -1,0 +1,16 @@
+item,value,currency,exchange_rate_used,year,page,table_or_figure,transcribed_by,checked,notes
+Total estimated expenditures 2026 budget law,538415,LBP billion,"89500 LBP/USD (estimated, footnote)",2026,7,Overview of the 2026 Budget,"agent two-pass (text layer, then page images)",True,
+Total estimated revenues 2026 budget law,538415,LBP billion,"89500 LBP/USD (estimated, footnote)",2026,7,Overview of the 2026 Budget,"agent two-pass (text layer, then page images)",True,
+Approximate USD equivalent of total budget,6,USD billion,"89500 LBP/USD (estimated, footnote)",2026,7,Overview,"agent two-pass (text layer, then page images)",True,
+Budget exchange rate used for USD conversion,89500,LBP per USD,89500,2026,7,Footnote,"agent two-pass (text layer, then page images)",True,
+Ministry of Public Health allocation 2026,47266,LBP billion,"89500 LBP/USD (estimated, footnote)",2026,25,Admin classification (3),"agent two-pass (text layer, then page images)",True,
+Ministry of Public Health allocation 2025 budget law,39823,LBP billion,,2025,25,Admin classification (3),"agent two-pass (text layer, then page images)",True,
+Ministry of Social Affairs allocation 2026,16263,LBP billion,"89500 LBP/USD (estimated, footnote)",2026,25,Admin classification (3),"agent two-pass (text layer, then page images)",True,
+Ministry of Social Affairs allocation 2025 budget law,11656,LBP billion,,2025,25,Admin classification (3),"agent two-pass (text layer, then page images)",True,
+Total 2025 budget law,445214,LBP billion,,2025,7,Overview,"agent two-pass (text layer, then page images)",True,
+Health function share of 2026 expenditures,,percent,,2026,23,Functional classification pie,agent two-pass,False,"pass1 missing; pass2 value=9 (page 23, Functional classification (1)). Disagreement: pass2 read from page image looks right but is unconfirmed by pass1"
+Health function expenditure 2026 (functional classification),47457,LBP billion,"89500 LBP/USD (estimated, footnote)",2026,24,Bar chart by function,agent pass2 only,False,not in pass1; single pass
+Health function expenditure 2025 (functional classification),40033,LBP billion,,2025,24,Bar chart by function,agent pass2 only,False,not in pass1; single pass
+"MoPH 2026 allocation, USD equivalent (derived)",528111732,USD,"89500 LBP/USD (estimated, footnote)",2026,25,"computed = 47,266e9 / 89,500",agent arithmetic,False,"derived, not stated in document"
+"MoSA 2026 allocation, USD equivalent (derived)",181709497,USD,"89500 LBP/USD (estimated, footnote)",2026,25,"computed = 16,263e9 / 89,500",agent arithmetic,False,"derived, not stated in document"
+Context: 2026 budget amended to raise MoPH funds for hospital coverage and selected cancer medications,,text,,2026,7,Key amendments bullet,agent two-pass,True,qualitative; no amount stated

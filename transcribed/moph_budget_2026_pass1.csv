@@ -1,0 +1,11 @@
+item,value,currency,exchange_rate_used,year,page,table_or_figure,transcribed_by,checked,notes
+Total estimated expenditures 2026 budget law,538415,LBP billion,"89500 LBP/USD (estimated, footnote)",2026,7,Overview of the 2026 Budget text,agent pass1 (PDF text layer),,Approx USD 6 billion per document
+Total estimated revenues 2026 budget law,538415,LBP billion,"89500 LBP/USD (estimated, footnote)",2026,7,Overview of the 2026 Budget text,agent pass1 (PDF text layer),,Deficit 0% per document
+Approximate USD equivalent of total budget,6,USD billion,"89500 LBP/USD (estimated, footnote)",2026,7,Overview text,agent pass1 (PDF text layer),,stated as 'around USD 6 billion'
+Budget exchange rate used for USD conversion,89500,LBP per USD,89500,2026,7,Footnote to Overview,agent pass1 (PDF text layer),,"'estimated exchange rate of USD 1 = LBP 89,500'"
+Ministry of Public Health allocation 2026,47266,LBP billion,"89500 LBP/USD (estimated, footnote)",2026,25,"Admin classification (3), ordering of text-extracted columns",agent pass1 (PDF text layer),,8.8% of budget; position 4 in ministry list; mapping from text order
+Ministry of Public Health allocation 2025 budget law,39823,LBP billion,,2025,25,Admin classification (3),agent pass1 (PDF text layer),,8.9% of 2025 budget
+Ministry of Social Affairs allocation 2026,16263,LBP billion,"89500 LBP/USD (estimated, footnote)",2026,25,Admin classification (3),agent pass1 (PDF text layer),,3.0% of budget; mapping from text order
+Ministry of Social Affairs allocation 2025 budget law,11656,LBP billion,,2025,25,Admin classification (3),agent pass1 (PDF text layer),,2.6% of 2025 budget
+Total 2025 budget law,445214,LBP billion,,2025,7,Overview text,agent pass1 (PDF text layer),,
+Health function share of 2026 expenditures,,percent,,2026,23,Functional classification pie,agent pass1 (PDF text layer),,missing in pass 1 (text extraction ambiguous)

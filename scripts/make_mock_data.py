@@ -215,3 +215,42 @@ for d in districts:
 save(pd.DataFrame(gc), "governance_capacity.csv")
 
 print("MOCK data written to", OUT)
+
+
+# ---- Mock scenario inputs keyed to the REAL cadaster / facility ids (only when data/processed holds real cadasters + facilities).
+# Written to data/mock/real_ids/ so the pure mock set above stays self-consistent. All of it is still MOCK (is_mock=True).
+PROC = ROOT / "data" / "processed"
+if (PROC / "cadasters.csv").exists() and (PROC / "facilities.csv").exists():
+    RIDS = OUT / "real_ids"
+    RIDS.mkdir(exist_ok=True)
+    rc = pd.read_csv(PROC / "cadasters.csv", dtype={"cadaster_id": str})
+    rf = pd.read_csv(PROC / "facilities.csv", dtype={"cadaster_id": str, "facility_id": str})
+    r2 = np.random.default_rng(13)
+
+    def save_real(df, name):
+        df = df.copy(); df["is_mock"] = True
+        for k, v in MOCK_SRC.items():
+            if k not in df.columns:
+                df[k] = v
+        df.to_csv(RIDS / name, index=False)
+
+    phc = rf[rf["type"] == "PHC"][["facility_id"]].copy()
+    phc["posts_budgeted"] = r2.integers(4, 14, len(phc))
+    phc["posts_filled"] = (phc.posts_budgeted * r2.uniform(0.4, 1.0, len(phc))).astype(int)
+    phc["has_family_physician"] = r2.random(len(phc)) > 0.85
+    phc["staff_left_last_12m"] = r2.integers(0, 4, len(phc))
+    phc["referral_sent_month"] = r2.integers(10, 80, len(phc))
+    phc["referral_completed_month"] = (phc.referral_sent_month * r2.uniform(0.2, 0.7, len(phc))).astype(int)
+    save_real(phc, "staffing_referrals.csv")
+    w = rc[["cadaster_id"]].sample(min(15, len(rc)), random_state=1).copy()
+    w.insert(0, "site_id", [f"MOCK-WELL-{i+1:02d}" for i in range(len(w))])
+    w["nitrate_mg_l"] = r2.uniform(10, 260, len(w)).round(0)
+    w["date"] = "2026-01-01"
+    save_real(w, "water_quality.csv")
+    sv = pd.read_csv(OUT / "soil_sites.csv")
+    sv["cadaster_id"] = r2.choice(rc.cadaster_id, len(sv))
+    sv["lat"] = sv.cadaster_id.map(rc.set_index("cadaster_id").lat)
+    sv["lon"] = sv.cadaster_id.map(rc.set_index("cadaster_id").lon)
+    sv = sv.drop(columns=[c for c in ("is_mock",) if c in sv.columns])
+    save_real(sv, "soil_sites.csv")
+    print("mock scenario inputs keyed to real ids written to", RIDS)
