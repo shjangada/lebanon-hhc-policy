@@ -1,0 +1,52 @@
+# Ranges sampled by src/beqaa/robustness.py (Monte Carlo + scenarios). Every range has a source or is labelled an assumption.
+# status: verified | assumption | mock. Ranges are deliberately wide: the question is whether the recommendation survives, not what the best guess is.
+seed: 42
+n_draws: 1000
+top_k: 8
+core_threshold: 0.80                 # a cadaster is in the CORE set if it is top-k in >= this share of draws, overall AND in every scenario
+
+parameters:
+  catchment_d0_minutes: {values: [15, 30, 60], source: "E2SFCA catchment sensitivity (S36; Luo & Qi used 30 min)", status: assumption}
+  need_weights: {dist: "Dirichlet(1,1,1,1)", source: "uniform over the weight simplex (JRC handbook; METHODS_DECISIONS D4/D10)", status: assumption}
+  aggregation: {values: [arithmetic, geometric, max], source: "METHODS_DECISIONS D3: the contested choice", status: assumption}
+  cr6_fraction: {low: 0.0, high: 1.0, grid: [0.0, 0.1, 0.5, 1.0], source: "M4 key uncertainty: Cr(VI) share unknown (500x HQ swing)", status: assumption}
+  intervention_cost_multiplier: {from: "interventions.csv cost_low/cost_high", source: "mock until quotes (FEASIBILITY item 3)", status: mock}
+  intervention_effect_multiplier: {from: "interventions.csv lift_low/lift_high", source: "mock until literature/pilot", status: mock}
+  community_capture_rate: {low: 0.10, high: 0.40, source: "allocation sensitivity grid; no Lebanon estimate", status: assumption}
+  community_local_fit: {low: 1.00, high: 1.30, source: "CDD evidence mixed (3ie WP30 S26; Mansuri & Rao S35)", status: assumption}
+  community_admin_cost: {low: 0.00, high: 0.15, source: "cost of running committees; no estimate", status: assumption}
+  capacity_gain_per_year: {low: 0.00, high: 0.05, source: "FEASIBILITY section 5: >0.05/yr not credible", status: assumption}
+
+scenarios:                            # deep uncertainty: named worlds, applied to M1 access, M2 targets, policy value and the escrow
+  S1_escalation:
+    label: "Renewed escalation"
+    exposed_incidents_threshold: 15   # cadaster is 'access-degraded' if >= this many conflict incidents since Oct 2023 (LRP admin-3; ACLED not yet loaded)
+    facilities_in_exposed_cadasters: "non-functional"
+    travel_multiplier: [1.5, 2.0]     # applied to travel legs that start in an exposed cadaster
+    policy_effect_multiplier_exposed: [0.3, 0.7]   # delivery effectiveness of spending in exposed cadasters (assumption)
+    escrow_escalation_year: 2028
+    status: assumption
+  S2_funding_shock:
+    label: "Funding shock"
+    pool_factor: [0.7, 0.5, 0.3]      # pool drops 30 / 50 / 70% (FEASIBILITY: LRP 39% funded, Addendum 17%)
+    status: verified_for_context
+  S3_power_collapse:
+    label: "Power collapse"
+    grid_hours_per_day: [4, 6]        # EDL average 4-6 h/day (FEASIBILITY section 1)
+    clinic_hours_per_day: 8           # assumption
+    grid_only_facility_capacity_factor: "grid_hours / clinic_hours"
+    hub_spoke_effect_factor: [0.5, 0.9]   # referral tracking depends on power (offline-first phones soften it); assumption
+    status: assumption
+  S4_staff_loss:
+    label: "Staff loss"
+    capacity_loss: [0.10, 0.25]       # health workforce drops 10 / 25% (emigration 40% doctors, 30% nurses since 2019: WORKFORCE_RETENTION.md)
+    staff_dependent_interventions: [mobile_maternal_unit, hub_spoke_ereferral, chw_women_orgs]
+    status: assumption
+  S5_capacity_stall:
+    label: "Capacity stall"
+    capacity_gain_per_year: 0.0       # governance never improves: escrow stays at the INGO rung
+    status: assumption
+  S6_worst_case_contamination:
+    label: "Worst-case contamination"
+    cr6_fraction: 1.0                 # all chromium treated as Cr(VI)
+    status: assumption
