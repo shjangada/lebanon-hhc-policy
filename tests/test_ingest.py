@@ -38,3 +38,16 @@ def test_cadasters_population_converter(tmp_path, monkeypatch):
     for dist, tot in by.items():                          # rescaled to the LRP 2026 district totals (within rounding)
         assert tot == pytest.approx(lrp.loc[inv[dist], "total"], rel=1e-3)
     assert (pop.status == "assumption").all() and not pop.is_mock.any()
+
+
+@needs_raw
+def test_facilities_converter_and_coverage():
+    from beqaa.ingest import cadasters_population as cp, facilities as fc
+    cad = cp.build_cadasters()
+    fac = fc.build_facilities(cad)
+    assert len(fac) > 0 and fac.facility_id.is_unique and set(fac.type) <= {"PHC", "hospital_hub"} and fac.cadaster_id.isin(cad.cadaster_id).all()
+    assert (fac.status == "assumption").all()
+    cov = fc.coverage(fac, cad)
+    assert cov.iloc[-1].phc_in_mophnetwork_lrp2026 == 61 and 0 <= cov.iloc[-1].coverage < 1      # OSM covers a fraction of the MoPH network
+    tt = fc.build_travel_time(cad.head(3), fac.head(4))
+    assert len(tt) == 12 and (tt.minutes >= 0).all()
