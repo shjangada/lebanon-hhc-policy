@@ -37,6 +37,13 @@ Dashboard: five question-led pages (1 Money now · 2 Where should it go · 3 Who
 
 Not built yet: M3 network simulation, Workforce & network page, Pilot design page (stepped-wedge, PDIA log), case-study cards, notebook appendix, LLM layer for the registry chat.
 
+## Running the app
+```
+make app           # localhost:8501 from this folder (shows whichever branch is checked out here)
+make app-stable    # localhost:8502 from a separate worktree that tracks origin/main (scripts/run_stable.sh)
+```
+`.streamlit/config.toml` sets `runOnSave = true`: the app reruns by itself when a `.py` file in `app/` or `src/beqaa` changes. New CSVs in `data/processed/` or `data/registry/` are picked up on the next rerun (press **R** in the browser): the app's cache is keyed to file timestamps. If `requirements.txt` changes, stop the server, `pip install -r requirements.txt`, restart. The stable worktree (`../lebanon-hhc-main`, detached at `origin/main`) only changes when main changes; re-run `make app-stable` after each merge to update it.
+
 ## Data status: what is real and what is fake so far
 **Short version:** the places, population, conflict incidents, food insecurity, official severity, funding flows, soil (5 villages) and crop transfer factors are real. Costs, cascade rates, staffing, water quality and district governance capacity are still mock or assumed, so the model outputs are **not findings yet**.
 

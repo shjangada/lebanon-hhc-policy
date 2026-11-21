@@ -1,0 +1,10 @@
+[server]
+# Rerun automatically whenever a source file changes (app/ or src/beqaa), so localhost always shows the saved code.
+runOnSave = true
+fileWatcherType = "auto"
+
+[browser]
+gatherUsageStats = false
+
+[client]
+showErrorDetails = "full"
