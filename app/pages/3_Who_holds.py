@@ -38,21 +38,25 @@ m[1].metric("Released to towns", f"${tot:,.0f}", help="Need floor + capacity tra
 m[2].metric("Held in escrow", f"${float(sel.held_usd.sum()):,.0f}", help="Capacity tranche withheld because a threshold failed (restricted mode).")
 m[3].metric("Held by donors (INGO rung)", f"${float(sel['usd_INGO'].sum()):,.0f}", help="Money administered by an international NGO or UN agency as fiduciary.")
 
-st.subheader("Where the money flows")
-links = escrow.flow_links(sched, yr)
-if go is not None and len(links):
-    nodes = list(dict.fromkeys(list(links.source) + list(links.target)))
-    ncol = ["#7f8c8d" if n.startswith(("International", "Pooled")) else "#c0392b" if "held" in n else "#2e86c1" if n.startswith("Administrator")
-            else "#27ae60" if n.startswith("Community") else "#8e44ad" if n.startswith("District") else "#d68910" for n in nodes]
-    fig = go.Figure(go.Sankey(node=dict(label=nodes, pad=14, thickness=14, color=ncol),
-                              link=dict(source=[nodes.index(x) for x in links.source], target=[nodes.index(x) for x in links.target], value=links.value_usd.round(0).tolist())))
-    fig.update_layout(height=430, margin=dict(l=8, r=8, t=8, b=8), font_size=11)
-    if C.IS_MOCK:
-        fig.add_annotation(text="MOCK DATA", x=0.5, y=0.5, xref="paper", yref="paper", showarrow=False, textangle=-25, font=dict(size=60, color="rgba(220,0,0,0.20)"))
-    st.plotly_chart(fig, width="stretch")
-else:
-    st.dataframe(links.round(0), hide_index=True, width="stretch")
-st.caption("Need floor is guaranteed by priority; the capacity tranche needs every threshold to pass; the community committee (women ≥30%, workers incl. unregistered ≥10% of seats) decides use at every rung.")
+st.subheader("Who holds the money")
+LADDER_COLORS = {"INGO": "#9aa5b1", "National NGO": "#7fb3d5", "Union of Municipalities": "#2874a6", "MoPH": "#0b3d63", "Held in escrow": "#e59866"}
+def holder_frame(pth):
+    long = pth.melt("year", [f"usd_{l}" for l in escrow.LEVELS] + ["held_usd"], "holder", "usd")
+    long["holder"] = long.holder.str.replace("usd_", "", regex=False).replace({"held_usd": "Held in escrow"})
+    long["share"] = long.usd / long.groupby("year").usd.transform("sum")
+    return long
+hf = holder_frame(path)
+order = [h for h in LADDER_COLORS if h in set(hf.holder)]
+bars = alt.Chart(hf).mark_bar().encode(
+    y=alt.Y("year:O", title=None, sort="ascending"),
+    x=alt.X("share:Q", title="share of released money", axis=alt.Axis(format="%"), scale=alt.Scale(domain=[0, 1])),
+    color=alt.Color("holder:N", title="Held by", scale=alt.Scale(domain=order, range=[LADDER_COLORS[h] for h in order]), legend=alt.Legend(orient="bottom")),
+    order=alt.Order("holder:N", sort="ascending"),
+    tooltip=["year", "holder", alt.Tooltip("usd:Q", title="USD", format=",.0f"), alt.Tooltip("share:Q", title="share", format=".0%")])
+st.altair_chart(C.wm(bars, 760, 230), use_container_width=False)
+st.caption("Pool of $1M over 2026-2030 (illustrative). Grey = international fiduciary; blues = Lebanese rungs, darker = more local control; orange = capacity tranche held back because a threshold failed. "
+           "Flow: pooled window inside LHF/LFF → need gate → need floor (guaranteed) + capacity tranche (only if every threshold passes) → administrator at the district's rung → community committee decides use "
+           "(women ≥30%, workers incl. unregistered ≥10% of seats).")
 
 st.subheader("Who controls money in each district" + (" (all years)" if yr is None else f" ({yr})"))
 d = sched if yr is None else sched[sched.year == yr]
@@ -62,13 +66,7 @@ st.dataframe(C.pretty(dd.round(2), district="District", towns="Towns in window",
              hide_index=True, width="stretch")
 st.caption("Only districts that contain priority towns appear. Capacity index = mock district series rescaled to the national anchor (SC01, World Bank WGI Government Effectiveness 29.9/100 for 2025).")
 
-st.subheader("Transition 2026 → 2030: who holds the money")
-cmp_ = pd.concat([theme_kpi._escrow_path(s, scored)[0].assign(scenario=theme_kpi.SCENARIO_LABELS[s]) for s in ("baseline", "S5_capacity_stall", "S2_funding_shock")], ignore_index=True)
-long = cmp_.melt(["year", "scenario"], [f"usd_{l}" for l in escrow.LEVELS] + ["held_usd"], "holder", "usd")
-long["holder"] = long.holder.str.replace("usd_", "").replace({"held_usd": "Held in escrow"})
-area = alt.Chart(long).mark_bar().encode(x=alt.X("year:O", title=None), y=alt.Y("usd:Q", title="USD"), color=alt.Color("holder:N", title="Holder"),
-                                         column=alt.Column("scenario:N", title=None))
-st.altair_chart(area.properties(width=210, height=240), use_container_width=False)
+st.subheader("Local control over time, by scenario")
 line = alt.Chart(kt.assign(scenario=kt.scenario.map(theme_kpi.SCENARIO_LABELS))).mark_line(point=True).encode(x=alt.X("year:O", title=None), y=alt.Y("local_control_share:Q", scale=alt.Scale(domain=[0, 1]), title="local control"),
                                                                                                        color=alt.Color("scenario:N", title=None, legend=alt.Legend(orient="bottom")))
 st.altair_chart(C.wm(line, 760, 260), use_container_width=False)
