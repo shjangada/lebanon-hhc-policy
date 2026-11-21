@@ -8,8 +8,8 @@ empty columns; **mock** = synthetic. The app loads `data/processed/` first and f
 |---|---|---|---|---|
 | cadasters | ✅ real | 222 |  | D01 |
 | population | 🟡 partly real | 222 |  | D03+D04+D08 |
-| facilities | 🟡 partly real | 41 | has_solar_backup, hours_per_week | D02 |
-| travel_time | 🟡 partly real | 9102 |  | D01+D02 |
+| facilities | 🟡 partly real | 94 | osm_amenity, has_solar_backup, hours_per_week | S04 |
+| travel_time | 🟡 partly real | 20868 |  | D01+D02 |
 | vulnerability | 🟡 partly real | 222 | female_headed_hh_share, unable_to_access_care_share, no_insurance_share | D05 |
 | official_severity | ✅ real | 26 |  | S15 |
 | soil_sites | 🟡 partly real | 27 |  | S27 |
@@ -27,8 +27,8 @@ empty columns; **mock** = synthetic. The app loads `data/processed/` first and f
 | layer | cadasters covered |
 |---|---|
 | population (LRP + WorldPop + DTM) | 222/222 (100%) |
-| facility located in the cadaster | 26/222 (12%) |
-| a facility within 30 min (modelled travel time) | 210/222 (95%) |
+| facility located in the cadaster | 51/222 (23%) |
+| a facility within 30 min (modelled travel time) | 219/222 (99%) |
 | travel time (assumed speeds) | 222/222 (100%) |
 | soil result at the cadaster | 5/222 (2%) |
 | district official severity (JIAF/health) | 222/222 (100%) |
@@ -40,7 +40,7 @@ empty columns; **mock** = synthetic. The app loads `data/processed/` first and f
 - **cascade_baseline**: published rates cover only some steps and groups (VASyR national for Syrians; AlArab PHC-attendee sample); the sourced rows are in `data/processed/cascade_baseline_long.csv`. Referral completion has no source.
 - **water_quality**: needs a data request (Litani River Authority). **staffing_referrals, governance_capacity**: no public source; scenario inputs for the escrow, to be measured in the pilot. The UN-Habitat municipal assessment publishes only national aggregates (`docs/ADMIN_CAPACITY_INDEX.md`).
 - **vulnerability**: only IPC at district level; VASyR gives governorate-level 'below SMEB' for Syrian households only (extra columns); female-headed households, access barriers and insurance have no district source and stay empty.
-- **facilities**: OSM covers about 15% of the 61 MoPH-network PHCs; capacity, ANC offering and MoPH-network flags are assumptions; only 2 hospitals have a dated status (WHO sitreps name hospitals without locations; matched by name).
+- **facilities**: MoPH locator + PHC network list (97 facilities; 59 network PHCCs placed, 29 hospitals). Hospitals sit at their OSM-matched positions; PHCCs only at their village centroid (1-5 km). Capacity and ANC offering are assumptions; only 4 facilities have a dated 2026 status (WHO sitreps and MSF name hospitals without locations; matched by name).
 - **soil_sites**: 5 villages located by NAME at cadaster centroids (the report has no coordinates; 4 villages unmatched are logged); Cr, total P and one Pb value above the detection limit; Cr(VI) share unknown.
 - **population**: the within-district spread of every group is modelled (WorldPop); registered vs unregistered Syrians is an assumption (LRP planning figure vs UNHCR records).
 - **conflict**: LRP incidents (to Jul 2025) are loaded; ACLED events need the account's API access (the token request returned HTTP 403, see `docs/MANUAL_STEPS.md`).
@@ -49,5 +49,6 @@ empty columns; **mock** = synthetic. The app loads `data/processed/` first and f
 | source | level | names |
 |---|---|---|
 | cadasters_population | admin3 | 2 |
+| facilities_moph | facility | 3 |
 | facility_status | facility_name | 28 |
 | soil_sites | village | 3 |

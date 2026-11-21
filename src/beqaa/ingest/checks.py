@@ -60,7 +60,7 @@ def run() -> dict:
     if f["share"] < 0.1:
         warns.append("facilities: the five districts hold a small share of the national OSM facility count (check scope)")
     if not (t["rho"] > 0.5):
-        warns.append(f"travel time: our ranking disagrees with HDX accessibility (rho={t['rho']:.2f}); OSM covers only ~15% of the MoPH-network PHCs, so our PHC access is understated")
+        warns.append(f"travel time: our ranking disagrees with HDX accessibility (rho={t['rho']:.2f}); PHCC positions are village centroids and few facilities have a dated status")
     for w in warns:
         print("WARNING:", w)
     return {"population_max_abs_diff_pct": round(float(p.diff_pct.abs().max()), 3), "facilities": f, "travel_time_rho": round(t["rho"], 2), "warnings": len(warns)}

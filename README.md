@@ -53,7 +53,7 @@ The app and pipeline load `data/processed/` (real, from `make ingest`) first and
 |---|---|---|---|
 | cadasters | ✅ real | 222 real admin-3 areas (COD-AB) in Baalbek, Hermel, Zahle, West Bekaa, Rachaya, with p-codes, Arabic names, area, centroid | nothing (2 zero-population areas dropped and logged) |
 | population | 🟡 partly real | LRP 2026 totals by group, WorldPop 1 km spread, IOM DTM displaced; sums match LRP district totals | how each group is spread inside a district (modelled); registered vs unregistered Syrians (assumption) |
-| facilities | 🟡 partly real | OSM hospitals/clinics (41) placed in cadasters; dated status for 2 hospitals (WHO sitreps, matched by name) | OSM has only ~15% of the 61 MoPH-network PHCs; capacity, ANC offering, MoPH-network flag are assumptions; PHC status unknown |
+| facilities | 🟡 partly real | MoPH locator + PHC network list (97): 65 PHCCs and 29 hospitals placed in cadasters; `in_mophnetwork` is real; dated status for 4 facilities | PHCC positions are village centroids (1-5 km); capacity and ANC offering are assumptions; PHC functionality unknown |
 | travel_time | 🟡 partly real | cadaster-to-facility minutes; cross-checked against the HDX accessibility file (Spearman 0.90 by district) | speeds are an assumption (straight line × 1.3 / 40 km/h); no road network |
 | vulnerability | 🟡 partly real | IPC phase 3+ share by district (Sep 2026); VASyR 'below SMEB' by governorate (Syrian households, extra columns) | female-headed households, access barriers, insurance: no district source, left empty |
 | official_severity | ✅ real | LRP Addendum JIAF / health severity classes for all 26 districts (hand-transcribed) | FSA composite printed for only 8 Severity-4 districts; other 18 empty |

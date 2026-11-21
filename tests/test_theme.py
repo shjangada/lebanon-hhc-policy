@@ -5,7 +5,7 @@ import re
 import pandas as pd
 import pytest
 
-from beqaa import io, m2_need_score as m2, narrative, theme_kpi
+from beqaa import escrow, io, m2_need_score as m2, narrative, theme_kpi
 
 PROC = io.PROCESSED
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -33,8 +33,15 @@ def test_projection_monotone_baseline_flat_under_capacity_stall(auto):
     sc = m2.compute(m2.raw_indicators())
     base = [theme_kpi.local_control_share(y, "baseline", scored=sc)["value"] for y in range(2027, 2031)]
     stall = [theme_kpi.local_control_share(y, "S5_capacity_stall", scored=sc)["value"] for y in range(2027, 2031)]
-    assert all(b2 >= b1 - 1e-9 for b1, b2 in zip(base, base[1:]))                 # non-decreasing under baseline settings
-    assert max(stall) - min(stall) < 1e-9                                         # flat when capacity stalls
+    # invariant: under baseline settings no town moves DOWN the administrator ladder (capacity gains only, <= 0.05/yr).
+    # The money-weighted KPI itself can dip in a year when the capacity tranche is held back (only the floor is released), so it is not asserted monotone.
+    _, sched = theme_kpi._escrow_path("baseline", sc)
+    for _cid, g in sched.sort_values("year").groupby("cadaster_id"):
+        lv = [escrow.LEVELS.index(x) for x in g.administered_by_floor]
+        assert all(b >= a for a, b in zip(lv, lv[1:])), (_cid, lv)
+    _, sched_s = theme_kpi._escrow_path("S5_capacity_stall", sc)                  # capacity stalls: every town stays on the rung it starts on
+    for _cid, g in sched_s.sort_values("year").groupby("cadaster_id"):
+        assert g.administered_by_floor.nunique() == 1, _cid
     assert base[-1] > stall[-1]
     r = theme_kpi.local_control_share(2030, "baseline", scored=sc)
     assert r["status"] == "assumption" and r["kind"] == "projection"             # mock capacity inputs: labelled, never 'real'
