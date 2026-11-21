@@ -48,3 +48,16 @@ def test_exposure_access_target_list():
     sc = m2.compute(m2.raw_indicators())
     t = m2.exposure_access_targets(sc)
     assert (t.D_environment >= 0.33).all() and (t.access_deficit >= 0.5).all()
+
+
+def test_capacity_sensitivity_levels_move_but_ranking_does_not():
+    """Centre capacity is an assumption (flat 300/week): levels scale with it, but the access ranking must be stable across 200 / 300 / 400 (rho >= 0.95),
+    and the module-level scale is restored afterwards."""
+    from scipy.stats import spearmanr
+    from beqaa import m1_access as m1
+    cs = m1.capacity_sensitivity()
+    assert m1.PHC_SCALE == 1.0
+    p = cs.pivot(index="cadaster_id", columns="phc_capacity_weekly", values="rank_current")
+    assert spearmanr(p[200], p[400])[0] >= 0.95
+    med = cs.groupby("phc_capacity_weekly").access_current.median()
+    assert med[200] < med[300] < med[400]

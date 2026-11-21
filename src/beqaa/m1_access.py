@@ -59,13 +59,16 @@ def facility_state(fac: pd.DataFrame) -> pd.Series:
     return st.where(dated, "unknown")
 
 
+PHC_SCALE = 1.0          # multiplier on primary-care-centre capacity (no size data exists for centres: see capacity_sensitivity)
+
+
 def effective_facilities(fac: pd.DataFrame, unknown_weight: float = 1.0, partial_weight: float = PARTIAL_WEIGHT) -> pd.DataFrame:
     """Facilities that supply care now, with capacity scaled by state and, for mobile units, by hours per week / 40.
     unknown_weight: share of capacity credited to facilities with no dated status (1 = optimistic, 0 = pessimistic; they are shown grey either way)."""
     f = fac.copy()
     f["state"] = facility_state(f)
     w = f.state.map({"functional": 1.0, "partial": partial_weight, "closed": 0.0, "damaged": 0.0, "unknown": unknown_weight})
-    cap = f.capacity_weekly.astype(float) * w
+    cap = f.capacity_weekly.astype(float) * w * np.where(f["type"] == "PHC", PHC_SCALE, 1.0)
     if "hours_per_week" in f.columns:
         mob = (f["type"] == "mobile") & f.hours_per_week.notna()
         cap = cap.where(~mob, cap * f.hours_per_week.fillna(40) / 40.0)
@@ -121,6 +124,21 @@ def access_by_cadaster(d0: float = 30, demand_col: str = "women_15_49", faciliti
     df["rank_current"] = df.access_current.rank(method="min")           # 1 = least access
     df["is_mock"] = m1 or m2 or m3
     return df
+
+
+def capacity_sensitivity(demand_col: str = "women_15_49", d0: float = 30, scales=(2 / 3, 1.0, 4 / 3)) -> pd.DataFrame:
+    """Centre capacity is a flat 300 consultations/week (no staff, hours or volume data exist). Re-run at 200 / 300 / 400 and report how much the access ranking moves.
+    Hospital capacity is scaled by MoPH medicine beds where recorded. Returns per cadaster current access and rank under each centre capacity."""
+    global PHC_SCALE
+    old, rows = PHC_SCALE, []
+    try:
+        for sc in scales:
+            PHC_SCALE = sc
+            a = access_by_cadaster(d0, demand_col)
+            rows.append(a[["cadaster_id", "cadaster_name", "district", "access_current", "rank_current"]].assign(phc_capacity_weekly=round(300 * sc)))
+    finally:
+        PHC_SCALE = old
+    return pd.concat(rows, ignore_index=True)
 
 
 def catchment_sensitivity(demand_col: str = "women_15_49", sizes=(15, 30, 60), demand_weights: dict | None = None) -> pd.DataFrame:

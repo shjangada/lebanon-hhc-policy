@@ -56,10 +56,11 @@ def build_facilities_moph(cad: pd.DataFrame | None = None) -> pd.DataFrame:
             dropped.append(f"{r.facility_id} ({r.village}): outside the five districts' cadasters")
             continue
         kind = MOPH_TYPE[r.type]
+        beds = pd.to_numeric(r.beds_medicine, errors="coerce")
         fs = str(r.functional_status)
         st = next((v for k, v in MOPH_STATUS.items() if fs.startswith(k)), "")
         rows.append({"facility_id": r.facility_id, "name": r.name_en if isinstance(r.name_en, str) else r.name_ar, "type": kind, "cadaster_id": pcodes[hit[0]],
-                     "lat": round(float(lat), 5), "lon": round(float(lon), 5), "capacity_weekly": CAPACITY[kind], "status_2026": st,
+                     "lat": round(float(lat), 5), "lon": round(float(lon), 5), "capacity_weekly": CAPACITY[kind], "beds_medicine": beds, "status_2026": st,
                      "offers_anc": True, "in_mophnetwork": r.moph_network == "yes", "osm_amenity": "", "name_ar": r.name_ar,
                      "functional_status": "" if fs == "unknown" else fs, "status_date": "" if pd.isna(r.status_date) else r.status_date,
                      "status_source": "" if pd.isna(r.status_source_url) else r.status_source_url,
@@ -69,6 +70,14 @@ def build_facilities_moph(cad: pd.DataFrame | None = None) -> pd.DataFrame:
     if dropped:
         log_unmatched("facilities_moph", "facility", dropped, "MoPH facility with no usable coordinate or outside the five districts")
     df = pd.DataFrame(rows)
+    # Hospital size: weekly capacity scaled by the MoPH-recorded medicine-ward beds (12 of 29 hospitals have a value): capacity = 2000 x beds / median(beds).
+    # beds_medicine counts the medicine department only, not all beds; hospitals without a value keep the flat 2000. Centres stay flat (no size data): run M1 at a
+    # low and a high value (m1_access.capacity_sensitivity).
+    h = df.type == "hospital_hub"
+    med = df.loc[h, "beds_medicine"].median()
+    scaled = CAPACITY["hospital_hub"] * df.loc[h, "beds_medicine"] / med
+    df.loc[h, "capacity_weekly"] = scaled.fillna(CAPACITY["hospital_hub"]).round(0)
+    df.loc[h & df.beds_medicine.notna(), "assumed_fields"] = "capacity_weekly (scaled by MoPH medicine beds);offers_anc"
     return provenance(df, "MoPH Health Facility Locator + MoPH PHC network list 27/03/2025 (62 network PHCCs, 6 public and 23 private hospitals); capacity and ANC offering are assumptions; PHCC position = village centroid",
                       "2026-11-21", "assumption", "https://www.moph.gov.lb/en/HealthFacilities/index/0/20379/8", "S04")
 
