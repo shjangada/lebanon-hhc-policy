@@ -22,3 +22,8 @@ Cadasters with zero access: 12 of 222 (OSM) to 3 of 222 (MoPH). Rank correlation
 
 ## Not solved
 Capacity and ANC offering are still assumptions; PHCC positions are approximate; the list is March 2025 and misses about 3 network centres; names were read through web extraction and must be checked against the PDF (`docs/MANUAL_STEPS.md`). Road travel times (OSMnx) are not yet used: travel time is still straight line x 1.3 at 40 km/h.
+
+## Capacity (assumption, now tested)
+- **Hospitals:** weekly capacity = 2000 x (MoPH medicine-ward beds / median beds); 12 of 29 hospitals have a bed count (medicine department only, not all beds), the rest keep 2000. Range 800 to 5,333.
+- **Centres:** no size data exists (no staff, hours or volumes), so every centre stays 300 consultations/week and M1 is run at **200 / 300 / 400** (`m1_access.capacity_sensitivity`). Median current access by district moves with the level (Baalbek 0.146 / 0.170 / 0.195; Zahle 0.317 / 0.347 / 0.382) but the **ranking of cadasters does not** (Spearman 0.997 between 200 and 400). So the access ranking is robust to centre size; access levels are not.
+- Real staffing per centre needs the MoPH PHC department (docs/DATA_REQUESTS.md).
