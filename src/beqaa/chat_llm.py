@@ -67,7 +67,7 @@ def ask(question: str, history: list[dict] | None = None, client=None, context: 
             if bad:
                 text += f"\n\n⚠ **Unverified ids removed from consideration: {', '.join(bad)} are not in the registry. Do not use them.**"
             import re
-            return {"answer": text, "citations": sorted(set(re.findall(r"\b[FOS]\d{3}\b", text)) - set(bad)), "trace": trace, "invalid_ids": bad, "mode": MODEL}
+            return {"answer": text, "citations": sorted(set(re.findall(r"\b[FOS]\d{2,3}\b", text)) - set(bad)), "trace": trace, "invalid_ids": bad, "mode": MODEL}
         results = []
         for b in resp.content:
             if b.type != "tool_use":
