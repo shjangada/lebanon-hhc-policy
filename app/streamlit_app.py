@@ -10,6 +10,7 @@ import streamlit as st
 
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(HERE.parent / "src"))      # the beqaa package lives in src/ and is not pip-installed on Streamlit Cloud
 st.set_page_config(page_title="The UN funding line: Beqaa health", layout="wide")
 
 import common  # noqa: E402
