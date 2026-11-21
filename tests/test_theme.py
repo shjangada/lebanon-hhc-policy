@@ -75,7 +75,8 @@ def test_pages_run_headless_and_show_question_badges_and_answer(page, auto):
 
 
 @need
-def test_main_entry_opens_on_page_one(auto):
+def test_main_entry_is_one_page_with_five_sections(auto):
     from streamlit.testing.v1 import AppTest
     at = AppTest.from_file(str(ROOT / "app" / "streamlit_app.py"), default_timeout=300).run()
-    assert not at.exception and at.title[0].value == "Funding today"
+    assert not at.exception
+    assert [h.value for h in at.header] == ["Funding today", "Priority areas", "Control of the money", "Resilience", "Funding sources"]
