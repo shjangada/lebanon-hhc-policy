@@ -1,4 +1,5 @@
 """Page 5: Where can we get the money? (the action step)"""
+import os
 import pathlib
 import sys
 
@@ -100,8 +101,13 @@ with st.expander("Funding-flow data sources (where real allocation data comes fr
     st.caption("data/registry/funding_datasets.csv: datasets, not grants. CBPF / FTS are already processed (`make ingest`) and drive Page 1.")
 
 st.subheader("Ask the registry (optional chat)")
-use_llm = st.checkbox("Phrase answers with Claude (optional; needs ANTHROPIC_API_KEY)", False, key="p5_llm")
-client = chat_llm.get_client() if use_llm else None
+LLM_CAP = int(os.environ.get("CHAT_MAX_LLM_QUESTIONS", "10"))      # per browser session: protects the API key on a public deployment
+has_key = chat_llm.get_client() is not None
+use_llm = st.checkbox("Phrase answers with Claude (optional; needs ANTHROPIC_API_KEY)", has_key, key="p5_llm", disabled=not has_key)
+st.session_state.setdefault("llm_used", 0)
+client = chat_llm.get_client() if use_llm and st.session_state.llm_used < LLM_CAP else None
+if use_llm and client is None:
+    st.info(f"Claude question limit for this session reached ({LLM_CAP}); answers are now retrieval-only rows of the registries.")
 st.caption(("Claude loops through the funding, organisation and source registries and only phrases what it finds; every claim cites a registry id and URL; invented ids are flagged. " + chat_llm.MODEL)
            if client else "Retrieval-only (default): answers are rows of the registries with their source URLs. This chat is an optional layer on top of the eligibility checker above.")
 if "chat_hist" not in st.session_state:
@@ -116,7 +122,8 @@ if q_ := st.chat_input("e.g. Which funders could let local communities decide ho
     with st.chat_message("assistant"):
         with st.spinner("Searching the registries…"):
             top3 = ", ".join(scored.nsmallest(3, "rank").cadaster_name)
-            r_ = chat_llm.ask(q_, history=st.session_state.chat_hist[:-1], client=client, context=f"priority cadasters: {top3}; theme: community-decided, locally administered funding")
+            st.session_state.llm_used += 1 if client else 0
+            r_ = chat_llm.ask(q_, history=st.session_state.chat_hist[:-1], client=client, use_llm=client is not None, context=f"priority cadasters: {top3}; theme: community-decided, locally administered funding")
         st.markdown(r_["answer"])
         st.caption(f"Mode: {r_['mode']}" + (f" · cited: {', '.join(r_['citations'])}" if r_["citations"] else ""))
         if r_["trace"]:

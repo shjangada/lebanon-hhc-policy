@@ -8,6 +8,8 @@ __pycache__/
 # raw downloads are committed (small) except files >5 MB, which scripts/fetch_sources.py re-downloads
 data/raw/admin_boundaries/*.geojson.zip
 data/raw/soil_sites/**/*.pdf
+# third-party PDFs are not redistributed: python scripts/fetch_sources.py --restore-pdfs re-downloads them (url + sha256 in each _provenance.json)
+data/raw/**/*.pdf
 data/processed/*
 !data/processed/.gitkeep
 .ipynb_checkpoints/
