@@ -23,11 +23,9 @@ DATASETS = {
     "vulnerability": "vulnerability.csv",
     "official_severity": "official_severity.csv",
     "soil_sites": "soil_sites.csv",
-    "water_quality": "water_quality.csv",
     "crop_transfer": "crop_transfer.csv",
     "interventions": "interventions.csv",
     "cascade_baseline": "cascade_baseline.csv",
-    "staffing_referrals": "staffing_referrals.csv",
     "conflict_exposure": "conflict_exposure.csv",
     "funding_flows": "funding_flows.csv",
     "funding_requirements": "funding_requirements.csv",
@@ -46,7 +44,7 @@ class Loaded:
 
 ID_COLS = {"cadaster_id": str, "facility_id": str}
 # datasets whose real source is partial or modelled: they never get the plain "real" badge
-KEYED_MOCK = {"staffing_referrals", "water_quality", "soil_sites"}        # id-keyed mock inputs regenerated against real ids (data/mock/real_ids)
+KEYED_MOCK = {"soil_sites"}        # id-keyed mock inputs regenerated against real ids (data/mock/real_ids)
 
 
 def _mode() -> str:
@@ -118,6 +116,11 @@ def dataset_badge(name: str, raw_dir: pathlib.Path | None = None, processed_dir:
             return "partly real"
         return "real"
     return "missing" if name in REAL_ONLY else "mock"
+
+
+def any_mock(raw_dir: pathlib.Path | None = None, processed_dir: pathlib.Path | None = None) -> bool:
+    """True only if some dataset is still entirely mock (badge 'mock'). 'Partly real' datasets (real values plus labelled proxies/assumptions) do not count."""
+    return any(dataset_badge(n, raw_dir, processed_dir) == "mock" for n in DATASETS if n not in REAL_ONLY)
 
 
 def data_status(raw_dir: pathlib.Path | None = None, processed_dir: pathlib.Path | None = None) -> pd.DataFrame:

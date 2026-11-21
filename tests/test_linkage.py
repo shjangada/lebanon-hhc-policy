@@ -109,12 +109,10 @@ def test_unsampled_environment_is_unknown_not_zero():
     assert np.allclose(u.loc[~gap, "D_environment"], z.loc[~gap, "D_environment"])
 
 
-def test_mock_water_quality_is_never_scored():
-    """No public Beqaa well data: while water_quality is mock, nitrate is skipped (unknown), not imputed, and every cadaster is a water evidence gap."""
+def test_water_is_never_scored():
+    """No public Beqaa well data exists (the mock water_quality dataset was removed): nitrate is skipped (unknown), never imputed, and every cadaster is a water evidence gap."""
     from beqaa import io, m2_need_score as m2
-    if not io.load_dataset("water_quality").is_mock:
-        import pytest
-        pytest.skip("water_quality is real")
+    assert "water_quality" not in io.DATASETS
     raw = m2.raw_indicators()
     assert raw.nitrate_mg_l.isna().all() and raw.nitrate_imputed.all()
     assert "nitrate_mg_l" in m2.compute(raw).attrs["skipped_indicators"]

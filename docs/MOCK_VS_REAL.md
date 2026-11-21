@@ -5,7 +5,7 @@ Real inputs here are still PARTLY real (see `docs/DATA_STATUS.md`), so differenc
 
 - Cadasters scored: mock 40 vs real 222. Indicators skipped for lack of data (real): unable_to_access_care_share, no_insurance_share, female_headed_hh_share, nitrate_mg_l.
 - Need tiers (mock): {'Moderate': 35, 'Low': 5}; (real): {'Moderate': 161, 'Low': 59, 'High': 2}.
-- Worst-group spatial access vs host Lebanese: mock 0.91, real 1.00.
+- Worst-group spatial access vs host Lebanese: mock 0.91, real 0.98.
 
 ## Top-10 cadasters by Need Score, by district
 | district | top-10 cadasters (mock) | top-10 cadasters (real inputs) |
@@ -31,7 +31,7 @@ Top-10 on real inputs: Tfail (Baalbek), Michaa Mrajhineh (Hermel), Hermel Jbab (
 | district | escrow administrator 2030 (mock) | (real inputs) |
 |---|---|---|
 | Baalbek | Union of Municipalities | Union of Municipalities |
-| Hermel | National NGO | National NGO |
+| Hermel | National NGO | Union of Municipalities |
 | Rachaya | - | - |
 | West Bekaa | Union of Municipalities | - |
 | Zahle | National NGO | - |

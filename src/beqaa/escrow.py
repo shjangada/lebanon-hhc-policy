@@ -58,11 +58,16 @@ def select_towns(scored: pd.DataFrame, n_towns: int, need_min: float, env_weight
     return gated.sort_values("priority_score", ascending=False).head(n_towns).copy(), w
 
 
+SCEN_REFERRAL = 0.5     # SCENARIO value (not data): referral completion is not published; break-even in breakeven.py
+SCEN_POSTS = 0.8        # SCENARIO value (not data): share of budgeted posts filled
+
+
 def run(scored: pd.DataFrame, pool: float | None = None, n_towns: int | None = None, need_floor_pct: float | None = None,
         start: int | None = None, end: int | None = None, rules: dict | None = None, unrestricted: bool = False,
         max_level: str = DEFAULT_MAX_LEVEL, escalation_year: int | None = None, escalation_drop: float = 0.15,
         recovery_per_year: float = 0.03, env_weight: float | None = None, need_min: float | None = None,
-        yoy_gain: float | None = None, bands: list[float] | None = None) -> tuple[pd.DataFrame, pd.DataFrame, list[str]]:
+        yoy_gain: float | None = None, bands: list[float] | None = None,
+        referral_completion: float = SCEN_REFERRAL, posts_filled: float = SCEN_POSTS) -> tuple[pd.DataFrame, pd.DataFrame, list[str]]:
     pool = POOL["default_usd"] if pool is None else pool
     n_towns = NEED_GATE["n_towns"] if n_towns is None else n_towns
     need_floor_pct = NEED_GATE["need_floor_pct"] if need_floor_pct is None else need_floor_pct
@@ -80,8 +85,7 @@ def run(scored: pd.DataFrame, pool: float | None = None, n_towns: int | None = N
     rows = []
     for t, sh in zip(towns.itertuples(), share):
         gd = gov[gov.district == t.district].set_index("year")
-        posts_filled = 1 - t.posts_unfilled_share
-        ref = t.referral_completion
+        ref = referral_completion          # SCENARIO parameters (no public facility-level data): the same for every town; see breakeven.py
         for y in years:
             g = gd.loc[y]
             idx = float(g.admin_capacity_index)
@@ -131,10 +135,8 @@ def run(scored: pd.DataFrame, pool: float | None = None, n_towns: int | None = N
         w.append(f"${tot_held:,.0f} ({tot_held / pool:.0%} of the pool) is held back by thresholds; consider a lower tranche share or unrestricted routing.")
     if need_floor_pct < 0.3:
         w.append("Need floor below 30%: the highest-need, lowest-capacity towns depend mainly on capacity tranches they may never unlock.")
-    near = towns[(towns.referral_completion - r["referral_min"]).between(0, 0.05)]
-    for t in near.itertuples():
-        w.append(f"Gaming risk: {t.cadaster_name} referral completion ({t.referral_completion:.0%}) sits within 5 points above the threshold. "
-                 "Self-reported: verify independently (sampled audits).")
+    if 0 <= referral_completion - r["referral_min"] <= 0.05:
+        w.append(f"Gaming risk: the assumed referral completion ({referral_completion:.0%}) sits within 5 points above the threshold. Self-reported: verify independently (sampled audits).")
     w.append("Gaming risk (structural): referral completion, posts filled and transparent reporting are self-reported by the implementer. "
              "Posts can be 'filled' on paper. Use third-party spot checks before releasing a tranche.")
     w.append(f"Capacity anchor: district admin capacity is MOCK, rescaled to the national WGI Government Effectiveness value "

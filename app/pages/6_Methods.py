@@ -408,7 +408,7 @@ with section("s3", "4 · Allocation",
             st.slider("Need floor %", 0.0, 1.0, 0.5, 0.05, key="floor")
             st.toggle("Unrestricted (route via a more-foreign intermediary instead of holding)", False, key="unres")
             st.toggle("Renewed escalation from 2028 (capacity drops, recovers slowly)", False, key="esc")
-            st.caption("Scenario inputs: capacity, referral and staffing figures are mock defaults that the pilot would measure (no public source).")
+            st.caption("Scenario inputs: referral completion and posts filled are assumed values that the pilot would measure (no public source); capacity is the national anchor in every district.")
             st.slider("Referral completion ≥", 0.0, 1.0, 0.40, 0.05, key="ref_min")
             st.slider("Posts filled ≥", 0.0, 1.0, 0.60, 0.05, key="posts_min")
             st.slider("District admin capacity ≥ (national anchor SC01 = 0.299)", 0.0, 0.7, float(escrow.DEFAULT_RULES["admin_capacity_min"]), 0.01, key="cap_min")

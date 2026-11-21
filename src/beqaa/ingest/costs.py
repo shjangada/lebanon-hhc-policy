@@ -56,13 +56,23 @@ def run() -> dict:
             r["status"] = "partial"
             r["note"] = "COST derived from data/raw/costs (see cost_basis); effect, reach and risk columns remain assumptions"
         else:
-            r["cost_basis"], r["cost_items"] = "no published unit cost: mock range kept as a labelled assumption", ""
-            r["cost_status"] = "assumption (mock)"
+            r["cost_basis"], r["cost_items"] = "no published unit cost: range kept as a labelled ASSUMPTION (placeholder), not data", ""
+            r["cost_status"] = "assumption (placeholder)"
             r["is_mock"] = True
         rows.append(r)
     out = pd.DataFrame(rows)
+    # Effects: only where a published estimate was READ (not Lebanon; scenario ranges). CHW: any-ANC +0.0 (Tanzania cluster RCT, RR 0.97 on <4 visits: null) to +0.169
+    # (Afghanistan DiD, +10.5 pp, 95% CI 4.2-16.9) and facility delivery +11.0 pp (4.0-18.0), Edmond 2018 BMC Medicine; Geldsetzer 2019 PLoS Med. Mobile unit: no effect size found,
+    # lift 0 here and the break-even is the result. All effects are non-Lebanon proxies to be verified against the originals.
+    chw = out.intervention_id == "chw_women_orgs"
+    out.loc[chw, ["lift_low", "lift_high"]] = [0.0, 0.169]
+    out.loc[chw, "steps"] = "any_anc;facility_delivery"
+    out["effect_basis"] = ""
+    out.loc[chw, "effect_basis"] = "literature proxy (non-Lebanon): Edmond 2018 BMC Medicine (Afghanistan, +10.5 pp ANC, CI 4.2-16.9; delivery +11.0 pp); Geldsetzer 2019 PLoS Med (Tanzania, null on ANC4): range 0 to 0.169; verify originals"
+    out.loc[~chw, "effect_basis"] = "no published effect size found: lift range is an ASSUMPTION (placeholder); the break-even is the result"
+    out.loc[out.intervention_id == "soil_water_screening", "effect_basis"] = "environmental measure: acts on exposure, not on the ANC cascade"
     out["source_id"], out["source_date"], out["url"] = "COST", "2026-11-21", URL
     out["source"] = "cost_ranges.csv (derived) / mock for rows without a unit price"
     out.to_csv(PROCESSED / "interventions.csv", index=False)
-    return {"cost_rows": len(c), "interventions_with_derived_cost": len(d), "interventions_mock_cost": int(out.is_mock.sum()),
+    return {"cost_rows": len(c), "interventions_with_derived_cost": len(d), "assumption_rows": int(out.is_mock.sum()),
             "derived": {k: (round(v["cost_low_usd"]), round(v["cost_high_usd"])) for k, v in d.items()}}

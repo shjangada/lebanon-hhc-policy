@@ -41,7 +41,6 @@ def raw_indicators(d0: float = 30, demand_col: str = "women_15_49", include_unre
     fac, _ = load_dataset("facilities")
     tt, _ = load_dataset("travel_time")
     vul, _ = load_dataset("vulnerability")
-    stf, _ = load_dataset("staffing_referrals")
     gov, _ = load_dataset("governance_capacity")
     acc = m1_access.access_by_cadaster(d0, demand_col)
     prov = ["is_mock", "source", "source_date", "url", "status"]
@@ -63,14 +62,6 @@ def raw_indicators(d0: float = 30, demand_col: str = "women_15_49", include_unre
     df["phc_30"] = df.phc_30.fillna(0)
     df["anc_share_30min"] = df.anc_share_30min.fillna(0)
     df["phc_per_50k"] = df.phc_30 / df.population_total * 50_000
-    # facility-level stress mapped to cadaster via nearest open PHC (by travel time)
-    stf = stf.assign(posts_unfilled_share=1 - stf.posts_filled / stf.posts_budgeted,
-                     referral_completion=stf.referral_completed_month / stf.referral_sent_month)
-    stf["referral_incompletion"] = 1 - stf.referral_completion
-    phcs = fac[fac.type == "PHC"][["facility_id"]].merge(stf, on="facility_id")
-    tn = tt[tt.facility_id.isin(phcs.facility_id)].sort_values("minutes").drop_duplicates("cadaster_id")
-    tn = tn.merge(phcs[["facility_id", "posts_unfilled_share", "referral_incompletion", "referral_completion"]], on="facility_id")
-    df = df.merge(tn[["cadaster_id", "posts_unfilled_share", "referral_incompletion", "referral_completion"]], on="cadaster_id", how="left")
     # vulnerability (district value applied to cadaster in mock; real = finer)
     df = df.merge(vul.drop(columns=[c for c in ("level", "is_mock", "source", "source_date", "url", "status") if c in vul.columns]), on="cadaster_id", how="left")
     # security exposure: conflict incidents since Oct 2023 (real source: LRP 2026 package, admin 3)
@@ -102,18 +93,10 @@ def raw_indicators(d0: float = 30, demand_col: str = "women_15_49", include_unre
     df["speciation_uncertainty_nearby"] = spec_unc
     df["rung_b_exposure_nearby"] = rung_b
     df["soil_hq_high_nearby"] = hq_near
-    if load_dataset("water_quality").is_mock:
-        # No public Beqaa well data (water_quality is mock): water exposure is UNKNOWN for every cadaster and is never scored from mock values.
-        # The indicator is skipped (attrs['skipped_indicators']) and every cadaster is a water evidence gap (feeds research_gaps.py).
-        df["nitrate_mg_l"] = np.nan
-        df["nitrate_imputed"] = True
-        df["env_evidence"] = df.soil_sampled_nearby
-    else:
-        nit = m4_exposure.nitrate_by_cadaster()
-        df = df.merge(nit, on="cadaster_id", how="left")
-        df["nitrate_imputed"] = df.nitrate_mg_l.isna()
-        df["env_evidence"] = df.soil_sampled_nearby | ~df.nitrate_imputed        # any environmental measurement for this cadaster at all
-        df["nitrate_mg_l"] = df.nitrate_mg_l.fillna(df.groupby("district").nitrate_mg_l.transform("median")).fillna(df.nitrate_mg_l.median())
+    # Water exposure is UNKNOWN for every cadaster: no public Beqaa well data exists, so nitrate is never scored (indicator skipped; every cadaster is a water evidence gap).
+    df["nitrate_mg_l"] = np.nan
+    df["nitrate_imputed"] = True
+    df["env_evidence"] = df.soil_sampled_nearby
     # NGO-dependency stress (not a Need Score domain; drives the escrow switch): 1 - share funds managed locally (latest actual year)
     g = gov[~gov.projected.astype(bool)]
     g = g[g.year == g.year.max()][["district", "share_funds_managed_locally", "admin_capacity_index"]]
