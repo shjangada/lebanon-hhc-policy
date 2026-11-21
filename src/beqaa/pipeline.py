@@ -6,7 +6,7 @@ import shutil
 
 import pandas as pd
 
-from . import (allocation, assumptions, escrow, funding_finder, io, m1_access, m2_need_score as m2, m4_exposure, m5_options,
+from . import (allocation, assumptions, escrow, robustness, funding_finder, io, m1_access, m2_need_score as m2, m4_exposure, m5_options,
                research_gaps, state_capacity, viz)
 from .io import ROOT
 
@@ -57,6 +57,15 @@ def run(verbose: bool = True) -> dict:
     detail.to_csv(PROC / "allocation_detail.csv", index=False)
     allocation.by_district(detail).to_csv(PROC / "allocation_by_district.csv", index=False)
     esc, esc_sum, warn = escrow.run(scored)
+    rb = robustness.run_all()                                           # N draws per scenario (data/params/uncertainty.yaml), fixed seed
+    rb["rank"]["per_cadaster"].to_csv(PROC / "robust_rank_per_cadaster.csv", index=False)
+    rb["rank"]["scenarios"].to_csv(PROC / "robust_rank_scenarios.csv", index=False)
+    (PROC / "robust_core_set.txt").write_text(f"Core set (top-{rb['rank']['top_k']} in >= {rb['rank']['threshold']:.0%} of {rb['rank']['n_draws']} draws per scenario and in every scenario): "
+                                              + (", ".join(rb["rank"]["core"]) if rb["rank"]["core"] else "EMPTY") + "\n" + (rb["rank"]["warning"] or "") + "\n")
+    rb["regret"]["summary"].to_csv(PROC / "robust_regret_summary.csv", index=False)
+    rb["regret"]["by_scenario"].to_csv(PROC / "robust_regret_by_scenario.csv", index=False)
+    rb["breakpoints"].to_csv(PROC / "robust_breakpoints.csv", index=False)
+    rb["escrow"].to_csv(PROC / "robust_escrow_degradation.csv", index=False)
     esc.to_csv(PROC / "escrow_schedule.csv", index=False)
     esc_sum.to_csv(PROC / "escrow_summary.csv", index=False)
     escrow.flow_links(esc).to_csv(PROC / "escrow_flow_links.csv", index=False)
