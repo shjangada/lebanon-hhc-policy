@@ -29,6 +29,8 @@ DATASETS = {
     "cascade_baseline": "cascade_baseline.csv",
     "staffing_referrals": "staffing_referrals.csv",
     "conflict_exposure": "conflict_exposure.csv",
+    "funding_flows": "funding_flows.csv",
+    "funding_requirements": "funding_requirements.csv",
     "governance_capacity": "governance_capacity.csv",
 }
 
@@ -90,7 +92,8 @@ def load_dataset(name: str, raw_dir: pathlib.Path | None = None, mock_dir: pathl
     return Loaded(df, True)
 
 
-BADGES = {"real": "✅ real", "partly real": "🟡 partly real", "mock": "🔴 mock"}
+REAL_ONLY = {"funding_flows", "funding_requirements"}          # no mock counterpart: absent processed file = missing, never invented
+BADGES = {"real": "✅ real", "partly real": "🟡 partly real", "mock": "🔴 mock", "missing": "⚪ missing"}
 
 
 def dataset_badge(name: str, raw_dir: pathlib.Path | None = None, processed_dir: pathlib.Path | None = None) -> str:
@@ -113,7 +116,7 @@ def dataset_badge(name: str, raw_dir: pathlib.Path | None = None, processed_dir:
         if st & {"partial", "assumption", "missing"} or "assumed_fields" in df.columns or has_nan_col:
             return "partly real"
         return "real"
-    return "mock"
+    return "missing" if name in REAL_ONLY else "mock"
 
 
 def data_status(raw_dir: pathlib.Path | None = None, processed_dir: pathlib.Path | None = None) -> pd.DataFrame:
@@ -126,7 +129,8 @@ def data_status(raw_dir: pathlib.Path | None = None, processed_dir: pathlib.Path
 
 
 def overall_mode(raw_dir: pathlib.Path | None = None, processed_dir: pathlib.Path | None = None) -> str:
-    s = data_status(raw_dir, processed_dir)["status"]
+    st_ = data_status(raw_dir, processed_dir)
+    s = st_[~st_.dataset.isin(REAL_ONLY)]["status"]
     if s.str.contains("🔴").all():
         return "MOCK"
     if s.str.contains("✅").all():
