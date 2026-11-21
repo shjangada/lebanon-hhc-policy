@@ -59,8 +59,12 @@ def _tf_for(metal: str, tfdf: pd.DataFrame) -> float:
     return float(t.max()) if len(t) else 0.0
 
 
-def screen_sites(p: dict | None = None, receptor: str = "child") -> pd.DataFrame:
-    """One row per soil measurement with HQ range (soil+food), tier, evidence rung, action."""
+def screen_sites(p: dict | None = None, receptor: str = "child", cr6_for_tier: float | None = None) -> pd.DataFrame:
+    """One row per soil measurement with HQ range (soil+food), tier, evidence rung, action.
+    `cr6_for_tier`: Cr(VI) share used to set the Cr tier. None (default) = precautionary worst case (all Cr(VI), = hq_high).
+    This is the M4 -> M2 link: the tier feeds the Need Score environment domain (soil_hotspot_proximity) and, through it,
+    the allocation / escrow priority. `speciation_decisive` = the HQ range straddles 1, so a Cr(VI) speciation test would
+    change the tier (an implementation-research candidate, see research_gaps.py)."""
     p = p or load_params()
     soil, mock = load_dataset("soil_sites")
     tfdf, _ = load_dataset("crop_transfer")
@@ -69,14 +73,18 @@ def screen_sites(p: dict | None = None, receptor: str = "child") -> pd.DataFrame
     for r in soil.itertuples():
         m, c = r.parameter, float(r.value_mg_kg)
         row = {"site_name": r.site_name, "cadaster_id": r.cadaster_id, "lat": getattr(r, "lat", np.nan), "lon": getattr(r, "lon", np.nan),
-               "parameter": m, "value_mg_kg": c, "receptor": receptor, "hq_low": np.nan, "hq_high": np.nan, "screening_ratio": np.nan}
+               "parameter": m, "value_mg_kg": c, "receptor": receptor, "hq_low": np.nan, "hq_high": np.nan, "screening_ratio": np.nan,
+               "hq_at_assumed_cr6": np.nan, "speciation_decisive": False}
         if m == "Cr":
             tf = _tf_for("Cr", tfdf)
             row["hq_low"] = cr_hq(c, receptor, 0.0, tf, p, True)
             row["hq_high"] = cr_hq(c, receptor, 1.0, tf, p, True)
             row["hq_soil_only_low"] = cr_hq(c, receptor, 0.0, 0, p, False)
             row["hq_soil_only_high"] = cr_hq(c, receptor, 1.0, 0, p, False)
-            tier = 0 if row["hq_high"] < 0.1 else (1 if row["hq_high"] < 1 else 2)
+            row["hq_at_assumed_cr6"] = row["hq_high"] if cr6_for_tier is None else cr_hq(c, receptor, cr6_for_tier, tf, p, True)
+            row["speciation_decisive"] = bool(row["hq_low"] < 1 <= row["hq_high"])
+            hq_t = row["hq_at_assumed_cr6"]
+            tier = 0 if hq_t < 0.1 else (1 if hq_t < 1 else 2)
         elif m == "Pb":
             row["screening_ratio"] = c / pbssl
             tier = 0 if row["screening_ratio"] < 0.5 else (1 if row["screening_ratio"] < 1 else 2)

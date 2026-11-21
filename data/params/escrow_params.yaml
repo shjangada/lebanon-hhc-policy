@@ -1,0 +1,58 @@
+# P5 escrow pool flow: international funds -> ring-fenced pooled window -> thresholds -> administrator ladder -> community committee -> districts.
+# Every number here is an ASSUMPTION (editable in the dashboard) unless a `source` with a registry id is given.
+# Feasibility: the pool is a ring-fenced Beqaa window inside an existing pooled fund (LHF / LFF), not a new vehicle (docs/FEASIBILITY.md §3).
+pool:
+  default_usd: 1000000          # illustrative pilot window; compare Health Sector Sep-Dec 2026 requirement $74.2M (FEASIBILITY §1)
+  years: [2026, 2030]
+  expected_realisation: 0.40    # assume <=40% of appeal-based money materialises (LRP 2026: 39% funded; FEASIBILITY §1)
+
+need_gate:
+  n_towns: 8                    # priority towns admitted to the window (top by priority score)
+  need_score_min: 0.33          # town must be at least 'Moderate' on M2 to enter (tier threshold, need_score_indicators.yaml)
+  need_floor_pct: 0.50          # share of each year's money released on need alone (guaranteed, no capacity test)
+  env_priority_weight: 0.10     # blend of M4 environmental exposure (D_environment) into the allocation priority; 0 = need score only.
+                                # NB: M2 already contains an environment domain (weight 0.15): this is an explicit, visible top-up.
+
+capacity_thresholds:            # all must pass for the capacity tranche to be released (process indicators, not outcomes: Cochrane 2021 P4P mixed)
+  referral_min: 0.40            # referral completion (pilot-measured; no public source)
+  posts_filled_min: 0.60        # budgeted PHC posts filled (pilot-measured)
+  transparent_required: true    # published quarterly spend + third-party spot check
+  admin_capacity_min: 0.30      # district admin capacity index >= national anchor (SC01 WGI GE 2025 = 29.9/100)
+
+national_anchor:                # real anchors from data/registry/state_capacity_sources.csv
+  admin_index_source: SC01      # WGI Government Effectiveness 0-100 -> /100
+  fiscal_source: SC02           # government share of total health spending (13.4%)
+  anchor_year_applied_to: 2026  # latest actual year of the district series; 2025 WGI predates the 2026 war -> treat as an upper bound
+  max_yoy_gain: 0.05            # FEASIBILITY §5: gains >0.05/yr are not credible
+  default_yoy_gain: 0.03        # projected gain per year (assumption; slider 0-0.05)
+
+ladder:                         # administrator = who holds the money (fiduciary). Community committee decides USE at every rung.
+  - level: INGO
+    min_capacity: 0.0
+    holds_money: "International NGO / UN agency as fiduciary"
+    decides_use: "Community committee (women >=30%, workers incl. unregistered >=10% of seats) sets priorities; INGO executes"
+    co_governs: "MoPH (standards, DHIS2 reporting), Union of Municipalities (observer)"
+    verifies: "Pooled-fund secretariat (LHF/LFF) + third-party monitor"
+    local_weight: 0.0
+  - level: National NGO
+    min_capacity: 0.28          # WGI GE 2023 low (SC01 notes): national NGOs already received LHF funds at the worst measured point (F004 notes; verify)
+    holds_money: "Lebanese national NGO (LHF-eligible partner)"
+    decides_use: "Community committee; national NGO executes and reports"
+    co_governs: "MoPH + Union of Municipalities"
+    verifies: "Pooled-fund secretariat + third-party monitor"
+    local_weight: 0.33
+  - level: Union of Municipalities
+    min_capacity: 0.40          # assumption; councils elected May 2025 for 6 years (SC09) = stable counterpart through 2030
+    holds_money: "Union of Municipalities, with an NGO or the pooled fund as co-signatory (Independent Municipal Fund deficit >$400M: FEASIBILITY §1)"
+    decides_use: "Community committee inside the municipal plan (LHSP Maps of Risks and Resources precedent)"
+    co_governs: "MoPH"
+    verifies: "Pooled-fund secretariat + Central Inspection / third-party monitor"
+    local_weight: 0.67
+  - level: MoPH
+    min_capacity: 0.514         # WGI GE 2000 high (51.4/100, SC01 notes): MoPH administers only if effectiveness returns to its best recorded level
+    holds_money: "MoPH (PHC network budget line)"
+    decides_use: "Community committee via PHC health committees"
+    co_governs: "Unions of Municipalities"
+    verifies: "Court of Audit + third-party monitor"
+    local_weight: 1.0
+max_level: Union of Municipalities   # default 2030 ceiling: MoPH co-governs, does not administer (FEASIBILITY §3, §6). SC03: MoPH budget $486M (2018) -> $37M (2022, secondary)

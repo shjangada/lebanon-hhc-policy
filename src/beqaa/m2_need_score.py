@@ -33,7 +33,8 @@ def score_indicator(x: pd.Series, safe: float, crisis: float) -> pd.Series:
     return ((x - safe) / (crisis - safe)).clip(0, 1)
 
 
-def raw_indicators(d0: float = 30, demand_col: str = "women_15_49", include_unregistered: bool = True) -> pd.DataFrame:
+def raw_indicators(d0: float = 30, demand_col: str = "women_15_49", include_unregistered: bool = True,
+                   cr6_for_tier: float | None = None) -> pd.DataFrame:
     """Raw indicator values per cadaster (before scaling), plus stress-layer columns."""
     cad, m0 = load_dataset("cadasters")
     pop, m1 = load_dataset("population")
@@ -77,16 +78,25 @@ def raw_indicators(d0: float = 30, demand_col: str = "women_15_49", include_unre
     df = df.merge(ce[["cadaster_id", "conflict_incidents"]], on="cadaster_id", how="left")
     df["conflict_incidents"] = df.conflict_incidents.fillna(0)
     # environment: soil hotspot proximity (tier x distance decay) + nitrate
-    sites = m4_exposure.screen_sites()
-    prox = []
+    # M4 -> M2 link: soil tiers (Cr tier depends on the assumed Cr(VI) share; default precautionary) decay with distance (15 km)
+    sites = m4_exposure.screen_sites(cr6_for_tier=cr6_for_tier)
+    prox, spec_unc, rung_b, hq_near = [], [], [], []
     for r in df.itertuples():
-        v = 0.0
+        v = u = b = h = 0.0
         for s in sites.itertuples():
             if np.isnan(s.lat):
                 continue
-            v = max(v, s.tier * max(0.0, 1 - _hav(r.lat, r.lon, s.lat, s.lon) / 15.0))
-        prox.append(v)
+            decay = max(0.0, 1 - _hav(r.lat, r.lon, s.lat, s.lon) / 15.0)
+            v = max(v, s.tier * decay)
+            u = max(u, float(s.speciation_decisive) * decay)          # nearby result whose tier hinges on Cr(VI) speciation
+            b = max(b, float(s.evidence_rung == "b") * decay)         # plausible pathway, health effect not demonstrated
+            if not np.isnan(s.hq_high):
+                h = max(h, s.hq_high * decay)
+        prox.append(v); spec_unc.append(u); rung_b.append(b); hq_near.append(h)
     df["soil_hotspot_proximity"] = prox
+    df["speciation_uncertainty_nearby"] = spec_unc
+    df["rung_b_exposure_nearby"] = rung_b
+    df["soil_hq_high_nearby"] = hq_near
     nit = m4_exposure.nitrate_by_cadaster()
     df = df.merge(nit, on="cadaster_id", how="left")
     df["nitrate_imputed"] = df.nitrate_mg_l.isna()

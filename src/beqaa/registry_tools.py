@@ -11,7 +11,8 @@ from .io import ROOT
 
 STOP = set("the a an of for to in and or is are what which who how any can we do does with on from about funding fund grant grants".split())
 FUND_COLS = ["fund_id", "name", "funder", "amount", "currency", "period", "period_end", "sectors", "geography", "channel", "local_org_eligible",
-             "community_decision_fit", "how_to_access", "url", "announced_date", "verified_on", "status", "recency_flag", "fits_escrow", "notes"]
+             "community_decision_fit", "involvement_level", "how_to_access", "url", "announced_date", "verified_on", "status", "availability",
+             "recency_flag", "fits_escrow", "notes"]
 ORG_COLS = ["org_id", "name", "type", "geography", "sectors", "works_with_unregistered_workers", "women_led", "community_decision_fit",
             "contact_route", "url", "status", "notes"]
 
@@ -25,8 +26,10 @@ def _clean(df: pd.DataFrame, cols) -> list[dict]:
 
 
 def search_funding(query: str = "", channel: str | None = None, local_org_eligible: str | None = None, active_only: bool = False,
-                   community_decision_fit: str | None = None, limit: int = 8) -> list[dict]:
+                   community_decision_fit: str | None = None, limit: int = 8, include_closed: bool = False) -> list[dict]:
     f = ff.annotate(ff.load_funding())
+    if not include_closed:                       # 'closed' rows (no next round) are hidden; closed_recurring stays, labelled 'expected next round'
+        f = f[f.status != "closed"]
     if channel:
         f = f[f.channel == channel]
     if local_org_eligible:
@@ -87,10 +90,12 @@ TOOL_SPECS = [
      "Call several times with different queries/filters to loop through the database.",
      "input_schema": {"type": "object", "properties": {
          "query": {"type": "string", "description": "keywords, e.g. 'maternal health', 'civil society'"},
-         "channel": {"type": "string", "enum": ["gov", "UN_pooled", "INGO", "NGO", "private"]},
-         "local_org_eligible": {"type": "string", "enum": ["yes", "no", "to_verify"]},
-         "community_decision_fit": {"type": "string", "enum": ["yes", "partial", "no", "to_verify"], "description": "does the funder let communities decide allocation"},
-         "active_only": {"type": "boolean"}, "limit": {"type": "integer"}}}},
+         "channel": {"type": "string", "enum": ["gov", "UN_pooled", "pooled_fund", "local_ngo", "INGO", "NGO", "private", "other"]},
+         "local_org_eligible": {"type": "string", "enum": ["yes", "no", "partial", "to_verify"]},
+         "community_decision_fit": {"type": "string", "enum": ["high", "medium", "low", "to_verify"],
+                                    "description": "how far the funder lets communities decide use (high = core/flexible/institutional funding)"},
+         "active_only": {"type": "boolean"}, "include_closed": {"type": "boolean", "description": "include rows with status 'closed' (default false)"},
+         "limit": {"type": "integer"}}}},
     {"name": "search_orgs", "description": "Search implementing organisations and precedents (local NGOs, municipalities, cooperatives, programmes).",
      "input_schema": {"type": "object", "properties": {"query": {"type": "string"}, "community_decision_fit": {"type": "string", "enum": ["yes", "partial", "no", "to_verify"]},
                                                        "limit": {"type": "integer"}}}},

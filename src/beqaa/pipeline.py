@@ -6,7 +6,8 @@ import shutil
 
 import pandas as pd
 
-from . import allocation, assumptions, escrow, io, m1_access, m2_need_score as m2, m4_exposure, m5_options, viz
+from . import (allocation, assumptions, escrow, funding_finder, io, m1_access, m2_need_score as m2, m4_exposure, m5_options,
+               research_gaps, state_capacity, viz)
 from .io import ROOT
 
 PROC = ROOT / "data" / "processed"
@@ -54,8 +55,23 @@ def run(verbose: bool = True) -> dict:
     summ, detail = allocation.simulate(scored, 100_000)
     summ.to_csv(PROC / "allocation_summary.csv", index=False)
     detail.to_csv(PROC / "allocation_detail.csv", index=False)
+    allocation.by_district(detail).to_csv(PROC / "allocation_by_district.csv", index=False)
     esc, esc_sum, warn = escrow.run(scored)
     esc.to_csv(PROC / "escrow_schedule.csv", index=False)
+    esc_sum.to_csv(PROC / "escrow_summary.csv", index=False)
+    escrow.flow_links(esc).to_csv(PROC / "escrow_flow_links.csv", index=False)
+    escrow.role_table(esc).to_csv(PROC / "escrow_roles.csv", index=False)
+    escrow.by_district(esc).to_csv(PROC / "escrow_by_district.csv", index=False)
+    state_capacity.anchored_governance().to_csv(PROC / "governance_capacity_anchored.csv", index=False)
+    state_capacity.capacity_panel().to_csv(PROC / "state_capacity_panel.csv", index=False)
+    # M2 x evidence: implementation-research candidates linked to registry rows
+    gaps = research_gaps.cadaster_gaps(scored, rob)
+    gaps.to_csv(PROC / "research_gaps_cadaster.csv", index=False)
+    research_gaps.district_gaps(gaps).to_csv(PROC / "research_gaps_district.csv", index=False)
+    research_gaps.research_candidates(gaps).to_csv(PROC / "research_candidates.csv", index=False)
+    research_gaps.intervention_gaps(m4_exposure.tornado()).to_csv(PROC / "research_gaps_interventions.csv", index=False)
+    fr = funding_finder.annotate(funding_finder.load_funding())
+    funding_finder.rank_involvement(fr).to_csv(PROC / "funding_ranked.csv", index=False)
     assum = assumptions.build()
     assum.to_csv(PROC / "assumptions.csv", index=False)
     # robustness statement
