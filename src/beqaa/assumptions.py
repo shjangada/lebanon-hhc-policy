@@ -50,6 +50,8 @@ def build() -> pd.DataFrame:
     add("allocation", "community priority weights", "Dirichlet(0.7) per cadaster", "", "MOCK (stand-in for survey / participatory budgeting)", "mock")
     for k, v in escrow.DEFAULT_RULES.items():
         add("escrow", k, v, "editable", "assumption")
-    add("escrow", "admin level bands (capacity index)", escrow.BANDS, "INGO / national NGO / municipality / MoPH", "assumption")
+    add("escrow", "admin level bands (capacity index)", escrow.BANDS, "INGO / national NGO / Union of Municipalities / MoPH (default ceiling: Union of Municipalities)", "assumption")
+    add("escrow", "max administrator level", escrow.DEFAULT_MAX_LEVEL, "MoPH only as co-governor", "docs/FEASIBILITY.md (MoPH cannot be assumed to administer by 2030)")
+    add("escrow", "max year-on-year capacity gain (projections)", escrow.MAX_YOY_CAPACITY_GAIN, "", "docs/FEASIBILITY.md")
     add("escrow", "local-control weights", escrow.LEVEL_LOCAL_WEIGHT, "", "assumption")
     return pd.DataFrame(rows)
