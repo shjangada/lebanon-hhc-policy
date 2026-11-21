@@ -4,7 +4,7 @@ import pandas as pd
 import pydeck as pdk
 import streamlit as st
 
-from beqaa import (allocation, assumptions, chat, chat_llm, equity, escrow, funding_finder as ff, io, m1_access, m2_need_score as m2,
+from beqaa import (robustness, allocation, assumptions, chat, chat_llm, equity, escrow, funding_finder as ff, io, m1_access, m2_need_score as m2,
                    m4_exposure, m5_options, research_gaps, state_capacity)
 
 try:                                   # Sankey for the escrow flow; falls back to a table if plotly is not installed
@@ -109,7 +109,7 @@ h3{margin-top:0;padding-top:0}
 .takeaway{font-size:1.02rem;margin:-.2rem 0 .6rem 0}
 </style>""", unsafe_allow_html=True)
 
-NAV = [("s1", "1 Priority"), ("s2", "2 Options"), ("s3", "3 Allocation"), ("s4", "4 Exposure"), ("s5", "5 Funding"), ("ref", "Evidence")]
+NAV = [("s1", "1 Priority"), ("s2", "2 Options"), ("s3", "3 Allocation"), ("s4", "4 Exposure"), ("s5", "5 Funding"), ("s6", "6 Robustness"), ("ref", "Evidence")]
 NAV_HTML = "<div class='nav'>" + "".join(f"<a href='#{i}'>{t}</a>" for i, t in NAV) + "</div>"
 st.sidebar.markdown("**Jump to**")
 st.sidebar.markdown(NAV_HTML.replace("<div class='nav'>", "<div class='nav' style='line-height:2'>"), unsafe_allow_html=True)
@@ -120,6 +120,7 @@ PURPOSE = {
     "s2": "Compares what each intervention would achieve for a given budget: reach, cost, who it might exclude, and other side effects.",
     "s3": "Tests who should decide how funds are spent (community, top-down, per capita) and who administers them as measured capacity grows (escrow).",
     "s4": "Screens soil and water findings for plausible health exposure and sets the protective action each tier triggers.",
+    "s6": "Re-runs the priority list and the allocation policies under uncertain assumptions and six stress scenarios, and recommends only what holds up.",
     "s5": "Lists the funders that could pay for this, with source, recency and whether the money can go through local organisations; includes the funding assistant.",
 }
 
@@ -444,6 +445,54 @@ with section("s5", "5 · Funding",
                     st.json(r_["trace"])
         st.session_state.chat_hist.append({"role": "assistant", "content": r_["answer"]})
 
+
+# ---------------- 6. Robustness ----------------
+@st.cache_data
+def robust(n, ver):
+    return robustness.run_all(n=n)
+
+
+rb_n = st.session_state.get("rb_n", 300)
+RB = robust(rb_n, VER)
+_core = RB["rank"]["core"]
+_pol = RB["regret"]
+with section("s6", "6 · Robustness",
+             (f"<b>{len(_core)}</b> cadaster(s) stay in the top {RB['rank']['top_k']} in at least {RB['rank']['threshold']:.0%} of draws and in every scenario: <b>{', '.join(_core)}</b>. "
+              if _core else "<b>No cadaster</b> holds a top-k place across every scenario: the priority list is not robust. ")
+             + f"Allocation policy with the smallest worst-case regret: <b>{_pol['minimax_policy'].replace('_', ' ')}</b>"
+             + (" (differs from the best on average)." if _pol["disagree"] else " (also best on average).")):
+    st.markdown("**Priority cadasters across draws and scenarios** (share of draws in which it is top-k)")
+    pc = RB["rank"]["per_cadaster"].head(12)
+    cols = [c for c in pc.columns if c.startswith("p_top_") and c != "p_top_overall"]
+    show = pc[["cadaster_name", "p_top_overall"] + cols + ["rank_p05", "rank_p95", "core"]].rename(columns={c: c.replace("p_top_", "") for c in cols})
+    st.dataframe(show.round(2).rename(columns={"cadaster_name": "Cadaster", "p_top_overall": "overall", "rank_p05": "rank 5%", "rank_p95": "rank 95%", "core": "core"}),
+                 hide_index=True, width="stretch")
+    if RB["rank"]["warning"]:
+        st.warning(RB["rank"]["warning"])
+    a, b = st.columns(2)
+    with a:
+        st.markdown("**How far each scenario reshuffles the ranking**")
+        st.dataframe(pretty(RB["rank"]["scenarios"].round(2), scenario="Scenario", kendall_tau_vs_baseline="Kendall τ vs baseline",
+                            top_k_retained="Top-k kept", top_k="of"), hide_index=True, width="stretch")
+        st.caption("τ = 1: same order as baseline. Funding shock and capacity stall do not change who is a priority; they change how much money flows and who administers it.")
+    with b:
+        st.markdown("**Allocation policies: regret across scenarios** (pathways lost vs the best policy in that world)")
+        st.dataframe(pretty(_pol["summary"][["policy", "mean_value", "mean_regret", "max_regret", "minimax_rank"]].round(0),
+                            policy="Policy", mean_value="Mean pathways", mean_regret="Mean regret", max_regret="Max regret", minimax_rank="Minimax rank"),
+                     hide_index=True, width="stretch")
+        st.caption("Allocations are fixed in advance on baseline data, then judged in each world. Prefer the smallest max regret, not the best average.")
+    st.markdown("**Breakpoints: where does 'community beats top-down' flip?**")
+    st.dataframe(pretty(RB["breakpoints"][["priorities", "assumption", "reading"]], priorities="Community priorities", assumption="Assumption", reading="Reading"),
+                 hide_index=True, width="stretch")
+    with st.expander("Escrow under funding shock, capacity stall and escalation (graceful degradation)"):
+        st.dataframe(pretty(RB["escrow"].round(2), world="World", pool_usd="Pool $", released_usd="Released $", held_in_escrow_usd="Held $", conserved="Money conserved",
+                            share_lebanese_managed_2030="Lebanese-managed 2030", towns_with_tranche_held="Towns with tranche held",
+                            need_floor_still_paid="Need floor paid", n_warnings="Warnings"), hide_index=True, width="stretch")
+    with st.expander("Scenario definitions and parameter ranges (data/params/uncertainty.yaml)"):
+        st.dataframe(pd.DataFrame([{"scenario": v["label"], "what changes": ", ".join(f"{k}={val}" for k, val in v.items() if k not in ("label", "status")), "status": v["status"]}
+                                   for v in RB["unc"]["scenarios"].values()]), hide_index=True, width="stretch")
+        st.slider("Draws per scenario (preview; the pipeline uses 1,000)", 100, 1000, 300, 100, key="rb_n")
+    st.caption("Mock data: scenario effects, costs and community priorities are assumptions; the structure and the method are what carry over to real data.")
 
 # ---------------- Evidence ----------------
 st.markdown("<a id='ref'></a>", unsafe_allow_html=True)
