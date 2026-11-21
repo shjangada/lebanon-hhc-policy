@@ -5,7 +5,12 @@ import pydeck as pdk
 import streamlit as st
 
 from beqaa import (allocation, assumptions, chat, chat_llm, equity, escrow, funding_finder as ff, io, m1_access, m2_need_score as m2,
-                   m4_exposure, m5_options)
+                   m4_exposure, m5_options, research_gaps, state_capacity)
+
+try:                                   # Sankey for the escrow flow; falls back to a table if plotly is not installed
+    import plotly.graph_objects as go
+except ImportError:                    # pragma: no cover
+    go = None
 
 st.set_page_config(page_title="Beqaa Health Prioritization", layout="wide")
 MODE = io.overall_mode()
@@ -37,17 +42,17 @@ VER = _version()
 
 
 @st.cache_data
-def raw_ind(d0, demand, _v):
-    return m2.raw_indicators(d0, demand)
+def raw_ind(d0, demand, cr6, ver):      # `ver` (no leading underscore) is part of the cache key: code/data changes invalidate it
+    return m2.raw_indicators(d0, demand, cr6_for_tier=cr6)
 
 
 @st.cache_data
-def sites_df(_v):
-    return m4_exposure.screen_sites()
+def sites_df(cr6, ver):
+    return m4_exposure.screen_sites(cr6_for_tier=cr6)
 
 
 @st.cache_data
-def funding(_v):
+def funding(ver):
     return ff.annotate(ff.load_funding())
 
 
@@ -68,6 +73,14 @@ with st.sidebar.expander("Need Score weights and toggles"):
     unreg = st.toggle("Include unregistered workers", True)
     geo = st.toggle("Non-compensatory (geometric mean)", False)
     top_k = st.slider("Top-k cadasters (priority set)", 3, 15, CFG["top_k"])
+with st.sidebar.expander("Environmental damage → need and money (M4 links)"):
+    precaution = st.toggle("Precautionary Cr tiering (treat all Cr as Cr(VI))", True,
+                           help="Until speciation results exist, the Cr tier uses the worst case. Untick to set an assumed Cr(VI) share.")
+    cr6 = None if precaution else st.slider("Assumed Cr(VI) share of total Cr", 0.0, 1.0, 0.1, 0.05)
+    env_w = st.slider("Environmental exposure weight in allocation / escrow priority", 0.0, 0.5, float(escrow.NEED_GATE["env_priority_weight"]), 0.05,
+                      help="Priority = (1 − w)·Need Score + w·M4 environmental exposure. The Need Score already has an environment domain (weight above); "
+                           "this is an explicit top-up. 0 = need only.")
+    st.caption("M4 soil/water tiers → Need Score environment domain → allocation & escrow priority.")
 with st.sidebar.expander("Demand weighting for access"):
     demand = st.selectbox("Demand", ["women_15_49", "weighted_women_15_49", "pregnant_est", "population_total"])
     dw = {"displaced_lebanese": st.slider("Displaced Lebanese ×", 0.5, 3.0, 1.0, 0.1),
@@ -75,7 +88,7 @@ with st.sidebar.expander("Demand weighting for access"):
           "unregistered_workers_est": st.slider("Unregistered workers ×", 0.5, 3.0, 1.0, 0.1)}
 
 spec = {**CFG, "top_k": top_k}
-raw = raw_ind(d0, "women_15_49" if demand == "weighted_women_15_49" else demand, VER)
+raw = raw_ind(d0, "women_15_49" if demand == "weighted_women_15_49" else demand, cr6, VER)
 if not unreg:
     raw = raw.assign(unregistered_workers_share=0.0)
 on = [d for d in m2.DOMAINS if d != "environment" or env_on]
@@ -164,7 +177,7 @@ with section("s1", "1 · Priority",
         fac = fac.assign(_c=fac.status_2026.map(lambda s_: [30, 140, 60, 230] if s_ == "open" else [200, 30, 30, 230]))
         layers.append(pdk.Layer("ScatterplotLayer", fac, get_position=["lon", "lat"], get_radius=1200, get_fill_color="_c"))
     if "Soil sites (by tier)" in (ov or []):
-        s_ = sites_df(VER).dropna(subset=["lat"]).assign(_c=lambda d: d.tier.map({0: [120, 120, 120, 220], 1: [240, 190, 0, 230], 2: [130, 0, 160, 240]}))
+        s_ = sites_df(cr6, VER).dropna(subset=["lat"]).assign(_c=lambda d: d.tier.map({0: [120, 120, 120, 220], 1: [240, 190, 0, 230], 2: [130, 0, 160, 240]}))
         layers.append(pdk.Layer("ScatterplotLayer", s_, get_position=["lon", "lat"], get_radius=1800, get_fill_color="_c"))
     if IS_MOCK:
         layers.append(pdk.Layer("TextLayer", pd.DataFrame({"lat": [scored.lat.mean()], "lon": [scored.lon.mean()], "t": ["MOCK DATA"]}),
@@ -257,9 +270,14 @@ with section("s2", "2 · Options",
 fit = st.session_state.get("fit", 1.1); ws = st.session_state.get("ws", 0.3); wk = st.session_state.get("wk", 0.1)
 floor = st.session_state.get("floor", 0.5); unres = st.session_state.get("unres", False)
 rules = {"referral_min": st.session_state.get("ref_min", 0.40), "posts_filled_min": st.session_state.get("posts_min", 0.60)}
-summ, det = allocation.simulate(scored, budget, top_k, {"local_fit_multiplier": fit, "women_seat_share": ws, "worker_seat_share": wk})
+rules.update(admin_capacity_min=st.session_state.get("cap_min", float(escrow.DEFAULT_RULES["admin_capacity_min"])))
+need_min = st.session_state.get("need_min", float(escrow.NEED_GATE["need_score_min"]))
+yoy = st.session_state.get("yoy", float(escrow.DEFAULT_YOY_GAIN))
+allow_moph = st.session_state.get("allow_moph", False)
+summ, det = allocation.simulate(scored, budget, top_k, {"local_fit_multiplier": fit, "women_seat_share": ws, "worker_seat_share": wk}, env_weight=env_w)
 esc_on = st.session_state.get("esc", False)
-sched, esum, warns = escrow.run(scored, max(budget, 10_000), top_k, floor, rules=rules, unrestricted=unres, escalation_year=2028 if esc_on else None)
+sched, esum, warns = escrow.run(scored, max(budget, 10_000), top_k, floor, rules=rules, unrestricted=unres, escalation_year=2028 if esc_on else None,
+                                env_weight=env_w, need_min=need_min, yoy_gain=yoy, max_level="MoPH" if allow_moph else escrow.DEFAULT_MAX_LEVEL)
 sm = summ.set_index("regime")
 held = esum.held_usd.sum() / max(esum.held_usd.sum() + esum.released_usd.sum(), 1)
 with section("s3", "3 · Allocation",
@@ -291,6 +309,44 @@ with section("s3", "3 · Allocation",
             st.caption("Scenario inputs: capacity, referral and staffing figures are mock defaults that the pilot would measure (no public source).")
             st.slider("Referral completion ≥", 0.0, 1.0, 0.40, 0.05, key="ref_min")
             st.slider("Posts filled ≥", 0.0, 1.0, 0.60, 0.05, key="posts_min")
+            st.slider("District admin capacity ≥ (national anchor SC01 = 0.299)", 0.0, 0.7, float(escrow.DEFAULT_RULES["admin_capacity_min"]), 0.01, key="cap_min")
+            st.slider("Need gate: Need Score ≥", 0.0, 0.9, float(escrow.NEED_GATE["need_score_min"]), 0.01, key="need_min")
+            st.slider("Projected capacity gain per year (cap 0.05)", 0.0, float(escrow.MAX_YOY_CAPACITY_GAIN), float(escrow.DEFAULT_YOY_GAIN), 0.005, key="yoy")
+            st.toggle("Allow MoPH as administrator (default: co-governor only)", False, key="allow_moph")
+    st.markdown("**P5 pool flow: international funds → pooled escrow → thresholds → administrator → community committee → districts**")
+    yrs = ["All years"] + sorted(sched.year.unique().tolist())
+    ysel = st.radio("Year", yrs, horizontal=True, key="flow_year", label_visibility="collapsed")
+    links = escrow.flow_links(sched, None if ysel == "All years" else int(ysel))
+    if go is not None and len(links):
+        nodes = list(dict.fromkeys(list(links.source) + list(links.target)))
+        ncol = ["#7f8c8d" if n.startswith(("International", "Pooled")) else "#c0392b" if "held" in n else "#2e86c1" if n.startswith("Administrator")
+                else "#27ae60" if n.startswith("Community") else "#8e44ad" if n.startswith("District") else "#d68910" for n in nodes]
+        fig = go.Figure(go.Sankey(node=dict(label=nodes, pad=14, thickness=14, color=ncol),
+                                  link=dict(source=[nodes.index(x) for x in links.source], target=[nodes.index(x) for x in links.target],
+                                            value=links.value_usd.round(0).tolist())))
+        fig.update_layout(height=420, margin=dict(l=8, r=8, t=8, b=8), font_size=11)
+        if IS_MOCK:
+            fig.add_annotation(text="MOCK DATA", x=0.5, y=0.5, xref="paper", yref="paper", showarrow=False, textangle=-25,
+                               font=dict(size=60, color="rgba(220,0,0,0.20)"))
+        st.plotly_chart(fig, width="stretch")
+    else:
+        st.dataframe(links.round(0), hide_index=True, width="stretch")
+        st.caption("Install plotly for the Sankey view (pip install plotly).")
+    st.caption("Need floor is guaranteed by priority; the capacity tranche needs every threshold to pass. Administrator = who holds the money; "
+               "the community committee (women ≥30%, workers incl. unregistered ≥10% of seats) decides use at every rung. Thresholds: data/params/escrow_params.yaml.")
+    with st.expander("Who controls money at each capacity level · state-capacity anchor · allocation by district"):
+        st.dataframe(escrow.role_table(sched).round(3), hide_index=True, width="stretch")
+        st.markdown("**State-capacity anchor (real national values; district series is mock)**")
+        st.dataframe(state_capacity.capacity_panel(), hide_index=True, width="stretch",
+                     column_config={"url": st.column_config.LinkColumn("url", display_text="open")})
+        gcap = state_capacity.anchored_governance(yoy_gain=yoy)
+        st.altair_chart(wm(alt.Chart(gcap).mark_line(point=True).encode(x="year:O", y=alt.Y("admin_capacity_index:Q", title="admin capacity (anchored, mock spread)"),
+                                                                       color="district:N", strokeDash="projected:N")
+                           + alt.Chart(pd.DataFrame({"y": [b for b in escrow.BANDS]})).mark_rule(color="grey", strokeDash=[2, 2]).encode(y="y:Q"), 640, 240))
+        st.caption("Grey rules = ladder bands (national NGO 0.28 = WGI 2023 low; Union of Municipalities 0.40; MoPH 0.514 = WGI 2000 high). "
+                   "Dashed = projected with the capped yearly gain.")
+        st.dataframe(escrow.by_district(sched).round(3), hide_index=True, width="stretch")
+        st.dataframe(allocation.by_district(det).round(1), hide_index=True, width="stretch")
     if warns:
         with st.expander(f"Warnings ({len(warns)}): lock-outs and gaming risk", expanded=False):
             for w_ in warns:
@@ -300,7 +356,7 @@ with section("s3", "3 · Allocation",
                             "thresholds_failed"]].round(3), hide_index=True, width="stretch")
 
 # ---------------- 4. Soil & water ----------------
-sites = sites_df(VER)
+sites = sites_df(cr6, VER)
 tor = m4_exposure.tornado()
 n_t2 = int((sites.tier >= 2).sum())
 with section("s4", "4 · Exposure",
@@ -319,16 +375,49 @@ with section("s4", "4 · Exposure",
         st.dataframe(ev_t, hide_index=True, width="stretch")
         st.download_button("Download evidence table", ev_t.to_csv(index=False), "tab_evidence.csv")
         st.table(pd.DataFrame([(t, r_, a_) for t, (r_, a_) in m4_exposure.ACTIONS.items()], columns=["tier", "rung", "action"]))
+    gaps = research_gaps.cadaster_gaps(scored, rob)
+    cands = research_gaps.research_candidates(gaps)
+    st.markdown(f"**Where evidence is weakest → implementation-research candidates** ({len(cands)} high-need cadasters with an evidence gap ≥ {research_gaps.GAP_MIN})")
+    if len(cands):
+        st.dataframe(pretty(cands[["cadaster_name", "district", "need_score", "evidence_gap_score", "main_gap", "study", "registry_rows"]].round(2),
+                            cadaster_name="Cadaster", district="District", need_score="Need", evidence_gap_score="Evidence gap", main_gap="Main gap",
+                            study="Study that would close it", registry_rows="Registry rows whose sectors fit"), hide_index=True, width="stretch")
+    st.caption("Gap = Cr(VI) speciation decides the tier, rung-b pathway without health data, imputed well nitrate, unstable rank (weights are assumptions). "
+               "Registry links are matches on sector keywords only: confirm eligibility; no grant is invented.")
+    with st.expander("Evidence gaps by district and by intervention"):
+        st.dataframe(research_gaps.district_gaps(gaps).round(3), hide_index=True, width="stretch")
+        st.dataframe(research_gaps.intervention_gaps(tor), hide_index=True, width="stretch")
 
 # ---------------- 5. Funders ----------------
 f = funding(VER)
-res = ff.rank(ff.filter_funding(f, None, False, True), ["health", "maternal"]).head(5)
+next_round = st.session_state.get("next_round", False)
+show_closed = st.session_state.get("show_closed", False)
+rank_mode = st.session_state.get("rank_mode", "Community decides (low donor involvement first)")
+pool_f = ff.filter_funding(f, None, False, True, show_next_round=next_round, show_closed=show_closed, show_closed_to_new=show_closed)
+res = ff.rank(pool_f, ["health", "maternal"])
+if rank_mode.startswith("Community"):
+    res = ff.rank_involvement(res)
+res = res.head(8)
 with section("s5", "5 · Funding",
-             f"{len(res)} active or recent funds match health and maternal care; top match: <b>{res.name.iloc[0]}</b> ({res.channel.iloc[0]})." if len(res) else "No active match."):
-    st.dataframe(pretty(res[["name", "funder", "channel", "recency_flag", "fits_escrow", "url", "verified_on"]], name="Fund", funder="Funder", channel="Channel",
-                        recency_flag="Status", fits_escrow="Fits escrow?", url="Source", verified_on="Verified"),
+             f"{len(res)} funds shown; top match: <b>{res.name.iloc[0]}</b> ({res.channel.iloc[0]}, {res.involvement_level.iloc[0]})." if len(res) else "No active match."):
+    c1, c2, c3 = st.columns(3)
+    c1.toggle("Show closed annual calls as 'expected next round'", False, key="next_round")
+    c2.toggle("Show closed / closed-to-new rows", False, key="show_closed")
+    c3.radio("Rank by", ["Community decides (low donor involvement first)", "Priority match (sector, open now, local eligibility)"], key="rank_mode",
+             label_visibility="collapsed")
+    st.dataframe(pretty(res[["name", "funder", "channel", "availability", "involvement_level", "fits_escrow", "url", "verified_on"]], name="Fund", funder="Funder",
+                        channel="Channel", availability="Status", involvement_level="Donor involvement", fits_escrow="Fits escrow?", url="Source",
+                        verified_on="Verified"),
                  hide_index=True, width="stretch", column_config={"Source": st.column_config.LinkColumn("Source", display_text="open")})
-    st.caption("From data/registry/funding_registry.csv. 'Fits escrow' = can be pooled and open to local organisations.")
+    st.caption("Only rows from data/registry/funding_registry.csv (never invented). Closed rows are hidden by default; 'expected next round' = recurring call, "
+               "this round closed. Donor involvement: core / flexible / institutional funding ranks highest because the community committee decides use. "
+               "'Fits escrow' = poolable money open to local organisations; direct grants to local orgs complement the pool.")
+    with st.expander("Funding-flow data sources (where real allocation data comes from)"):
+        try:
+            st.dataframe(ff.load_datasets(), hide_index=True, width="stretch", column_config={"url": st.column_config.LinkColumn("url", display_text="open")})
+            st.caption("data/registry/funding_datasets.csv: datasets, not grants. Use D01–D03 to measure the localisation share of LHF allocations (baseline for 'share managed locally').")
+        except FileNotFoundError:
+            st.info("data/registry/funding_datasets.csv not found.")
 
     st.markdown("**Ask the funding assistant**")
     _client = chat_llm.get_client()
