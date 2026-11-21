@@ -610,3 +610,33 @@ with st.expander("Data gaps: what is still mock and how it would be obtained"):
     st.caption("Datasets marked 'pilot_measured' or 'partner_request' have no public source: they stay scenario inputs and are flagged as assumptions.")
 with st.expander("Data status and context"):
     st.dataframe(pd.concat([io.data_status(), io.reference_status()]), hide_index=True, width="stretch")
+
+
+# ---------------- Appendix: why people seek care (HAUS 2024) ----------------
+st.header("Appendix: why people seek care (UNHCR HAUS 2024)")
+_haus = pd.read_csv(io.PROCESSED / "haus_2024.csv") if (io.PROCESSED / "haus_2024.csv").exists() else None
+if _haus is None:
+    st.info("Run `make ingest` to load the HAUS 2024 appendix dataset.")
+else:
+    st.caption("UNHCR telephone survey of refugee households known to UNHCR (mostly Syrian), 2-20 September 2024: 1,448 households, 6,910 members; Bekaa is 31.5% of respondents but no Bekaa-specific outcomes are published. "
+               "Self-reported; excludes unregistered people and anyone without a phone; the 'chronic condition' share swings with how respondents interpret the question (21% in 2022, 12% in 2024) while hypertension, asthma and diabetes prevalence is stable. "
+               "Appendix evidence, not a model input.")
+    hv = _haus.set_index("indicator")
+    a1, a2 = st.columns(2)
+    with a1:
+        ch = _haus[_haus.indicator.str.startswith("chronic_") & _haus.unit.str.contains("chronic condition")].assign(label=lambda d: d.indicator.str.replace("chronic_", "").str.replace("_", " "))
+        st.altair_chart(alt.Chart(ch).mark_bar(color="#8e44ad").encode(y=alt.Y("label:N", sort="-x", title=None), x=alt.X("value:Q", title="% of those with a chronic condition"), tooltip=["label", "value"]).properties(width=360, height=220, title="Chronic conditions (12% of members report one)"), use_container_width=False)
+    with a2:
+        ac = _haus[_haus.indicator.str.startswith("acute_symptom_")].assign(label=lambda d: d.indicator.str.replace("acute_symptom_", "").str.replace("_", " "))
+        st.altair_chart(alt.Chart(ac).mark_bar(color="#c0392b").encode(y=alt.Y("label:N", sort="-x", title=None), x=alt.X("value:Q", title="% of acute-illness episodes"), tooltip=["label", "value"]).properties(width=360, height=260, title="Acute illness last month: symptoms (12% of members)"), use_container_width=False)
+    b1, b2 = st.columns(2)
+    with b1:
+        cas = pd.DataFrame([("Any ANC (of women pregnant in 2 years)", hv.loc["anc_any_share", "value"]), ("4+ ANC visits (of those who attended)", hv.loc["anc_4plus_share", "value"]),
+                            ("Delivered in a facility (hospital + other)", hv.loc["delivery_in_hospital_share", "value"] + hv.loc["delivery_other_facility_share", "value"]), ("Sought postnatal care", hv.loc["pnc_sought_share", "value"])], columns=["step", "value"])
+        st.altair_chart(alt.Chart(cas).mark_bar(color="#2e86c1").encode(y=alt.Y("step:N", sort=None, title=None), x=alt.X("value:Q", scale=alt.Scale(domain=[0, 100]), title="%")).properties(width=360, height=170, title="Maternal care among Syrian refugee women"), use_container_width=False)
+    with b2:
+        bar = pd.DataFrame([("ANC: could not afford fees", hv.loc["anc_no_access_reason_fees", "value"]), ("Services sought but not received: could not afford fees", hv.loc["service_not_received_could_not_afford_fees", "value"]),
+                            ("Acute illness, no care sought: could not afford fees", hv.loc["acute_no_care_reason_fees", "value"]), ("Chronic care: had to pay", hv.loc["chronic_care_paid_share", "value"])], columns=["barrier", "value"])
+        st.altair_chart(alt.Chart(bar).mark_bar(color="#d68910").encode(y=alt.Y("barrier:N", sort="-x", title=None), x=alt.X("value:Q", title="%")).properties(width=360, height=170, title="Cost is the leading barrier"), use_container_width=False)
+    st.caption(f"Where chronic care was sought: pharmacy {hv.loc['chronic_care_at_pharmacy','value']}%, primary health care {hv.loc['chronic_care_at_phc','value']}%, private clinic {hv.loc['chronic_care_at_private_clinic','value']}%; only {hv.loc['chronic_care_accessed_3m','value']}% of people with a chronic condition accessed care or medicine in the last 3 months. "
+               "Text figures were transcribed in two passes (no disagreement); the acute-symptom chart values were read once. Source: S56 (data/raw/haus2024).")

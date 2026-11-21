@@ -63,7 +63,7 @@ The app and pipeline load `data/processed/` (real, from `make ingest`) first and
 
 **Registries (real, with source URLs and verified dates):** `funding_registry.csv` (22 funds), `org_registry.csv`, `sources.csv` (55+ sources), `state_capacity_sources.csv`, `workforce_sources.csv`. Rows marked `to_verify` are not yet checked against the primary source.
 
-**Hand transcriptions** (`transcribed/`, two passes each, page references): WHO sitreps, UNFPA appeal lines, LRP severity maps, CNRS soil, Abi Saab, VASyR/MSNA, UN-Habitat RMA, Citizen Budget. Both passes were made by one agent, so `checked=True` means "no typo found", not "verified by a second person".
+**Hand transcriptions** (`transcribed/`, two passes each, page references): UNHCR HAUS 2024 (appendix: why refugee households seek care), WHO sitreps, UNFPA appeal lines, LRP severity maps, CNRS soil, Abi Saab, VASyR/MSNA, UN-Habitat RMA, Citizen Budget. Both passes were made by one agent, so `checked=True` means "no typo found", not "verified by a second person".
 
 **Assumptions that are not data** (all in the dashboard's assumptions log): Need Score anchors and weights, community local-fit and capture, escrow thresholds and ladder weights, scenario effect multipliers, access thresholds (30 / 60 min), the Syrian registered/unregistered split.
 
