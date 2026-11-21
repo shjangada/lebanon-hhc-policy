@@ -1,7 +1,8 @@
 """M1: Enhanced 2-step floating catchment area (E2SFCA) access. Answers Q1.
 
 Step 1: R_j = cap_j / sum_k pop_k W(t_kj).  Step 2: A_i = sum_j R_j W(t_ij).
-W = Gaussian decay inside catchment d0 (Luo & Qi 2009 form), 0 outside. A_i is capacity per person.
+W = continuous Gaussian decay inside catchment d0, 0 outside (a later refinement of E2SFCA; Luo & Qi 2009 themselves used stepped
+travel-time zones, available here as kind='stepped'). A_i is capacity per person. See docs/METHODS_DECISIONS.md D9.
 Conservation: sum_i pop_i A_i = sum of capacity of facilities with non-zero demand in catchment.
 """
 from __future__ import annotations

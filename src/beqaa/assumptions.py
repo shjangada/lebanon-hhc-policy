@@ -17,11 +17,12 @@ def build() -> pd.DataFrame:
     spec = m2_need_score.load_spec()
     for d, w in spec["domain_weights"].items():
         add("M2", f"weight[{d}]", w, "Dirichlet(1,…,1) draws", "team assumption; paper gives no weights")
+    add("M2", "default aggregation / normalisation", "weighted arithmetic mean of domain means; safe/crisis goalposts", "geometric, max, percentile tested", "docs/METHODS_DECISIONS.md D2-D3")
     add("M2", "tier thresholds (high/moderate)", f"{spec['tiers']['high']}/{spec['tiers']['moderate']}", "sliders", "CLAUDE.md brief")
     add("M2", "top_k for p_top_tier", spec["top_k"], "", "team assumption")
     for d, inds in spec["domains"].items():
         for i in inds:
-            add("M2", f"{d}.{i['name']}", f"safe={i['safe']}, crisis={i['crisis']}", f"level: {i['level']}", i["source"], i["status"])
+            add("M2", f"{d}.{i['name']}", f"safe={i['safe']}, crisis={i['crisis']}", f"level: {i['level']}; anchor: {i.get('anchor', 'assumption')}", i["source"], i["status"])
     ex = m4_exposure.load_params()
     for k, v in ex.items():
         if isinstance(v, dict) and "value" in v:
@@ -35,7 +36,7 @@ def build() -> pd.DataFrame:
                 else:
                     add("M4", f"{k}.{kk}", vv, "", "EPA defaults" if "food" not in k else "assumption", "verify" if "food" not in k else "assumption")
     add("M4", "crop transfer factor", "max over crops for metal", "x0.25–x4 in tornado", "crop_transfer.csv (Abi Saab et al. 2022 when real)", "mock")
-    add("M1", "decay function", "Gaussian within d0", "stepped alternative", "Luo & Qi 2009 E2SFCA form")
+    add("M1", "decay function", "Gaussian within d0 (default)", "stepped zones alternative", "E2SFCA: Luo & Qi 2009 used stepped zones (S36); continuous Gaussian decay is a later refinement (to verify citation). D9")
     add("M1", "d0 catchment (min)", 30, "15 / 30 / 60", "team assumption")
     add("M1", "women share applied to every group in a cadaster", "cadaster-level share", "", "assumption: age/sex by displacement status not published")
     for g, w in m1_access.DEFAULT_DEMAND_WEIGHTS.items():

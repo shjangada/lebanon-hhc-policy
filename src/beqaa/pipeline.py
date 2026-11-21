@@ -41,6 +41,7 @@ def run(verbose: bool = True) -> dict:
     scored.to_csv(PROC / "m2_need_score.csv", index=False)
     rob = m2.robustness(raw)
     rob.to_csv(PROC / "m2_robustness.csv", index=False)
+    m2.method_sensitivity(raw).to_csv(PROC / "m2_method_sensitivity.csv", index=False)
     comp, hidden = m2.compare_official(scored)
     comp.to_csv(PROC / "m2_official_comparison.csv", index=False)
     hidden.to_csv(PROC / "m2_hidden_hotspots.csv", index=False)

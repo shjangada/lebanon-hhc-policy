@@ -1,25 +1,27 @@
 # Indicator spec for M2. s = clip((x - safe)/(crisis - safe), 0, 1)  (direction is encoded by safe vs crisis order).
-# status: verified | assumption | mock.  Starting point: Lebanon Health Sector severity/PiN thresholds (2024 annex);
+# Every choice below is justified in docs/METHODS_DECISIONS.md (decision ids D1-D12).
+# anchor: published = taken from a published threshold (verify against the primary document) | quantile = set to the 10th/90th percentile of the
+#         real data once available (apply_quantile_anchors; D6) | assumption = team judgement, tested in the sensitivity analysis.
+# status: verified | to_verify_primary | assumption | mock.
 # Removed for now (no public source; re-add when MoPH/NGO data exist): posts_unfilled_share, referral_incompletion (staffing_referrals).
-# deviations documented in the `source` field. ALL safe/crisis values are assumptions unless marked verified.
-domain_weights: {clinical_demand: 0.25, capacity_strain: 0.30, vulnerability: 0.30, environment: 0.15}  # assumption
-tiers: {high: 0.66, moderate: 0.33}   # assumption, exposed as sliders in the app
+domain_weights: {clinical_demand: 0.25, capacity_strain: 0.25, vulnerability: 0.25, environment: 0.25}  # D4: equal weights (SVI, JRC handbook default); alternatives tested
+tiers: {high: 0.66, moderate: 0.33}   # D5: assumption, exposed as sliders; relative top-k drives "where first"
 top_k: 8                              # "top tier" for p_top_tier = rank within top k cadasters
 domains:
   clinical_demand:
-    - {name: pregnant_per_1000, safe: 6, crisis: 14, level: cadaster, source: "pregnant_est / population (UNFPA ratio ~4.1% of women 15-49)", status: assumption}
-    - {name: women_share, safe: 0.20, crisis: 0.27, level: cadaster, source: women_15_49 / population, status: assumption}
+    - {name: pregnant_per_1000, safe: 6, crisis: 14, level: cadaster, source: "pregnant_est / population (UNFPA ratio ~4.1% of women 15-49)", status: assumption, anchor: quantile}
+    - {name: women_share, safe: 0.20, crisis: 0.27, level: cadaster, source: women_15_49 / population, status: assumption, anchor: quantile}
   capacity_strain:
-    - {name: access_deficit, safe: 0.0, crisis: 1.0, level: cadaster, source: "M1: 1 - current access / pre-2026 median access", status: assumption}
-    - {name: phc_per_50k, safe: 2, crisis: 0, level: cadaster, source: "Health Sector threshold: 2 PHC per 50,000 (open PHCs within 30 min)", status: verified}
-    - {name: anc_share_30min, safe: 1.0, crisis: 0.0, level: cadaster, source: "share of open facilities within 30 min offering ANC", status: assumption}
+    - {name: access_deficit, safe: 0.0, crisis: 1.0, level: cadaster, source: "M1: 1 - current access / pre-2026 median access", status: assumption, anchor: assumption}
+    - {name: phc_per_50k, safe: 3, crisis: 0.5, level: cadaster, source: "Lebanon Health Sector 2024 PiN/severity annex: PHC per 50,000 bands from >3 (lowest severity) to 0.5 (highest); band-to-severity mapping to verify (S37)", status: to_verify_primary, anchor: published}
+    - {name: anc_share_30min, safe: 1.0, crisis: 0.0, level: cadaster, source: "share of open facilities within 30 min offering ANC", status: assumption, anchor: assumption}
   vulnerability:
-    - {name: ipc3plus_share, safe: 0.05, crisis: 0.40, level: district, source: IPC Lebanon, status: assumption}
-    - {name: unable_to_access_care_share, safe: 0.05, crisis: 0.20, level: district, source: "Health Sector sector threshold 20%", status: assumption}
-    - {name: no_insurance_share, safe: 0.20, crisis: 0.80, level: district, source: assumption, status: assumption}
-    - {name: female_headed_hh_share, safe: 0.10, crisis: 0.35, level: district, source: assumption, status: assumption}
-    - {name: conflict_incidents, safe: 0, crisis: 40, level: cadaster, source: "LRP 2026 conflict incidents since Oct 2023 (admin 3); crisis value is an assumption", status: assumption}
-    - {name: unregistered_workers_share, safe: 0.0, crisis: 0.12, level: cadaster, source: "assumption (document estimation method)", status: assumption}
+    - {name: ipc3plus_share, safe: 0.05, crisis: 0.40, level: district, source: IPC Lebanon, status: assumption, anchor: assumption}
+    - {name: unable_to_access_care_share, safe: 0.05, crisis: 0.20, level: district, source: "Health Sector 2024 annex uses a 20% threshold for people reporting two or more barriers (S37); our indicator is a different survey item, so the anchor is an assumption", status: assumption, anchor: assumption}
+    - {name: no_insurance_share, safe: 0.20, crisis: 0.80, level: district, source: assumption, status: assumption, anchor: assumption}
+    - {name: female_headed_hh_share, safe: 0.10, crisis: 0.35, level: district, source: assumption, status: assumption, anchor: assumption}
+    - {name: conflict_incidents, safe: 0, crisis: 40, level: cadaster, source: "LRP 2026 conflict incidents since Oct 2023 (admin 3); crisis value is an assumption", status: assumption, anchor: quantile}
+    - {name: unregistered_workers_share, safe: 0.0, crisis: 0.12, level: cadaster, source: "assumption (document estimation method)", status: assumption, anchor: quantile}
   environment:
-    - {name: soil_hotspot_proximity, safe: 0, crisis: 3, level: cadaster, source: "M4 tier x distance decay (15 km)", status: assumption}
-    - {name: nitrate_mg_l, safe: 10, crisis: 50, level: cadaster, source: "WHO guideline 50 mg/L (crisis); wells imputed from district where unmeasured", status: verified}
+    - {name: soil_hotspot_proximity, safe: 0, crisis: 3, level: cadaster, source: "M4 tier x distance decay (15 km)", status: assumption, anchor: assumption}
+    - {name: nitrate_mg_l, safe: 10, crisis: 50, level: cadaster, source: "WHO guideline 50 mg/L (crisis); wells imputed from district where unmeasured", status: verified, anchor: published}

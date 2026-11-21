@@ -23,18 +23,31 @@ def wm(chart, w=640, h=320):
     return chart + t
 
 
+def _version():
+    """Cache key: modification times of the code, parameters and data. Switching branches or regenerating data changes it, so stale cached
+    frames (e.g. built before an indicator existed) are never reused."""
+    import pathlib
+    root = pathlib.Path(__file__).resolve().parents[1]
+    files = list((root / "src" / "beqaa").rglob("*.py")) + list((root / "data" / "params").glob("*.yaml")) + list((root / "data" / "mock").glob("*.csv")) \
+        + list((root / "data" / "derived").glob("*.csv")) + list((root / "data" / "registry").glob("*.csv"))
+    return max((f.stat().st_mtime_ns for f in files), default=0)
+
+
+VER = _version()
+
+
 @st.cache_data
-def raw_ind(d0, demand):
+def raw_ind(d0, demand, _v):
     return m2.raw_indicators(d0, demand)
 
 
 @st.cache_data
-def sites_df():
+def sites_df(_v):
     return m4_exposure.screen_sites()
 
 
 @st.cache_data
-def funding():
+def funding(_v):
     return ff.annotate(ff.load_funding())
 
 
@@ -62,11 +75,13 @@ with st.sidebar.expander("Demand weighting for access"):
           "unregistered_workers_est": st.slider("Unregistered workers ×", 0.5, 3.0, 1.0, 0.1)}
 
 spec = {**CFG, "top_k": top_k}
-raw = raw_ind(d0, "women_15_49" if demand == "weighted_women_15_49" else demand)
+raw = raw_ind(d0, "women_15_49" if demand == "weighted_women_15_49" else demand, VER)
 if not unreg:
     raw = raw.assign(unregistered_workers_share=0.0)
 on = [d for d in m2.DOMAINS if d != "environment" or env_on]
 scored = m2.compute(raw, w, spec, geo, on)
+if scored.attrs.get("skipped_indicators"):
+    st.warning("Indicators skipped (not in the loaded data): " + ", ".join(scored.attrs["skipped_indicators"]) + ". Press C then Rerun to clear caches.")
 rob = m2.robustness(raw, spec=spec, geometric=geo, domains_on=on)
 acc = m1_access.access_by_cadaster(d0, demand, "all", "gaussian", dw if demand == "weighted_women_15_49" else None)
 ga = m1_access.group_access(acc)
@@ -149,7 +164,7 @@ with section("s1", "1 · Priority & access",
         fac = fac.assign(_c=fac.status_2026.map(lambda s_: [30, 140, 60, 230] if s_ == "open" else [200, 30, 30, 230]))
         layers.append(pdk.Layer("ScatterplotLayer", fac, get_position=["lon", "lat"], get_radius=1200, get_fill_color="_c"))
     if "Soil sites (by tier)" in (ov or []):
-        s_ = sites_df().dropna(subset=["lat"]).assign(_c=lambda d: d.tier.map({0: [120, 120, 120, 220], 1: [240, 190, 0, 230], 2: [130, 0, 160, 240]}))
+        s_ = sites_df(VER).dropna(subset=["lat"]).assign(_c=lambda d: d.tier.map({0: [120, 120, 120, 220], 1: [240, 190, 0, 230], 2: [130, 0, 160, 240]}))
         layers.append(pdk.Layer("ScatterplotLayer", s_, get_position=["lon", "lat"], get_radius=1800, get_fill_color="_c"))
     if IS_MOCK:
         layers.append(pdk.Layer("TextLayer", pd.DataFrame({"lat": [scored.lat.mean()], "lon": [scored.lon.mean()], "t": ["MOCK DATA"]}),
@@ -194,6 +209,14 @@ with section("s1", "1 · Priority & access",
                             cadaster_name="Cadaster", district="District", pct_lost="Access lost (%)"), hide_index=True, width="stretch")
         st.caption("Power source is mock (pilot-measured); conflict incidents are mock counts standing in for the LRP 2026 admin-3 incident table. "
                    "Conflict exposure is also a Need Score indicator (vulnerability domain).")
+
+    with st.expander("Method check: does the ranking depend on our formula choices?"):
+        ms = m2.method_sensitivity(raw, spec=spec)
+        st.dataframe(pretty(ms[["variant", "spearman_vs_reference", "top_k_retained", "top_k_jaccard", "max_rank_shift"]].round(2),
+                            variant="Alternative choice", spearman_vs_reference="Rank correlation", top_k_retained=f"Top-{top_k} kept",
+                            top_k_jaccard="Top-k overlap", max_rank_shift="Max rank shift"), hide_index=True, width="stretch")
+        st.caption("Each row changes one methodological choice (aggregation, normalisation, weights, dropped domain) and compares with the default. "
+                   "Low overlap = that choice drives the priority list, so report it as contested. Rationale and precedents: docs/METHODS_DECISIONS.md.")
 
 # ---------------- 2. What to fund ----------------
 iv, _ = io.load_dataset("interventions")
@@ -277,7 +300,7 @@ with section("s3", "3 · Allocation & escrow",
                             "thresholds_failed"]].round(3), hide_index=True, width="stretch")
 
 # ---------------- 4. Soil & water ----------------
-sites = sites_df()
+sites = sites_df(VER)
 tor = m4_exposure.tornado()
 n_t2 = int((sites.tier >= 2).sum())
 with section("s4", "4 · Soil & water triggers",
@@ -298,7 +321,7 @@ with section("s4", "4 · Soil & water triggers",
         st.table(pd.DataFrame([(t, r_, a_) for t, (r_, a_) in m4_exposure.ACTIONS.items()], columns=["tier", "rung", "action"]))
 
 # ---------------- 5. Funders ----------------
-f = funding()
+f = funding(VER)
 res = ff.rank(ff.filter_funding(f, None, False, True), ["health", "maternal"]).head(5)
 with section("s5", "5 · Funding sources",
              f"{len(res)} active or recent funds match health and maternal care; top match: <b>{res.name.iloc[0]}</b> ({res.channel.iloc[0]})." if len(res) else "No active match."):
