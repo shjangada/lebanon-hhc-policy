@@ -4,21 +4,20 @@
 
 ---
 
-## 0. Where the project stands
+## 0. Where the project stands (rewritten 2026-11-21; the earlier text described a mock-data build)
 
-**Built (on mock data):** M1 access (E2SFCA + closure scenario + mobile-unit siting), M2 Need Score (4 domains, 5,000 weight draws, official-severity comparison), M4 exposure screen (real CNRS-L soil values, mock locations), M5 options at $1k/$100k/$1M, community allocation, escrow/funding switch, funding finder + grounded registry chat, and a one-page decision dashboard. 30 tests pass. **Real data in use:** CNRS-L soil values and WDI national population only.
+**Data.** No dataset is entirely mock (`io.any_mock()` is False; the red MOCK DATA watermark appears only if one is). Real or sourced: cadasters (222), official severity, crop transfer factors, conflict incidents (LRP, to Jul 2025), FTS and LHF funding, the MoPH facility list (97), WorldPop age/sex, the project inventory. Partly real or proxy: population (spread inside districts modelled), facilities (capacity assumed, centres at village centroids), travel time (straight line x 1.3 at 40 km/h), vulnerability (district IPC only), soil (5 villages), intervention costs (3 of 8 derived from sourced unit prices), cascade (HAUS 2024 reference; other groups assumed equal), governance (national anchors, identical districts). **Removed instead of kept as mock:** water quality (water exposure is unknown for every cadaster) and staffing (referral completion and posts filled are scenario parameters). The audit is `docs/HEADLINE_AUDIT.md`; the assumptions and what the pilot measures are `docs/ASSUMPTIONS_PILOT.md`.
 
-**Not built:** M3 network simulation, Workforce page, Pilot (stepped-wedge/PDIA) page, case-study cards, appendix notebook.
+**Built:** M1 access (E2SFCA, closure scenario, centre capacity 200/300/400 with a stable ranking), M2 Need Score (four domains; unsampled areas are *unknown*, not zero), M4 exposure screen, M5 options, community allocation, escrow ladder, robustness (six scenarios, regret, core set), **break-evens** (`breakeven.py`), health riders (`riders.py`), one-page dashboard with six sections (Why Beqaa, Funding today, Priority areas, Control of the money, Resilience, Funding sources) plus Methods. **Not built:** M3 network simulation, Workforce page, stepped-wedge/PDIA pilot page, OSM-road travel times, escrow overhead in the escrow-vs-direct comparison.
 
-**What the mock runs are already telling us about the design.** These are worth taking seriously even before real data arrives:
-1. **Community-decided allocation reached ~2,400 women vs ~5,300 for top-down** at $100k (`allocation_summary.csv`). The result is driven entirely by the assumed capture rate (0.2) and local-fit multiplier (1.1). Right now the community-control claim rests on assumptions alone. It has to be framed as **something the pilot tests**, not something the analysis shows.
-2. **Escrow: the capacity tranche is "held" in most town-years**, and the mock governance projection jumps `admin_capacity_index` from 0.39 to 0.66 in one year, handing control to MoPH by 2029. That trajectory is not credible (see §1 Governance). Recalibrate it before any escrow chart goes in the memo.
-3. **At $1,000, only environmental items and transport vouchers are fundable.** That matches the challenge lead's "what can you start for $1,000" test. Keep it.
-4. **Every cost and lift in `interventions.csv` is mock.** No cost-effectiveness claim can be made until these are sourced.
+**What the current runs say (all conditional on stated assumptions; 125 tests pass):**
+1. **Priority ranking:** on real inputs the top 10 cadasters are 9 in Baalbek and 1 in Hermel, driven by district-level IPC and conflict counts; 61% of cadasters have an environment evidence gap. No robust core set beyond a single cadaster (Tfail): district is the reliable resolution, cadaster a screening layer.
+2. **Community-decided allocation loses to the status quo and to top-down at every tested value** when community priorities are placeholders. Best case (communities pick the most cost-effective option) it wins only if capture < 5.6% or the local-fit multiplier exceeds 1.48 (above the tested range 1.00-1.30). So the community-control claim is a design principle to be tested in a pilot, not a modelled advantage.
+3. **Escrow:** with capacity starting at the national anchor (0.299) and growing at most 0.05 a year, the Union of Municipalities rung is reached about 2029 at +0.03 a year; local control of released money is about 33% until then (scenario, not forecast). The earlier "jump to MoPH by 2029" came from mock district data and is gone.
+4. **Costs:** mobile-unit proxy $331k-1.21M per unit-year (4-8x the old mock); CHW $12k-54k per 10 CHW-years; a health rider on a funded project about $3,800-4,200 (central) or 0.5-0.9% of the project budget where known. Five option costs and most effect sizes remain labelled placeholders.
+5. **Projects:** none of 37 inventoried funded projects tests soil or screens people for exposure (desk search; to confirm). That gap is the case for riders on existing projects.
 
 ---
-
-> **Update (data ingest):** population, conflict incidents, IPC, funding flows, official severity, soil (5 villages) and crop transfer factors are now real or partly real; costs, cascade rates, staffing, governance capacity and water quality are still mock or assumed. Which conclusions changed: `docs/MOCK_VS_REAL.md`.
 
 ## 1. The constraint baseline (hard facts)
 

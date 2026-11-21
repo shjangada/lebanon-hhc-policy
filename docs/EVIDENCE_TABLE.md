@@ -1,0 +1,27 @@
+# Evidence table: one row per claim the recommendation depends on
+
+Rung: **(a)** environmental finding · **(b)** plausible exposure pathway · **(c)** demonstrated health effect. Geography: Beqaa (five districts) / other Lebanon / international. Verification: `verified` = value in the repo, transcribed in two passes or read from a primary file; `modelled`; `reported` = number from the cited source as reported to the team, **not re-read here** (check before quoting); `to_verify`. **No row below is rung (c) for Beqaa: no health effect has been shown.**
+
+| # | Claim | Rung | Geography | Source | Verification |
+|---|---|---|---|---|---|
+| 1 | Total chromium 110-230 mg/kg in soil in 4 sampled villages (Chmestar, Ksarnaba, Rayak, Bouday) | a | Beqaa (villages located by name; no coordinates in the report) | CNRS-L / MoE post-war soil report, Apr 2026, Table 2.3 (`data/processed/soil_sites.csv`) | verified (two passes) |
+| 2 | A crop-soil exposure route for chromium is plausible: child hazard quotient 0.27 to 280 depending on the Cr(VI) share (0 to 1); the form decides | b | Beqaa (model) | M4 screen (`m4_site_screen.csv`), EPA defaults, Abi Saab et al. 2022 transfer factors | modelled; Cr(VI) share not measured |
+| 3 | Lead 230 mg/kg at Bouday, above the 200 ppm EPA residential screening level | a (screening exceedance); b in the model | Beqaa | CNRS-L / MoE 2026; EPA 2024 screening level | verified value; level to_verify_primary |
+| 4 | Total phosphorus 146-1,858 mg/kg (highest in Rayak). **Total P is not white phosphorus** and cannot establish munition exposure | a only | Beqaa | CNRS-L / MoE 2026 | verified value; never state as WP |
+| 5 | Nitrate: 12 of 21 Bekaa-plain wells exceeded 200 mg/L (2007-09) | a | Beqaa (old) | Darwish et al. 2011, Agric. Water Manage. 99:74-84 | to_verify (abstract read through a summariser) |
+| 6 | Nitrate in Baalbek-Hermel samples: median 11, max 137 mg/L (Lebanese standard 45), n=41, Jul-Oct 2023; Beqaa governorate n=2 (unusable) | a | Baalbek-Hermel | Fahes et al. 2025, Sci. Rep. 15:10539 | to_verify (summariser; mixed sample types) |
+| 7 | About 70% of generated wastewater is discharged untreated; private wells supply 33% of water | a | Lebanon (national) | CDR / MoEW strategic environmental assessment of the National Water Sector Strategy | reported (not re-read); the "90% (WHO)" figure is NOT used |
+| 8 | Bebnine: women dissatisfied with water quality reported worse health; household water treatment protective against child diarrhoea | b / c | North Lebanon (Akkar), about 2009-13 | Habib et al., Women & Health 2013; companion study (EcoHealth) | to_verify: the "42%" figure is not in the abstract; do not quote it |
+| 9 | Toxic metals detected in newborn cord blood (EELI birth cohort, about 135 mothers); detection is not a health effect | b | Beirut (not Beqaa) | EELI / Balamand; Int J Hyg Environ Health 2026 | reported (not re-read): confirm "all 8 metals" and associations |
+| 10 | Women in agriculture have household and occupational pesticide exposure routes; women's exposure is often under-estimated | b | International (no Beqaa study found) | FAO 2023 Status of Women in Agrifood Systems; Deziel et al. 2015 EHP | reported |
+| 11 | Rural women do a major share of agricultural labour in Lebanon, often unrecognised and low paid | b (occupational) / context | Lebanon | FAO 2021 Country Gender Assessment; UN Women 2022, 2024 | reported |
+| 12 | Lack of clean water raises menstrual and postpartum hygiene problems and infections | b | no Lebanon source found | WASH literature (none cited) | assumption: find a UNFPA/UNICEF WASH-MHM source |
+| 13 | Landfill leachate contaminates about 30% of groundwater; air pollution up 50% | not used | Lebanon | advocacy sources (AFSC, UN) | **not verified: dropped** |
+| 14 | Direct funding to local actors: 4.3% in 2025 vs a 25% Grand Bargain pledge | context | global | ALNAP SOHS 2026 ch.4 (S45) | reported |
+| 15 | LHF share of project budgets to national NGOs: 38% (2023), 38% (2024), 44% (2025), 47% (2026, partial year) | context | Lebanon (one pooled fund) | OCHA CBPF project summary (`lhf_national_ngo_share_by_year.csv`) | verified (file) |
+| 16 | Beqaa-titled LHF health projects: 0%, 5.3%, 0% to national NGOs (2024, 2025, 2026) | context | Beqaa (proxy) | title keywords only; full budgets (`beqaa_lhf_national_ngo_share_by_year.csv`) | proxy: projects not naming Beqaa are missed |
+| 17 | Government pays 13.4% of total health spending; WGI government effectiveness 29.9/100 (2025) | context | Lebanon (national) | SC02 (K2P/UNICEF), SC01 (World Bank) | SC01 verified (API); SC02 verified |
+| 18 | None of 37 inventoried funded projects tests soil contamination or screens people for exposure | context | Beqaa | project inventory (desk search, 2026-11-21) | to_verify: pages read through a summariser; several blocked |
+| 19 | CHW home visits raised any-ANC by 10.5 points (CI 4.2 to 16.9) in Afghanistan; null on 4+ visits in a Tanzania trial | context (effect size) | international | Edmond 2018, BMC Medicine; Geldsetzer 2019, PLoS Med | to_verify (read through a summariser) |
+
+What would change the response: a Cr(VI) speciation test in the 4 villages (rows 1-2: decides whether the response is monitoring or protection); measured water nitrate in the wells the funded projects serve (rows 5-7); maternal and cord-blood biomonitoring near the sampled villages (rows 9-10: the route from (b) to (c)).
