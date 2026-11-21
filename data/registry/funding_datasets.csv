@@ -1,0 +1,12 @@
+dataset_id,name,publisher,freshness,url,use,verified_on
+D01,"HDX - CBPF Allocations and contributions (live CSV/JSON: ProjectSummary.csv, Contributions.csv)",OCHA CBPF,live,https://data.humdata.org/dataset/cbpf-allocations-and-contributions,LHF project-level allocations by partner type (UN/INGO/NNGO) -> localization share,2026-11-21
+D02,CBPF Data Hub,OCHA,live,https://cbpf.data.unocha.org/,"Same as D01, dashboard; filter Lebanon",2026-11-21
+D03,CBPF IATI feed Lebanon (per-year XML),OCHA CBPF,monthly,https://cbpfapi.unocha.org/iati/iati/71/2025/GetPooledFund.xml,Machine-readable LHF allocations; change year in URL,2026-11-21
+D04,HDX - Lebanon Current IATI Aid Activities,IATI publishers via HDX,2026-05-08,https://response.reliefweb.int/lebanon/data,"Who funds what, through whom; detail on d-portal.org",2026-11-21
+D05,Lebanon - Requirements and Funding Data (HDX HAPI / OCHA FTS),OCHA FTS,live,https://hapi.humdata.org/,Appeal requirements vs funded,2026-11-21
+D06,LRP Funding Update Jan-Jun 2026,GoL/UN (UNHCR portal),2026-08-10,https://data.unhcr.org/en/documents/details/123651,Sector funding gaps incl. health,2026-11-21
+D07,Lebanon Aid Tracking 2026 (ActivityInfo) user guide + reports,UN RCO / GoL,2026,https://data.unhcr.org/ar/documents/download/124323,"Grant-level donor reporting across LRP, Addendum, Flash Appeal",2026-11-21
+D08,UK FCDO DevTracker - Lebanon,FCDO,live,https://devtracker.fcdo.gov.uk/countries/LB/,UK programmes + implementing partners; IATI download,2026-11-21
+D09,Start Network alerts (Lebanon),Start Network,per alert,https://startnetwork.org/funds/global-start-fund/alerts/877-lebanon-displacement-due-conflict,Alert/allocation amounts,2026-11-21
+D10,GBViE Hub - Humanitarian financing opportunities list,SDDirect,2025-12-30,https://sddirect.org.uk/sites/default/files/2025-12/GBViE%20Hub%2025%20Humanitarian%20Financiaing%20Opportunities%20updated%20301225.pdf,Curated list of flexible funders for women-led orgs,2026-11-21
+D11,fundsforNGOs - Lebanon tag,fundsforNGOs (aggregator),rolling,https://www2.fundsforngos.org/tag/lebanon/,Discovery only; always verify on funder site,2026-11-21

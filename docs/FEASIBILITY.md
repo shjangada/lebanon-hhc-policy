@@ -96,8 +96,8 @@ Status: items 1, 2 and 5 are implemented (feasibility columns and filter, escrow
 3. Replace mock costs with sourced unit costs: UNFPA/WHO appeal lines for mobile units, an AUB quote for speciation, WASH sector costs for water trucking, IRC/UNFPA stipends for CHWs.
 4. Add a **power** column to facilities (grid / generator / solar) and a **security** exposure flag (distance to 2026 strike locations) to M1/M2.
 5. **(done)** Change the community-allocation framing in the dashboard from "result" to "pilot test arm", and show the assumption sensitivity (capture 0.1–0.4, local fit 1.0–1.3).
-6. Verify the `Mansuri & Rao 2013` citation (marked "from memory") and add the 3ie WP30 and Cochrane 2021 citations to `sources.csv`.
-7. Load `data_catalog.csv` (30 sources) into `data/registry/sources.csv`.
+6. **(done)** Verified the `Mansuri & Rao 2013` citation (World Bank Policy Research Report, title is "Localizing Development: Does Participation Work?", DOI 10.1596/978-0-8213-8256-1) and added it as S35; the 3ie WP30 and Cochrane 2021 citations are S26 and S25 in `sources.csv`.
+7. **(done)** Loaded `data_catalog.csv` (30 sources) into `data/registry/sources.csv`.
 
 ---
 

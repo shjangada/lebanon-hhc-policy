@@ -46,7 +46,7 @@ def build() -> pd.DataFrame:
         add("M5", f"reach weight[{g}]", w, "0.2–1.0", "assumption: unregistered workers harder to reach")
     for k, v in allocation.DEFAULTS.items():
         add("allocation", k, v, "local_fit 1.0–1.3" if k == "local_fit_multiplier" else "",
-            "Mansuri & Rao 2013 (CDD review; mixed evidence): citation from memory, verify" if k == "local_fit_multiplier" else "assumption")
+            "Mansuri & Rao 2013, Localizing Development: Does Participation Work? (World Bank; sources.csv S35); 3ie WP30 2018 (S26): mixed evidence" if k == "local_fit_multiplier" else "assumption")
     add("allocation", "community priority weights", "Dirichlet(0.7) per cadaster", "", "MOCK (stand-in for survey / participatory budgeting)", "mock")
     for k, v in escrow.DEFAULT_RULES.items():
         add("escrow", k, v, "editable", "assumption")
