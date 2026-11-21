@@ -77,7 +77,7 @@ def valid_ids() -> set[str]:
 
 def invalid_citations(text: str) -> list[str]:
     """Registry-style ids (F###, O###, S###) in `text` that are not in the registries: treated as a hard failure."""
-    return sorted({m for m in re.findall(r"\b[FOS]\d{3}\b", text)} - valid_ids())
+    return sorted({m for m in re.findall(r"\b[FOS]\d{2,3}\b", text)} - valid_ids())
 
 
 TOOLS = {"search_funding": search_funding, "search_orgs": search_orgs, "get_entry": get_entry, "list_sources": list_sources}

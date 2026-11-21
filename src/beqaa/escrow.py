@@ -1,5 +1,6 @@
 """Adaptive funding switch (escrow). Money follows measured need; administrative control shifts
-INGO -> national NGO -> municipality -> MoPH as measured capacity improves.
+INGO -> national NGO -> Union of Municipalities (-> MoPH only if explicitly allowed) as measured capacity improves.
+MoPH is co-governor, not administrator, by default: it cannot be assumed to run the funds by 2030 (docs/FEASIBILITY.md).
 
 Per town and year: need-floor release (guaranteed, by Need Score share) + capacity tranche (released only if the
 threshold rules pass). Locked tranche is either HELD in escrow (restricted) or released through a more-foreign
@@ -12,9 +13,11 @@ import pandas as pd
 
 from .io import load_dataset
 
-LEVELS = ["INGO", "National NGO", "Municipality", "MoPH"]
-LEVEL_LOCAL_WEIGHT = {"INGO": 0.0, "National NGO": 0.33, "Municipality": 0.67, "MoPH": 1.0}   # state-capacity weight (assumption)
+LEVELS = ["INGO", "National NGO", "Union of Municipalities", "MoPH"]
+LEVEL_LOCAL_WEIGHT = {"INGO": 0.0, "National NGO": 0.33, "Union of Municipalities": 0.67, "MoPH": 1.0}   # state-capacity weight (assumption)
 BANDS = [0.35, 0.50, 0.70]            # admin_capacity_index cut-points between levels (assumption)
+MAX_YOY_CAPACITY_GAIN = 0.05           # cap used when generating projections (docs/FEASIBILITY.md: >0.05/yr is not credible)
+DEFAULT_MAX_LEVEL = "Union of Municipalities"   # default 2030 administrator ceiling; MoPH only as co-governor
 DEFAULT_RULES = {"referral_min": 0.40, "posts_filled_min": 0.60, "transparent_required": True, "admin_capacity_min": 0.40}
 
 
@@ -23,7 +26,8 @@ def level_for(index: float) -> str:
 
 
 def run(scored: pd.DataFrame, pool: float = 1_000_000, n_towns: int = 8, need_floor_pct: float = 0.5, start: int = 2026, end: int = 2030,
-        rules: dict | None = None, unrestricted: bool = False) -> tuple[pd.DataFrame, pd.DataFrame, list[str]]:
+        rules: dict | None = None, unrestricted: bool = False, max_level: str = DEFAULT_MAX_LEVEL,
+        escalation_year: int | None = None, escalation_drop: float = 0.15, recovery_per_year: float = 0.03) -> tuple[pd.DataFrame, pd.DataFrame, list[str]]:
     r = {**DEFAULT_RULES, **(rules or {})}
     gov, mock = load_dataset("governance_capacity")
     stf, _ = load_dataset("staffing_referrals")
@@ -39,6 +43,9 @@ def run(scored: pd.DataFrame, pool: float = 1_000_000, n_towns: int = 8, need_fl
         for y in years:
             g = gd.loc[y]
             idx = float(g.admin_capacity_index)
+            escalated = escalation_year is not None and y >= escalation_year
+            if escalated:                                                     # renewed escalation: capacity drops, then recovers slowly
+                idx = max(0.0, idx - max(0.0, escalation_drop - recovery_per_year * (y - escalation_year)))
             floor = per_year * need_floor_pct * sh
             tranche = per_year * (1 - need_floor_pct) * sh
             fails = []
@@ -51,7 +58,7 @@ def run(scored: pd.DataFrame, pool: float = 1_000_000, n_towns: int = 8, need_fl
             if idx < r["admin_capacity_min"]:
                 fails.append("admin capacity")
             passed = not fails
-            level = level_for(idx)
+            level = LEVELS[min(LEVELS.index(level_for(idx)), LEVELS.index(max_level))]
             if passed:
                 released_tranche, held, level_t = tranche, 0.0, level
             elif unrestricted:
@@ -66,7 +73,9 @@ def run(scored: pd.DataFrame, pool: float = 1_000_000, n_towns: int = 8, need_fl
                          "need_floor_usd": floor, "tranche_due_usd": tranche, "tranche_released_usd": released_tranche,
                          "held_in_escrow_usd": held, "released_usd": released, "administered_by_floor": level,
                          "administered_by_tranche": level_t or "held", "thresholds_failed": "; ".join(fails),
-                         "share_managed_locally": local, "is_mock": bool(mock)})
+                         "share_managed_locally": local,
+                         "lebanese_managed_usd": (floor if level != "INGO" else 0.0) + (released_tranche if level_t not in (None, "INGO") else 0.0),
+                         "escalation_scenario": escalated, "is_mock": bool(mock)})
     d = pd.DataFrame(rows)
     # warnings
     w = []
@@ -86,11 +95,15 @@ def run(scored: pd.DataFrame, pool: float = 1_000_000, n_towns: int = 8, need_fl
                  "Self-reported: verify independently (sampled audits).")
     w.append("Gaming risk (structural): referral completion, posts filled and transparent reporting are self-reported by the implementer. "
              "Posts can be 'filled' on paper. Use third-party spot checks before releasing a tranche.")
+    if escalation_year is not None:
+        w.append(f"Renewed-escalation scenario from {escalation_year}: capacity falls by {escalation_drop:.2f} and recovers {recovery_per_year:.2f}/yr; "
+                 "fixed activities should pause while CHW and phone follow-up continue.")
     if unrestricted:
         w.append("Unrestricted routing: money reaches high-need towns but via more-foreign intermediaries and with weaker earmarking: higher capture risk.")
     else:
         w.append("Restricted: money is held in escrow when thresholds fail, which protects against capture but delays care in the weakest towns.")
     summary = d.groupby("year").agg(released_usd=("released_usd", "sum"), held_usd=("held_in_escrow_usd", "sum")).reset_index()
+    summary["share_lebanese_managed"] = (d.groupby("year").lebanese_managed_usd.sum() / d.groupby("year").released_usd.sum().clip(lower=1e-9)).values
     summary["share_managed_locally"] = d.groupby("year").apply(lambda x: np.average(x.share_managed_locally, weights=np.maximum(x.released_usd, 1e-9)),
                                                                include_groups=False).values
     return d, summary, w

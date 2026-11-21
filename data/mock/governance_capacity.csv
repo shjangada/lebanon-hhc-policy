@@ -1,61 +1,61 @@
 district,year,projected,admin_capacity_index,share_funds_managed_locally,transparent_reporting,is_mock,source,source_date,url,status
-Baalbek,2019,False,0.458,0.132,False,True,MOCK (synthetic),2026-11-21,,mock
-Baalbek,2020,False,0.314,0.187,False,True,MOCK (synthetic),2026-11-21,,mock
-Baalbek,2021,False,0.368,0.151,True,True,MOCK (synthetic),2026-11-21,,mock
-Baalbek,2022,False,0.598,0.153,False,True,MOCK (synthetic),2026-11-21,,mock
-Baalbek,2023,False,0.736,0.167,False,True,MOCK (synthetic),2026-11-21,,mock
-Baalbek,2024,False,0.46,0.143,False,True,MOCK (synthetic),2026-11-21,,mock
-Baalbek,2025,False,0.748,0.151,False,True,MOCK (synthetic),2026-11-21,,mock
-Baalbek,2026,False,0.511,0.157,True,True,MOCK (synthetic),2026-11-21,,mock
-Baalbek,2027,True,0.743,0.213,False,True,MOCK (synthetic),2026-11-21,,mock
-Baalbek,2028,True,0.798,0.249,True,True,MOCK (synthetic),2026-11-21,,mock
-Baalbek,2029,True,0.86,0.317,False,True,MOCK (synthetic),2026-11-21,,mock
-Baalbek,2030,True,0.909,0.338,False,True,MOCK (synthetic),2026-11-21,,mock
-Hermel,2019,False,0.279,0.164,True,True,MOCK (synthetic),2026-11-21,,mock
-Hermel,2020,False,0.042,0.111,False,True,MOCK (synthetic),2026-11-21,,mock
-Hermel,2021,False,0.132,0.148,True,True,MOCK (synthetic),2026-11-21,,mock
-Hermel,2022,False,0.436,0.169,True,True,MOCK (synthetic),2026-11-21,,mock
-Hermel,2023,False,0.434,0.128,False,True,MOCK (synthetic),2026-11-21,,mock
-Hermel,2024,False,0.296,0.141,False,True,MOCK (synthetic),2026-11-21,,mock
-Hermel,2025,False,0.498,0.133,True,True,MOCK (synthetic),2026-11-21,,mock
-Hermel,2026,False,0.327,0.151,False,True,MOCK (synthetic),2026-11-21,,mock
-Hermel,2027,True,0.661,0.186,True,True,MOCK (synthetic),2026-11-21,,mock
-Hermel,2028,True,0.683,0.219,False,True,MOCK (synthetic),2026-11-21,,mock
-Hermel,2029,True,0.712,0.297,False,True,MOCK (synthetic),2026-11-21,,mock
-Hermel,2030,True,0.73,0.391,True,True,MOCK (synthetic),2026-11-21,,mock
-Zahle,2019,False,0.322,0.128,False,True,MOCK (synthetic),2026-11-21,,mock
-Zahle,2020,False,0.122,0.161,False,True,MOCK (synthetic),2026-11-21,,mock
-Zahle,2021,False,0.18,0.173,True,True,MOCK (synthetic),2026-11-21,,mock
-Zahle,2022,False,0.411,0.161,False,True,MOCK (synthetic),2026-11-21,,mock
-Zahle,2023,False,0.424,0.144,True,True,MOCK (synthetic),2026-11-21,,mock
-Zahle,2024,False,0.274,0.139,True,True,MOCK (synthetic),2026-11-21,,mock
-Zahle,2025,False,0.617,0.147,True,True,MOCK (synthetic),2026-11-21,,mock
-Zahle,2026,False,0.343,0.152,False,True,MOCK (synthetic),2026-11-21,,mock
-Zahle,2027,True,0.654,0.223,True,True,MOCK (synthetic),2026-11-21,,mock
-Zahle,2028,True,0.689,0.262,False,True,MOCK (synthetic),2026-11-21,,mock
-Zahle,2029,True,0.717,0.319,False,True,MOCK (synthetic),2026-11-21,,mock
-Zahle,2030,True,0.766,0.368,True,True,MOCK (synthetic),2026-11-21,,mock
-West Bekaa,2019,False,0.402,0.143,False,True,MOCK (synthetic),2026-11-21,,mock
-West Bekaa,2020,False,0.095,0.158,True,True,MOCK (synthetic),2026-11-21,,mock
-West Bekaa,2021,False,0.171,0.159,True,True,MOCK (synthetic),2026-11-21,,mock
-West Bekaa,2022,False,0.478,0.136,False,True,MOCK (synthetic),2026-11-21,,mock
-West Bekaa,2023,False,0.538,0.195,True,True,MOCK (synthetic),2026-11-21,,mock
-West Bekaa,2024,False,0.355,0.182,True,True,MOCK (synthetic),2026-11-21,,mock
-West Bekaa,2025,False,0.603,0.148,False,True,MOCK (synthetic),2026-11-21,,mock
-West Bekaa,2026,False,0.382,0.145,False,True,MOCK (synthetic),2026-11-21,,mock
-West Bekaa,2027,True,0.741,0.201,False,True,MOCK (synthetic),2026-11-21,,mock
-West Bekaa,2028,True,0.75,0.254,True,True,MOCK (synthetic),2026-11-21,,mock
-West Bekaa,2029,True,0.763,0.279,False,True,MOCK (synthetic),2026-11-21,,mock
-West Bekaa,2030,True,0.821,0.322,False,True,MOCK (synthetic),2026-11-21,,mock
-Rachaya,2019,False,0.444,0.155,True,True,MOCK (synthetic),2026-11-21,,mock
-Rachaya,2020,False,0.291,0.163,False,True,MOCK (synthetic),2026-11-21,,mock
-Rachaya,2021,False,0.33,0.144,True,True,MOCK (synthetic),2026-11-21,,mock
-Rachaya,2022,False,0.636,0.18,False,True,MOCK (synthetic),2026-11-21,,mock
-Rachaya,2023,False,0.689,0.148,True,True,MOCK (synthetic),2026-11-21,,mock
-Rachaya,2024,False,0.463,0.152,True,True,MOCK (synthetic),2026-11-21,,mock
-Rachaya,2025,False,0.755,0.149,False,True,MOCK (synthetic),2026-11-21,,mock
-Rachaya,2026,False,0.508,0.163,False,True,MOCK (synthetic),2026-11-21,,mock
-Rachaya,2027,True,0.82,0.213,True,True,MOCK (synthetic),2026-11-21,,mock
-Rachaya,2028,True,0.873,0.258,False,True,MOCK (synthetic),2026-11-21,,mock
-Rachaya,2029,True,0.933,0.29,True,True,MOCK (synthetic),2026-11-21,,mock
-Rachaya,2030,True,0.899,0.33,False,True,MOCK (synthetic),2026-11-21,,mock
+Baalbek,2019,False,0.421,0.132,False,True,MOCK (synthetic),2026-11-21,,mock
+Baalbek,2020,False,0.284,0.187,False,True,MOCK (synthetic),2026-11-21,,mock
+Baalbek,2021,False,0.314,0.151,True,True,MOCK (synthetic),2026-11-21,,mock
+Baalbek,2022,False,0.494,0.153,False,True,MOCK (synthetic),2026-11-21,,mock
+Baalbek,2023,False,0.579,0.167,False,True,MOCK (synthetic),2026-11-21,,mock
+Baalbek,2024,False,0.355,0.143,False,True,MOCK (synthetic),2026-11-21,,mock
+Baalbek,2025,False,0.574,0.151,False,True,MOCK (synthetic),2026-11-21,,mock
+Baalbek,2026,False,0.376,0.157,True,True,MOCK (synthetic),2026-11-21,,mock
+Baalbek,2027,True,0.406,0.141,True,True,MOCK (synthetic),2026-11-21,,mock
+Baalbek,2028,True,0.436,0.19,False,True,MOCK (synthetic),2026-11-21,,mock
+Baalbek,2029,True,0.466,0.239,True,True,MOCK (synthetic),2026-11-21,,mock
+Baalbek,2030,True,0.496,0.256,False,True,MOCK (synthetic),2026-11-21,,mock
+Hermel,2019,False,0.32,0.138,False,True,MOCK (synthetic),2026-11-21,,mock
+Hermel,2020,False,0.153,0.13,True,True,MOCK (synthetic),2026-11-21,,mock
+Hermel,2021,False,0.169,0.112,False,True,MOCK (synthetic),2026-11-21,,mock
+Hermel,2022,False,0.388,0.146,True,True,MOCK (synthetic),2026-11-21,,mock
+Hermel,2023,False,0.407,0.155,True,True,MOCK (synthetic),2026-11-21,,mock
+Hermel,2024,False,0.206,0.127,False,True,MOCK (synthetic),2026-11-21,,mock
+Hermel,2025,False,0.454,0.175,True,True,MOCK (synthetic),2026-11-21,,mock
+Hermel,2026,False,0.218,0.116,True,True,MOCK (synthetic),2026-11-21,,mock
+Hermel,2027,True,0.248,0.169,False,True,MOCK (synthetic),2026-11-21,,mock
+Hermel,2028,True,0.278,0.211,False,True,MOCK (synthetic),2026-11-21,,mock
+Hermel,2029,True,0.308,0.261,True,True,MOCK (synthetic),2026-11-21,,mock
+Hermel,2030,True,0.338,0.253,False,True,MOCK (synthetic),2026-11-21,,mock
+Zahle,2019,False,0.363,0.152,True,True,MOCK (synthetic),2026-11-21,,mock
+Zahle,2020,False,0.207,0.138,False,True,MOCK (synthetic),2026-11-21,,mock
+Zahle,2021,False,0.191,0.124,False,True,MOCK (synthetic),2026-11-21,,mock
+Zahle,2022,False,0.394,0.135,False,True,MOCK (synthetic),2026-11-21,,mock
+Zahle,2023,False,0.447,0.138,True,True,MOCK (synthetic),2026-11-21,,mock
+Zahle,2024,False,0.279,0.179,True,True,MOCK (synthetic),2026-11-21,,mock
+Zahle,2025,False,0.503,0.112,False,True,MOCK (synthetic),2026-11-21,,mock
+Zahle,2026,False,0.278,0.152,True,True,MOCK (synthetic),2026-11-21,,mock
+Zahle,2027,True,0.308,0.177,False,True,MOCK (synthetic),2026-11-21,,mock
+Zahle,2028,True,0.338,0.207,True,True,MOCK (synthetic),2026-11-21,,mock
+Zahle,2029,True,0.368,0.235,False,True,MOCK (synthetic),2026-11-21,,mock
+Zahle,2030,True,0.398,0.27,True,True,MOCK (synthetic),2026-11-21,,mock
+West Bekaa,2019,False,0.405,0.156,True,True,MOCK (synthetic),2026-11-21,,mock
+West Bekaa,2020,False,0.169,0.148,False,True,MOCK (synthetic),2026-11-21,,mock
+West Bekaa,2021,False,0.23,0.154,False,True,MOCK (synthetic),2026-11-21,,mock
+West Bekaa,2022,False,0.442,0.174,False,True,MOCK (synthetic),2026-11-21,,mock
+West Bekaa,2023,False,0.445,0.157,True,True,MOCK (synthetic),2026-11-21,,mock
+West Bekaa,2024,False,0.28,0.077,False,True,MOCK (synthetic),2026-11-21,,mock
+West Bekaa,2025,False,0.501,0.16,False,True,MOCK (synthetic),2026-11-21,,mock
+West Bekaa,2026,False,0.298,0.177,True,True,MOCK (synthetic),2026-11-21,,mock
+West Bekaa,2027,True,0.328,0.225,True,True,MOCK (synthetic),2026-11-21,,mock
+West Bekaa,2028,True,0.358,0.218,False,True,MOCK (synthetic),2026-11-21,,mock
+West Bekaa,2029,True,0.388,0.243,False,True,MOCK (synthetic),2026-11-21,,mock
+West Bekaa,2030,True,0.418,0.268,False,True,MOCK (synthetic),2026-11-21,,mock
+Rachaya,2019,False,0.444,0.135,False,True,MOCK (synthetic),2026-11-21,,mock
+Rachaya,2020,False,0.27,0.144,True,True,MOCK (synthetic),2026-11-21,,mock
+Rachaya,2021,False,0.293,0.162,False,True,MOCK (synthetic),2026-11-21,,mock
+Rachaya,2022,False,0.488,0.172,True,True,MOCK (synthetic),2026-11-21,,mock
+Rachaya,2023,False,0.501,0.159,True,True,MOCK (synthetic),2026-11-21,,mock
+Rachaya,2024,False,0.318,0.155,True,True,MOCK (synthetic),2026-11-21,,mock
+Rachaya,2025,False,0.576,0.163,False,True,MOCK (synthetic),2026-11-21,,mock
+Rachaya,2026,False,0.396,0.144,True,True,MOCK (synthetic),2026-11-21,,mock
+Rachaya,2027,True,0.426,0.197,True,True,MOCK (synthetic),2026-11-21,,mock
+Rachaya,2028,True,0.456,0.246,True,True,MOCK (synthetic),2026-11-21,,mock
+Rachaya,2029,True,0.486,0.238,True,True,MOCK (synthetic),2026-11-21,,mock
+Rachaya,2030,True,0.516,0.285,True,True,MOCK (synthetic),2026-11-21,,mock

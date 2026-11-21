@@ -121,3 +121,25 @@ def test_conflict_indicator_in_need_score():
     assert "conflict_incidents" in raw.columns and raw.conflict_incidents.ge(0).all()
     s = m2.compute(raw)
     assert "s_conflict_incidents" in s.columns and s.need_score.between(0, 1).all()
+
+def test_feasibility_filter_flags():
+    ft = m5_options.feasibility_table().set_index("intervention_id")
+    assert "F6" in ft.loc["hub_spoke_ereferral", "flags"] and ft.loc["cr_speciation_tests", "feasible"]
+    assert not ft.loc["transport_vouchers", "feasible"]
+
+
+def test_escrow_max_level_escalation_and_capacity_cap():
+    sc = m2.compute(m2.raw_indicators())
+    d, s, _ = escrow.run(sc, 1_000_000, 8, 0.5)
+    assert "MoPH" not in set(d.administered_by_floor) | set(d.administered_by_tranche)
+    d2, s2, w2 = escrow.run(sc, 1_000_000, 8, 0.5, escalation_year=2028)
+    assert (d2[d2.year >= 2028].admin_capacity_index.values <= d[d.year >= 2028].admin_capacity_index.values + 1e-12).all()
+    assert any("escalation" in x for x in w2) and s.share_lebanese_managed.between(0, 1).all()
+    gov, _ = io.load_dataset("governance_capacity")
+    p = gov.pivot(index="year", columns="district", values="admin_capacity_index").diff().loc[2027:]
+    assert p.max().max() <= escrow.MAX_YOY_CAPACITY_GAIN + 1e-9
+
+
+def test_allocation_sensitivity_grid():
+    g = allocation.sensitivity(m2.compute(m2.raw_indicators()), 100_000)
+    assert g.shape == (4, 4) and (g.values > 0).all()
