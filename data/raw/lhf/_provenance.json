@@ -1,0 +1,17 @@
+{
+  "source_id": "D09",
+  "title": "LHF / CBPF project summary (Lebanon fund 71)",
+  "publisher": "OCHA CBPF / HDX",
+  "license": "CC BY",
+  "retrieved": "2026-11-21",
+  "files": [
+    {
+      "file": "global_cbpf_project_summary.csv",
+      "url": "https://data.humdata.org/dataset/0a2bae2a-9c09-4aa8-bdf5-f66e71512cb1/resource/4f8eee3c-cea7-453d-8f46-7525f3e289d1/download/global_cbpf_project_summary.csv",
+      "bytes": 11339731,
+      "sha256": "181fd0217bf6714768d6fae73c9f3b5e57b170a30122669fb17f04120baabb82"
+    }
+  ],
+  "hdx_last_modified": "2026-11-21T08:27:02.069512",
+  "hdx_page": "https://data.humdata.org/dataset/cbpf-allocations-and-contributions"
+}
