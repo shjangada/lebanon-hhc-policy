@@ -94,11 +94,13 @@ k[2].metric("2030 held by Lebanese organisations", f"{p30.get('lebanese_held_sha
 tab = theme_kpi.kpi_table(scenarios=[scn], scored=C.scored_cached(None, 30, 0.1, C.VER))
 obs = lhf.rename(columns={"national_ngo_share": "value"}).assign(series="Observed: LHF share to national NGOs (real)", kind="observed")[["year", "value", "series", "kind"]] if lhf is not None else pd.DataFrame(columns=["year", "value", "series", "kind"])
 proj = tab.rename(columns={"local_control_share": "value"}).assign(series="Projection: local control of the escrow window (assumption, mock capacity inputs)", kind="projection")[["year", "value", "series", "kind"]]
-allp = pd.concat([obs, proj], ignore_index=True)
+bq = theme_kpi.beqaa_proxy_series()
+bqp = bq.rename(columns={"national_ngo_share": "value"}).assign(series="Proxy: Beqaa-titled LHF health projects, share to national NGOs", kind="observed")[["year", "value", "series", "kind"]] if bq is not None else pd.DataFrame(columns=["year", "value", "series", "kind"])
+allp = pd.concat([obs, bqp, proj], ignore_index=True)
 line = alt.Chart(allp).mark_line(point=True).encode(x=alt.X("year:O", title=None), y=alt.Y("value:Q", scale=alt.Scale(domain=[0, 1]), title="share"), color=alt.Color("series:N", title=None, legend=alt.Legend(orient="bottom")),
                                                       strokeDash=alt.StrokeDash("kind:N", legend=None, scale=alt.Scale(domain=["observed", "projection"], range=[[1, 0], [5, 4]])))
 st.altair_chart(C.wm(line, 760, 300), use_container_width=False)
-st.caption("The two series have different scopes and are not one continuous line: observed = one real pooled fund, nationwide; projection = the proposed escrow window, weighted by the rung that holds the money (INGO 0, national NGO 1/3, union of municipalities 2/3, MoPH 1). Page 3 shows the mechanism.")
+st.caption("Proxy line: LHF health projects whose title names Bekaa or Baalbek-Hermel, full budgets, so projects that do not name it are missed (no governorate-level funding data is public). The series have different scopes and are not one continuous line: observed = one real pooled fund, nationwide; projection = the proposed escrow window, weighted by the rung that holds the money (INGO 0, national NGO 1/3, union of municipalities 2/3, MoPH 1). Page 3 shows the mechanism.")
 
 st.subheader("Why a mechanism: pledges without one fail")
 st.markdown(
