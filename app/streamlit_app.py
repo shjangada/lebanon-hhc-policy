@@ -96,18 +96,18 @@ h3{margin-top:0;padding-top:0}
 .takeaway{font-size:1.02rem;margin:-.2rem 0 .6rem 0}
 </style>""", unsafe_allow_html=True)
 
-NAV = [("s1", "1 Priority & access"), ("s2", "2 Options & budget"), ("s3", "3 Allocation & escrow"), ("s4", "4 Soil & water triggers"), ("s5", "5 Funding sources"), ("ref", "Evidence & data")]
+NAV = [("s1", "1 Priority"), ("s2", "2 Options"), ("s3", "3 Allocation"), ("s4", "4 Exposure"), ("s5", "5 Funding"), ("ref", "Evidence")]
 NAV_HTML = "<div class='nav'>" + "".join(f"<a href='#{i}'>{t}</a>" for i, t in NAV) + "</div>"
 st.sidebar.markdown("**Jump to**")
 st.sidebar.markdown(NAV_HTML.replace("<div class='nav'>", "<div class='nav' style='line-height:2'>"), unsafe_allow_html=True)
 
 
 PURPOSE = {
-    "s1": "Shows which cadasters need care most and whose access is most constrained, so money is aimed at the right places and groups.",
-    "s2": "Compares what each intervention would achieve for a given budget, with its cost, who it might exclude and other side effects.",
-    "s3": "Tests who should decide how funds are spent (community, top-down, per capita) and how control shifts from foreign NGOs to Lebanese bodies as capacity is measured.",
-    "s4": "Turns soil and water findings into protective actions, and shows what evidence would change the response.",
-    "s5": "Lists the funders and partners that could pay for this, with their source and whether the money can go through local organisations.",
+    "s1": "Ranks cadasters by need, so money is aimed at the places and groups that need care most. Includes access by group and how robust the ranking is.",
+    "s2": "Compares what each intervention would achieve for a given budget: reach, cost, who it might exclude, and other side effects.",
+    "s3": "Tests who should decide how funds are spent (community, top-down, per capita) and who administers them as measured capacity grows (escrow).",
+    "s4": "Screens soil and water findings for plausible health exposure and sets the protective action each tier triggers.",
+    "s5": "Lists the funders that could pay for this, with source, recency and whether the money can go through local organisations; includes the funding assistant.",
 }
 
 
@@ -150,7 +150,7 @@ top = scored.merge(rob[["cadaster_id", "p_top_tier", "rank_p05", "rank_p95"]], o
 stable = rob[rob.p_top_tier >= 0.9].cadaster_name.tolist()
 
 # ---------------- 1. Where ----------------
-with section("s1", "1 · Priority & access",
+with section("s1", "1 · Priority",
              f"Highest need: <b>{top.cadaster_name.iloc[0]}</b>, {top.cadaster_name.iloc[1]}, {top.cadaster_name.iloc[2]}. "
              f"{('Stable across weightings: ' + ', '.join(stable)) if stable else 'Ranking is sensitive to the weights.'}"):
     left, right = st.columns([3, 2])
@@ -224,7 +224,7 @@ tier_name = budget_label if budget_label != "Custom" else f"${budget:,.0f}"
 pick = st.session_state.get("pick", ["transport_vouchers", "chw_women_orgs"])
 ev = m5_options.evaluate(pick, budget) if pick else None
 best = ev.sort_values("extra_pathways_median", ascending=False).iloc[0] if ev is not None and len(ev) else None
-with section("s2", "2 · Options & budget",
+with section("s2", "2 · Options",
              (f"Best of your picks: <b>{best.label}</b>, about {best.extra_pathways_median:,.0f} extra completed care pathways "
               f"(range {best.extra_pathways_p05:,.0f}–{best.extra_pathways_p95:,.0f})." if best is not None else "Pick interventions to compare.")):
     feas = m5_options.feasibility_table().set_index("intervention_id")
@@ -262,7 +262,7 @@ esc_on = st.session_state.get("esc", False)
 sched, esum, warns = escrow.run(scored, max(budget, 10_000), top_k, floor, rules=rules, unrestricted=unres, escalation_year=2028 if esc_on else None)
 sm = summ.set_index("regime")
 held = esum.held_usd.sum() / max(esum.held_usd.sum() + esum.released_usd.sum(), 1)
-with section("s3", "3 · Allocation & escrow",
+with section("s3", "3 · Allocation",
              f"Pilot test arms, not results: with these assumptions the community arm reaches <b>{sm.loc['community', 'women_reached'] / sm.loc['top_down', 'women_reached']:.0%}</b> of the women top-down does. "
              f"Escrow holds back <b>{held:.0%}</b> of funds; <b>{esum.share_lebanese_managed.iloc[-1]:.0%}</b> is administered by Lebanese organisations by {int(esum.year.max())}."):
     l, r = st.columns(2)
@@ -303,7 +303,7 @@ with section("s3", "3 · Allocation & escrow",
 sites = sites_df(VER)
 tor = m4_exposure.tornado()
 n_t2 = int((sites.tier >= 2).sum())
-with section("s4", "4 · Soil & water triggers",
+with section("s4", "4 · Exposure",
              f"{n_t2} of {len(sites)} soil results reach tier 2 (plausible exposure pathway, rung b); none is confirmed harm (rung c). "
              f"Biggest uncertainty: <b>{tor.iloc[0].driver.split(' (')[0].lower()}</b>."):
     e1, e2 = st.columns(2)
@@ -323,40 +323,42 @@ with section("s4", "4 · Soil & water triggers",
 # ---------------- 5. Funders ----------------
 f = funding(VER)
 res = ff.rank(ff.filter_funding(f, None, False, True), ["health", "maternal"]).head(5)
-with section("s5", "5 · Funding sources",
+with section("s5", "5 · Funding",
              f"{len(res)} active or recent funds match health and maternal care; top match: <b>{res.name.iloc[0]}</b> ({res.channel.iloc[0]})." if len(res) else "No active match."):
     st.dataframe(pretty(res[["name", "funder", "channel", "recency_flag", "fits_escrow", "url", "verified_on"]], name="Fund", funder="Funder", channel="Channel",
                         recency_flag="Status", fits_escrow="Fits escrow?", url="Source", verified_on="Verified"),
                  hide_index=True, width="stretch", column_config={"Source": st.column_config.LinkColumn("Source", display_text="open")})
     st.caption("From data/registry/funding_registry.csv. 'Fits escrow' = can be pooled and open to local organisations.")
 
-# ---------------- Reference ----------------
+    st.markdown("**Ask the funding assistant**")
+    _client = chat_llm.get_client()
+    st.caption(("LLM assistant (" + chat_llm.MODEL + ") loops through the funding, organisation and source registries; every claim cites a registry id and URL. "
+                "It never uses outside knowledge for grants.") if _client else
+               "No ANTHROPIC_API_KEY found (set it in .env): showing retrieval-only answers from the registries.")
+    if "chat_hist" not in st.session_state:
+        st.session_state.chat_hist = []
+    for m_ in st.session_state.chat_hist:
+        with st.chat_message(m_["role"]):
+            st.markdown(m_["content"])
+    if q_ := st.chat_input("e.g. Which funders could let local communities decide how maternal-health money is spent?"):
+        st.session_state.chat_hist.append({"role": "user", "content": q_})
+        with st.chat_message("user"):
+            st.markdown(q_)
+        with st.chat_message("assistant"):
+            with st.spinner("Searching the registries…"):
+                ctx = f"budget tier {budget_label}; priority cadasters: {', '.join(top.cadaster_name.head(3))}; theme: community-decided, locally administered funding"
+                r_ = chat_llm.ask(q_, history=st.session_state.chat_hist[:-1], client=_client, context=ctx)
+            st.markdown(r_["answer"])
+            st.caption(f"Mode: {r_['mode']}" + (f" · cited: {', '.join(r_['citations'])}" if r_["citations"] else ""))
+            if r_["trace"]:
+                with st.expander("Registry lookups"):
+                    st.json(r_["trace"])
+        st.session_state.chat_hist.append({"role": "assistant", "content": r_["answer"]})
+
+
+# ---------------- Evidence ----------------
 st.markdown("<a id='ref'></a>", unsafe_allow_html=True)
-st.subheader("Evidence, assumptions and data")
-st.markdown("**Ask the funding assistant**")
-_client = chat_llm.get_client()
-st.caption(("LLM assistant (" + chat_llm.MODEL + ") loops through the funding, organisation and source registries; every claim cites a registry id and URL. "
-            "It never uses outside knowledge for grants.") if _client else
-           "No ANTHROPIC_API_KEY found (set it in .env): showing retrieval-only answers from the registries.")
-if "chat_hist" not in st.session_state:
-    st.session_state.chat_hist = []
-for m_ in st.session_state.chat_hist:
-    with st.chat_message(m_["role"]):
-        st.markdown(m_["content"])
-if q_ := st.chat_input("e.g. Which funders could let local communities decide how maternal-health money is spent?"):
-    st.session_state.chat_hist.append({"role": "user", "content": q_})
-    with st.chat_message("user"):
-        st.markdown(q_)
-    with st.chat_message("assistant"):
-        with st.spinner("Searching the registries…"):
-            ctx = f"budget tier {budget_label}; priority cadasters: {', '.join(top.cadaster_name.head(3))}; theme: community-decided, locally administered funding"
-            r_ = chat_llm.ask(q_, history=st.session_state.chat_hist[:-1], client=_client, context=ctx)
-        st.markdown(r_["answer"])
-        st.caption(f"Mode: {r_['mode']}" + (f" · cited: {', '.join(r_['citations'])}" if r_["citations"] else ""))
-        if r_["trace"]:
-            with st.expander("Registry lookups"):
-                st.json(r_["trace"])
-    st.session_state.chat_hist.append({"role": "assistant", "content": r_["answer"]})
+st.subheader("Evidence")
 
 with st.expander("Assumptions log"):
     asm = assumptions.build()
