@@ -161,3 +161,17 @@ def test_haus_2024_appendix_transcription():
     cb = pd.read_csv(PROC / "cascade_baseline_long.csv")
     h = cb[cb.source_citation.astype(str).str.contains("HAUS")]
     assert set(h.step) == {"p_any_anc", "p_anc4", "p_facility_delivery", "p_postnatal"} and h.loc[h.step == "p_facility_delivery", "transcription_checked"].eq(False).all()
+
+
+def test_beqaa_funding_proxy_is_labelled_and_matches_the_pack():
+    from beqaa import theme_kpi
+    b = theme_kpi.beqaa_proxy_series()
+    if b is None:
+        pytest.skip("beqaa funding not ingested")
+    s = b.set_index("year").national_ngo_share
+    assert abs(s[2025] - 199993.11 / (3582700.14 + 199993.11)) < 1e-6 and s[2024] == 0 and s[2026] == 0     # pack: Embrace $0.20M in 2025 only
+    f = pd.read_csv(PROC / "beqaa_funding_proxy.csv")
+    assert f.status.eq("partial").all() and (~f.is_mock.astype(bool)).all()
+    reg = pd.read_csv(io.ROOT / "data" / "registry" / "org_registry.csv")
+    added = reg[reg.org_id > "O008"]
+    assert (added.women_led == "to_verify").all() and (added.status == "to_verify").all()        # women_led is unknown for all partners: never guessed

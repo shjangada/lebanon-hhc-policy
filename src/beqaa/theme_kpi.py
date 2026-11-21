@@ -31,6 +31,16 @@ def observed_series(processed_dir=None) -> pd.DataFrame | None:
     return d[["year", "national_ngo_share", "total_usd"]]
 
 
+def beqaa_proxy_series(processed_dir=None) -> pd.DataFrame | None:
+    """National-NGO share of LHF health project budgets whose TITLE names a Bekaa / Baalbek-Hermel place (PROXY: full budgets, title keywords only, projects not naming
+    Beqaa are missed; no 4W by governorate exists publicly). None if the file is absent."""
+    f = (processed_dir or PROCESSED) / "beqaa_lhf_national_ngo_share_by_year.csv"
+    if not f.exists():
+        return None
+    d = pd.read_csv(f)
+    return d[d.scope == "beqaa_titled_proxy"][["year", "national_ngo_share", "total_usd"]]
+
+
 def _escrow_path(scenario: str, scored: pd.DataFrame | None = None):
     if scored is None:
         scored = m2.compute(m2.raw_indicators())

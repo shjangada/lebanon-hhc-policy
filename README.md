@@ -67,6 +67,8 @@ The app and pipeline load `data/processed/` (real, from `make ingest`) first and
 | governance_capacity | 🔴 mock | national anchors only (WGI 29.9/100, state health share 13.4%) | district series is mock: the UN-Habitat assessment publishes national aggregates only |
 | funding_flows | ✅ real | OCHA FTS funding by year, cluster, recipient type | FTS cannot split national from international NGOs (LHF file does) |
 | funding_requirements | ✅ real | OCHA FTS requirements and % funded (Flash Appeal 2026: 54%; Health cluster 60%) | nothing |
+| beqaa_funding_proxy | 🟡 partly real | LHF health projects whose title names Bekaa or Baalbek-Hermel, by recipient type, 2024-26 (title keyword proxy; about 0-5% to national NGOs) | projects not naming Beqaa are missed; full budgets; no public 4W by governorate; the Beqaa theme KPI is therefore a proxy |
+| beqaa_health_partners | 🟡 partly real | 49 organisations: 39 operate the MoPH-network PHCCs (MoPH list 16/04/2026, all Lebanese) plus INGOs/NNGOs/UN | `women_led` unknown for all (to verify on each organisation's own site); PHCC list may miss rows |
 
 **Registries (real, with source URLs and verified dates):** `funding_registry.csv` (22 funds), `org_registry.csv`, `sources.csv` (55+ sources), `state_capacity_sources.csv`, `workforce_sources.csv`. Rows marked `to_verify` are not yet checked against the primary source.
 
