@@ -38,7 +38,10 @@ def _load_env():
         for line in f.read_text().splitlines():
             if "=" in line and not line.lstrip().startswith("#"):
                 k, v = line.split("=", 1)
-                os.environ.setdefault(k.strip(), v.strip().strip('"'))
+                k, v = k.strip().removeprefix("export ").strip(), v.strip()
+                if len(v) >= 2 and v[0] == v[-1] and v[0] in "\"'":        # strip one matching pair of quotes only (a password may contain quote characters)
+                    v = v[1:-1]
+                os.environ[k] = v                                          # .env wins over a stale value left in the shell
 
 
 def get_token() -> str:
