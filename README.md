@@ -33,7 +33,7 @@ The Makefile uses `.venv/bin/python` (override with `make PY=python3 ...`).
 | **Escrow & funding switch** (`escrow.py`): need floor + capacity tranche, editable thresholds, administrator ladder INGO → national NGO → Union of Municipalities (MoPH co-governs, not assumed to administer by 2030; renewed-escalation scenario), lock-out and gaming warnings, restricted vs unrestricted | Q3, Q5 | M2 scores, governance_capacity and staffing_referrals (mock **scenario inputs**: no public source, the pilot would measure them) | Runs on mock; thresholds are assumptions |
 | **Funding finder + registry chat** (`funding_finder.py`, `chat.py`): rank registry rows, recency and "fits escrow?" flags; grounded retrieval that refuses when nothing matches | Q3 | `data/registry/*.csv` (8 funding rows, 7 org rows to verify) | Registry rows from team research 2026-11-21; re-check before use |
 
-Dashboard: one scrolling page with five sections (1 Funding today · 2 Priority areas · 3 Control of the money · 4 Resilience · 5 Funding sources) and a jump-link bar, plus a separate Methods page (the detailed model views). Interventions carry a feasibility filter (F1–F8) from `docs/FEASIBILITY.md`. Every mock file is listed in `data/registry/mock_provenance.csv` with the real source it stands in for and how obtainable it is (a test enforces this).
+Dashboard: one scrolling page with six sections (0 Why Beqaa · 1 Funding today · 2 Priority areas · 3 Control of the money · 4 Resilience · 5 Funding sources) and a jump-link bar, plus a separate Methods page (the detailed model views). Interventions carry a feasibility filter (F1–F8) from `docs/FEASIBILITY.md`. Every mock file is listed in `data/registry/mock_provenance.csv` with the real source it stands in for and how obtainable it is (a test enforces this).
 
 Not built yet: M3 network simulation, Workforce & network page, Pilot design page (stepped-wedge, PDIA log), case-study cards, notebook appendix, LLM layer for the registry chat.
 
@@ -67,6 +67,8 @@ The app and pipeline load `data/processed/` (real, from `make ingest`) first and
 | governance_capacity | 🔴 mock | national anchors only (WGI 29.9/100, state health share 13.4%) | district series is mock: the UN-Habitat assessment publishes national aggregates only |
 | funding_flows | ✅ real | OCHA FTS funding by year, cluster, recipient type | FTS cannot split national from international NGOs (LHF file does) |
 | funding_requirements | ✅ real | OCHA FTS requirements and % funded (Flash Appeal 2026: 54%; Health cluster 60%) | nothing |
+| agesex_by_district | 🟡 partly real | WorldPop 2025 age/sex 1 km, summed by district: population pyramids and demand shares (Why Beqaa) | modelled, not a census; not scaled to the LRP 2026 totals |
+| damage_published | 🟡 to verify | 41 published damage figures (UN-Habitat BDDQA 2025, World Bank RDNA 2025, CNRS-L via Annahar 2026, IMPACT HSM) | extracted automatically: `to_verify_pdf`; governorate/district totals only; no 2026 Bekaa building-level data exists |
 | beqaa_funding_proxy | 🟡 partly real | LHF health projects whose title names Bekaa or Baalbek-Hermel, by recipient type, 2024-26 (title keyword proxy; about 0-5% to national NGOs) | projects not naming Beqaa are missed; full budgets; no public 4W by governorate; the Beqaa theme KPI is therefore a proxy |
 | beqaa_health_partners | 🟡 partly real | 49 organisations: 39 operate the MoPH-network PHCCs (MoPH list 16/04/2026, all Lebanese) plus INGOs/NNGOs/UN | `women_led` unknown for all (to verify on each organisation's own site); PHCC list may miss rows |
 
