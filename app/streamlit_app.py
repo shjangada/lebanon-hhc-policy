@@ -87,11 +87,22 @@ st.sidebar.markdown("**Jump to**")
 st.sidebar.markdown(NAV_HTML.replace("<div class='nav'>", "<div class='nav' style='line-height:2'>"), unsafe_allow_html=True)
 
 
+PURPOSE = {
+    "s1": "Shows which cadasters need care most and whose access is most constrained, so money is aimed at the right places and groups.",
+    "s2": "Compares what each intervention would achieve for a given budget, with its cost, who it might exclude and other side effects.",
+    "s3": "Tests who should decide how funds are spent (community, top-down, per capita) and how control shifts from foreign NGOs to Lebanese bodies as capacity is measured.",
+    "s4": "Turns soil and water findings into protective actions, and shows what evidence would change the response.",
+    "s5": "Lists the funders and partners that could pay for this, with their source and whether the money can go through local organisations.",
+}
+
+
 def section(anchor, title, takeaway):
-    """Bordered card: anchor, title, one-line takeaway. Use as `with section(...):`."""
+    """Bordered card: anchor, title, purpose line, one-line takeaway. Use as `with section(...):`."""
     st.markdown(f"<a id='{anchor}'></a>", unsafe_allow_html=True)
     box = st.container(border=True)
     box.subheader(title)
+    if anchor in PURPOSE:
+        box.caption(PURPOSE[anchor])
     box.markdown(f"<div class='takeaway'>{takeaway}</div>", unsafe_allow_html=True)
     return box
 
