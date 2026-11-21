@@ -18,6 +18,8 @@
 
 ---
 
+> **Update (data ingest):** population, conflict incidents, IPC, funding flows, official severity, soil (5 villages) and crop transfer factors are now real or partly real; costs, cascade rates, staffing, governance capacity and water quality are still mock or assumed. Which conclusions changed: `docs/MOCK_VS_REAL.md`.
+
 ## 1. The constraint baseline (hard facts)
 
 | Constraint | Fact (date) | Source | Design rule it forces |

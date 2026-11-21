@@ -61,7 +61,7 @@ def funding(ver):
 st.sidebar.title("Beqaa health priorities")
 color = {"MOCK": "#c0392b", "PARTIAL": "#d68910", "REAL": "#1e8449"}[MODE]
 st.sidebar.markdown(f"<div style='background:{color};color:white;padding:8px;border-radius:6px;text-align:center'>"
-                    f"<b>DATA MODE: {MODE}</b>{' — synthetic cadasters, placeholder costs' if IS_MOCK else ''}</div>", unsafe_allow_html=True)
+                    f"<b>DATA MODE: {MODE}</b>{' — real places and population, some inputs still mock' if MODE == 'PARTIAL' else (' — synthetic cadasters, placeholder costs' if IS_MOCK else '')}</div>", unsafe_allow_html=True)
 st.sidebar.markdown("**Scenario**")
 budget_label = st.sidebar.selectbox("Budget tier", list(m5_options.BUDGET_TIERS) + ["Custom"], 1)
 budget = st.sidebar.number_input("Custom budget (USD)", 100, 10_000_000, 50_000, 1000) if budget_label == "Custom" else m5_options.BUDGET_TIERS[budget_label]
@@ -146,8 +146,14 @@ def pretty(df, **rename):
 st.title("Where should Beqaa primary-care money go first, and who should run it?")
 st.caption("Adaptive funding switch: money follows measured need; control moves from foreign NGOs to Lebanese entities (national NGOs, Unions of Municipalities, with MoPH co-governing) as measured capacity improves. "
            "Traditional: funds follow appeals and agency footprint, referrals untracked, unregistered workers invisible.")
-if IS_MOCK:
+_ds = io.data_status()
+if MODE == "MOCK":
     st.error("MOCK DATA: synthetic cadasters and placeholder costs. Do not cite these numbers.", icon="⚠️")
+elif IS_MOCK:
+    _mock = ", ".join(_ds[_ds.status.str.contains("mock")].dataset)
+    _part = ", ".join(_ds[_ds.status.str.contains("partly")].dataset)
+    st.warning(f"PARTLY REAL DATA. Mock inputs (charts carry a watermark): {_mock or 'none'}. Partly real (assumed or missing fields): {_part or 'none'}. Do not cite model outputs as findings yet.", icon="⚠️")
+st.caption("Data badges: " + " · ".join(f"{r.dataset} {r.status.split(' ')[0]}" for r in _ds.itertuples()))
 st.markdown(NAV_HTML, unsafe_allow_html=True)
 
 gg = ga.set_index("group")
@@ -602,5 +608,10 @@ with st.expander("Assumptions log"):
     asm = assumptions.build()
     st.dataframe(asm, hide_index=True, width="stretch")
     st.download_button("Download assumptions CSV", asm.to_csv(index=False), "tab_assumptions.csv")
+with st.expander("Data gaps: what is still mock and how it would be obtained"):
+    mp = pd.read_csv(io.ROOT / "data" / "registry" / "mock_provenance.csv")
+    st.dataframe(mp.merge(_ds.assign(mock_file=_ds.dataset + ".csv")[["mock_file", "status"]], on="mock_file", how="left")[["mock_file", "status", "obtainability", "real_source", "how_to_get_it"]],
+                 hide_index=True, width="stretch")
+    st.caption("Datasets marked 'pilot_measured' or 'partner_request' have no public source: they stay scenario inputs and are flagged as assumptions.")
 with st.expander("Data status and context"):
     st.dataframe(pd.concat([io.data_status(), io.reference_status()]), hide_index=True, width="stretch")

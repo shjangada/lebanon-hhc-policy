@@ -143,7 +143,7 @@ def compute(raw: pd.DataFrame, weights: dict | None = None, spec: dict | None = 
         for ind in spec["domains"][d]:
             if exclude_indicators and ind["name"] in exclude_indicators:
                 continue
-            if ind["name"] not in raw.columns:         # stale cached/old data lacking a newer indicator: skip it visibly instead of crashing
+            if ind["name"] not in raw.columns or raw[ind["name"]].isna().all():     # missing (stale data, or a column still waiting for its source): skip visibly
                 skipped.append(ind["name"])
                 continue
             col = f"s_{ind['name']}"
