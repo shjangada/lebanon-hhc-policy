@@ -62,9 +62,11 @@ def badges(datasets: list[str]) -> str:
     return " · ".join(f"{d} {BADGE[io.dataset_badge(d)].split(' ')[0]}" for d in datasets)
 
 
-def header(question: str, sentence: narrative.Sentence | str, datasets: list[str]) -> None:
-    """Question as the title, one plain-language answer built from current outputs, and the real / partly real / mock badge of every dataset the page uses."""
-    st.title(question)
+def header(title: str, sentence: narrative.Sentence | str, datasets: list[str], purpose: str = "") -> None:
+    """Short title, what the page is for, one plain-language answer built from current outputs, and the real / partly real / mock badge of every dataset the page uses."""
+    st.title(title)
+    if purpose:
+        st.caption(purpose)
     if isinstance(sentence, str):
         st.markdown(f"**{sentence}**")
     else:

@@ -70,7 +70,7 @@ def test_pages_run_headless_and_show_question_badges_and_answer(page, auto):
     if page != "6_Methods":
         txt = " ".join(c.value for c in at.caption)
         assert "Data on this page" in txt and "✅" in txt or "🟡" in txt or "🔴" in txt
-        assert len(at.title) == 1 and at.title[0].value.endswith("?")
+        assert len(at.title) == 1 and not at.title[0].value.endswith("?")                       # short descriptive titles, not questions
         assert any(m.value.strip() for m in at.markdown)                            # the one-line answer
 
 
@@ -78,4 +78,4 @@ def test_pages_run_headless_and_show_question_badges_and_answer(page, auto):
 def test_main_entry_opens_on_page_one(auto):
     from streamlit.testing.v1 import AppTest
     at = AppTest.from_file(str(ROOT / "app" / "streamlit_app.py"), default_timeout=300).run()
-    assert not at.exception and at.title[0].value == "Where does the money go now, and who controls it?"
+    assert not at.exception and at.title[0].value == "Funding today"

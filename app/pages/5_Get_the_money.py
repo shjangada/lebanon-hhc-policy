@@ -25,7 +25,7 @@ if women:
 pooled = res[res.can_pool]
 direct = res[res.channel.isin(ff.DIRECT_LOCAL_CHANNELS) & ~res.can_pool]
 sent = narrative.page5(len(pooled), len(direct), int(res[(res.name.fillna("") + res.sectors.fillna("") + res.notes.fillna("")).str.lower().str.contains("women|feminist")].shape[0]))
-C.header("Where can we get the money?", sent, ["funding_flows"])
+C.header("Funding sources", sent, ["funding_flows"], purpose="Real funds and partners that could pay for this, split by whether they can be pooled or go straight to local groups.")
 st.caption("Only rows of data/registry/funding_registry.csv (never invented), each with its source URL and verified date. Closed rows are hidden by default. "
            + ("Women lens ON: only funds open to women-led organisations." if women else "Turn on the women lens in the sidebar to filter to women-led-eligible funds."))
 cols = ["name", "funder", "channel", "availability", "involvement_level", "fits_escrow", "url", "verified_on"]

@@ -20,8 +20,8 @@ n = st.session_state.get("p4_n", 300)
 RB = run(n, C.VER)
 rk, pol = RB["rank"], RB["regret"]
 core = rk["core"]
-C.header("Does the money keep reaching people when things go wrong?", narrative.page4(len(core), rk["top_k"], rk["threshold"], pol["minimax_policy"]),
-         ["cadasters", "population", "facilities", "travel_time", "conflict_exposure", "governance_capacity", "interventions"])
+C.header("Resilience", narrative.page4(len(core), rk["top_k"], rk["threshold"], pol["minimax_policy"]),
+         ["cadasters", "population", "facilities", "travel_time", "conflict_exposure", "governance_capacity", "interventions"], purpose="Which recommendations survive uncertain assumptions and six stress scenarios; only the robust core is recommended.")
 st.caption("Scenarios: S1 renewed escalation, S2 funding −30/−50/−70%, S3 power collapse, S4 staff loss, S5 capacity stall, S6 worst-case Cr(VI). Parameter ranges and their sources: data/params/uncertainty.yaml. "
            "Scenario effects, costs and community priorities are assumptions or mock; the method is what carries over to real data.")
 
@@ -35,6 +35,14 @@ cols = [c for c in pc.columns if c.startswith("p_top_") and c != "p_top_overall"
 st.dataframe(pc[["cadaster_name", "p_top_overall"] + cols + ["rank_p05", "rank_p95", "core"]].rename(columns={c: c.replace("p_top_", "") for c in cols}).round(2).rename(
     columns={"cadaster_name": "Cadaster", "p_top_overall": "overall", "rank_p05": "rank 5%", "rank_p95": "rank 95%", "core": "recommended (core)"}), hide_index=True, width="stretch")
 st.caption("Share of random draws in which each cadaster is in the top-k. Cadasters outside the core are not recommended, however high they rank in the baseline.")
+
+hm = pc.melt("cadaster_name", [c for c in pc.columns if c.startswith("p_top_") and c != "p_top_overall"], "scenario", "p")
+hm["scenario"] = hm.scenario.str.replace("p_top_", "").str.replace("_", " ")
+heat = alt.Chart(hm).mark_rect().encode(x=alt.X("scenario:N", title=None, axis=alt.Axis(labelAngle=-35)), y=alt.Y("cadaster_name:N", title=None, sort=pc.cadaster_name.tolist()),
+                                        color=alt.Color("p:Q", title="P(top-k)", scale=alt.Scale(domain=[0, 1], scheme="redyellowgreen")), tooltip=["cadaster_name", "scenario", alt.Tooltip("p:Q", format=".2f")])
+txt = alt.Chart(hm).mark_text(fontSize=10).encode(x="scenario:N", y=alt.Y("cadaster_name:N", sort=pc.cadaster_name.tolist()), text=alt.Text("p:Q", format=".1f"))
+st.altair_chart(C.wm(heat + txt, 560, 360), use_container_width=False)
+st.caption("Each cell: share of random draws in which the cadaster is in the top-k under that scenario. A cadaster is recommended only if every cell is high.")
 
 st.subheader("What each scenario does to the money and the target set")
 mp = {"baseline": ("baseline", "baseline"), "S1_escalation": ("S1_escalation", "S1_escalation"), "S2_funding_shock": ("S2_funding_shock", "S2_funding_shock"),
@@ -70,6 +78,11 @@ st.subheader("Which allocation policy: regret across scenarios")
 st.dataframe(C.pretty(pol["summary"][["policy", "mean_value", "mean_regret", "max_regret", "minimax_rank"]].round(0), policy="Policy", mean_value="Mean pathways", mean_regret="Mean regret",
                       max_regret="Max regret", minimax_rank="Minimax rank"), hide_index=True, width="stretch")
 st.caption("Allocations are fixed in advance on baseline data and judged in every world; prefer the smallest maximum regret, not the best average. Policies: top-down (by need), per capita, community-decided, existing allocation (follows current capacity). Escrow is evaluated above as a mechanism, not as a spending policy.")
+
+rg = alt.Chart(pol["summary"]).mark_bar().encode(y=alt.Y("policy:N", sort="x", title=None), x=alt.X("max_regret:Q", title="maximum regret (pathways lost vs the best policy in that world)"),
+                                                  color=alt.condition(alt.datum.policy == pol["minimax_policy"], alt.value("#27ae60"), alt.value("#aab7b8")), tooltip=["policy", alt.Tooltip("max_regret:Q", format=".0f"), alt.Tooltip("mean_regret:Q", format=".0f")])
+st.altair_chart(C.wm(rg, 560, 200), use_container_width=False)
+st.caption("The green policy has the smallest worst-case regret. Mock costs and community priorities drive the gaps.")
 
 st.subheader("Breakpoints: where does the recommendation flip?")
 st.dataframe(C.pretty(RB["breakpoints"][["priorities", "assumption", "reading"]], priorities="Community priorities", assumption="Assumption", reading="Reading"), hide_index=True, width="stretch")
