@@ -102,6 +102,22 @@ line = alt.Chart(allp).mark_line(point=True).encode(x=alt.X("year:O", title=None
 st.altair_chart(C.wm(line, 760, 300), use_container_width=False)
 st.caption("Proxy line: LHF health projects whose title names Bekaa or Baalbek-Hermel, full budgets, so projects that do not name it are missed (no governorate-level funding data is public). The series have different scopes and are not one continuous line: observed = one real pooled fund, nationwide; projection = the proposed escrow window, weighted by the rung that holds the money (INGO 0, national NGO 1/3, union of municipalities 2/3, MoPH 1). Page 3 shows the mechanism.")
 
+st.subheader("Projects already funded in the Beqaa")
+prj = pd.read_csv(PROC / "projects.csv") if (PROC / "projects.csv").exists() else None
+if prj is None:
+    st.info("Data pending: run `make ingest` (projects inventory).")
+else:
+    st.warning(f"None of the {len(prj)} inventoried projects tests soil contamination or screens people for exposure: the money is already in the fields (water, irrigation, cooperatives, farmland), "
+               "and nothing connects it to health. Desk search of 2026-11-21; pages were read through a summarising tool and only 3 of the shortlisted pages could be opened, so this is a finding to confirm, not a proven absence.", icon="ℹ️")
+    sectors = prj.sector.str.split(";").explode().str.strip().value_counts().rename_axis("sector").reset_index(name="projects")
+    chs = alt.Chart(sectors).mark_bar(color="#2e86c1").encode(y=alt.Y("sector:N", sort="-x", title=None), x=alt.X("projects:Q", title="projects (a project can have several sectors)"), tooltip=["sector", "projects"])
+    st.altair_chart(C.wm(chs, 520, 220), use_container_width=False)
+    show = prj[prj.recency_ok.eq("yes") | prj.attachability_score.ge(2)].sort_values(["attachability_score", "recency_ok"], ascending=False)
+    st.dataframe(C.pretty(show[["project_id", "name", "funder", "implementer_type", "location_precision", "amount", "currency", "recency_ok", "attachability_score", "verified"]], project_id="ID", name="Project",
+                          funder="Funder", implementer_type="Implementer type", location_precision="Location precision", amount="Amount", currency="Cur.", recency_ok="Recent (6 mo)", attachability_score="Attachability 0-3",
+                          verified="Page verified"), hide_index=True, width="stretch")
+    st.caption("Source: data/raw/projects (inventory) with per-project verification in data/registry/projects_verification.csv. `verified` is `no` unless a person or agent opened the source page; discrepancies are recorded there.")
+
 st.subheader("Why a mechanism: pledges without one fail")
 st.markdown(
     f"- **Grand Bargain 2016:** 25% of humanitarian funding pledged 'as directly as possible' to local actors; **4.3%** went directly in 2025 ([ALNAP SOHS 2026 ch.4]({ALNAP})).\n"

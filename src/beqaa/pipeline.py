@@ -67,7 +67,8 @@ def run(verbose: bool = True) -> dict:
     rb["regret"]["summary"].to_csv(PROC / "robust_regret_summary.csv", index=False)
     rb["regret"]["by_scenario"].to_csv(PROC / "robust_regret_by_scenario.csv", index=False)
     rb["breakpoints"].to_csv(PROC / "robust_breakpoints.csv", index=False)
-    from . import breakeven
+    from . import breakeven, riders
+    riders.run()
     be = breakeven.run(rb["scored"])
     pd.concat([be["allocation"].assign(kind="allocation"), be["escrow"].assign(kind="escrow release")], ignore_index=True).to_csv(PROC / "breakeven.csv", index=False)
     rb["escrow"].to_csv(PROC / "robust_escrow_degradation.csv", index=False)
