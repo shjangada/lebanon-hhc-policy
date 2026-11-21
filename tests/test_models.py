@@ -10,7 +10,7 @@ def test_e2sfca_conservation():
     pop, _ = io.load_dataset("population"); fac, _ = io.load_dataset("facilities"); tt, _ = io.load_dataset("travel_time")
     for scen in ("baseline_pre2026", "current_2026"):
         a = m1_access.e2sfca(pop, fac, tt, 30, "women_15_49", "all", scen)
-        f = fac if scen == "baseline_pre2026" else fac[fac.status_2026 == "open"]
+        f = fac[fac["type"] != "mobile"] if scen == "baseline_pre2026" else m1_access.effective_facilities(fac)
         T = tt[tt.facility_id.isin(f.facility_id)].pivot(index="cadaster_id", columns="facility_id", values="minutes")
         has_demand = (T <= 30).any(axis=0)
         cap = f.set_index("facility_id").loc[has_demand[has_demand].index, "capacity_weekly"].sum()

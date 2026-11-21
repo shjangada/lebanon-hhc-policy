@@ -1,26 +1,28 @@
-facility_id,name,type,cadaster_id,lat,lon,capacity_weekly,status_2026,offers_anc,in_mophnetwork,power_source,is_mock,source,source_date,url,status
-MOCK-PHC-01,Mock PHC 1,PHC,MOCK-ZAH-07,33.847131429215715,35.91066722154058,836,damaged,False,False,generator,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-02,Mock PHC 2,PHC,MOCK-BAA-03,33.869191041916295,36.11948826256025,265,closed,False,False,grid_only,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-03,Mock PHC 3,PHC,MOCK-WES-04,33.59649538522545,35.7217971581782,752,open,True,True,generator,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-04,Mock PHC 4,PHC,MOCK-WES-06,33.56083441966457,35.81126494261674,806,open,False,False,grid_only,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-05,Mock PHC 5,PHC,MOCK-WES-05,33.61922354902475,35.84355846552557,361,open,True,True,solar,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-06,Mock PHC 6,PHC,MOCK-ZAH-05,33.90651142953089,35.93521749225147,226,open,False,True,solar,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-07,Mock PHC 7,PHC,MOCK-BAA-08,34.032594203382146,36.137335693155855,390,damaged,True,True,generator,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-08,Mock PHC 8,PHC,MOCK-ZAH-02,33.885925117319346,35.96522022621793,734,open,True,True,generator,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-09,Mock PHC 9,PHC,MOCK-RAC-04,33.4210914973549,35.773765124213725,337,open,False,True,grid_only,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-10,Mock PHC 10,PHC,MOCK-ZAH-05,33.91187350214164,35.917251385950834,462,open,True,False,generator,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-11,Mock PHC 11,PHC,MOCK-BAA-03,33.87241101489296,36.11852543827644,744,damaged,True,True,solar,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-12,Mock PHC 12,PHC,MOCK-WES-08,33.634160866789294,35.80260934526168,396,open,True,True,generator,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-13,Mock PHC 13,PHC,MOCK-WES-06,33.56871545815859,35.801125761767,282,closed,False,True,generator,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-14,Mock PHC 14,PHC,MOCK-WES-07,33.519733975212304,35.74162247093467,795,closed,True,False,grid_only,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-15,Mock PHC 15,PHC,MOCK-HER-07,34.39903959744347,36.40518046827102,869,damaged,True,True,generator,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-16,Mock PHC 16,PHC,MOCK-WES-07,33.51204069571421,35.71977282633559,736,open,True,False,generator,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-17,Mock PHC 17,PHC,MOCK-HER-04,34.46647009471551,36.382283120361066,155,open,True,True,generator,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-18,Mock PHC 18,PHC,MOCK-RAC-03,33.55561890285372,35.84468209681651,722,open,True,False,generator,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-19,Mock PHC 19,PHC,MOCK-WES-05,33.58767405600546,35.85445949048054,516,closed,True,True,grid_only,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-20,Mock PHC 20,PHC,MOCK-WES-05,33.61417471555989,35.842028780201375,653,damaged,False,False,solar,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-21,Mock PHC 21,PHC,MOCK-BAA-05,33.997514713197596,36.14729477467548,870,open,True,True,generator,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-PHC-22,Mock PHC 22,PHC,MOCK-ZAH-02,33.90177455547659,35.96030411771187,437,damaged,True,True,solar,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-HUB-1,Mock Baalbek hub,hospital_hub,,34.006,36.21,2000,open,True,True,,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-HUB-2,Mock Zahle hub,hospital_hub,,33.847,35.902,2000,open,True,True,,True,MOCK (synthetic),2026-11-21,,mock
-MOCK-HUB-3,Mock Hermel hub,hospital_hub,,34.39,36.38,2000,open,True,True,,True,MOCK (synthetic),2026-11-21,,mock
+facility_id,name,type,cadaster_id,lat,lon,capacity_weekly,status_2026,offers_anc,in_mophnetwork,power_source,hours_per_week,status_date,status_source,is_mock,source,source_date,url,status
+MOCK-PHC-01,Mock PHC 1,PHC,MOCK-ZAH-07,33.847131429215715,35.91066722154058,836,damaged,False,False,generator,,2026-09-07,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-02,Mock PHC 2,PHC,MOCK-BAA-03,33.869191041916295,36.11948826256025,265,closed,False,False,grid_only,,2026-09-27,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-03,Mock PHC 3,PHC,MOCK-WES-04,33.59649538522545,35.7217971581782,752,open,True,True,generator,,,,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-04,Mock PHC 4,PHC,MOCK-WES-06,33.56083441966457,35.81126494261674,806,partial,False,False,grid_only,,2026-10-18,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-05,Mock PHC 5,PHC,MOCK-WES-05,33.61922354902475,35.84355846552557,361,partial,True,True,solar,,2026-09-27,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-06,Mock PHC 6,PHC,MOCK-ZAH-05,33.90651142953089,35.93521749225147,226,open,False,True,solar,,2026-09-14,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-07,Mock PHC 7,PHC,MOCK-BAA-08,34.032594203382146,36.137335693155855,390,damaged,True,True,generator,,2026-09-09,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-08,Mock PHC 8,PHC,MOCK-ZAH-02,33.885925117319346,35.96522022621793,734,partial,True,True,generator,,2026-09-10,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-09,Mock PHC 9,PHC,MOCK-RAC-04,33.4210914973549,35.773765124213725,337,open,False,True,grid_only,,2026-09-04,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-10,Mock PHC 10,PHC,MOCK-ZAH-05,33.91187350214164,35.917251385950834,462,open,True,False,generator,,,,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-11,Mock PHC 11,PHC,MOCK-BAA-03,33.87241101489296,36.11852543827644,744,damaged,True,True,solar,,2026-09-16,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-12,Mock PHC 12,PHC,MOCK-WES-08,33.634160866789294,35.80260934526168,396,open,True,True,generator,,2026-10-04,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-13,Mock PHC 13,PHC,MOCK-WES-06,33.56871545815859,35.801125761767,282,closed,False,True,generator,,2026-09-21,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-14,Mock PHC 14,PHC,MOCK-WES-07,33.519733975212304,35.74162247093467,795,closed,True,False,grid_only,,2026-10-16,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-15,Mock PHC 15,PHC,MOCK-HER-07,34.39903959744347,36.40518046827102,869,damaged,True,True,generator,,,,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-16,Mock PHC 16,PHC,MOCK-WES-07,33.51204069571421,35.71977282633559,736,open,True,False,generator,,,,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-17,Mock PHC 17,PHC,MOCK-HER-04,34.46647009471551,36.382283120361066,155,open,True,True,generator,,2026-09-04,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-18,Mock PHC 18,PHC,MOCK-RAC-03,33.55561890285372,35.84468209681651,722,open,True,False,generator,,2026-09-09,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-19,Mock PHC 19,PHC,MOCK-WES-05,33.58767405600546,35.85445949048054,516,closed,True,True,grid_only,,2026-10-14,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-20,Mock PHC 20,PHC,MOCK-WES-05,33.61417471555989,35.842028780201375,653,damaged,False,False,solar,,2026-10-07,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-21,Mock PHC 21,PHC,MOCK-BAA-05,33.997514713197596,36.14729477467548,870,open,True,True,generator,,,,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-PHC-22,Mock PHC 22,PHC,MOCK-ZAH-02,33.90177455547659,35.96030411771187,437,damaged,True,True,solar,,2026-10-24,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HUB-1,Mock Baalbek hub,hospital_hub,,34.006,36.21,2000,open,True,True,,,2026-09-11,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HUB-2,Mock Zahle hub,hospital_hub,,33.847,35.902,2000,open,True,True,,,2026-09-22,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-HUB-3,Mock Hermel hub,hospital_hub,,34.39,36.38,2000,open,True,True,,,2026-10-28,MOCK Health Sector functionality update,True,MOCK (synthetic),2026-11-21,,mock
+MOCK-MMU-1,Mock mobile maternal unit 1,mobile,MOCK-BAA-04,34.00767,36.18103,300,open,True,False,generator,24.0,2026-11-01,MOCK Health Sector 4W (mobile unit routes),True,MOCK (synthetic),2026-11-21,,mock
+MOCK-MMU-2,Mock mobile maternal unit 2,mobile,MOCK-WES-04,33.59178,35.71167,300,open,True,False,generator,16.0,2026-11-01,MOCK Health Sector 4W (mobile unit routes),True,MOCK (synthetic),2026-11-21,,mock

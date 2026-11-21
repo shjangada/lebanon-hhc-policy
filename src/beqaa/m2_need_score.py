@@ -55,7 +55,7 @@ def raw_indicators(d0: float = 30, demand_col: str = "women_15_49", include_unre
     acc["access_deficit"] = 1 - (acc.access_current / ref).clip(0, 1)
     df = df.merge(acc[["cadaster_id", "access_baseline", "access_current", "access_lost", "access_deficit"]], on="cadaster_id")
     # open PHCs and ANC share within 30 min
-    op = fac[(fac.status_2026 == "open")]
+    op = m1_access.effective_facilities(fac)
     t = tt[tt.facility_id.isin(op.facility_id) & (tt.minutes <= 30)].merge(op[["facility_id", "type", "offers_anc"]], on="facility_id")
     phc = t[t.type == "PHC"].groupby("cadaster_id").size().rename("phc_30")
     anc = t.groupby("cadaster_id").offers_anc.mean().rename("anc_share_30min")
@@ -258,3 +258,11 @@ def method_sensitivity(raw: pd.DataFrame, spec: dict | None = None, top_k: int |
                      "top_k_retained": len(top & ref_top), "top_k": k, "top_k_jaccard": len(top & ref_top) / len(top | ref_top),
                      "max_rank_shift": int((s["rank"] - ref["rank"]).abs().max()), "is_mock": bool(raw.is_mock.all())})
     return pd.DataFrame(rows)
+
+
+def exposure_access_targets(scored: pd.DataFrame, env_min: float = 0.33, deficit_min: float = 0.5) -> pd.DataFrame:
+    """P1c: cadasters with HIGH environmental exposure (M4 tier-based environment domain) and LOW access (access deficit vs the pre-2026 median).
+    This set is the core target list for the memo. Both thresholds are assumptions (env 0.33 = 'Moderate' band; deficit 0.5 = half the pre-2026 access lost)."""
+    t = scored[(scored["D_environment"] >= env_min) & (scored["access_deficit"] >= deficit_min)].copy()
+    t["why"] = "environmental exposure tier >= moderate AND access deficit >= 50%: exposure findings are screening-level (rung a/b), access gap is modelled"
+    return t.sort_values(["access_deficit", "D_environment"], ascending=False)[["cadaster_id", "cadaster_name", "district", "D_environment", "access_deficit", "need_score", "why"]]

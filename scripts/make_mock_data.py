@@ -59,7 +59,24 @@ for k, (lat, lon, n) in enumerate([(34.006, 36.21, "Mock Baalbek hub"), (33.847,
     fac.append({"facility_id": f"MOCK-HUB-{k+1}", "name": n, "type": "hospital_hub", "cadaster_id": None,
                 "lat": lat, "lon": lon, "capacity_weekly": 2000, "status_2026": "open",
                 "offers_anc": True, "in_mophnetwork": True})
-fac = save(pd.DataFrame(fac), "facilities.csv")
+fac = pd.DataFrame(fac)
+# Dated functionality status (MOCK). Separate rng: adding these columns must not shift the draws of the datasets below.
+_r = np.random.default_rng(11)
+fac["hours_per_week"] = np.nan
+is_phc = fac.type == "PHC"
+fac.loc[is_phc & (fac.status_2026 == "open") & (_r.random(len(fac)) < 0.2), "status_2026"] = "partial"          # partially functional
+fac["status_date"] = [(pd.Timestamp("2026-11-01") - pd.Timedelta(days=int(d))).strftime("%Y-%m-%d") for d in _r.integers(0, 60, len(fac))]
+fac.loc[is_phc & (_r.random(len(fac)) < 0.15), "status_date"] = ""                                                # no dated source -> unknown (shown grey)
+fac["status_source"] = np.where(fac.status_date == "", "", "MOCK Health Sector functionality update")
+# Mobile medical units: part-time facilities, effective capacity = capacity x hours_per_week / 40
+mob = []
+for k, (idx, hrs) in enumerate([(3, 24), (27, 16)]):
+    c = cad.iloc[idx]
+    mob.append({"facility_id": f"MOCK-MMU-{k+1}", "name": f"Mock mobile maternal unit {k+1}", "type": "mobile", "cadaster_id": c.cadaster_id,
+                "lat": c.lat, "lon": c.lon, "capacity_weekly": 300, "status_2026": "open", "offers_anc": True, "in_mophnetwork": False,
+                "power_source": "generator", "hours_per_week": hrs, "status_date": "2026-11-01", "status_source": "MOCK Health Sector 4W (mobile unit routes)"})
+fac = pd.concat([fac, pd.DataFrame(mob)], ignore_index=True)
+fac = save(fac, "facilities.csv")
 
 
 def hav(a, b, c, d):
