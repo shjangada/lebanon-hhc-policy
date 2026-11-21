@@ -35,3 +35,12 @@ The PHC network list was read through web extraction (the PDF could not be downl
 
 ## ACLED outcome (2026-11-21)
 The OAuth token request now sends the documented `scope=authenticated` and still returns HTTP 403 (stopped, not retried in a loop). A browser call with the account's cookie session did return data, and its `data_query_restrictions` show `date_recency: 12 months` (events up to 2025-11-21 only, restricted countries/regions list empty). So this account tier gives **no 2026 events**: the planned "last 30/90/365 days" access flag cannot be built from it even if OAuth worked. Options: (a) keep the LRP incident counts (to Jul 2025) as the conflict layer; (b) ask ACLED for a research tier with current data; (c) use the HDX ACLED district-month file (district level, as of 18 Nov 2026) for a fallback. Do not commit ACLED data.
+
+## What replaced the mock datasets (2026-11-21)
+| Was mock | Now | Limit |
+|---|---|---|
+| water_quality | removed; water exposure = unknown (evidence gap). Published Beqaa studies (Darwish 2011; Fahes 2025) are context only | no cadaster-level water data |
+| staffing_referrals | removed; referral completion (0.5) and posts filled (0.8) are scenario parameters in `escrow.run` | break-even needed (docs/ASSUMPTIONS_PILOT.md, still to write) |
+| governance_capacity | WGI 29.9/100 and LHF national-NGO share applied to all five districts | districts identical until UN-Habitat RMA microdata |
+| cascade_baseline | HAUS 2024 reference cascade; other groups assumed equal | between-group gaps unobservable |
+Still labelled assumptions (not data): 5 intervention costs, effect ranges other than the CHW literature proxy, community priorities, local-fit and capture rates. Charts that depend on them carry an ASSUMED INPUTS mark.

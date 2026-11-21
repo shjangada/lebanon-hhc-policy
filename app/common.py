@@ -12,7 +12,8 @@ from beqaa import io, m1_access, m2_need_score as m2, narrative
 
 ROOT = io.ROOT
 MODE = io.overall_mode()
-IS_MOCK = MODE != "REAL"
+IS_MOCK = io.any_mock()          # watermark only while a dataset is entirely mock; labelled proxies/assumptions are shown as such on each chart
+SCENARIO_ON = False             # set by pages whose charts depend on assumed/scenario inputs (Resilience, allocation)
 BADGE = io.BADGES
 
 
@@ -26,12 +27,12 @@ def version() -> float:
 VER = version()
 
 
-def wm(chart, w=640, h=320):
+def wm(chart, w=640, h=320, scenario=False):
     """Red MOCK DATA watermark on a chart when any input is still mock."""
     chart = chart.properties(width=w, height=h)
-    if not IS_MOCK:
+    if not (IS_MOCK or scenario or SCENARIO_ON):
         return chart
-    t = alt.Chart(pd.DataFrame({"t": ["MOCK DATA"]})).mark_text(size=54, color="red", opacity=0.2, angle=335, fontWeight="bold").encode(text="t:N", x=alt.value(w / 2), y=alt.value(h / 2))
+    t = alt.Chart(pd.DataFrame({"t": ["MOCK DATA" if IS_MOCK else "ASSUMED INPUTS"]})).mark_text(size=54, color="red", opacity=0.2, angle=335, fontWeight="bold").encode(text="t:N", x=alt.value(w / 2), y=alt.value(h / 2))
     return chart + t
 
 
@@ -84,7 +85,9 @@ def header(title: str, sentence: narrative.Sentence | str, datasets: list[str], 
             st.table(pd.DataFrame([{"number": sentence.facts[k][0], "source": sentence.sources[k]} for k in sentence.facts]))
     st.caption("Data on this page: " + badges(datasets) + "  (✅ real · 🟡 partly real · 🔴 mock)")
     if IS_MOCK:
-        st.warning("Some inputs are still mock or assumed (charts carry a watermark). Do not cite model outputs as findings yet.", icon="⚠️")
+        st.warning("Some inputs are still mock (charts carry a watermark). Do not cite model outputs as findings yet.", icon="⚠️")
+    elif SCENARIO_ON:
+        st.info("This section runs on assumed or scenario inputs (labelled 'ASSUMED INPUTS' on each chart): read it as a comparison of options and break-evens, not as a forecast.", icon="ℹ️")
 
 
 def women_lens() -> bool:

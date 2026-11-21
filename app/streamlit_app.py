@@ -51,9 +51,11 @@ def dashboard():
     common.ANCHORS = {title: anchor for _, title, anchor, _ in SECTIONS}
     try:
         for _, _, _, path in SECTIONS:
+            common.SCENARIO_ON = path.endswith("4_Resilience.py")      # section 4 compares options on assumed inputs
             runpy.run_path(str(HERE / path), run_name="__main__")
     finally:
         common.ONE_PAGE = False
+        common.SCENARIO_ON = False
 
 
 common.sidebar()

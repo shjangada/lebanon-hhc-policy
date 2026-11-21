@@ -13,15 +13,13 @@ empty columns; **mock** = synthetic. The app loads `data/processed/` first and f
 | vulnerability | 🟡 partly real | 222 | female_headed_hh_share, unable_to_access_care_share, no_insurance_share | D05 |
 | official_severity | ✅ real | 26 |  | S15 |
 | soil_sites | 🟡 partly real | 27 |  | S27 |
-| water_quality | 🔴 mock | 15 | (mock) | mock |
 | crop_transfer | ✅ real | 40 |  | S28 |
 | interventions | 🟡 partly real | 8 | (mock) | COST |
-| cascade_baseline | 🔴 mock | 5 | (mock) | mock |
-| staffing_referrals | 🔴 mock | 9 | (mock) | mock |
+| cascade_baseline | 🟡 partly real | 5 |  | HAUS2024 |
 | conflict_exposure | ✅ real | 222 |  | D03 |
 | funding_flows | ✅ real | 134 |  | D06 |
 | funding_requirements | ✅ real | 102 |  | D06 |
-| governance_capacity | 🔴 mock | 60 | (mock) | mock |
+| governance_capacity | 🟡 partly real | 30 |  | SC01 |
 
 ## Coverage of the 222 Beqaa cadasters (five districts)
 | layer | cadasters covered |
@@ -37,8 +35,8 @@ empty columns; **mock** = synthetic. The app loads `data/processed/` first and f
 
 ## Why things are still mock or partial
 - **interventions**: 3 of 8 costs are derived from sourced unit prices (CHW pay, soil/water lab prices, mobile unit as a per-consultation proxy); the other 5 stay mock (no published unit cost); effects and reach are assumptions everywhere. See docs/COSTS.md.
-- **cascade_baseline**: published rates cover only some steps and groups (VASyR national for Syrians; AlArab PHC-attendee sample); the sourced rows are in `data/processed/cascade_baseline_long.csv`. Referral completion has no source.
-- **water_quality**: needs a data request (Litani River Authority). **staffing_referrals, governance_capacity**: no public source; scenario inputs for the escrow, to be measured in the pilot. The UN-Habitat municipal assessment publishes only national aggregates (`docs/ADMIN_CAPACITY_INDEX.md`).
+- **cascade_baseline**: the reference cascade is HAUS 2024 (registered displaced Syrians, national; any ANC, ANC4, delivery, postnatal). The other groups have no sourced baseline and are set equal to it (flagged `basis`); referral completion is a scenario value (0.5), not data. Between-group cascade gaps are unobservable.
+- **water**: no public Beqaa well data; the mock water dataset was removed. Water exposure is unknown for every cadaster (evidence gap). **staffing**: the mock staffing dataset was removed; referral completion and posts filled are scenario parameters. **governance_capacity**: national anchors (WGI 29.9/100 and the LHF national-NGO share) applied to every district, so districts start identical; capacity grows at most 0.05 a year (projection); transparent reporting is a scenario rule.
 - **vulnerability**: only IPC at district level; VASyR gives governorate-level 'below SMEB' for Syrian households only (extra columns); female-headed households, access barriers and insurance have no district source and stay empty.
 - **facilities**: MoPH locator + PHC network list (97 facilities; 59 network PHCCs placed, 29 hospitals). Hospitals sit at their OSM-matched positions; PHCCs only at their village centroid (1-5 km). Capacity and ANC offering are assumptions; only 4 facilities have a dated 2026 status (WHO sitreps and MSF name hospitals without locations; matched by name).
 - **soil_sites**: 5 villages located by NAME at cadaster centroids (the report has no coordinates; 4 villages unmatched are logged); Cr, total P and one Pb value above the detection limit; Cr(VI) share unknown.

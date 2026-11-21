@@ -20,9 +20,9 @@ scored = C.scored_cached(None, 30, 0.1, C.VER)
 kt = theme_kpi.kpi_table(scored=scored)
 base, stall = kt[kt.scenario == "baseline"].set_index("year"), kt[kt.scenario == "S5_capacity_stall"].set_index("year")
 sent = narrative.page3(base.local_control_share.loc[2026], base.local_control_share.loc[2030], "baseline", stall.local_control_share.loc[2030])
-C.header("Control of the money", sent, ["cadasters", "population", "governance_capacity", "staffing_referrals", "funding_flows"], purpose="The escrow window: who holds the money at each stage from 2026 to 2030, what moves control up the ladder, and who decides how it is used.")
+C.header("Control of the money", sent, ["cadasters", "population", "governance_capacity", "funding_flows"], purpose="The escrow window: who holds the money at each stage from 2026 to 2030, what moves control up the ladder, and who decides how it is used.")
 st.caption("Mechanism: international funds go into a ring-fenced window inside an existing pooled fund (LHF/LFF), pass a need gate, then a need floor (guaranteed) plus a capacity tranche (only if thresholds pass). "
-           "An administrator ladder decides who holds the money: INGO → national NGO → union of municipalities, with MoPH co-governing. A community committee decides use at every rung. District capacity and staffing inputs are mock scenario inputs.")
+           "An administrator ladder decides who holds the money: INGO → national NGO → union of municipalities, with MoPH co-governing. A community committee decides use at every rung. Capacity starts at the national anchor in every district (no district series is public) and grows at most 0.05 a year; referral completion and posts filled are scenario values, not data.")
 
 a, b = st.columns([1, 2])
 scn = a.selectbox("Scenario", list(theme_kpi.SCENARIOS), format_func=lambda k: theme_kpi.SCENARIO_LABELS[k], key="p3_scn")
@@ -81,6 +81,7 @@ long["regime"] = long.regime.map({"top_down": "Top-down by need", "per_capita": 
 al = alt.Chart(long).mark_bar().encode(x=alt.X("regime:N", title=None, sort=["Top-down by need", "Equal per capita", "Community-decided"]), y=alt.Y("value:Q", title=None), color=alt.Color("regime:N", legend=None),
                                        column=alt.Column("metric:N", title=None), tooltip=["regime", "metric", alt.Tooltip("value:Q", format=",.0f")])
 st.altair_chart(al.properties(width=300, height=240), use_container_width=False)
+st.warning("ASSUMED INPUTS: community priorities, local-fit and capture are scenario values, so these bars are test arms, not results.", icon="ℹ️")
 st.caption("These are PILOT TEST ARMS, not results: the community arm's effect rests on assumptions (local-fit 1.0-1.3, capture 10-40%, mock community priorities), and the model does not value legitimacy or sustainability. "
            "Community-driven development delivers local public goods but does not transform governance by itself (see precedents), so the claim is better targeting, not institution-building. Breakpoints are on the Resilience page.")
 

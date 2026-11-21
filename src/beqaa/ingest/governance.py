@@ -8,9 +8,29 @@ from __future__ import annotations
 
 import pandas as pd
 
-from .common import ROOT
+from .common import PROCESSED, ROOT, provenance
 
 REG = ROOT / "data" / "registry"
+
+
+DISTRICTS = ["Baalbek", "Hermel", "Zahle", "West Bekaa", "Rachaya"]
+
+
+def build_governance(sc: pd.DataFrame) -> pd.DataFrame:
+    """Replaces the mock district series with SOURCED national values applied to every district (no district spread is invented):
+      admin_capacity_index  2025 = SC01 WGI Government Effectiveness 29.9/100 = 0.299 for all five districts (national anchor); 2026-2030 rows are PROJECTED (state_capacity caps gains at 0.05/yr)
+      share_funds_managed_locally  2025 = LHF national-NGO share of project budgets that year (real, nationwide, one pooled fund); not projected here
+      transparent_reporting  SCENARIO: False in 2025-2026, True from 2027 (a pre-agreed pilot rule: the consortium publishes quarterly spend). Not an observation.
+    Districts therefore start identical: where district capacity differs is unknown until UN-Habitat RMA microdata exist (docs/DATA_REQUESTS.md)."""
+    anchor = float(sc.loc[sc.id == "SC01", "value"].iloc[0]) / 100
+    lhf = pd.read_csv(PROCESSED / "lhf_national_ngo_share_by_year.csv").set_index("year").national_ngo_share
+    rows = []
+    for d in DISTRICTS:
+        rows.append({"district": d, "year": 2025, "projected": False, "admin_capacity_index": anchor, "share_funds_managed_locally": float(lhf.loc[2025]), "transparent_reporting": False})
+        for y in range(2026, 2031):
+            rows.append({"district": d, "year": y, "projected": True, "admin_capacity_index": anchor, "share_funds_managed_locally": float("nan"), "transparent_reporting": y >= 2027})
+    return provenance(pd.DataFrame(rows), "National anchors applied to all districts: WGI GE 2025 (SC01), LHF national-NGO share 2025; transparent_reporting is a scenario rule; no district spread",
+                      "2026-11-21", "partial", "https://api.worldbank.org/v2/country/LB/indicator/GOV_WGI_GE.SC?format=json", "SC01")
 
 
 def run() -> dict:
@@ -34,4 +54,5 @@ def run() -> dict:
         changed.append("SC13")
     sc.to_csv(REG / "state_capacity_sources.csv", index=False)
     wf.to_csv(REG / "workforce_sources.csv", index=False)
-    return {"registry_rows_updated": changed, "admin_capacity_index": "not computable at district level (see docs/ADMIN_CAPACITY_INDEX.md)"}
+    build_governance(sc).to_csv(PROCESSED / "governance_capacity.csv", index=False)
+    return {"governance_capacity": "real national anchors for all districts (no mock spread)", "registry_rows_updated": changed, "admin_capacity_index": "not computable at district level (see docs/ADMIN_CAPACITY_INDEX.md)"}

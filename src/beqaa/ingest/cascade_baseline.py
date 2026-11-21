@@ -18,7 +18,25 @@ def build() -> pd.DataFrame:
     return provenance(out, "published ANC / delivery rates (VASyR 2025, HAUS 2024, Benage 2015, AlArab 2023, MSNA 2025)", "2025-12-31", "partial", "", "VASyR/Benage/AlArab")
 
 
+REFERRAL_SCENARIO = 0.5       # SCENARIO value, not data: no published referral completion; M5/escrow report the break-even
+
+
+def build_table(long: pd.DataFrame) -> pd.DataFrame:
+    """Step x group table M5 needs, with NO mock values: the reference cascade is HAUS 2024 (registered displaced Syrians, national; the 2024 rows of the long file).
+    The other three groups have NO sourced baseline for Beqaa (host Lebanese rows are missing in VASyR/MSNA), so they are set equal to the reference and marked
+    `basis=assumed equal to reference`: between-group gaps in the cascade are UNOBSERVABLE here and are explored only as a scenario. Referral completion = scenario value."""
+    h = long[(long.group == "displaced_syrians") & (long.year == 2024)].set_index("step").value_fraction
+    ref = {"p_any_anc": float(h["p_any_anc"]), "p_anc4": float(h["p_anc4"]), "p_facility_delivery": float(h["p_facility_delivery"]), "p_postnatal": float(h["p_postnatal"])}
+    rows = []
+    for g in ["host_lebanese", "displaced_lebanese", "registered_displaced_syrians", "unregistered_workers_est", "women_15_49"]:
+        rows.append({"group": g, **ref, "p_referral_complete": REFERRAL_SCENARIO,
+                     "basis": "sourced: HAUS 2024 (registered displaced Syrians, national)" if g == "registered_displaced_syrians" else "assumed equal to the sourced reference (no sourced baseline for this group)"})
+    return provenance(pd.DataFrame(rows), "HAUS 2024 reference cascade (any ANC, ANC4, facility delivery, postnatal); referral completion is a scenario value", "2024-12-31", "partial",
+                      "", "HAUS2024")
+
+
 def run() -> dict:
     d = build()
     d.to_csv(PROCESSED / "cascade_baseline_long.csv", index=False)
+    build_table(d).to_csv(PROCESSED / "cascade_baseline.csv", index=False)
     return {"rows": len(d), "verified": int((d.value_status == "verified").sum()), "unverified": int((d.value_status == "unverified").sum()), "missing": int((d.value_status == "missing").sum()), "steps": sorted(d.step.unique().tolist())}

@@ -165,5 +165,5 @@ def evidence_table(sites: pd.DataFrame | None = None) -> pd.DataFrame:
 
 
 def nitrate_by_cadaster() -> pd.DataFrame:
-    w, _ = load_dataset("water_quality")
-    return w.groupby("cadaster_id").nitrate_mg_l.mean().reset_index()
+    """No public Beqaa well-level nitrate data exists (water_quality was a mock input and was removed): returns an empty frame, so nitrate is never scored."""
+    return pd.DataFrame({"cadaster_id": pd.Series(dtype=str), "nitrate_mg_l": pd.Series(dtype=float)})

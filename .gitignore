@@ -53,6 +53,8 @@ data/raw/msna/*.pdf
 !data/processed/haus_2024.csv
 !data/processed/interventions.csv
 !data/processed/cost_ranges.csv
+!data/processed/governance_capacity.csv
+!data/processed/cascade_baseline.csv
 !data/processed/beqaa_funding_proxy.csv
 !data/processed/beqaa_lhf_national_ngo_share_by_year.csv
 !data/processed/beqaa_health_partners.csv
