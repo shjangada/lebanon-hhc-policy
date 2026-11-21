@@ -1,0 +1,14 @@
+mock_file,real_source,obtainability,how_to_get_it
+cadasters.csv,COD-AB admin 3 (D01),public_download,scripts/fetch_sources.py; convert admin3 table + centroids
+population.csv,LRP 2026 package (D03) + DTM (D04) + WorldPop (D08),public_download,convert; unregistered workers stay an assumption
+facilities.csv,OSM facilities (D02) + WHO sitrep map (S03),public_download+transcribe,coordinates public; open/closed status transcribed from sitrep; capacity from partners
+travel_time.csv,OSM roads or HDX accessibility (D07),public_download,compute travel times from roads or use D07 as cross-check
+vulnerability.csv,IPC (D05) + VASyR/MSNA,public_download+transcribe,IPC area table public; VASyR indicators from the report tables
+official_severity.csv,LRP Addendum JIAF/FSA maps (S15),transcribe,severity maps are images: transcribe district values
+soil_sites.csv,CNRS-L/MoE report Table 2.3 (S27),transcribe,values are real; add real site coordinates from the report
+water_quality.csv,Litani River Authority / monitoring,partner_request,request 2025-26 well and river nitrate data
+crop_transfer.csv,Abi Saab et al. 2022 (S28),transcribe,download PDF by hand and transcribe transfer factors
+interventions.csv,UNFPA/WHO appeal lines + implementer quotes,partner_request,cost lines from appeals; lifts from literature
+cascade_baseline.csv,VASyR + published ANC studies,literature,transcribe published rates; referral completion stays an assumption
+staffing_referrals.csv,MoPH PHC department / NGO partner records,pilot_measured,no public source: scenario input for escrow thresholds; the pilot would measure it
+governance_capacity.csv,UN-Habitat municipal assessment + partner mix,pilot_measured,no public source: scenario input for escrow; index is a documented composite

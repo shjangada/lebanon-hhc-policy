@@ -46,7 +46,7 @@ st.sidebar.markdown(f"<div style='background:{color};color:white;padding:8px;bor
 st.sidebar.markdown("**Scenario**")
 budget_label = st.sidebar.selectbox("Budget tier", list(m5_options.BUDGET_TIERS) + ["Custom"], 1)
 budget = st.sidebar.number_input("Custom budget (USD)", 100, 10_000_000, 50_000, 1000) if budget_label == "Custom" else m5_options.BUDGET_TIERS[budget_label]
-layer = st.sidebar.selectbox("Map layer", ["need", "providership", "referral", "ngo_dependency", "environment"])
+layer = st.sidebar.selectbox("Map layer", ["need", "environment"])
 d0 = st.sidebar.selectbox("Catchment d0 (min)", [15, 30, 60], 1)
 st.sidebar.markdown("**Model settings**")
 with st.sidebar.expander("Need Score weights and toggles"):
@@ -119,19 +119,17 @@ if IS_MOCK:
     st.error("MOCK DATA: synthetic cadasters and placeholder costs. Do not cite these numbers.", icon="⚠️")
 st.markdown(NAV_HTML, unsafe_allow_html=True)
 
-gov, _ = io.load_dataset("governance_capacity")
-stf, _ = io.load_dataset("staffing_referrals")
-g_ = gov[(~gov.projected.astype(bool))]
-g_ = g_[g_.year == g_.year.max()]
 gg = ga.set_index("group")
 worst_ratio = gg.ratio_to_host.drop("women_15_49").min()
+_f = ff.annotate(ff.load_funding())
+n_active = int((_f.recency_flag == "active or recent").sum())
+n_stable = int((rob.p_top_tier >= 0.9).sum())
 with st.container(border=True):
-    c = st.columns(5)
-    c[0].metric("Funds managed locally", f"{g_.share_funds_managed_locally.mean():.0%}", help="2030 indicator, current baseline")
-    c[1].metric("Referral completion", f"{stf.referral_completed_month.sum() / stf.referral_sent_month.sum():.0%}")
-    c[2].metric("Posts filled", f"{stf.posts_filled.sum() / stf.posts_budgeted.sum():.0%}")
-    c[3].metric("Access lost to closures", f"{acc.access_lost.sum() / acc.access_baseline.sum():.0%}")
-    c[4].metric("Worst-group access vs host", f"{worst_ratio:.2f}×", help="1.00 = parity. Spatial access only.")
+    c = st.columns(4)
+    c[0].metric("Access lost to closures", f"{acc.access_lost.sum() / acc.access_baseline.sum():.0%}", help="Women 15-49 capacity, pre-2026 vs now (E2SFCA)")
+    c[1].metric("Worst-group access vs host", f"{worst_ratio:.2f}×", help="1.00 = parity. Spatial access only.")
+    c[2].metric("Stable priority cadasters", f"{n_stable}", help="Top-k in at least 90% of random domain weightings")
+    c[3].metric("Active or recent funds", f"{n_active}", help="From the funding registry")
 
 top = scored.merge(rob[["cadaster_id", "p_top_tier", "rank_p05", "rank_p95"]], on="cadaster_id").sort_values("rank").head(10)
 stable = rob[rob.p_top_tier >= 0.9].cadaster_name.tolist()
@@ -237,6 +235,7 @@ with section("s3", "3 · Allocation & escrow",
         with st.popover("Adjust escrow rules"):
             st.slider("Need floor %", 0.0, 1.0, 0.5, 0.05, key="floor")
             st.toggle("Unrestricted (route via a more-foreign intermediary instead of holding)", False, key="unres")
+            st.caption("Scenario inputs: capacity, referral and staffing figures are mock defaults that the pilot would measure (no public source).")
             st.slider("Referral completion ≥", 0.0, 1.0, 0.40, 0.05, key="ref_min")
             st.slider("Posts filled ≥", 0.0, 1.0, 0.60, 0.05, key="posts_min")
     if warns:
@@ -291,12 +290,3 @@ with st.expander("Assumptions log"):
     st.download_button("Download assumptions CSV", asm.to_csv(index=False), "tab_assumptions.csv")
 with st.expander("Data status and context"):
     st.dataframe(pd.concat([io.data_status(), io.reference_status()]), hide_index=True, width="stretch")
-    gm = gov.groupby(["year", "projected"]).agg(admin_capacity_index=("admin_capacity_index", "mean"), share_funds_managed_locally=("share_funds_managed_locally", "mean")).reset_index()
-    long = gm.melt(["year", "projected"], var_name="indicator", value_name="value")
-    base = alt.Chart(long).encode(x="year:O", y=alt.Y("value:Q", scale=alt.Scale(domain=[0, 1])), color="indicator:N")
-    st.altair_chart(wm(base.transform_filter(alt.datum.year <= 2026).mark_line(point=True) + base.transform_filter(alt.datum.year >= 2026).mark_line(strokeDash=[5, 4]), 640, 260))
-    st.caption("Capacity vs local control, 2019–2030 (dashed = projected; mock). 2019 crisis → 2020 blast → 2024 war → 2026 war.")
-    wdi = io.load_wdi_population("LBN")
-    if wdi is not None:
-        st.line_chart(wdi.set_index("year").population)
-        st.caption("Lebanon resident population, World Bank WDI (real).")
