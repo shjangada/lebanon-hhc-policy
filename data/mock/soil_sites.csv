@@ -1,9 +1,9 @@
 site_name,parameter,value_mg_kg,cadaster_id,lat,lon,source,evidence_rung,is_mock_location,is_mock,source_date,url,status
-Rayak,total_P,1858,MOCK-ZAH-03,33.84316,35.84959,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,True,2026-11-21,,mock
-Rayak,total_P,970,MOCK-BAA-07,34.00396,36.26763,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,True,2026-11-21,,mock
-Rayak,Cr,220,MOCK-WES-05,33.60349,35.8397,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,True,2026-11-21,,mock
-Chemstar,Cr,230,MOCK-BAA-07,34.00396,36.26763,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,True,2026-11-21,,mock
-Chemstar,total_P,628,MOCK-ZAH-01,33.81927,35.85117,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,True,2026-11-21,,mock
-Bouday,Pb,230,MOCK-RAC-02,33.47908,35.81226,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,True,2026-11-21,,mock
-Bouday,Cr,140,MOCK-RAC-05,33.44483,35.86983,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,True,2026-11-21,,mock
-Ksarnaba,Cr,170,MOCK-RAC-08,33.53754,35.82144,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,True,2026-11-21,,mock
+Rayak,total_P,1858,MOCK-RAC-02,33.47908,35.81226,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,True,2026-11-21,,mock
+Rayak,total_P,970,MOCK-HER-08,34.5185,36.35562,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,True,2026-11-21,,mock
+Rayak,Cr,220,MOCK-HER-06,34.42194,36.40193,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,True,2026-11-21,,mock
+Chemstar,Cr,230,MOCK-BAA-04,34.00767,36.18103,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,True,2026-11-21,,mock
+Chemstar,total_P,628,MOCK-RAC-02,33.47908,35.81226,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,True,2026-11-21,,mock
+Bouday,Pb,230,MOCK-WES-07,33.51903,35.72991,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,True,2026-11-21,,mock
+Bouday,Cr,140,MOCK-BAA-02,34.04503,36.25643,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,True,2026-11-21,,mock
+Ksarnaba,Cr,170,MOCK-ZAH-02,33.88696,35.96774,"CNRS-L/MoE Apr 2026, Ch. II (values); location MOCK",a,True,True,2026-11-21,,mock

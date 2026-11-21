@@ -12,3 +12,4 @@ interventions.csv,UNFPA/WHO appeal lines + implementer quotes,partner_request,co
 cascade_baseline.csv,VASyR + published ANC studies,literature,transcribe published rates; referral completion stays an assumption
 staffing_referrals.csv,MoPH PHC department / NGO partner records,pilot_measured,no public source: scenario input for escrow thresholds; the pilot would measure it
 governance_capacity.csv,UN-Habitat municipal assessment + partner mix,pilot_measured,no public source: scenario input for escrow; index is a documented composite
+conflict_exposure.csv,LRP 2026 package sheet Conflict Incidents_adm3_Summary (D03),public_download,convert admin-3 incident counts (already downloaded)

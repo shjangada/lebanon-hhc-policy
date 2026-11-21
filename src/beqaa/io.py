@@ -24,6 +24,7 @@ DATASETS = {
     "interventions": "interventions.csv",
     "cascade_baseline": "cascade_baseline.csv",
     "staffing_referrals": "staffing_referrals.csv",
+    "conflict_exposure": "conflict_exposure.csv",
     "governance_capacity": "governance_capacity.csv",
 }
 

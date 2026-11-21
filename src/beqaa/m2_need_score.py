@@ -72,6 +72,10 @@ def raw_indicators(d0: float = 30, demand_col: str = "women_15_49", include_unre
     df = df.merge(tn[["cadaster_id", "posts_unfilled_share", "referral_incompletion", "referral_completion"]], on="cadaster_id", how="left")
     # vulnerability (district value applied to cadaster in mock; real = finer)
     df = df.merge(vul.drop(columns=[c for c in ("level", "is_mock", "source", "source_date", "url", "status") if c in vul.columns]), on="cadaster_id", how="left")
+    # security exposure: conflict incidents since Oct 2023 (real source: LRP 2026 package, admin 3)
+    ce, _ = load_dataset("conflict_exposure")
+    df = df.merge(ce[["cadaster_id", "conflict_incidents"]], on="cadaster_id", how="left")
+    df["conflict_incidents"] = df.conflict_incidents.fillna(0)
     # environment: soil hotspot proximity (tier x distance decay) + nitrate
     sites = m4_exposure.screen_sites()
     prox = []

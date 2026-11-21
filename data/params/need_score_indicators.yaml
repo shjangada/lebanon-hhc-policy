@@ -18,6 +18,7 @@ domains:
     - {name: unable_to_access_care_share, safe: 0.05, crisis: 0.20, level: district, source: "Health Sector sector threshold 20%", status: assumption}
     - {name: no_insurance_share, safe: 0.20, crisis: 0.80, level: district, source: assumption, status: assumption}
     - {name: female_headed_hh_share, safe: 0.10, crisis: 0.35, level: district, source: assumption, status: assumption}
+    - {name: conflict_incidents, safe: 0, crisis: 40, level: cadaster, source: "LRP 2026 conflict incidents since Oct 2023 (admin 3); crisis value is an assumption", status: assumption}
     - {name: unregistered_workers_share, safe: 0.0, crisis: 0.12, level: cadaster, source: "assumption (document estimation method)", status: assumption}
   environment:
     - {name: soil_hotspot_proximity, safe: 0, crisis: 3, level: cadaster, source: "M4 tier x distance decay (15 km)", status: assumption}
