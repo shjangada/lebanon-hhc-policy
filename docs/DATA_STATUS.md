@@ -42,6 +42,7 @@ empty columns; **mock** = synthetic. The app loads `data/processed/` first and f
 - **soil_sites**: 5 villages located by NAME at cadaster centroids (the report has no coordinates; 4 villages unmatched are logged); Cr, total P and one Pb value above the detection limit; Cr(VI) share unknown.
 - **population**: the within-district spread of every group is modelled (WorldPop); registered vs unregistered Syrians is an assumption (LRP planning figure vs UNHCR records).
 - **conflict**: LRP incidents (to Jul 2025) are loaded; ACLED events need the account's API access (the token request returned HTTP 403, see `docs/MANUAL_STEPS.md`).
+- **esu (MoPH surveillance)**: reported (notified) cases, suspected and confirmed mixed, under-reported, no denominator; the Bekaa file is the old Beqaa mohafaza; 2026 runs to August only and late-2025 zeros are reporting lag (flagged). **who_wbd**: PDF extraction, disease label of one line inferred. **wbd_risk**: 2024 top-20 only (12 Beqaa cadasters matched; no district values in the 2025 map). **informal_settlements**: Dec 2016 (OLD; 2026 reach is a national proxy). **outreach, referral_payers, wash, capacity_waittime**: sourced rows; visit frequency, waiting times and referral completion are NOT FOUND and are pilot measures; no payer found for unregistered Syrians. **evidence_pack, prices_pack**: 37 claims and 20 prices; unverified prices (Aquagenx test, UNICEF H2S per test vs box, any Lebanese Cr(VI), PPE or water-test price) stay sliders.
 
 ## Unmatched names (never dropped silently): `data/processed/_unmatched.csv`
 | source | level | names |
@@ -50,3 +51,4 @@ empty columns; **mock** = synthetic. The app loads `data/processed/` first and f
 | facilities_moph | facility | 3 |
 | facility_status | facility_name | 28 |
 | soil_sites | village | 3 |
+| wbd_risk | cadaster | 2 |

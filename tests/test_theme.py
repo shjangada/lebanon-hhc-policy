@@ -86,4 +86,4 @@ def test_main_entry_is_one_page_with_five_sections(auto):
     from streamlit.testing.v1 import AppTest
     at = AppTest.from_file(str(ROOT / "app" / "streamlit_app.py"), default_timeout=300).run()
     assert not at.exception
-    assert [h.value for h in at.header] == ["Why Beqaa", "Funding today", "Priority areas", "Control of the money", "Resilience", "Funding sources"]
+    assert [h.value for h in at.header] == ["Why Beqaa", "Care and disease today", "Funding today", "Priority areas", "Control of the money", "Pilot design", "Resilience", "Funding sources"]

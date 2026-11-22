@@ -33,6 +33,24 @@ def score_indicator(x: pd.Series, safe: float, crisis: float) -> pd.Series:
     return ((x - safe) / (crisis - safe)).clip(0, 1)
 
 
+def PROCESSED_WBD() -> set:
+    """p-codes of Beqaa-valley cadasters in the WaSH 2024 water-borne-disease top-20 (matched by name in ingest/pilot_data.py)."""
+    import pathlib
+    f = pathlib.Path(__file__).resolve().parents[2] / "data" / "processed" / "wbd_risk.csv"
+    if not f.exists():
+        return set()
+    r = pd.read_csv(f, dtype={"cadaster_id": str})
+    return set(r[(r.in_beqaa_valley == "yes") & r.cadaster_id.notna()].cadaster_id)
+
+
+def _waterborne_rate() -> pd.Series:
+    import pathlib
+    if not (pathlib.Path(__file__).resolve().parents[2] / "data" / "processed" / "esu_by_district.csv").exists():
+        return pd.Series(dtype=float)
+    from . import start_site
+    return start_site.disease_rate()
+
+
 def raw_indicators(d0: float = 30, demand_col: str = "women_15_49", include_unregistered: bool = True,
                    cr6_for_tier: float | None = None) -> pd.DataFrame:
     """Raw indicator values per cadaster (before scaling), plus stress-layer columns."""
@@ -96,7 +114,12 @@ def raw_indicators(d0: float = 30, demand_col: str = "women_15_49", include_unre
     # Water exposure is UNKNOWN for every cadaster: no public Beqaa well data exists, so nitrate is never scored (indicator skipped; every cadaster is a water evidence gap).
     df["nitrate_mg_l"] = np.nan
     df["nitrate_imputed"] = True
-    df["env_evidence"] = df.soil_sampled_nearby
+    # WaSH water-borne-disease risk map (2024): 1 for a matched top-20 cadaster, unknown (NaN) otherwise: absence from the list is not evidence of safety
+    wbd = PROCESSED_WBD()
+    df["wbd_risk_top20"] = df.cadaster_id.isin(wbd).astype(float).where(df.cadaster_id.isin(wbd))
+    df["env_evidence"] = df.soil_sampled_nearby | df.wbd_risk_top20.notna()
+    # reported hepatitis A + typhoid per 10,000 by district (MoPH ESU, 2023-2025 mean): clinical-demand context at district resolution
+    df["waterborne_per_10k"] = df.district.map(_waterborne_rate())
     # NGO-dependency stress (not a Need Score domain; drives the escrow switch): 1 - share funds managed locally (latest actual year)
     g = gov[~gov.projected.astype(bool)]
     g = g[g.year == g.year.max()][["district", "share_funds_managed_locally", "admin_capacity_index"]]

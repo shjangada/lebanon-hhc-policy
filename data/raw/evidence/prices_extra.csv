@@ -1,0 +1,5 @@
+item,unit,low,central,high,currency,year,geography,source,url,verified,notes
+"E. coli lab test, water (AUB CEE testing services)",per sample,,40,,USD,2025,Lebanon (AUB lab),"AUB Civil and Environmental Engineering, Testing Services and Prices",https://www.aub.edu.lb/msfea/Documents/msfea-cee-testing-services-list-2025.pdf,yes,"lab fee, VAT extra; file name says 2025, no date printed; contact ceelabs@aub.edu.lb"
+"Total coliforms lab test, water (AUB CEE)",per sample,,25,,USD,2025,Lebanon (AUB lab),AUB CEE Testing Services and Prices,https://www.aub.edu.lb/msfea/Documents/msfea-cee-testing-services-list-2025.pdf,yes,lab fee VAT extra
+"Free available chlorine lab test, water (AUB CEE)",per sample,,35,,USD,2025,Lebanon (AUB lab),AUB CEE Testing Services and Prices,https://www.aub.edu.lb/msfea/Documents/msfea-cee-testing-services-list-2025.pdf,yes,lab test not a field kit
+"Lead lab test, water (AUB CEE)",per sample,,30,,USD,2025,Lebanon (AUB lab),AUB CEE Testing Services and Prices,https://www.aub.edu.lb/msfea/Documents/msfea-cee-testing-services-list-2025.pdf,yes,lab fee VAT extra; NO Cr(VI) line and NO soil heavy-metal line on this list

@@ -11,6 +11,7 @@ domains:
   clinical_demand:
     - {name: pregnant_per_1000, safe: 6, crisis: 14, level: cadaster, source: "pregnant_est / population (UNFPA ratio ~4.1% of women 15-49)", status: assumption, anchor: quantile}
     - {name: women_share, safe: 0.20, crisis: 0.27, level: cadaster, source: women_15_49 / population, status: assumption, anchor: quantile}
+    - {name: waterborne_per_10k, safe: 3, crisis: 12, level: district, source: "MoPH ESU reported hepatitis A + typhoid cases per 10,000, caza, mean 2023-2025 (notified cases; under-reported; district-level so it does not separate cadasters)", status: assumption, anchor: assumption}
   capacity_strain:
     - {name: access_deficit, safe: 0.0, crisis: 1.0, level: cadaster, source: "M1: 1 - current access / pre-2026 median access", status: assumption, anchor: assumption}
     - {name: phc_per_50k, safe: 3, crisis: 0.5, level: cadaster, source: "Lebanon Health Sector 2024 PiN/severity annex: PHC per 50,000 bands from >3 (lowest severity) to 0.5 (highest); band-to-severity mapping to verify (S37)", status: to_verify_primary, anchor: published}
@@ -24,4 +25,5 @@ domains:
     - {name: unregistered_workers_share, safe: 0.0, crisis: 0.12, level: cadaster, source: "assumption (document estimation method)", status: assumption, anchor: quantile}
   environment:
     - {name: soil_hotspot_proximity, safe: 0, crisis: 3, level: cadaster, source: "M4 tier x distance decay (15 km)", status: assumption, anchor: assumption}
+    - {name: wbd_risk_top20, safe: 0, crisis: 1, level: cadaster, source: "WaSH Sector water-borne-disease risk map 2024 update: cadaster is in the national top-20 highest risk (no score published; unmatched or outside the top 20 = unknown, not safe)", status: assumption, anchor: assumption}
     - {name: nitrate_mg_l, safe: 10, crisis: 50, level: cadaster, source: "WHO guideline 50 mg/L (crisis); wells imputed from district where unmeasured", status: verified, anchor: published}
