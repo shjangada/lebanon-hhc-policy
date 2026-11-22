@@ -18,3 +18,17 @@ Every row is an input with no published Lebanon value (or a proxy). Break-evens 
 | 12 | Reach of displaced Syrian workers (equity safeguard) | reach weights 0.8 (registered), 0.5 (unregistered) | assumption: no legal-status data | share of services used by unregistered workers | anonymous community-ID tally at each service | between-group gaps cannot be measured from public data (only HAUS 2024 for registered displaced Syrians); the safeguard is a design rule until measured |
 
 Data requested on the dates and from the organisations listed in `docs/DATA_REQUESTS.md` (drafts, to be sent); the analysis uses the published proxies and scenario ranges above until received.
+
+## Pilot-flow sliders (added with the funnel, schedule and M6 models; defaults are assumptions unless a source is named)
+| # | Assumption | Default / range | Source | What the pilot measures | What changes if wrong (break-even) |
+|---|---|---|---|---|---|
+| 13 | Share of settlement people reached / screened | 0.5 / 0.5 | assumption | people reached and screened per site per month | funnel output scales linearly; no break-even |
+| 14 | Symptomatic or positive rate among those screened | 0.15 (0.01-0.5) | assumption (water positivity 72% is sourced for WATER, not people) | symptoms and positives at screening | sets the number of red flags |
+| 15 | Share of positives handled by CHWs | 0.8 (0.3-1.0) | assumption: no Beqaa evidence on community case management | cases closed by CHWs vs referred | `pilot_flow.break_even_chw_share`: the share below which a centre exceeds 10% added load (none at the default spare share) |
+| 16 | Referral completion | 0.5 (0.1-1.0) | assumption | referrals sent vs completed | escrow release needs >= 40% (section 4) |
+| 17 | Visit schedule (CHW every 1-2 weeks; water tests monthly or quarterly) | 1-2 weeks; monthly | WHO GDWQ: at least 12 samples a year per supply | days from symptom to contact; samples per supply | quarterly water tests fail the WHO floor; expected wait = half the visit interval (model) |
+| 18 | Coverage of the district population | 0.10 (0.01-0.5) | assumption | people covered | cost per case averted is independent of coverage; visits per case needed to break even is the break-even |
+| 19 | Transfer of the child-diarrhoea risk ratio to hepatitis A and typhoid | 1.0 (0-1) | Wolf 2022 RR (filtration 0.50 [0.41-0.60]; chlorination 0.66 [0.56-0.77]; handwashing 0.70 [0.64-0.76]; sewer 0.53 [0.30-0.93]) for DIARRHOEA in LMIC children | cases in pilot vs comparison cazas (ESU) | at transfer 0 no case is averted; the package costs thousands of dollars per reported case at any coverage |
+| 20 | Centre spare capacity | 20% of an assumed 300 consultations a week | assumption (ranking stable at 200-400) | monthly referrals received per centre | breach of the 10% load limit |
+| 21 | Referral fund per red flag with no payer | $150 (0-400) | illustrative: patient share of a normal delivery was $128-170 under the UNHCR scheme that ended 1 Dec 2025; no payer found for unregistered Syrians | actual referral costs and who paid | new money rises linearly with red flags |
+| 22 | Maternal and cord-blood metals panel (biomonitoring) | not run | no Beqaa data; the Beirut / Mount Lebanon correlates study (n=74) found antimony and nickel higher near farmland | a metals panel at one Beqaa delivery hospital near the sampled villages (lab quote needed: not invented) | the route from rung (b) to (c) |

@@ -37,9 +37,11 @@ import common  # noqa: E402
 importlib.reload(common)        # app/common.py is a plain module: reload it on every rerun so edits are never stale (the beqaa package is reloaded by Streamlit's watcher)
 
 SECTIONS = [("0 · Why Beqaa", "Why Beqaa", "why", "pages/0_Why_Beqaa.py"),
+            ("0b · Care today", "Care and disease today", "care", "pages/0b_Care_today.py"),
             ("1 · Funding today", "Funding today", "funding", "pages/1_Money_now.py"),
             ("2 · Priority areas", "Priority areas", "areas", "pages/2_Where.py"),
             ("3 · Control of the money", "Control of the money", "control", "pages/3_Who_holds.py"),
+            ("3b · Pilot", "Pilot design", "pilot", "pages/3b_Pilot.py"),
             ("4 · Resilience", "Resilience", "resilience", "pages/4_Resilience.py"),
             ("5 · Funding sources", "Funding sources", "sources", "pages/5_Get_the_money.py")]
 
@@ -52,7 +54,7 @@ def dashboard():
     common.ANCHORS = {title: anchor for _, title, anchor, _ in SECTIONS}
     try:
         for _, _, _, path in SECTIONS:
-            common.SCENARIO_ON = path.endswith("4_Resilience.py")      # section 4 compares options on assumed inputs
+            common.SCENARIO_ON = path.endswith(("4_Resilience.py", "3b_Pilot.py"))      # section 4 compares options on assumed inputs
             runpy.run_path(str(HERE / path), run_name="__main__")
     finally:
         common.ONE_PAGE = False
