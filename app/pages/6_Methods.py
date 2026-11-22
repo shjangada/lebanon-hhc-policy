@@ -60,8 +60,12 @@ def funding(ver):
 st.title("Methods")
 st.caption("Documents behind the dashboard: what each output rests on, and what the pilot must measure. Detailed model views follow below.")
 _docs = io.ROOT / "docs"
-for _title, _file in (("Assumptions to pilot (what we assume, what the pilot measures, what changes if wrong)", "ASSUMPTIONS_PILOT.md"),
-                      ("Headline audit (inputs behind every output and their status)", "HEADLINE_AUDIT.md")):
+for _title, _file in (("Narrative, grapevine framing and options A/B/C", "NARRATIVE.md"), ("Options compared (impact, cost, feasibility, equity, uncertainty)", "OPTIONS.md"),
+                      ("Trigger table (Q2): findings to protection, assessment, referral, follow-up", "TRIGGERS.md"), ("Decision-maker and route (LHF, MoPH, LEAP)", "DECISION_ROUTE.md"),
+                      ("Implementation and budget by phase", "IMPLEMENTATION.md"), ("Evidence table (rung a / b / c, geography, verification)", "EVIDENCE_TABLE.md"),
+                      ("Stakeholders", "STAKEHOLDERS.md"), ("Assumptions to pilot (what we assume, what the pilot measures, what changes if wrong)", "ASSUMPTIONS_PILOT.md"),
+                      ("Headline audit (every number traced to a file and a source)", "HEADLINE_AUDIT.md"), ("Objections and answers", "OBJECTIONS.md"),
+                      ("Proxies and labelled assumptions, and data requests", "DATA_REQUESTS.md"), ("Data sources with access dates", "DATA_SOURCES.md")):
     with st.expander(_title):
         _p = _docs / _file
         st.markdown(_p.read_text() if _p.exists() else f"{_file} not found")

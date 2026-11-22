@@ -11,13 +11,8 @@ import common as C  # noqa: E402
 from beqaa import narrative, robustness, theme_kpi  # noqa: E402
 
 
-@st.cache_data
-def run(n, ver):
-    return robustness.run_all(n=n)
-
-
 n = st.session_state.get("p4_n", 300)
-RB = run(n, C.VER)
+RB = C.robust_cached(n, C.VER)
 rk, pol = RB["rank"], RB["regret"]
 core = rk["core"]
 C.header("Resilience", narrative.page4(len(core), rk["top_k"], rk["threshold"], pol["minimax_policy"]),
@@ -79,10 +74,7 @@ st.dataframe(C.pretty(pol["summary"][["policy", "mean_value", "mean_regret", "ma
                       max_regret="Max regret", minimax_rank="Minimax rank"), hide_index=True, width="stretch")
 st.caption("Allocations are fixed in advance on baseline data and judged in every world; prefer the smallest maximum regret, not the best average. Policies: top-down (by need), per capita, community-decided, existing allocation (follows current capacity). Escrow is evaluated above as a mechanism, not as a spending policy.")
 
-rg = alt.Chart(pol["summary"]).mark_bar().encode(y=alt.Y("policy:N", sort="x", title=None), x=alt.X("max_regret:Q", title="maximum regret (pathways lost vs the best policy in that world)"),
-                                                  color=alt.condition(alt.datum.policy == pol["minimax_policy"], alt.value("#27ae60"), alt.value("#aab7b8")), tooltip=["policy", alt.Tooltip("max_regret:Q", format=".0f"), alt.Tooltip("mean_regret:Q", format=".0f")])
-st.altair_chart(C.wm(rg, 560, 200), use_container_width=False)
-st.caption("The green policy has the smallest worst-case regret. Placeholder costs, effects and community priorities drive the gaps.")
+st.caption("The regret chart (maximum regret by policy) is in the **Appendix charts** tab; the table above has the numbers.")
 
 st.subheader("Break-evens: what has to be true")
 from beqaa import breakeven  # noqa: E402

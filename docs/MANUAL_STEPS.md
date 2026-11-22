@@ -17,7 +17,7 @@ Until then: the public HDX ACLED file gives **district-level, monthly** counts o
 | Health-worker top-up amounts | no public figure (IMF report W19 has minimum wages only) | MoPH PHC department / NGO partners |
 | Staffing, referral completion | not published | MoPH PHC department, NGO records; pilot indicator |
 | Bekaa doctor / nurse counts | not found | Order of Physicians, MoPH |
-| District governance capacity | the UN-Habitat RMA publishes only aggregates for a national sample of 38 municipalities (`docs/ADMIN_CAPACITY_INDEX.md`) | request the municipality-level RMA data from UN-Habitat Lebanon |
+| District governance capacity | the UN-Habitat RMA publishes only aggregates for a national sample of 38 municipalities | request the municipality-level RMA data from UN-Habitat Lebanon |
 | Community priority weights | only a pilot survey can produce them | participatory exercise |
 | Referral completion in the cascade | no source found | pilot-collected |
 

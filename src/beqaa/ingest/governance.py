@@ -2,7 +2,7 @@
 - SC01 (WGI Government Effectiveness 29.9, 2025): verified against the World Bank API (primary).
 - W19 (IMF public minimum wage LBP 675,000): verified against the IMF TA report (it contains no health-worker pay figures).
 - SC13: MoPH 2026 allocation from the Citizen Budget 2026 (LBP bn; USD only as a flagged conversion at the budget rate 89,500 LBP/USD).
-- admin_capacity_index: NOT computable at district level: the UN-Habitat RMA publishes only aggregates for a national sample of 38 municipalities (docs/ADMIN_CAPACITY_INDEX.md),
+- admin_capacity_index: NOT computable at district level: the UN-Habitat RMA publishes only aggregates for a national sample of 38 municipalities ,
   so governance_capacity.csv stays a mock scenario input. The real LHF national-NGO share replaces the mock `share_funds_managed_locally` baseline (see lhf_allocations)."""
 from __future__ import annotations
 

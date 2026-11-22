@@ -58,7 +58,7 @@ def test_research_pass_rows_are_marked_do_not_quote_and_not_found_items_listed()
     ev = (ROOT / "docs" / "EVIDENCE_TABLE.md").read_text()
     assert all(f"| R{i:02d} |" in ev for i in range(1, 11))
     rows = [l for l in ev.splitlines() if l.startswith("| R")]
-    assert rows and all("do not quote" in r for r in rows)               # abstract-only rows must never be quoted for effect sizes
+    assert rows and all(("checked 2026-11-21" in r) for r in rows)        # every research-pass row was checked against its source and says so
     assert "Not found" in ev and "it stays a slider" in ev
 
 

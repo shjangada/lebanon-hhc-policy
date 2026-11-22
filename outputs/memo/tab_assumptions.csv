@@ -1,0 +1,81 @@
+module,parameter,value,range,source,status
+M2,weight[clinical_demand],0.25,"Dirichlet(1,…,1) draws",team assumption; paper gives no weights,assumption
+M2,weight[capacity_strain],0.25,"Dirichlet(1,…,1) draws",team assumption; paper gives no weights,assumption
+M2,weight[vulnerability],0.25,"Dirichlet(1,…,1) draws",team assumption; paper gives no weights,assumption
+M2,weight[environment],0.25,"Dirichlet(1,…,1) draws",team assumption; paper gives no weights,assumption
+M2,default aggregation / normalisation,weighted arithmetic mean of domain means; safe/crisis goalposts,"geometric, max, percentile tested",docs/METHODS_DECISIONS.md D2-D3,assumption
+M2,tier thresholds (high/moderate),0.66/0.33,sliders,CLAUDE.md brief,assumption
+M2,top_k for p_top_tier,8,,team assumption,assumption
+M2,clinical_demand.pregnant_per_1000,"safe=6, crisis=14",level: cadaster; anchor: quantile,pregnant_est / population (UNFPA ratio ~4.1% of women 15-49),assumption
+M2,clinical_demand.women_share,"safe=0.2, crisis=0.27",level: cadaster; anchor: quantile,women_15_49 / population,assumption
+M2,clinical_demand.waterborne_per_10k,"safe=3, crisis=12",level: district; anchor: assumption,"MoPH ESU reported hepatitis A + typhoid cases per 10,000, caza, mean 2023-2025 (notified cases; under-reported; district-level so it does not separate cadasters)",assumption
+M2,capacity_strain.access_deficit,"safe=0.0, crisis=1.0",level: cadaster; anchor: assumption,M1: 1 - current access / pre-2026 median access,assumption
+M2,capacity_strain.phc_per_50k,"safe=3, crisis=0.5",level: cadaster; anchor: published,"Lebanon Health Sector 2024 PiN/severity annex: PHC per 50,000 bands from >3 (lowest severity) to 0.5 (highest); band-to-severity mapping to verify (S37)",to_verify_primary
+M2,capacity_strain.anc_share_30min,"safe=1.0, crisis=0.0",level: cadaster; anchor: assumption,share of open facilities within 30 min offering ANC,assumption
+M2,vulnerability.ipc3plus_share,"safe=0.05, crisis=0.4",level: district; anchor: assumption,IPC Lebanon,assumption
+M2,vulnerability.unable_to_access_care_share,"safe=0.05, crisis=0.2",level: district; anchor: assumption,"Health Sector 2024 annex uses a 20% threshold for people reporting two or more barriers (S37); our indicator is a different survey item, so the anchor is an assumption",assumption
+M2,vulnerability.no_insurance_share,"safe=0.2, crisis=0.8",level: district; anchor: assumption,assumption,assumption
+M2,vulnerability.female_headed_hh_share,"safe=0.1, crisis=0.35",level: district; anchor: assumption,assumption,assumption
+M2,vulnerability.conflict_incidents,"safe=0, crisis=40",level: cadaster; anchor: quantile,LRP 2026 conflict incidents since Oct 2023 (admin 3); crisis value is an assumption,assumption
+M2,vulnerability.unregistered_workers_share,"safe=0.0, crisis=0.12",level: cadaster; anchor: quantile,assumption (document estimation method),assumption
+M2,environment.soil_hotspot_proximity,"safe=0, crisis=3",level: cadaster; anchor: assumption,M4 tier x distance decay (15 km),assumption
+M2,environment.wbd_risk_top20,"safe=0, crisis=1",level: cadaster; anchor: assumption,"WaSH Sector water-borne-disease risk map 2024 update: cadaster is in the national top-20 highest risk (no score published; unmatched or outside the top 20 = unknown, not safe)",assumption
+M2,environment.nitrate_mg_l,"safe=10, crisis=50",level: cadaster; anchor: published,WHO guideline 50 mg/L (crisis); wells imputed from district where unmeasured,verified
+M4,soil_ingestion_mg_per_day.child,200,,EPA defaults,verify
+M4,soil_ingestion_mg_per_day.adult,100,,EPA defaults,verify
+M4,body_weight_kg.child,15,,EPA defaults,verify
+M4,body_weight_kg.adult,70,,EPA defaults,verify
+M4,exposure_frequency.days,350,,EPA defaults,verify
+M4,exposure_frequency.per,365,,EPA defaults,verify
+M4,rfd_mg_per_kg_day.Cr_III,1.5,,EPA IRIS (confirm),verify
+M4,rfd_mg_per_kg_day.Cr_VI,0.003,,EPA IRIS (confirm),verify
+M4,lead_soil_screening_level_ppm,200,,EPA 2024 residential,verify
+M4,cr6_fraction,0.0–1.0,key uncertainty,assumption,assumption
+M4,food_intake_kg_per_day.child,0.15,,assumption,assumption
+M4,food_intake_kg_per_day.adult,0.3,,assumption,assumption
+M4,crop transfer factor,max over crops for metal,x0.25–x4 in tornado,crop_transfer.csv (Abi Saab et al. 2022 when real),mock
+M1,decay function,Gaussian within d0 (default),stepped zones alternative,E2SFCA: Luo & Qi 2009 used stepped zones (S36); continuous Gaussian decay is a later refinement (to verify citation). D9,assumption
+M1,d0 catchment (min),30,15 / 30 / 60,team assumption,assumption
+M1,women share applied to every group in a cadaster,cadaster-level share,,assumption: age/sex by displacement status not published,assumption
+M1,demand weight[host_lebanese],1.0,0.5–3 in app,assumption (displaced / unregistered women may carry more unmet need),assumption
+M1,demand weight[displaced_lebanese],1.0,0.5–3 in app,assumption (displaced / unregistered women may carry more unmet need),assumption
+M1,demand weight[registered_displaced_syrians],1.0,0.5–3 in app,assumption (displaced / unregistered women may carry more unmet need),assumption
+M1,demand weight[unregistered_workers_est],1.0,0.5–3 in app,assumption (displaced / unregistered women may carry more unmet need),assumption
+M5,cascade independence,product of conditional step probabilities,,assumption,assumption
+M5,intervention lifts / costs / reach,interventions.csv ranges,uniform within range,MOCK until UNFPA/WHO/K2P quotes,mock
+M5,reach weight[host_lebanese],1.0,0.2–1.0,assumption: unregistered workers harder to reach,assumption
+M5,reach weight[displaced_lebanese],1.0,0.2–1.0,assumption: unregistered workers harder to reach,assumption
+M5,reach weight[registered_displaced_syrians],0.8,0.2–1.0,assumption: unregistered workers harder to reach,assumption
+M5,reach weight[unregistered_workers_est],0.5,0.2–1.0,assumption: unregistered workers harder to reach,assumption
+allocation,local_fit_multiplier,1.1,local_fit 1.0–1.3,"Mansuri & Rao 2013, Localizing Development: Does Participation Work? (World Bank; sources.csv S35); 3ie WP30 2018 (S26): mixed evidence",assumption
+allocation,base_capture,0.2,,assumption,assumption
+allocation,women_seat_share,0.3,,assumption,assumption
+allocation,worker_seat_share,0.1,,assumption,assumption
+allocation,share_reaching_unregistered,0.5,,assumption,assumption
+allocation,community priority weights,Dirichlet(0.7) per cadaster,,MOCK (stand-in for survey / participatory budgeting),mock
+escrow,referral_min,0.4,editable,assumption,assumption
+escrow,posts_filled_min,0.6,editable,assumption,assumption
+escrow,transparent_required,True,editable,assumption,assumption
+escrow,admin_capacity_min,0.3,editable,national anchor SC01 (WGI GE 2025 = 29.9/100),assumption
+escrow,need_gate.n_towns,8,editable in app,assumption,assumption
+escrow,need_gate.need_score_min,0.33,editable in app,M2 Moderate tier threshold,assumption
+escrow,need_gate.need_floor_pct,0.5,editable in app,assumption,assumption
+escrow,need_gate.env_priority_weight,0.1,editable in app,blend of M4 environmental exposure into priority (M2 already has a 0.15 environment domain),assumption
+escrow,pool expected realisation,0.4,,LRP 2026: 39% funded (docs/FEASIBILITY.md §1),verified
+escrow,ladder band[INGO],0.0,,assumption,assumption
+escrow,ladder band[National NGO],0.28,,SC01 notes: WGI GE 2023 low 28.0 / 2000 high 51.4,assumption
+escrow,ladder band[Union of Municipalities],0.4,,assumption,assumption
+escrow,ladder band[MoPH],0.514,,SC01 notes: WGI GE 2023 low 28.0 / 2000 high 51.4,assumption
+state capacity,national admin-capacity anchor (WGI GE / 100),0.299,year 2025,state_capacity_sources.csv SC01,verified_primary
+state capacity,government share of health spending,0.134,year 2025,state_capacity_sources.csv SC02,verified
+state capacity,district admin_capacity_index,mock relative spread x national anchor,replace with SC07 UN-Habitat 2026,mock,mock
+state capacity,default projected capacity gain per year,0.03,0 to 0.05,assumption (cap from docs/FEASIBILITY.md §5),assumption
+research gaps,gap weight[speciation],0.35,,assumption,assumption
+research gaps,gap weight[rung_b],0.25,,assumption,assumption
+research gaps,gap weight[nitrate],0.15,,assumption,assumption
+research gaps,gap weight[rank],0.25,,assumption,assumption
+research gaps,candidate threshold (evidence_gap_score),0.4,,assumption,assumption
+M4,Cr(VI) share used for tiering,1.0 (precautionary) unless set in app,0-1,assumption: until speciation results exist,assumption
+escrow,max administrator level,Union of Municipalities,MoPH only as co-governor,docs/FEASIBILITY.md (MoPH cannot be assumed to administer by 2030),assumption
+escrow,max year-on-year capacity gain (projections),0.05,,docs/FEASIBILITY.md,assumption
+escrow,local-control weights,"{'INGO': 0.0, 'National NGO': 0.33, 'Union of Municipalities': 0.67, 'MoPH': 1.0}",,assumption,assumption

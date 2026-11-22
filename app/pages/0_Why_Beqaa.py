@@ -55,21 +55,12 @@ else:
     st.caption(f"WorldPop 2025, modelled 1 km grid (not a census, and not scaled to the LRP 2026 totals): women 15-49 are {w / t:.0%}, children under 5 are {a[a.age_band < 5].population.sum() / t:.0%} "
                f"and people 60+ are {a[a.age_band >= 60].population.sum() / t:.0%} of {int(t):,}: demand for maternal and child care, and for chronic care.")
 
-left, right = st.columns(2)
-with left:
-    st.subheader("Military action: incidents per district")
-    d = pd.DataFrame({"incidents": inc, "per_1000": inc / byd * 1000}).reset_index()
-    ch = alt.Chart(d).mark_bar(color="#c0392b").encode(y=alt.Y("district:N", sort="-x", title=None), x=alt.X("per_1000:Q", title="incidents per 1,000 people"),
-                                                       tooltip=["district", alt.Tooltip("incidents:Q", format=",.0f"), alt.Tooltip("per_1000:Q", format=".2f")])
-    st.altair_chart(C.wm(ch, 400, 220), use_container_width=False)
-    st.caption("LRP 2026 conflict-incident counts per cadaster, Oct 2023 to 29 Jul 2025. It stops before the 2026 war, so it understates the current picture.")
-with right:
-    st.subheader("Health access: centres per 10,000")
-    h = pd.DataFrame({"PHC": phc / byd * 1e4, "hospital": hosp / byd * 1e4}).reset_index().melt("district", var_name="type", value_name="per_10k")
-    ch2 = alt.Chart(h).mark_bar().encode(y=alt.Y("district:N", sort="-x", title=None), x=alt.X("per_10k:Q", title="facilities per 10,000 people"), color=alt.Color("type:N", title=None),
-                                         tooltip=["district", "type", alt.Tooltip("per_10k:Q", format=".2f")])
-    st.altair_chart(C.wm(ch2, 400, 220), use_container_width=False)
-    st.caption("MoPH facility list (centres at village positions). Counts ignore distance and size: the access model on the next sections handles both.")
+st.subheader("Military action: incidents per district")
+d = pd.DataFrame({"incidents": inc, "per_1000": inc / byd * 1000}).reset_index()
+ch = alt.Chart(d).mark_bar(color="#c0392b").encode(y=alt.Y("district:N", sort="-x", title=None), x=alt.X("per_1000:Q", title="incidents per 1,000 people"),
+                                                   tooltip=["district", alt.Tooltip("incidents:Q", format=",.0f"), alt.Tooltip("per_1000:Q", format=".2f")])
+st.altair_chart(C.wm(ch, 400, 220), use_container_width=False)
+st.caption("LRP 2026 conflict-incident counts per cadaster, Oct 2023 to 29 Jul 2025. It stops before the 2026 war, so it understates the current picture.")
 
 st.subheader("Damage figures (published; checked against the PDFs only where marked)")
 if dmg is not None:

@@ -58,32 +58,13 @@ st.caption("Pool of $1M over 2026-2030 (illustrative). Grey = international fidu
            "Flow: pooled window inside LHF/LFF → need gate → need floor (guaranteed) + capacity tranche (only if every threshold passes) → administrator at the district's rung → community committee decides use "
            "(women ≥30%, workers incl. unregistered ≥10% of seats).")
 
-st.subheader("Who controls money in each district" + (" (all years)" if yr is None else f" ({yr})"))
-d = sched if yr is None else sched[sched.year == yr]
-dd = d.groupby("district").agg(towns=("cadaster_id", "nunique"), released_usd=("released_usd", "sum"), held_usd=("held_in_escrow_usd", "sum"),
-                               rung=("administered_by_floor", lambda x: x.value_counts().index[0]), capacity_index=("admin_capacity_index", "mean")).reset_index()
-st.dataframe(C.pretty(dd.round(2), district="District", towns="Towns in window", released_usd="Released $", held_usd="Held $", rung="Rung holding the need floor (most common)", capacity_index="Capacity index"),
-             hide_index=True, width="stretch")
-st.caption("Only districts that contain priority towns appear. Capacity index = the national anchor applied to every district (SC01, World Bank WGI Government Effectiveness 29.9/100 for 2025).")
-
 st.subheader("Local control over time, by scenario")
 line = alt.Chart(kt.assign(scenario=kt.scenario.map(theme_kpi.SCENARIO_LABELS))).mark_line(point=True).encode(x=alt.X("year:O", title=None), y=alt.Y("local_control_share:Q", scale=alt.Scale(domain=[0, 1]), title="local control"),
                                                                                                        color=alt.Color("scenario:N", title=None, legend=alt.Legend(orient="bottom")))
 st.altair_chart(C.wm(line, 760, 260), use_container_width=False)
 st.caption("The theme KPI by year: it rises as capacity lets control move up the ladder, stays flat if capacity stalls (S5), and drops in 2028 under renewed escalation (S1) when the ladder falls back to an international fiduciary. Funding shock (S2) changes the dollars, not the ladder.")
 
-st.subheader("Who decides how it is spent: community, top-down or per capita")
-from beqaa import allocation  # noqa: E402
-summ, _det = allocation.simulate(scored, 100_000, 8)
-long = summ.melt("regime", ["women_reached", "extra_pathways"], "metric", "value")
-long["metric"] = long.metric.map({"women_reached": "Women reached", "extra_pathways": "Extra completed care pathways"})
-long["regime"] = long.regime.map({"top_down": "Top-down by need", "per_capita": "Equal per capita", "community": "Community-decided"})
-al = alt.Chart(long).mark_bar().encode(x=alt.X("regime:N", title=None, sort=["Top-down by need", "Equal per capita", "Community-decided"]), y=alt.Y("value:Q", title=None), color=alt.Color("regime:N", legend=None),
-                                       column=alt.Column("metric:N", title=None), tooltip=["regime", "metric", alt.Tooltip("value:Q", format=",.0f")])
-st.altair_chart(al.properties(width=300, height=240), use_container_width=False)
-st.warning("ASSUMED INPUTS: community priorities, local-fit and capture are scenario values, so these bars are test arms, not results.", icon="ℹ️")
-st.caption("These are PILOT TEST ARMS, not results: the community arm's effect rests on assumptions (local-fit 1.0-1.3, capture 10-40%, placeholder community priorities), and the model does not value legitimacy or sustainability. "
-           "Community-driven development delivers local public goods but does not transform governance by itself (see precedents), so the claim is better targeting, not institution-building. Breakpoints are on the Resilience page.")
+st.caption("Who decides how money is spent (community vs top-down vs per capita) rests on placeholder community priorities; the break-evens are in the Resilience section and the test-arm chart is in the **Appendix charts** tab. The district table is there too.")
 
 st.subheader("Thresholds (data/params/escrow_params.yaml)")
 P = yaml.safe_load(open(io.ROOT / "data" / "params" / "escrow_params.yaml"))

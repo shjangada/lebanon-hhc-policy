@@ -108,6 +108,8 @@ def score(weights: dict | None = None, params: dict | None = None, scored: pd.Da
     cad = criteria(scored, rid)
     w = {k: 1.0 for k in CRITERIA}
     w.update(weights or {})
+    if sum(w.values()) <= 0:                                           # every weight set to zero: fall back to equal weights instead of dividing by zero
+        w = {k: 1.0 for k in CRITERIA}
     tot = sum(w.values())
     cad["start_score"] = sum(cad[k] * w[k] for k in CRITERIA) / tot
     cad = pd.concat([cad, startup_cost(cad, params)], axis=1)

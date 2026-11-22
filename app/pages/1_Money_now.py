@@ -56,31 +56,15 @@ else:
                "Government is a lower bound on money held by Lebanese state actors. 2027 flows are pledges.")
 
 lhf_alloc = pd.read_csv(PROC / "lhf_allocations.csv") if (PROC / "lhf_allocations.csv").exists() else None
-left, right = st.columns(2)
-with left:
-    st.subheader("Lebanon Humanitarian Fund: who implements")
-    if lhf_alloc is None:
-        st.info("Data pending: run `make ingest` (CBPF project summary).")
-    else:
-        la = lhf_alloc.copy()
-        ch2 = alt.Chart(la).mark_bar().encode(x=alt.X("year:O", title=None), y=alt.Y("budget_usd:Q", stack="normalize", title="share of project budgets"),
-                                              color=alt.Color("partner_type:N", title="Partner type"), tooltip=["year", "partner_type", alt.Tooltip("budget_usd:Q", format=",.0f"), alt.Tooltip("projects:Q")])
-        st.altair_chart(C.wm(ch2, 400, 280), use_container_width=False)
-        st.caption("Source: OCHA CBPF project summary, Lebanon fund (real). National NGOs' share has risen from 17-24% in 2019-2022 to 38-47% in 2023-2026, still below the 70% aspiration for pooled funds.")
-with right:
-    st.subheader("Flash Appeal 2026: funded vs required, by sector")
-    if req is None:
-        st.info("Data pending: run `make ingest` (FTS requirements).")
-    else:
-        cl = req[(req.plan == "Lebanon Flash Appeal 2026") & (req.cluster != "All clusters (plan total)")].copy()
-        cl["gap_usd"] = (cl.requirements_usd - cl.funding_usd).clip(lower=0)
-        long = cl.melt(["cluster", "percent_funded"], ["funding_usd", "gap_usd"], "part", "usd")
-        long["part"] = long.part.map({"funding_usd": "Funded", "gap_usd": "Gap"})
-        order = cl.sort_values("percent_funded").cluster.tolist()
-        ch3 = alt.Chart(long).mark_bar().encode(y=alt.Y("cluster:N", sort=order, title=None), x=alt.X("usd:Q", title="USD"), color=alt.Color("part:N", title=None, scale=alt.Scale(domain=["Funded", "Gap"], range=["#2e86c1", "#c0392b"])),
-                                                tooltip=["cluster", "part", alt.Tooltip("usd:Q", format=",.0f"), "percent_funded"])
-        st.altair_chart(C.wm(ch3, 400, 280), use_container_width=False)
-        st.caption("Source: OCHA FTS (real). The Health cluster is 60% funded; sectors that shape recovery (livelihoods, WASH, social stability) are far less funded.")
+st.subheader("Lebanon Humanitarian Fund: who implements")
+if lhf_alloc is None:
+    st.info("Data pending: run `make ingest` (CBPF project summary).")
+else:
+    la = lhf_alloc.copy()
+    ch2 = alt.Chart(la).mark_bar().encode(x=alt.X("year:O", title=None), y=alt.Y("budget_usd:Q", stack="normalize", title="share of project budgets"),
+                                          color=alt.Color("partner_type:N", title="Partner type"), tooltip=["year", "partner_type", alt.Tooltip("budget_usd:Q", format=",.0f"), alt.Tooltip("projects:Q")])
+    st.altair_chart(C.wm(ch2, 400, 280), use_container_width=False)
+    st.caption("Source: OCHA CBPF project summary, Lebanon fund (real). National NGOs' share has risen from 17-24% in 2019-2022 to 38-47% in 2023-2026, still below the 70% aspiration for pooled funds.")
 
 st.subheader("Theme KPI: share of Beqaa health money controlled by Lebanese actors")
 scn = st.selectbox("Scenario for the projection", list(theme_kpi.SCENARIOS), format_func=lambda k: theme_kpi.SCENARIO_LABELS[k], key="p1_scn")

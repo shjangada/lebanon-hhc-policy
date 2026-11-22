@@ -1,4 +1,4 @@
-# Funding and eligibility assistant (Page 5)
+# Funding and eligibility assistant (section 5, Funding sources)
 
 **What it is.** A funding navigator for Lebanese local actors, not a general "ask anything about Lebanon health" bot. It lowers the cost of *direct access*: small organisations and municipalities rarely know which funds they qualify for or what they would need to move up the escrow ladder, and international NGOs have grant teams for exactly this. It supports the theme (money and decisions in Lebanese hands) and the Grand Bargain's local-funding goal.
 

@@ -98,26 +98,7 @@ with mr:
     st.altair_chart(C.wm(ch.mark_bar().add_params(alt.selection_point(name="pick", fields=["cadaster_name"])), 420, 420), on_select="rerun", key="p2_bar")
     st.caption("The fifteen cadasters with the worst value for the chosen metric. Click a bar or a map dot to highlight it in both.")
 
-st.subheader("Where access was lost, and where it overlaps with exposure")
-g1, g2 = st.columns(2)
-with g1:
-    lost = P.sort_values("access_lost_pct", ascending=False).head(10)
-    long = lost.melt("cadaster_name", ["access_prewar", "access_current"], "period", "access")
-    long["period"] = long.period.map({"access_prewar": "Pre-war", "access_current": "Now"})
-    ch = alt.Chart(long).mark_bar().encode(y=alt.Y("cadaster_name:N", sort=lost.cadaster_name.tolist(), title=None), x=alt.X("access:Q", title="capacity per 1,000 women (E2SFCA)"),
-                                           color=alt.Color("period:N", title=None, scale=alt.Scale(domain=["Pre-war", "Now"], range=["#aab7b8", "#c0392b"])), yOffset="period:N",
-                                           tooltip=["cadaster_name", "period", alt.Tooltip("access:Q", format=".1f")])
-    st.altair_chart(C.wm(ch, 400, 340), use_container_width=False)
-    st.caption("Ten cadasters that lost the most access since the pre-war baseline. Facilities are the MoPH list (PHCCs located at village centroids), and only 4 have a dated 2026 status, so read the ranking of losses, not the levels.")
-with g2:
-    sc = P.assign(target=(P.D_environment >= 0.33) & (P.access_deficit >= 0.5))
-    pts = alt.Chart(sc).mark_circle(opacity=0.7).encode(x=alt.X("access_deficit:Q", title="access deficit (share of pre-war access lost)", scale=alt.Scale(domain=[0, 1])),
-                                                       y=alt.Y("D_environment:Q", title="environmental exposure (M4 tier score)", scale=alt.Scale(domain=[0, 1])), size=alt.Size("population_total:Q", legend=None, scale=alt.Scale(range=[20, 400])),
-                                                       color=alt.Color("district:N", title="District"), stroke=alt.condition("datum.target", alt.value("black"), alt.value(None)), tooltip=["cadaster_name", "district", alt.Tooltip("access_deficit:Q", format=".2f"), alt.Tooltip("D_environment:Q", format=".2f")])
-    rules = alt.Chart(pd.DataFrame({"x": [0.5], "y": [0.33]}))
-    quad = rules.mark_rule(strokeDash=[4, 4], color="#555").encode(x="x:Q") + rules.mark_rule(strokeDash=[4, 4], color="#555").encode(y="y:Q")
-    st.altair_chart(C.wm(pts + quad, 400, 340), use_container_width=False)
-    st.caption("Top-right quadrant (outlined) = high exposure and low access: the core target list below. Exposure only exists where soil was sampled, so empty space is 'not measured', not 'safe'.")
+st.caption("Secondary charts (access lost since the pre-war baseline; exposure vs access) are in the **Appendix charts** tab.")
 d1, d2 = st.columns(2)
 with d1:
     box = alt.Chart(comb).mark_boxplot(extent="min-max").encode(x=alt.X("district:N", title=None), y=alt.Y("need_score:Q", title="combined priority"), color=alt.Color("district:N", legend=None))

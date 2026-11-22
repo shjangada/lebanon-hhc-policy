@@ -63,4 +63,4 @@ def dashboard():
 
 common.sidebar()
 st.navigation([st.Page(dashboard, title="Dashboard", default=True, url_path="dashboard"),
-               st.Page("pages/6_Methods.py", title="Methods")]).run()
+               st.Page("pages/7_Appendix_charts.py", title="Appendix charts"), st.Page("pages/6_Methods.py", title="Methods")]).run()

@@ -4,15 +4,16 @@
 
 **Theme:** an adaptive funding switch for Beqaa primary care. Money follows measured need, and administrative control shifts from foreign NGOs to Lebanese entities (national NGOs, Unions of Municipalities, with MoPH co-governing) as measured capacity improves. Horizon 2030.
 
-> **Everything currently runs on MOCK data** (synthetic cadasters, placeholder costs). The dashboard shows a red MOCK banner and watermarks every chart. Mock figures are never written to `outputs/memo/`. Real files in `data/raw/` override mock files of the same name automatically.
+> **Status (2026-11-21):** no dataset is entirely mock. Real or sourced inputs drive the ranking; anything without a published value is a labelled slider, placeholder or proxy (see `docs/HEADLINE_AUDIT.md` and `docs/ASSUMPTIONS_PILOT.md`). The red MOCK watermark appears only if a dataset is entirely mock; sections that rest on assumed inputs say ASSUMED INPUTS. Mock files in `data/mock/` exist only for the tests.
 
 ## Run
 ```
 python3 -m venv .venv && source .venv/bin/activate && pip install -e . pytest
-make mock     # generate MOCK data in data/mock/
+make mock     # generate MOCK data in data/mock/ (tests only)
 make ingest   # convert raw downloads to real datasets in data/processed/ (python -m beqaa.ingest all)
-make all      # mock + full pipeline -> data/processed/ and outputs/figures/
-make test     # mock + pytest (30 tests)
+make all      # mock + full pipeline -> data/processed/ (models, break-evens, riders, unit costs, KPIs)
+make test     # mock + pytest (150 tests)
+make appendix # ingest + pipeline + 13 memo figures (figures/) + generated docs + notebook
 make app      # Streamlit dashboard at http://localhost:8501
 ```
 The Makefile uses `.venv/bin/python` (override with `make PY=python3 ...`).
@@ -31,11 +32,16 @@ The Makefile uses `.venv/bin/python` (override with `make PY=python3 ...`).
 | **M5 Options & budget** (`m5_options.py`): $1k / $100k / $1M tiers, fundable-or-not, Monte Carlo extra completed pathways, cost per pathway, equity-gap change, collateral-damage checklist | Q3 | interventions, cascade_baseline | Runs on mock; costs and lifts are **mock** |
 | **Community allocation** (`allocation.py`): top-down vs per-capita vs community-decided with capture safeguards | Q3 (team theme) | M2 scores, M5 effects, mock community priorities | Effect of local choice is an **assumption** (range 1.0–1.3), not an estimate |
 | **Escrow & funding switch** (`escrow.py`): need floor + capacity tranche, editable thresholds, administrator ladder INGO → national NGO → Union of Municipalities (MoPH co-governs, not assumed to administer by 2030; renewed-escalation scenario), lock-out and gaming warnings, restricted vs unrestricted | Q3, Q5 | M2 scores, governance_capacity and staffing_referrals (mock **scenario inputs**: no public source, the pilot would measure them) | Runs on mock; thresholds are assumptions |
-| **Funding finder + registry chat** (`funding_finder.py`, `chat.py`): rank registry rows, recency and "fits escrow?" flags; grounded retrieval that refuses when nothing matches | Q3 | `data/registry/*.csv` (8 funding rows, 7 org rows to verify) | Registry rows from team research 2026-11-21; re-check before use |
+| **Start-site scorer, rank stability** (`start_site.py`): where the pilot is cheapest to start (soil result, host project, centre access, settlements 2016, outreach, reported disease, need) with 1,000-draw weight stability and startup cost | Q3, Q4 | processed data above | Saadnayel (Zahle) first; no single cadaster is stable, choose a district and a cluster |
+| **Pilot flow** (`pilot_flow.py`): referral funnel, visit and test schedule, WHO sampling floor, capacity-aware routing, break-even CHW share | Q2, Q5 | sliders (no Beqaa data); 72% settlement water positivity (WaSH Sector) | assumptions are sliders |
+| **M6 illness averted** (`m6_illness_averted.py`): reported hepatitis A + typhoid averted and cost per NOTIFIED case (upper bound) | Q4 | MoPH ESU 2023-25, Wolf 2022 RR (transferred), sourced prices | $2,600-8,500 per notified case |
+| **Riders, unit costs, KPIs** (`riders.py`, `unit_costs.py`): testing + referral add-on per project, unit-cost table, KPIs mapped to escrow triggers with equity splits | Q3, Q5 | AUB, UNICEF, K2P prices; escrow rules | counts are assumptions |
+| **Break-evens and sensitivity** (`breakeven.py`, `sensitivity.py`): when community beats status quo; one-way tornado of the pilot numbers | Q4 | scenario parameters | no published values |
+| **Funding finder + registry chat** (`funding_finder.py`, `chat.py`): rank registry rows, recency and "fits escrow?" flags; grounded retrieval that refuses when nothing matches | Q3 | `data/registry/*.csv` (22 funding rows, 53 organisations; most org rows are `to_verify`) | Registry rows from team research 2026-11-21; re-check before use |
 
-Dashboard: one scrolling page with six sections (0 Why Beqaa · 1 Funding today · 2 Priority areas · 3 Control of the money · 4 Resilience · 5 Funding sources) and a jump-link bar, plus a separate Methods page (the detailed model views). Interventions carry a feasibility filter (F1–F8) from `docs/FEASIBILITY.md`. Every mock file is listed in `data/registry/mock_provenance.csv` with the real source it stands in for and how obtainable it is (a test enforces this).
+Dashboard: one scrolling page with eight sections (Why Beqaa · Care and disease today · Funding today · Priority areas · Control of the money · Pilot design · Resilience · Funding sources) and a jump-link bar, plus a separate Methods page (the detailed model views). Interventions carry a feasibility filter (F1–F8) from `docs/FEASIBILITY.md`. Every mock file is listed in `data/registry/mock_provenance.csv` with the real source it stands in for and how obtainable it is (a test enforces this).
 
-Not built yet: M3 network simulation, Workforce & network page, Pilot design page (stepped-wedge, PDIA log), case-study cards, notebook appendix, LLM layer for the registry chat.
+Not built yet: M3 network simulation (a light version is `pilot_flow.py`), a Workforce page, OSM-road travel times, escrow overhead in the escrow-vs-direct comparison, a Beqaa-specific measured funding share (only a title-keyword proxy exists).
 
 ## Running the app
 ```
@@ -45,9 +51,9 @@ make app-stable    # localhost:8502 from a separate worktree that tracks origin/
 `.streamlit/config.toml` sets `runOnSave = true`: the app reruns by itself when a `.py` file in `app/` or `src/beqaa` changes. New CSVs in `data/processed/` or `data/registry/` are picked up on the next rerun (press **R** in the browser): the app's cache is keyed to file timestamps. If `requirements.txt` changes, stop the server, `pip install -r requirements.txt`, restart. The stable worktree (`../lebanon-hhc-main`, detached at `origin/main`) only changes when main changes; re-run `make app-stable` after each merge to update it.
 
 ## Data status: what is real and what is fake so far
-**Short version:** the places, population, conflict incidents, food insecurity, official severity, funding flows, soil (5 villages) and crop transfer factors are real. Costs, cascade rates, staffing, water quality and district governance capacity are still mock or assumed, so the model outputs are **not findings yet**.
+**Short version:** the places, population, MoPH facility list, conflict incidents, food insecurity, official severity, funding flows, disease surveillance, soil (5 villages) and crop transfer factors are real or sourced. Water quality and staffing were removed (water exposure is unknown for every cadaster; referral completion and posts filled are sliders); governance uses national anchors for every district; cascade uses HAUS 2024; five option costs and most effect sizes are labelled placeholders. Read the outputs as comparisons of options with break-evens, not forecasts.
 
-The app and pipeline load `data/processed/` (real, from `make ingest`) first and fall back to `data/mock/` per dataset (`BEQAA_DATA=mock` forces mock). Badges: ✅ real · 🟡 partly real (some fields assumed, modelled or empty) · 🔴 mock · ⚪ missing (no mock exists, nothing is invented).
+The app and pipeline load `data/processed/` (real, from `make ingest`); `data/mock/` is used only when a processed file is absent or `BEQAA_DATA=mock` (the tests). Badges: ✅ real · 🟡 partly real (some fields assumed, modelled or empty) · 🔴 mock · ⚪ missing (no mock exists, nothing is invented).
 
 | Dataset | Status | What is real | What is still assumed, mock or missing |
 |---|---|---|---|
@@ -58,19 +64,24 @@ The app and pipeline load `data/processed/` (real, from `make ingest`) first and
 | vulnerability | 🟡 partly real | IPC phase 3+ share by district (Sep 2026); VASyR 'below SMEB' by governorate (Syrian households, extra columns) | female-headed households, access barriers, insurance: no district source, left empty |
 | official_severity | ✅ real | LRP Addendum JIAF / health severity classes for all 26 districts (hand-transcribed) | FSA composite printed for only 8 Severity-4 districts; other 18 empty |
 | soil_sites | 🟡 partly real | CNRS-L/MoE Cr, total P, one Pb value for 5 Beqaa villages | no coordinates in the report: villages located by name at cadaster centroids; 4 villages unmatched; Cr(VI) share unknown |
-| water_quality | 🔴 mock | nothing | all mock: needs a data request to the Litani River Authority |
+| water_quality | removed | no public Beqaa well data | the mock dataset was deleted: water exposure is unknown for every cadaster (evidence gap); published studies are context only (`docs/EVIDENCE_TABLE.md`) |
 | crop_transfer | ✅ real | Abi Saab et al. 2022 printed BAFs for Cr, Ni, Zn, Cu, Cd by crop and season | no Pb or As; pooled means only |
 | interventions | 🟡 partly real | costs of 3 of 8 options derived from 48 sourced unit prices (`data/raw/costs`, `docs/COSTS.md`) | effects, reach and risk columns are assumptions; 5 options have no published cost (hub-spoke e-referral, vouchers, water truck, biochar, Cr(VI) speciation) |
-| cascade_baseline | 🔴 mock | sourced ANC/delivery rates in cascade_baseline_long.csv (VASyR national for Syrians, 2 verified rows) | M5 still uses a mock step x group table; referral completion has no source |
-| staffing_referrals | 🔴 mock | nothing | mock scenario input: no public source (pilot-measured) |
+| cascade_baseline | 🟡 partly real | HAUS 2024 reference cascade (any ANC, ANC4, facility delivery, postnatal; registered displaced Syrians, national) | other groups assumed equal to it (flagged); referral completion is a slider |
+| staffing_referrals | removed | no public source | the mock dataset was deleted: referral completion and posts filled are scenario parameters (`docs/ASSUMPTIONS_PILOT.md`) |
 | conflict_exposure | ✅ real | LRP conflict incidents per admin-3 (Oct 2023 - Jul 2025) | ACLED events for the last 30/90 days not loaded (API access returned HTTP 403) |
-| governance_capacity | 🔴 mock | national anchors only (WGI 29.9/100, state health share 13.4%) | district series is mock: the UN-Habitat assessment publishes national aggregates only |
+| governance_capacity | 🟡 partly real | WGI government effectiveness 29.9/100 and the LHF national NGO share, applied to every district | districts start identical (no district series is public); growth capped at 0.05 a year; transparent reporting is a scenario rule |
 | funding_flows | ✅ real | OCHA FTS funding by year, cluster, recipient type | FTS cannot split national from international NGOs (LHF file does) |
 | funding_requirements | ✅ real | OCHA FTS requirements and % funded (Flash Appeal 2026: 54%; Health cluster 60%) | nothing |
 | agesex_by_district | 🟡 partly real | WorldPop 2025 age/sex 1 km, summed by district: population pyramids and demand shares (Why Beqaa) | modelled, not a census; not scaled to the LRP 2026 totals |
 | damage_published | 🟡 to verify | 41 published damage figures (UN-Habitat BDDQA 2025, World Bank RDNA 2025, CNRS-L via Annahar 2026, IMPACT HSM) | extracted automatically: `to_verify_pdf`; governorate/district totals only; no 2026 Bekaa building-level data exists |
 | beqaa_funding_proxy | 🟡 partly real | LHF health projects whose title names Bekaa or Baalbek-Hermel, by recipient type, 2024-26 (title keyword proxy; about 0-5% to national NGOs) | projects not naming Beqaa are missed; full budgets; no public 4W by governorate; the Beqaa theme KPI is therefore a proxy |
 | beqaa_health_partners | 🟡 partly real | 49 organisations: 39 operate the MoPH-network PHCCs (MoPH list 16/04/2026, all Lebanese) plus INGOs/NNGOs/UN | `women_led` unknown for all (to verify on each organisation's own site); PHCC list may miss rows |
+| esu (surveillance) | 🟡 partly real | MoPH ESU reported cases, 32 diseases, 2019 to Aug 2026, by month, caza, age and sex | notified cases, under-reported; Bekaa file = old Beqaa mohafaza; 2026 partial and late-2025 zeros are lag |
+| informal_settlements | 🟡 old | IAMP Dec 2016: 135 cadasters, 184,966 people | OLD (2016); newer cadaster-level counts are not public |
+| outreach, referral_payers, wash, capacity_waittime | 🟡 partly real | who runs outreach, who pays for referral, settlement water quality (72% faecal), PHCC counts | visit frequency, waiting times and referral completion NOT FOUND; no payer found for unregistered Syrians in hospital |
+| evidence_pack, prices_pack, unit_costs, kpis | 🟡 partly real | 37 evidence rows, 20 prices (plus AUB lab prices), unit costs and KPIs | unverified prices stay sliders; no Lebanese Cr(VI), PPE or freight price |
+| projects, riders | 🟡 to verify | 37 funded projects (desk search) and the rider cost per project | most project pages could not be opened; host project not confirmed |
 
 **Registries (real, with source URLs and verified dates):** `funding_registry.csv` (22 funds), `org_registry.csv`, `sources.csv` (55+ sources), `state_capacity_sources.csv`, `workforce_sources.csv`. Rows marked `to_verify` are not yet checked against the primary source.
 
@@ -78,7 +89,7 @@ The app and pipeline load `data/processed/` (real, from `make ingest`) first and
 
 **Assumptions that are not data** (all in the dashboard's assumptions log): Need Score anchors and weights, community local-fit and capture, escrow thresholds and ladder weights, scenario effect multipliers, access thresholds (30 / 60 min), the Syrian registered/unregistered split.
 
-Details and coverage: `docs/DATA_STATUS.md` · what changes when real inputs replace mock: `docs/MOCK_VS_REAL.md` · what needs a person: `docs/MANUAL_STEPS.md`.
+Details and coverage: `docs/DATA_STATUS.md` · what needs a person: `docs/MANUAL_STEPS.md`.
 
 ## Data we use and what it is for
 

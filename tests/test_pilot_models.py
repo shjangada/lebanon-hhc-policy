@@ -109,3 +109,10 @@ def test_memo_support_docs_exist_with_their_required_columns():
     au = (docs / "HEADLINE_AUDIT.md").read_text()
     assert "| Number | Where used | File | Source | Status |" in au and "drop" in au and "ok" in au
     assert all((docs / f).exists() for f in ("OPTIONS.md", "DECISION_ROUTE.md", "OBJECTIONS.md", "IMPLEMENTATION.md"))
+
+
+@need
+def test_all_zero_weights_fall_back_to_equal_weights():
+    z = ss.score(weights={k: 0.0 for k in ss.CRITERIA})
+    e = ss.score()
+    assert z.start_score.notna().all() and (z.set_index("cadaster_id").start_score == e.set_index("cadaster_id").start_score).all()

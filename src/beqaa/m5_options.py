@@ -167,7 +167,9 @@ def evaluate(selected: list[str], budget: float, shares: dict | None = None, rea
                "equity_gap_change": float(gap_after - gap_before),
                "collateral_exclusion": r.risk_exclusion, "collateral_capture": r.risk_capture, "collateral_dependency": r.risk_dependency,
                "collateral_displacement": r.risk_displacement, "collateral_conflict": r.risk_conflict,
-               "feasibility_flags": "; ".join(feasibility_flags(r)) or "passes F1-F8", "is_mock": bool(mock)}
+               "feasibility_flags": "; ".join(feasibility_flags(r)) or "passes F1-F8",
+               "is_mock": bool(r["is_mock"]) if "is_mock" in iv.columns else bool(mock),        # row level: True = placeholder cost (no published unit cost)
+               "cost_basis": str(r.get("cost_basis", ""))}
         if not steps:
             row["note"] = "Environmental / protection measure: acts on exposure, not on the ANC cascade (no pathways counted)"
         rows.append(row)

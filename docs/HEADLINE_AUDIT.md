@@ -16,12 +16,12 @@ Status: **ok** = traced to a file and source, no mock or fallback input; **ok (p
 | 4.3% direct to local actors in 2025 vs 25% pledge | NARRATIVE | docs/sources S45 | ALNAP SOHS 2026 | check (reported) |
 | Chromium 110-230 mg/kg (4 villages); lead 230 mg/kg (Bouday) | NARRATIVE, evidence | soil_sites.csv | CNRS-L / MoE Apr 2026, Table 2.3, two-pass transcription; TOTAL Cr | ok |
 | Hazard quotient 0.27 to 280 | NARRATIVE, TRIGGERS, objections | m4_site_screen.csv | EPA defaults, Abi Saab 2022 factors, Cr(VI) share 0-1 | ok (modelled; range, not a point) |
-| Lead screening level 200 ppm | TRIGGERS | docs/EVIDENCE_TABLE.md row 3 | EPA Jan 2024 guidance | check (see EVIDENCE_TABLE) |
+| Lead screening level 200 ppm | TRIGGERS | docs/EVIDENCE_TABLE.md row 3 | EPA Residential Lead Directive (16 Oct 2025; supersedes the Jan 2024 guidance, which also said 200 ppm) | ok (checked 2026-11-21) |
 | 72% faecally contaminated settlement samples (Jul 2026) | NARRATIVE, Care today, pitch | wash.csv | WaSH Sector / UNICEF SitRep No. 5 | ok |
 | 15-20 L per person per day vs 35 L | Care today | wash.csv | WaSH Sector (2024) | ok |
 | About 70% of wastewater untreated | NARRATIVE, pitch | evidence_pack.csv (E28) | CDR/MoEW strategic environmental assessment | ok (national; pack-verified) |
 | Hepatitis A (Bekaa file): 690 (2023), 779 (2024), 270 (2025), 67 to Aug 2026 | NARRATIVE, Care today | esu_by_month.csv | MoPH ESU (reported; late-2025 zeros are lag; 2026 partial) | ok |
-| Nitrate: 12 of 21 Bekaa-plain wells above 200 mg/L (2007-09); Baalbek-Hermel median 11 mg/L, max 137 | EVIDENCE_TABLE, pitch (context) | docs/EVIDENCE_TABLE.md rows 5-6 | Darwish 2011; Fahes 2025 | check (verify units and context before quoting) |
+| Nitrate: 12 of 21 wells above 200 mg/L (2007-09, four fields); Baalbek-Hermel median 11 mg/L, max 137 | EVIDENCE_TABLE, pitch (context) | docs/EVIDENCE_TABLE.md rows 5-6 | Darwish 2011; Fahes 2025 | ok with context (checked 2026-11-21: matches; old; units unresolved; Fahes is a drinking-water paper that contradicts itself on the 45 mg/L limit) |
 | Rider cost about $3,800-4,200; 0.5-0.9% of host budget | NARRATIVE, OPTIONS | riders.csv | AUB and K2P prices x ASSUMED sample counts | ok (assumption: counts) |
 | Start-up about $33,000 (range $29,000-40,000) top site; $25 per household reached | OPTIONS, IMPLEMENTATION | unit_costs.csv, start_site | UNICEF catalogue, AUB, CHW pay x assumed counts | ok (assumption: counts; filters ex-works) |
 | $2,600-8,500 per NOTIFIED case averted (10% coverage) | NARRATIVE, OPTIONS, objections | m6 (table) | ESU + Wolf 2022 RR (transferred) + prices | ok as an UPPER BOUND |
@@ -30,10 +30,10 @@ Status: **ok** = traced to a file and source, no mock or fallback input; **ok (p
 | Escrow thresholds 0.40 / 0.60 / 0.30; capacity 0.299 growing <= 0.05/yr | KPIs, IMPLEMENTATION | escrow_params.yaml, governance_capacity.csv | assumptions anchored to SC01 | ok (assumption) |
 | First start site Saadnayel; stability 80% / 21% | NARRATIVE, FEASIBILITY, objections | start_site.rank_stability | scorer on processed data (tested against the docs) | ok |
 | Access ranking stable to centre size (rho 0.997) | objections | m1_access.capacity_sensitivity | centre capacity assumed 200/300/400 | ok (assumption) |
-| iCCM care-seeking RR 1.68; Lewin RR 0.86; Afshari, Ayaz, Das, Macfarlane | EVIDENCE_TABLE R01-R10 | docs/EVIDENCE_TABLE.md | abstracts read through a summariser | **do not quote effect sizes** (check) |
-| Wolf 2022 risk ratios 0.50 / 0.66 / 0.70 / 0.53 | M6, evidence E01-E07 | evidence_pack.csv | pack-verified; transferred to hepatitis A and typhoid by assumption | ok with label (check against the paper) |
+| iCCM care-seeking RR 1.68; Lewin RR 0.86; Afshari, Ayaz, Das, Macfarlane | EVIDENCE_TABLE R01-R10 | docs/EVIDENCE_TABLE.md | figures checked against the abstracts 2026-11-21 | ok with caveats (transferred effects, mostly low certainty; do not present R03 as a benefit) |
+| Wolf 2022 risk ratios 0.50 / 0.66 / 0.70 / 0.53 | M6, evidence E01-E07 | evidence_pack.csv | The Lancet 2022 (124 studies): figures verified against the abstract 2026-11-21; transferred to hepatitis A and typhoid by assumption | ok with label |
 | 69 of 126 women farmworkers reported health problems | evidence E14, KPI reference | evidence_pack.csv | Agrimovement (Bekaa and Koura sample, self-reported) | ok with label; not a Beqaa baseline |
-| Cord-blood antimony and nickel near farmland (n=74) | EVIDENCE_TABLE row 9 | evidence_pack.csv (E30-E32) | Beirut / Mount Lebanon, not Beqaa | ok with label; not a headline |
+| Cord-blood antimony and nickel near farmland (n=74) | EVIDENCE_TABLE row 9 | evidence_pack.csv (E30-E32) | Beirut / Mount Lebanon, not Beqaa; antimony bivariate and unadjusted; the nickel CI in the paper's table does not contain its coefficient | ok with label; not a headline; do not quote the nickel coefficient |
 | EELI "106 pollutants" | none | evidence_pack.csv (E33) | Spanish study | drop |
 | "90% of wastewater untreated (WHO)"; "30% of groundwater polluted by leachate"; "air pollution up 50%" | none | n/a | no primary source | drop |
 | White phosphorus 1,858 ppm | none | n/a | it is TOTAL phosphorus | drop |
