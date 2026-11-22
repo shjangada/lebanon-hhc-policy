@@ -52,3 +52,9 @@ def test_evidence_table_has_all_pack_rows_and_the_corrections():
     ev = (ROOT / "docs" / "EVIDENCE_TABLE.md").read_text()
     assert all(f"| E{i:02d} |" in ev for i in range(1, 38))
     assert "Spanish" in ev and "Bekaa and Koura" in ev and "NOT significant" in ev and "TOTAL chromium" in ev
+
+
+def test_research_pass_rows_are_marked_unverified_and_not_found_items_listed():
+    ev = (ROOT / "docs" / "EVIDENCE_TABLE.md").read_text()
+    assert all(f"| R{i:02d} |" in ev for i in range(1, 11)) and "abstract read; verify" in ev
+    assert "Not found" in ev and "stays a slider" in ev.replace("stay sliders", "stays a slider") or "it stays a slider" in ev
