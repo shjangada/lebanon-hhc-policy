@@ -12,8 +12,8 @@
 | Union of Hermel Municipalities, municipal councils (elected May 2025) | co-sign, host committee, municipal plan | yes at the later rungs | yes | high / medium | capacity and political balance |
 | Amel Association (candidate lead) and other PHCC operators | consortium lead, referral, CHW pay | yes | yes | high / medium | burden on centres; women-led status unknown |
 | Women-led and farming cooperatives | sampling at planting/harvest, committee seats | yes | yes | high / low | landowner bias; workers left out |
-| Donors: EU, AFD, KfW, Denmark, World Bank | fund the host projects and the window | yes | no | medium / high | no new money; reporting lines |
-| UN agencies: UNDP, FAO, WHO, UNFPA, UNICEF, ILO | implement host projects, technical support | partly | no | medium / high | mandate; overhead 7-8% |
+| Donors: EU, AFD, KfW, Denmark, World Bank | fund the LHF window and any host projects (optional) | yes | no | medium / high | no new money; reporting lines |
+| UN agencies: UNDP, FAO, WHO, UNFPA, UNICEF, ILO | implement host projects (optional), technical support | partly | no | medium / high | mandate; overhead 7-8% |
 | AUB lab and other labs | analyse samples at published prices | no | no | low / low | turnaround, sample chain of custody |
 | Displaced Syrian farm workers (including those without legal status) | none | their access is the test of the design | yes | high interest / lowest power | fear of exposure through registration or testing |
 | Farm owners and market buyers | consent to sampling | yes | yes | medium / medium | stigma and price effects if results leak |
