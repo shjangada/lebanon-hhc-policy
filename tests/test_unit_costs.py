@@ -13,7 +13,7 @@ def test_every_unit_cost_has_a_source_year_and_a_lebanon_flag():
     assert u.source.notna().all() and u.year.notna().all() and set(u.lebanon_price) == {"y", "n"} and (u.central > 0).all()
     assert (u.low.fillna(u.central) <= u.central).all() and (u.central <= u.high.fillna(u.central)).all()
     n = set(u[u.lebanon_price == "n"].item)
-    assert "Cr(VI) speciation in soil" in n and "Household ceramic water filter" in n               # no Lebanese price: flagged, never presented as local
+    assert "Cr(VI) analysis (US lab fee schedules)" in n and "Household ceramic water filter" in n               # no Lebanese price: flagged, never presented as local
 
 
 @need

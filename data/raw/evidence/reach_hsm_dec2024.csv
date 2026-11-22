@@ -1,0 +1,9 @@
+indicator,value,denominator,unit,collected,coverage,source,url,verification,caveat
+Health services reported inaccessible,17,53,cadasters,2024-12-10 to 2024-12-20,28 Bekaa + 24 Baalbek-Hermel cadasters (text also says n=53),REACH / Solidarites International HSM Lebanon factsheet Jan 2025 (Round 2),https://repository.impact-initiatives.org/document/impact/12a6a0ac/LBN25_HSM_Round2.pdf,PDF downloaded and text read directly (2026-11-22),"3-5 key informants per cadaster; cadasters purposively selected, not representative; text says n=53 in places and 52 in others"
+Barrier to health access: reduced income,10,17,cadasters (of those with inaccessible health services),2024-12-10 to 2024-12-20,same,same,same,same,multiple response
+Barrier to health access: higher cost of medication,9,17,cadasters (of those with inaccessible health services),2024-12-10 to 2024-12-20,same,same,same,same,multiple response
+Barrier to health access: higher cost of other health services,7,17,cadasters (of those with inaccessible health services),2024-12-10 to 2024-12-20,same,same,same,same,multiple response
+Chronic-disease medicines unavailable,10,53,cadasters,2024-12-10 to 2024-12-20,same,same,same,same,particularly Bekaa
+Health named a priority need,33,53,cadasters,2024-12-10 to 2024-12-20,same,same,same,same,medicine 24 of 33; equipment and specialised treatment 21 of 33; mental health 7
+Food named a priority need,48,53,cadasters,2024-12-10 to 2024-12-20,same,same,same,same,
+Cadasters receiving no aid of any kind,20,53,cadasters,2024-12-10 to 2024-12-20,same,same,same,same,the key-findings box says 23

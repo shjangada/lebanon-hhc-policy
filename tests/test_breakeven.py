@@ -78,3 +78,14 @@ def test_appendix_notebook_and_memo_figures_exist():
     assert len(figs) >= 6, figs
     exported = sorted(p.name for p in (root / "figures").glob("fig*.png"))
     assert len(exported) == 13 and exported == sorted(p.name for p in (root / "outputs" / "memo").glob("fig*.png"))      # figures/ is the 2x export; outputs/memo mirrors it
+
+
+def test_exposure_breakeven_is_the_share_where_the_hazard_quotient_equals_one(monkeypatch):
+    from beqaa import breakeven
+    monkeypatch.setenv("BEQAA_DATA", "auto")
+    ex = breakeven.exposure_breakevens()
+    assert len(ex) >= 5 and ((ex.cr6_share_at_hq1 > 0) & (ex.cr6_share_at_hq1 < 1)).all()
+    r = ex.iloc[0]
+    hq_at = r.hq_low + r.cr6_share_at_hq1 * (r.hq_high - r.hq_low)                 # HQ is linear in the Cr(VI) share
+    assert abs(hq_at - 1.0) < 1e-9
+    assert abs(breakeven.GREEK_ULTRAMAFIC_BOUND - 11.5 / 2176) < 1e-12 and ex.cr6_share_at_hq1.max() < 0.01        # all sites flip below 1% Cr(VI)

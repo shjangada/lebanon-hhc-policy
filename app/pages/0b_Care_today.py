@@ -51,6 +51,14 @@ st.dataframe(pd.DataFrame([
     {"existing resource": "Host-project safety lines", "what it is today": "funded water, irrigation and cooperative projects (see Funding today)", "redirect": "pay the rider from the project's own safeguard or OHS line where allowed"},
     {"existing resource": "Subsidised primary-care package", "what it is today": "LPSP: $2 / $3.5 per visit; network open to all", "redirect": "treat and refer through the existing package"}]), hide_index=True, width="stretch")
 
+st.subheader("What communities report (REACH, Dec 2024)")
+rh = pd.read_csv(PROC / "reach_hsm.csv") if (PROC / "reach_hsm.csv").exists() else None
+if rh is not None:
+    show = rh[["indicator", "value", "denominator", "unit"]].copy()
+    show["share"] = (pd.to_numeric(show.value) / pd.to_numeric(show.denominator)).map("{:.0%}".format)
+    st.dataframe(C.pretty(show[["indicator", "value", "denominator", "share", "unit"]], indicator="Indicator", value="Cadasters", denominator="Out of", share="Share", unit="Unit"), hide_index=True, width="stretch")
+    st.caption("REACH / Solidarites International Humanitarian Situation Monitoring, round 2 (10-20 Dec 2024): 3-5 key informants in each of 28 Bekaa and 24 Baalbek-Hermel cadasters, purposively selected, so not representative. Health is named a priority in about two thirds of the sampled cadasters and cost is the main reported barrier; this is the real community-priority evidence we have, but it does not rank interventions, so the intervention-level community weights in the allocation comparison remain placeholders.")
+
 st.subheader("Pollution makes people sick: reported water-borne disease")
 dis = st.selectbox("Disease", ["Hepatitis A", "Typhoid fever", "Brucellosis"], key="care_disease")
 d = esu_d[(esu_d.mohafaza_file == "Bekaa") & (esu_d.geo_level == "caza") & esu_d.disease.str.contains(dis.split()[0], case=False)].copy()

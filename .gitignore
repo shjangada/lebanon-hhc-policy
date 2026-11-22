@@ -74,6 +74,7 @@ data/raw/msna/*.pdf
 !data/processed/capacity_waittime.csv
 !data/processed/evidence_pack.csv
 !data/processed/prices_pack.csv
+!data/processed/reach_hsm.csv
 !data/processed/beqaa_funding_proxy.csv
 !data/processed/beqaa_lhf_national_ngo_share_by_year.csv
 !data/processed/beqaa_health_partners.csv

@@ -38,12 +38,15 @@ def unit_costs() -> pd.DataFrame:
     add("Household ceramic water filter", "per household", float(f.low), float(f.central), float(f.high), "UNICEF supply catalogue (ex-works; excludes freight and distribution)", 2026, False)
     n = pk[pk["item"].str.startswith("NaDCC 33 mg")].iloc[0]
     add("NaDCC chlorine tablets (household supply)", "per household per month", np.nan, float(n.central), np.nan, "UNICEF supply catalogue", 2026, False)
-    c6 = pk[pk["item"].str.startswith("Cr(VI) speciation in soil")].iloc[0]
-    c6b = pk[pk["item"].str.startswith("Cr(VI) in soil/sediment")].iloc[0]
-    add("Cr(VI) speciation in soil", "per sample", np.nan, float(c6.central), float(c6b.central), "US lab price list 2024 ($40); US Fish & Wildlife c. 2008 ($77, secondary): NO Lebanese price", 2024, False)
+    add("Cr(VI) analysis (US lab fee schedules)", "per sample", 40.0, 76.0, 80.25, "US only: $40 soil (2024 list), $74.90 water (Westchester Co. NY, 2025), $77 soil (c. 2008, secondary), $80.25 solid (2025): NO Lebanese price", 2025, False)
     for lab, nm in (("Pesticide PPE - locally adapted", "Pesticide PPE kit, locally adapted set"), ("Pesticide PPE kit - commercial", "Pesticide PPE kit, commercial"), ("Pesticide PPE kit - farm applicator", "Pesticide PPE kit, 14-day applicator kit")):
         r = pk[pk["item"].str.startswith(lab)].iloc[0]
         add(nm, "per kit", np.nan, float(r.central), np.nan, "retail / Nepal study (prices_pack): NO Lebanese or regional NGO price", str(r.year), False)
+    fac = pd.read_csv(PROCESSED / "facilities.csv", dtype={"cadaster_id": str})
+    cdd = pd.read_csv(PROCESSED / "cadasters.csv", dtype={"cadaster_id": str})[["cadaster_id", "district"]]
+    npc = fac[fac.type == "PHC"].merge(cdd, on="cadaster_id").groupby("district").size()
+    add("E-referral / DHIS2 software and rollout, first year per district (PROXY, not used in the ranking)", "per district", float(npc.min() * 1245), float(npc.median() * 1245), float(npc.max() * 1245),
+        "Sierra Leone eIDSR rollout $1,021 + running $224 per facility (PMC8820104, 2017) x PHCs per district; surveillance system, excludes coordination and tracking staff", 2017, False)
     add("Hospital delivery, patient share (UNHCR scheme, ENDED 1 Dec 2025)", "per delivery", float(cr.loc["3c", "usd_low"]), float(cr.loc["3c", "usd_central"]), float(cr.loc["3c", "usd_high"]), "cost_ranges 3c", 2025, True)
     add("Caesarean, patient share (UNHCR scheme, ENDED)", "per delivery", float(cr.loc["3d", "usd_low"]), float(cr.loc["3d", "usd_central"]), float(cr.loc["3d", "usd_high"]), "cost_ranges 3d", 2025, True)
     return pd.DataFrame(rows)
@@ -76,7 +79,8 @@ def kpis() -> pd.DataFrame:
     rule = escrow.DEFAULT_RULES
     cap = float(__import__("beqaa.state_capacity", fromlist=["x"]).national_baseline()["admin_anchor"])
     dis = "; ".join(f"{d} {v:.1f}" for d, v in esu.round(1).items())
-    R = [("Output", "People reached and screened per site per month", "set in pilot months 1-3 (outreach coverage partial; no visit frequency published)", "ASSUMPTION: at least half of settlement people reached (slider)", "monthly", "consortium lead (PHCC operator)", ""),
+    R = [("Outcome", "Cadasters reporting health services inaccessible (cost is the main barrier)", "17 of 53 sampled Bekaa and Baalbek-Hermel cadasters, Dec 2024; reduced income 10/17, medicine cost 9/17 (REACH HSM; purposive sample, key informants)", "falling in pilot cadasters against months 1-3 (no numeric target is published)", "annual", "REACH / consortium", ""),
+         ("Output", "People reached and screened per site per month", "set in pilot months 1-3 (outreach coverage partial; no visit frequency published)", "ASSUMPTION: at least half of settlement people reached (slider)", "monthly", "consortium lead (PHCC operator)", ""),
          ("Output", "Water samples per supply per year (nitrate, chromium, microbial)", "set in pilot months 1-3", "at least 12 per supply per year (WHO GDWQ Table 4.4, supplies serving fewer than 5,000 people)", "monthly", "consortium lead + AUB lab", ""),
          ("Output", "Share of tested settlement water sources faecally contaminated", "72% of tested samples, Baalbek-Hermel settlements, Jul 2026 (WaSH Sector / UNICEF SitRep No. 5)", "falling against months 1-3 (no numeric target is published)", "quarterly", "WASH partners + consortium", ""),
          ("Output", "Red flags referred", "set in pilot months 1-3", "all red flags routed to the centre with spare capacity", "monthly", "CHWs + centre", ""),
@@ -85,7 +89,7 @@ def kpis() -> pd.DataFrame:
          ("Outcome", "Resolved or recovered at 2-4 weeks", "none published: set in pilot months 1-3", "set after months 1-3", "monthly", "CHW follow-up call", ""),
          ("Outcome", "Reported hepatitis A + typhoid per 10,000, pilot vs comparison cazas", f"ESU 2023-2025 mean by district: {dis} (reported cases; under-reported)", "pilot caza falling relative to comparison", "quarterly", "MoPH ESU + consortium", ""),
          ("Outcome", "Pesticide symptoms and injuries treated", "none for Beqaa (reference only: 69 of 126 women farmworkers reported health problems, Bekaa and Koura sample, self-reported)", "set after months 1-3", "quarterly", "CHWs + centres", ""),
-         ("Outcome", "Antenatal care 4+ visits among women workers", "HAUS 2024: 0.691 for registered displaced Syrians (national)", "ASSUMPTION: above the HAUS reference for every group", "quarterly", "centre registers", ""),
+         ("Outcome", "Antenatal care 4+ visits among women workers", "registered displaced Syrians: 0.691 (HAUS 2024, national); VASyR: 66% nationally in 2025 (the preliminary slides say 54%) and 46% in Bekaa in 2024; no host-Lebanese baseline found", "ASSUMPTION: above the HAUS reference for every group", "quarterly", "centre registers", ""),
          ("System", "Posts filled (CHW and nurse posts budgeted vs filled)", "none published: set in pilot months 1-3", f">= {rule['posts_filled_min']:.2f} (escrow release threshold)", "quarterly", "consortium lead", f"escrow trigger: posts filled >= {rule['posts_filled_min']:.2f}"),
          ("System", "District administrative capacity index", f"{cap:.3f} (WGI government effectiveness 2025, national anchor)", f">= {rule['admin_capacity_min']:.2f} (capacity threshold); growth capped at 0.05 a year", "annual", "municipal union + MoPH", f"escrow trigger: capacity >= {rule['admin_capacity_min']:.2f}"),
          ("System", "Transparent reporting (published quarterly spend + third-party spot check)", "none: scenario rule from 2027", "published every quarter", "quarterly", "consortium lead", "escrow trigger: transparent reporting"),

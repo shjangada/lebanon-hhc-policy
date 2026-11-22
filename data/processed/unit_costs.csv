@@ -9,9 +9,10 @@ Community health worker pay,per month,100.0,300.0,450.0,job postings (cost_range
 Primary-care service (full provider cost),per service,20.03,20.03,20.74,K2P/UNICEF 2022 (cost_ranges 2a),2022,y
 Household ceramic water filter,per household,19.2,21.0,24.51,UNICEF supply catalogue (ex-works; excludes freight and distribution),2026,n
 NaDCC chlorine tablets (household supply),per household per month,,3.6,,UNICEF supply catalogue,2026,n
-Cr(VI) speciation in soil,per sample,,40.0,77.0,"US lab price list 2024 ($40); US Fish & Wildlife c. 2008 ($77, secondary): NO Lebanese price",2024,n
+Cr(VI) analysis (US lab fee schedules),per sample,40.0,76.0,80.25,"US only: $40 soil (2024 list), $74.90 water (Westchester Co. NY, 2025), $77 soil (c. 2008, secondary), $80.25 solid (2025): NO Lebanese price",2025,n
 "Pesticide PPE kit, locally adapted set",per kit,,20.0,,retail / Nepal study (prices_pack): NO Lebanese or regional NGO price,2014/15,n
 "Pesticide PPE kit, commercial",per kit,,57.12,,retail / Nepal study (prices_pack): NO Lebanese or regional NGO price,2026 (retail),n
 "Pesticide PPE kit, 14-day applicator kit",per kit,,159.99,,retail / Nepal study (prices_pack): NO Lebanese or regional NGO price,2026 (retail),n
+"E-referral / DHIS2 software and rollout, first year per district (PROXY, not used in the ranking)",per district,4980.0,13695.0,29880.0,"Sierra Leone eIDSR rollout $1,021 + running $224 per facility (PMC8820104, 2017) x PHCs per district; surveillance system, excludes coordination and tracking staff",2017,n
 "Hospital delivery, patient share (UNHCR scheme, ENDED 1 Dec 2025)",per delivery,128.0,170.0,170.0,cost_ranges 3c,2025,y
 "Caesarean, patient share (UNHCR scheme, ENDED)",per delivery,255.0,300.0,300.0,cost_ranges 3d,2025,y

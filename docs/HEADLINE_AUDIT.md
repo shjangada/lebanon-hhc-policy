@@ -23,8 +23,8 @@ Status: **ok** = traced to a file and source, no mock or fallback input; **ok (p
 | Hepatitis A (Bekaa file): 690 (2023), 779 (2024), 270 (2025), 67 to Aug 2026 | NARRATIVE, Care today | esu_by_month.csv | MoPH ESU (reported; late-2025 zeros are lag; 2026 partial) | ok |
 | Nitrate: 12 of 21 wells above 200 mg/L (2007-09, four fields); Baalbek-Hermel median 11 mg/L, max 137 | EVIDENCE_TABLE, pitch (context) | docs/EVIDENCE_TABLE.md rows 5-6 | Darwish 2011; Fahes 2025 | ok with context (checked 2026-11-21: matches; old; units unresolved; Fahes is a drinking-water paper that contradicts itself on the 45 mg/L limit) |
 | Rider cost about $3,800-4,200; 0.5-0.9% of host budget | NARRATIVE, OPTIONS | riders.csv | AUB and K2P prices x ASSUMED sample counts | ok (assumption: counts) |
-| Start-up about $33,000 (range $29,000-40,000) top site; $25 per household reached | OPTIONS, IMPLEMENTATION | unit_costs.csv, start_site | UNICEF catalogue, AUB, CHW pay x assumed counts | ok (assumption: counts; filters ex-works) |
-| $2,600-8,500 per NOTIFIED case averted (10% coverage) | NARRATIVE, OPTIONS, objections | m6 (table) | ESU + Wolf 2022 RR (transferred) + prices | ok as an UPPER BOUND |
+| Start-up about $36,000 (range $32,000-43,000) top site; $25 per household reached | OPTIONS, IMPLEMENTATION | unit_costs.csv, start_site | UNICEF catalogue, AUB, CHW pay x assumed counts | ok (assumption: counts; filters ex-works) |
+| $7,900-22,800 per NOTIFIED case averted (10% coverage) | NARRATIVE, OPTIONS, objections | m6 (table) | ESU + Wolf 2022 RR (transferred) + prices | ok as an UPPER BOUND |
 | Mobile unit $331k-1.21M per unit-year; CHW $12k-54k per 10 CHW-years | OPTIONS, interventions.csv | interventions.csv | per-consultation proxy (non-Lebanon) / job-posting pay | ok (proxy) |
 | Break-evens: capture < 5.6%, local fit > 1.48 | NARRATIVE, OPTIONS, objections | breakeven.csv | scenario parameters (no published value) | ok (scenario) |
 | Escrow thresholds 0.40 / 0.60 / 0.30; capacity 0.299 growing <= 0.05/yr | KPIs, IMPLEMENTATION | escrow_params.yaml, governance_capacity.csv | assumptions anchored to SC01 | ok (assumption) |
