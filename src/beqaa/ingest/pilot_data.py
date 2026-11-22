@@ -107,7 +107,7 @@ def care_flow(cad: pd.DataFrame) -> dict:
 
 def evidence_pack() -> dict:
     e = read_loose(E / "evidence.csv")
-    p = read_loose(E / "prices.csv")
+    p = pd.concat([read_loose(E / "prices.csv"), read_loose(E / "prices_extra.csv")], ignore_index=True)     # prices_extra: AUB lab prices read from the AUB price list
     provenance(e, "Evidence pack: 37 claims with rung, geography and verification flag", "2026-11-21", "to_verify", "see url per row", "EVD").to_csv(PROCESSED / "evidence_pack.csv", index=False)
     provenance(p, "Price pack: 20 rows; unverified prices stay sliders", "2026-11-21", "to_verify", "see url per row", "PRC").to_csv(PROCESSED / "prices_pack.csv", index=False)
     return {"evidence": len(e), "prices": len(p), "evidence_verified_flag": e.verified.value_counts().to_dict()}

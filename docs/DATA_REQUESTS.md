@@ -46,3 +46,12 @@ We analyse access to care for displaced Syrians and host communities in the five
 - `data/raw/beqaa_funding/beqaa_health_partners.csv`: the 39 PHCC operators against the MoPH PHCC list of 16/04/2026 (`phcc-16-4-2026.pdf`, pp. 18-22); the pack warns the extraction may have missed rows (the Annual Dashboard counts 37 + 28).
 - `women_led` for every organisation in `org_registry.csv`: check on each organisation's own site; leave `to_verify` until then.
 - `data/raw/damage_roads/damage/published_figures_transcribed.csv` (when ingested): automated extraction, check against the PDFs.
+
+## Items still open after the 2026-11-21 research pass (what could and could not be found)
+| # | Item | Result | What is needed |
+|---|---|---|---|
+| 1 | Host projects and funder add-on rules | ILO table-grape call: Activity 4.1 is awareness-raising only; call expired 23 Aug 2026, no award shown. Fair Trade Lebanon: RFQ page found (633 participants, Baabda and Baalbek), says "Self-Funded", PPE already bought. Nabad: nothing found. CBPF reprogramming and GATE safeguards documents all returned 403 | open the CBPF Data Hub pages for CBPF-LEB-25-S-NGO-38001 and CBPF-LEB-26-R-NGO-40017; download the CBPF Global Guidelines (revision rules) and the CDR ESCP / LMP / ESMF for GATE; ask the LHF Humanitarian Financing Unit whether a testing and referral activity can be added by budget revision |
+| 2-3 | CHW case-management and pesticide-protection evidence | see `docs/EVIDENCE_TABLE.md` (agent results merged where verified) | |
+| 4 | Prices | AUB lab list read (nitrate $25, total chromium $30, E. coli $40, total coliforms $25, chlorine $35, lead $30). NOT found: Cr(VI) price (AUB has total Cr only), regional PPE kit price, freight into Lebanon, field water-test kit prices | email ceelabs@aub.edu.lb for a Cr(VI) and soil-metals quote; request quotes from Lebanese suppliers for PPE kits |
+| 5 | Newer settlement locations | none public: only national totals (221,283 people received sanitation help in informal settlements and collective shelters, Q4 2025) | request the current IAMP site list from UNHCR Lebanon information management or the WASH sector |
+| 6 | Baalbek centre visit volumes | Amel total 224,180 consultations in 2025 (no geographic split); MoPH Annual Dashboard 2025 PDF could not be opened | open the dashboard PDF from a machine that can reach intouchmena.com; ask the operators for per-centre volumes |
