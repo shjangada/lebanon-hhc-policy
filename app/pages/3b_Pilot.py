@@ -37,6 +37,15 @@ mp = alt.Chart(ranked).mark_circle(size=60).encode(longitude="lon:Q", latitude="
 st.altair_chart(C.wm(mp.properties(), 520, 420), use_container_width=False)
 st.caption("The pilot starts where the scorer ranks first (the Zahle clusters and Hermel). Bouday and Chmestar, the CNRS-L soil villages, are a second wave: they rank lower on centre access and settlement population, but have soil data and REACH HSM 2025 coverage (reported). Change the weights above to see how fragile any one site is.")
 
+stab = ss.rank_stability(ss.criteria())
+ps = stab["per_cadaster"].head(10).melt(["cadaster_name", "district"], ["top3_random", "top3_perturb"], "perturbation", "share")
+ps["perturbation"] = ps.perturbation.map({"top3_random": "random weights (1,000 draws)", "top3_perturb": "weights +/-25% (1,000 draws)"})
+st.altair_chart(C.wm(alt.Chart(ps).mark_bar().encode(y=alt.Y("cadaster_name:N", sort=None, title=None), x=alt.X("share:Q", title="share of draws in the top 3", scale=alt.Scale(domain=[0, 1])), color=alt.Color("perturbation:N", title=None),
+                                                       yOffset="perturbation:N", tooltip=["cadaster_name", "district", "perturbation", alt.Tooltip("share:Q", format=".0%")]), 560, 340, scenario=True), use_container_width=False)
+sm = stab["summary"]
+st.caption(f"Rank stability: with weights perturbed by 25% {sm['perturb']['baseline_first_site']} is first in {sm['perturb']['baseline_first_share_top1']:.0%} of draws, but with fully random weights no single cadaster is stable ({sm['random']['baseline_first_site']} first in {sm['random']['baseline_first_share_top1']:.0%}, top 3 in {sm['random']['baseline_first_share_top3']:.0%}). "
+           f"Zahle district holds first place in {sm['district_of_first_site']['random'].get('Zahle', 0):.0%} of random draws and {sm['district_of_first_site']['perturb'].get('Zahle', 0):.0%} of perturbed ones: choose the district and a cluster, not one cadaster.")
+
 st.subheader("Visits, tests and the referral funnel")
 site = st.selectbox("Site", top.cadaster_name.tolist(), key="pil_site")
 row = top[top.cadaster_name == site].iloc[0]
