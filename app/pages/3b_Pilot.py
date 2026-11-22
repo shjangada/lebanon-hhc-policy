@@ -29,13 +29,13 @@ st.dataframe(C.pretty(top[["start_rank", "cadaster_name", "district", "start_sco
                       start_rank="Rank", cadaster_name="Cadaster", district="District", start_score="Start score", soil="Soil result", host="Funded host project", centre="Centre access", settlements="Settlements (2016)", outreach="Outreach operator",
                       disease="Water-borne disease", need="Need", startup_low_usd="Startup $ low", startup_central_usd="central", startup_high_usd="high"), hide_index=True, width="stretch")
 zero = int(ranked.zero_data_site_central_usd.iloc[0])
-st.caption(f"Criteria are 0-1 (soil within 15 km, a page-verified or partly verified host project = 1 and an unverified one = 0.5, E2SFCA access rank, 2016 settlement population: OLD, outreach operator named, reported hepatitis A + typhoid per 10,000 by district, need score). "
+st.caption(f"Criteria are 0-1 (soil within 15 km, a page-verified host project = 1, partly verified = 0.5, unverified = 0.25 (host projects are optional), E2SFCA access rank, 2016 settlement population: OLD, outreach operator named, reported hepatitis A + typhoid per 10,000 by district, need score). "
            f"Startup cost counts only missing pieces from sourced unit prices (no Lebanese Cr(VI) price exists: US $40-77); a site with no soil result and no host project would start at about ${zero:,} before kits. Centre capacity is assumed (ranking stable at 200-400 a week).")
 cl = ss.clusters(ranked)
 st.dataframe(C.pretty(cl.head(6).round(2), cluster_lead="Cluster", district="District", members="Cadasters", n="n", mean_start_score="Mean start score", startup_central_usd="Startup $ (central)", settlement_people_2016="Settlement people (2016)"), hide_index=True, width="stretch")
 mp = alt.Chart(ranked).mark_circle(size=60).encode(longitude="lon:Q", latitude="lat:Q", color=alt.Color("start_score:Q", scale=alt.Scale(scheme="viridis"), title="Start score"), tooltip=["cadaster_name", "district", alt.Tooltip("start_score:Q", format=".2f"), "startup_central_usd"])
 st.altair_chart(C.wm(mp.properties(), 520, 420), use_container_width=False)
-st.caption("The pilot starts where the scorer ranks first (the Zahle clusters and Hermel). Bouday and Chmestar, the CNRS-L soil villages, are a second wave: they rank lower on centre access and settlement population, but have soil data and REACH HSM 2025 coverage (reported). Change the weights above to see how fragile any one site is.")
+st.caption("The pilot starts where the scorer ranks first. Bouday and Chmestar, the CNRS-L soil villages, are a second wave: they rank lower on centre access and settlement population, but have soil data and REACH HSM 2025 coverage (reported). Change the weights above to see how fragile any one site is.")
 
 stab = ss.rank_stability(ss.criteria())
 ps = stab["per_cadaster"].head(10).melt(["cadaster_name", "district"], ["top3_random", "top3_perturb"], "perturbation", "share")
