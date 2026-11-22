@@ -2,7 +2,6 @@
 Real-data-only rule: outputs/memo/ is written only when every dataset is real (overall mode REAL)."""
 from __future__ import annotations
 
-import shutil
 
 import pandas as pd
 
@@ -22,7 +21,7 @@ def run(verbose: bool = True) -> dict:
     if problems:
         raise SystemExit("Inconsistent datasets (set BEQAA_DATA=mock, or finish the converters):\n  " + "\n  ".join(problems))
     mode = io.overall_mode()
-    is_mock = mode != "REAL"
+    is_mock = io.any_mock()                      # a dataset that is entirely mock; partly real datasets (real values plus labelled proxies) are not mock
     out = {}
     # M1
     acc = m1_access.access_by_cadaster(30, "women_15_49")
@@ -102,8 +101,7 @@ def run(verbose: bool = True) -> dict:
     viz.access_lost(acc, is_mock, FIG / "fig2_access_lost.png")
     # memo outputs: REAL only
     if not is_mock:
-        for f in ("fig1_priority_map.png", "fig2_access_lost.png"):
-            shutil.copy(FIG / f, MEMO / f)
+        # memo figures are written by scripts/make_figures.py (13 figures, figures/ and outputs/memo/); the pipeline writes the tables
         opt.to_csv(MEMO / "tab_options.csv", index=False)
         ev.to_csv(MEMO / "tab_evidence.csv", index=False)
         assum.to_csv(MEMO / "tab_assumptions.csv", index=False)
@@ -112,7 +110,7 @@ def run(verbose: bool = True) -> dict:
         print(f"Pipeline done. Data mode: {mode}. Processed -> {PROC}")
         print("Top 5 by Need Score:", ", ".join(scored.sort_values("rank").head(5).cadaster_name))
         print(txt)
-        print("memo outputs written" if not is_mock else "mock data: outputs/memo/ intentionally left empty")
+        print("memo tables written to outputs/memo (figures: scripts/make_figures.py)" if not is_mock else "a dataset is entirely mock: outputs/memo/ intentionally left empty")
     return {"mode": mode}
 
 

@@ -26,4 +26,6 @@ appendix:
 	$(PY) -m beqaa.ingest all
 	$(PY) -m beqaa.pipeline
 	$(PY) scripts/make_figures.py
+	$(PY) scripts/make_implementation.py
+	$(PY) scripts/make_sources_list.py
 	$(PY) scripts/make_appendix_notebook.py

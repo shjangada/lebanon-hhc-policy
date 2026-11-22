@@ -75,4 +75,6 @@ def test_appendix_notebook_and_memo_figures_exist():
     nb = json.loads((root / "notebooks" / "appendix.ipynb").read_text())
     assert nb["nbformat"] == 4 and any("make_figures" in "".join(c["source"]) for c in nb["cells"])
     figs = sorted(p.name for p in (root / "outputs" / "memo").glob("fig*.png"))
-    assert len(figs) == 6, figs
+    assert len(figs) >= 6, figs
+    exported = sorted(p.name for p in (root / "figures").glob("fig*.png"))
+    assert len(exported) == 13 and exported == sorted(p.name for p in (root / "outputs" / "memo").glob("fig*.png"))      # figures/ is the 2x export; outputs/memo mirrors it

@@ -41,6 +41,12 @@ def pretty(df: pd.DataFrame, **rename) -> pd.DataFrame:
 
 
 @st.cache_data
+def robust_cached(n: int, ver: float):
+    from beqaa import robustness
+    return robustness.run_all(n=n)
+
+
+@st.cache_data
 def scored_cached(env_weight: float | None, d0: int, cr6: float | None, ver: float):
     raw = m2.raw_indicators(d0, "women_15_49", cr6_for_tier=cr6)
     if env_weight is None:

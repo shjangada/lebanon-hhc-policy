@@ -1,0 +1,3 @@
+Data mode: PARTIAL.
+Cadasters top-8 in >=90% of random domain weightings: none.
+Cadasters top-8 in >=50%: Bouday, Chmistar, Taraiya, Tfail, Hermel Jbab, Michaa Mrajhineh.

@@ -11,7 +11,7 @@
 4. Deploy. The app reads the committed real `data/processed/*.csv` and `data/registry/*`; model outputs are recomputed at start (first load is slow, then cached).
 
 Not on the host (by design): raw third-party PDFs (restore locally with `python scripts/fetch_sources.py --restore-pdfs`; the HAUS 2024 PDF has no recorded URL and stays local), `.env`, ACLED data (its terms forbid redistribution), and pipeline outputs `m*_*.csv` (recomputed).
-Mock inputs that remain are labelled in the app (badges, watermark, per-page warning) and listed in `docs/MOCK_VS_REAL.md`.
+Placeholders and proxies are labelled in the app (badges, an ASSUMED INPUTS mark, per-section notes) and listed in `docs/ASSUMPTIONS_PILOT.md` and `docs/HEADLINE_AUDIT.md`.
 
 ## Retrying ACLED (local only)
 The last token request returned HTTP 403: the account was refused, usually because API access is not enabled for that myACLED tier.

@@ -1,4 +1,4 @@
-"""Ingest: report (docs/DATA_STATUS.md and docs/MOCK_VS_REAL.md). Run: python scripts/ingest/report.py"""
+"""Ingest: report (docs/DATA_STATUS.md). Run: python scripts/ingest/report.py"""
 import json
 import pathlib
 import sys

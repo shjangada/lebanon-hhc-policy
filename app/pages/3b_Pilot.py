@@ -20,6 +20,8 @@ st.subheader("Where to start")
 with st.expander("Weights and package assumptions (sliders)", expanded=False):
     cols = st.columns(7)
     w = {k: cols[i].slider(k, 0.0, 3.0, 1.0, 0.5, key=f"w_{k}") for i, k in enumerate(ss.CRITERIA)}
+    if sum(w.values()) == 0:
+        st.warning("All weights are zero: equal weights are used instead.")
     p1, p2, p3 = st.columns(3)
     par = {"n_wells": p1.slider("Wells tested per site", 5, 60, 20, key="pil_wells"), "chw_months": p2.slider("CHW months per site", 1, 12, 6, key="pil_chw"),
            "filter_share": p3.slider("Share of settlement households given a filter", 0.0, 1.0, 1.0, 0.05, key="pil_filt")}
@@ -93,6 +95,18 @@ st.caption(f"Relative risk {rr[0]:.2f} [{rr[1]:.2f}-{rr[2]:.2f}] for child diarr
            "Package prices: 2026 UNICEF catalogue filter per household over an assumed 3-year life (the filtration measure; the chlorination package uses NaDCC tablets; handwashing and sewer connection use the filtration price: no package price is sourced for them), plus CHW months. "
            "The cost per case is for NOTIFIED cases, so it is an UPPER BOUND on the cost per illness averted: most diarrhoea is never notified, and the pilot measures the true figure. Cost and benefit both scale with coverage, so coverage cannot break even: each notified case would have to cost hundreds of primary-care visits; the package pays for itself only through diarrhoea and severity not counted here.")
 
+st.subheader("What if the assumptions change? One-way sensitivity")
+from beqaa import sensitivity as sv  # noqa: E402
+tc = sv.tornado("cost_per_notified_case")
+tc["lo"] = tc[["output_at_low", "output_at_high"]].min(axis=1)
+tc["hi"] = tc[["output_at_low", "output_at_high"]].max(axis=1)
+tch = alt.Chart(tc).mark_bar(color="#2874a6").encode(y=alt.Y("parameter:N", sort=None, title=None), x=alt.X("lo:Q", title="USD per notified case averted (each assumption varied alone across its range)", scale=alt.Scale(type="log")), x2="hi:Q",
+                                                     tooltip=["parameter", alt.Tooltip("lo:Q", format=",.0f"), alt.Tooltip("hi:Q", format=",.0f"), "low_value", "high_value", "default"])
+st.altair_chart(C.wm(tch, 640, 240, scenario=True), use_container_width=False)
+sm_ = sv.summary()
+st.caption(f"Cost per notified case averted is ${sm_['cost_per_notified_case_baseline']:,.0f} at the defaults and ${sm_['cost_range_over_all_one_way_runs'][0]:,.0f} to ${sm_['cost_range_over_all_one_way_runs'][1]:,.0f} across every one-way run; the biggest driver is {sm_['largest_cost_driver']} (an assumption), so the cost per notified case never comes close to one primary-care visit ($20.03): the conclusion does not flip. "
+           f"The added load on the busiest receiving centre stays at or below {sm_['load_max_over_all_one_way_runs']:.1%} of its yearly capacity in every one-way run (limit 10%); the escrow, scenario and break-even analyses on the Resilience section test the allocation and handover assumptions the same way.")
+
 st.subheader("Unit costs and what a household, a case and a notified case averted cost")
 ucs = pd.read_csv(PROC / "unit_costs.csv")
 st.dataframe(C.pretty(ucs, item="Item", unit="Unit", low="Low", central="Central", high="High", source="Source", year="Year", lebanon_price="Lebanese price (y/n)"), hide_index=True, width="stretch")
@@ -110,11 +124,7 @@ st.dataframe(C.pretty(kp.drop(columns=["baseline_source"]), level="Level", basel
 st.caption("A KPI whose baseline says 'none' is set in pilot months 1-3. Targets that are not published values are labelled ASSUMPTION. Three KPIs are the escrow release triggers (referral completion >= 0.40, posts filled >= 0.60, capacity >= 0.30); every KPI is reported split by sex, nationality, registration status and settlement vs village.")
 
 st.subheader("Stepped rollout")
-order = top.head(8).cadaster_name.tolist()
-grid = pd.DataFrame([{"site": s, "month": m, "state": "pilot" if m >= 2 * i else "comparison"} for i, s in enumerate(order) for m in range(0, 13)])
-sr = alt.Chart(grid).mark_rect().encode(x=alt.X("month:O", title="month"), y=alt.Y("site:N", sort=order, title=None), color=alt.Color("state:N", scale=alt.Scale(domain=["pilot", "comparison"], range=["#2874a6", "#d5d8dc"]), title=None))
-st.altair_chart(C.wm(sr, 520, 260, scenario=True), use_container_width=False)
-st.caption("Illustrative stepped-wedge: one site starts every two months in score order; sites not yet started are the comparison. Randomised or matched ordering and the ESU comparison cazas are to be fixed with the implementer.")
+st.caption("One site starts every two months in start-score order; sites not yet started are the comparison (illustrative stepped-wedge; the chart is in the **Appendix charts** tab). Randomised or matched ordering and the ESU comparison cazas are to be fixed with the implementer.")
 
 st.subheader("Cost and reallocation")
 rf_cost = st.slider("Referral fund per red flag with no payer ($, illustrative)", 0, 400, 150, 10, key="pil_refund",
