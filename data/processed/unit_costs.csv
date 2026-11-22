@@ -1,0 +1,17 @@
+item,unit,low,central,high,source,year,lebanon_price
+Water nitrate lab test,per sample,25.0,25.0,25.0,AUB CEE testing price list (cost_ranges 6a),2025,y
+Water total chromium lab test,per sample,16.0,30.0,30.0,AUB CEE price list (6b),2025,y
+Soil total chromium (digestion + metal),per sample,60.0,130.0,130.0,derived from AUB prices (6c; secondary),2025,y
+E. coli lab test,per sample,,40.0,,AUB CEE testing price list (prices_extra),2025,y
+Total coliforms lab test,per sample,,25.0,,AUB CEE testing price list (prices_extra),2025,y
+Free chlorine lab test,per sample,,35.0,,AUB CEE testing price list (prices_extra),2025,y
+Community health worker pay,per month,100.0,300.0,450.0,job postings (cost_ranges 4b/4a/4c; secondary),2026,y
+Primary-care service (full provider cost),per service,20.03,20.03,20.74,K2P/UNICEF 2022 (cost_ranges 2a),2022,y
+Household ceramic water filter,per household,19.2,21.0,24.51,UNICEF supply catalogue (ex-works; excludes freight and distribution),2026,n
+NaDCC chlorine tablets (household supply),per household per month,,3.6,,UNICEF supply catalogue,2026,n
+Cr(VI) speciation in soil,per sample,,40.0,77.0,"US lab price list 2024 ($40); US Fish & Wildlife c. 2008 ($77, secondary): NO Lebanese price",2024,n
+"Pesticide PPE kit, locally adapted set",per kit,,20.0,,retail / Nepal study (prices_pack): NO Lebanese or regional NGO price,2014/15,n
+"Pesticide PPE kit, commercial",per kit,,57.12,,retail / Nepal study (prices_pack): NO Lebanese or regional NGO price,2026 (retail),n
+"Pesticide PPE kit, 14-day applicator kit",per kit,,159.99,,retail / Nepal study (prices_pack): NO Lebanese or regional NGO price,2026 (retail),n
+"Hospital delivery, patient share (UNHCR scheme, ENDED 1 Dec 2025)",per delivery,128.0,170.0,170.0,cost_ranges 3c,2025,y
+"Caesarean, patient share (UNHCR scheme, ENDED)",per delivery,255.0,300.0,300.0,cost_ranges 3d,2025,y

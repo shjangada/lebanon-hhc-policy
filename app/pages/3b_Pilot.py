@@ -93,19 +93,21 @@ st.caption(f"Relative risk {rr[0]:.2f} [{rr[1]:.2f}-{rr[2]:.2f}] for child diarr
            "Package prices: 2026 UNICEF catalogue filter per household over an assumed 3-year life (the filtration measure; the chlorination package uses NaDCC tablets; handwashing and sewer connection use the filtration price: no package price is sourced for them), plus CHW months. "
            "The cost per case is for NOTIFIED cases, so it is an UPPER BOUND on the cost per illness averted: most diarrhoea is never notified, and the pilot measures the true figure. Cost and benefit both scale with coverage, so coverage cannot break even: each notified case would have to cost hundreds of primary-care visits; the package pays for itself only through diarrhoea and severity not counted here.")
 
+st.subheader("Unit costs and what a household, a case and a notified case averted cost")
+ucs = pd.read_csv(PROC / "unit_costs.csv")
+st.dataframe(C.pretty(ucs, item="Item", unit="Unit", low="Low", central="Central", high="High", source="Source", year="Year", lebanon_price="Lebanese price (y/n)"), hide_index=True, width="stretch")
+from beqaa import unit_costs as uc  # noqa: E402
+cm = uc.cost_metrics(ranked, par)
+k3 = st.columns(3)
+k3[0].metric(f"Cost per household reached ({cm['top_site']})", f"${cm['cost_per_household_usd']['central']:,.0f}", help=f"low ${cm['cost_per_household_usd']['low']:,.0f}, high ${cm['cost_per_household_usd']['high']:,.0f}; {cm['households_reached']:,.0f} households (2016 settlement people, assumed reach); catalogue filter prices are ex-works")
+k3[1].metric("Cost per notified case averted (median)", f"${cm['cost_per_notified_case_averted_usd']['median']:,.0f}", help=f"5th to 95th percentile ${cm['cost_per_notified_case_averted_usd']['p05']:,.0f} to ${cm['cost_per_notified_case_averted_usd']['p95']:,.0f}")
+k3[2].metric("Primary-care service", "$20.03", help="K2P/UNICEF 2022; CHW contact about $7 derived from CHW pay and an assumed 10 visits a week; hospital delivery patient share $128-170 and caesarean $255-300 (UNHCR scheme, ended)")
+st.caption(cm["note"] + ". Prices without a Lebanese source are marked n; a shipping and markup multiplier is a slider in the cost split below.")
+
 st.subheader("Pilot metrics: evidence for scaling")
-st.dataframe(pd.DataFrame([
-    ["People reached and screened", "outreach coverage (partial; no visit frequency published)", "count per month at each site"],
-    ["Red flags referred and completed", "none: pilot measures it", "referral register, third-party spot check"],
-    ["Days from red flag to care", "none: pilot measures it", "register timestamps"],
-    ["Recovered or resolved at 2-4 weeks", "none: pilot measures it", "CHW follow-up call"],
-    ["Waterborne cases, pilot vs comparison cazas", "ESU 2023-2025 (reported; under-reported)", "ESU plus site registers"],
-    ["Pesticide symptoms and injuries treated", "Agrimovement survey, Bekaa and Koura (reference only: 69 of 126 women reported health problems)", "CHW and centre records"],
-    ["Antenatal care visits among women workers", "HAUS 2024 (registered Syrians, national)", "centre registers"],
-    ["Cost per person reached, per red flag, per case averted", "M6 and riders (ranges above)", "audited spend"],
-    ["Centre load", "M1 (assumed capacity)", "monthly referrals received"],
-    ["Share of pilot money held by Lebanese organisations", "LHF national NGO share 38-47% (2023-26); Beqaa proxy 0-5%", "quarterly published spend"]],
-    columns=["Metric", "Baseline source", "Pilot measure"]), hide_index=True, width="stretch")
+kp = pd.read_csv(PROC / "kpis.csv")
+st.dataframe(C.pretty(kp.drop(columns=["baseline_source"]), level="Level", baseline="Baseline", target="Target", frequency="Frequency", owner="Owner", splits="Reported split by", escrow_trigger="Escrow trigger"), hide_index=True, width="stretch")
+st.caption("A KPI whose baseline says 'none' is set in pilot months 1-3. Targets that are not published values are labelled ASSUMPTION. Three KPIs are the escrow release triggers (referral completion >= 0.40, posts filled >= 0.60, capacity >= 0.30); every KPI is reported split by sex, nationality, registration status and settlement vs village.")
 
 st.subheader("Stepped rollout")
 order = top.head(8).cadaster_name.tolist()
