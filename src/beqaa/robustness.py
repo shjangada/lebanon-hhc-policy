@@ -204,7 +204,7 @@ class _Engine:
         need_share = need * preg / (need * preg).sum()
         self.share = {"top_down": need_share, "per_capita": popc / popc.sum(), "community": need_share.copy(),
                       "existing_allocation": cap / cap.sum()}                                             # follows current facility capacity
-        pri = allocation.mock_priorities(self.cids, self.names, 8).set_index("cadaster_id").loc[self.cids, self.names].values    # c x i (mock)
+        pri = allocation.mock_priorities(self.cids, self.names, 8).set_index("cadaster_id").loc[self.cids, self.names].values    # c x i (synthetic placeholder: no community-priority survey exists)
         self.pri = pri
         self.preg = sc.loc[self.cids, "pregnant_est"].values.astype(float)        # annual pregnancies in the cadaster: reach cannot exceed it
 
@@ -283,7 +283,8 @@ def policy_regret(scored: pd.DataFrame, budget: float = 100_000, n: int | None =
     winner = summ.sort_values("max_regret").iloc[0].policy
     avg_winner = summ.sort_values("mean_value", ascending=False).iloc[0].policy
     return {"by_scenario": by_s, "summary": summ.sort_values("max_regret").reset_index(drop=True), "minimax_policy": winner, "best_on_average": avg_winner,
-            "disagree": winner != avg_winner, "n_draws": n, "is_mock": True}
+            "disagree": winner != avg_winner, "n_draws": n, "is_mock": False,
+            "assumed_inputs": "community priorities (synthetic placeholder), five option costs and most effect sizes (placeholders); ranking inputs are real"}
 
 
 # ---------------------------------------------------------------- breakpoints
@@ -311,7 +312,7 @@ def breakpoints(scored: pd.DataFrame, budget: float = 100_000, unc: dict | None 
                 lo = mid
         return (lo + hi) / 2
     rows = []
-    for align, tag in ((0.0, "as modelled (mock community priorities)"), (1.0, "best case (communities pick the most cost-effective option)")):
+    for align, tag in ((0.0, "as modelled (placeholder community priorities)"), (1.0, "best case (communities pick the most cost-effective option)")):
         for name, lo, hi, text in (("capture", 0.0, 0.9, "community arm beats top-down only while capture <"),
                                    ("admin_cost", 0.0, 0.9, "... only while committee admin cost <"),
                                    ("local_fit", 0.8, 3.0, "... only if the local-fit multiplier >")):

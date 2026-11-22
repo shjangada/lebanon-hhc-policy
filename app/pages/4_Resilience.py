@@ -23,7 +23,7 @@ core = rk["core"]
 C.header("Resilience", narrative.page4(len(core), rk["top_k"], rk["threshold"], pol["minimax_policy"]),
          ["cadasters", "population", "facilities", "travel_time", "conflict_exposure", "governance_capacity", "interventions"], purpose="Which recommendations survive uncertain assumptions and six stress scenarios; only the robust core is recommended.")
 st.caption("Scenarios: S1 renewed escalation, S2 funding −30/−50/−70%, S3 power collapse, S4 staff loss, S5 capacity stall, S6 worst-case Cr(VI). Parameter ranges and their sources: data/params/uncertainty.yaml. "
-           "Scenario effects, costs and community priorities are assumptions or mock; the method is what carries over to real data.")
+           "The ranking inputs are real (cadasters, population, IPC, LRP incidents, soil, MoPH facilities). The allocation and regret comparisons use placeholder community priorities, five placeholder option costs and mostly placeholder effect sizes: read them as a comparison of options and break-evens, not a forecast.")
 
 st.subheader("Recommended: only the robust core")
 if core:
@@ -82,7 +82,7 @@ st.caption("Allocations are fixed in advance on baseline data and judged in ever
 rg = alt.Chart(pol["summary"]).mark_bar().encode(y=alt.Y("policy:N", sort="x", title=None), x=alt.X("max_regret:Q", title="maximum regret (pathways lost vs the best policy in that world)"),
                                                   color=alt.condition(alt.datum.policy == pol["minimax_policy"], alt.value("#27ae60"), alt.value("#aab7b8")), tooltip=["policy", alt.Tooltip("max_regret:Q", format=".0f"), alt.Tooltip("mean_regret:Q", format=".0f")])
 st.altair_chart(C.wm(rg, 560, 200), use_container_width=False)
-st.caption("The green policy has the smallest worst-case regret. Mock costs and community priorities drive the gaps.")
+st.caption("The green policy has the smallest worst-case regret. Placeholder costs, effects and community priorities drive the gaps.")
 
 st.subheader("Break-evens: what has to be true")
 from beqaa import breakeven  # noqa: E402
