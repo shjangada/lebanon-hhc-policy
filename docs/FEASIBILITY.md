@@ -19,7 +19,7 @@
 
 ---
 
-**Start-site stability (`start_site.rank_stability`, 1,000 draws each).** (1) Weights perturbed by up to 25%: Saadnayel (Zahle) stays first in 98% of draws and Zahle holds first place in 98%. (2) Fully random weights: no single cadaster is stable (Saadnayel first in 30%, top 3 in 48%); first place goes to Zahle 40%, West Bekaa 36%, Baalbek 12%, Hermel 12%. (3) Leaving out one criterion at a time: Saadnayel is first in 4 of 7 cases. **Choose the district (Zahle) and a cluster, not one cadaster.**
+**Start-site stability (`start_site.rank_stability`, 1,000 draws each).** (1) Weights perturbed by up to 25%: Saadnayel (Zahle) is first in 80% of draws and in the top 3 in 100%; the first site is in Zahle 80% and Baalbek 20% of the time. (2) Fully random weights: no single cadaster is stable (Saadnayel first in 21%, top 3 in 39%); first place goes to Baalbek 42%, Zahle 29%, West Bekaa 24%, Hermel 5%. (3) Leaving out one criterion at a time: Saadnayel is first in 29% and top 3 in 57% of the 7 cases. **Choose a district and a cluster, not one cadaster: Zahle and Baalbek are the two candidate districts; the data does not separate them under random weights.**
 
 ## 1. The constraint baseline (hard facts)
 

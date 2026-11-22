@@ -2,7 +2,7 @@
 
 Criteria (each scaled 0-1; weights are sliders, default equal; all from processed data):
   soil       a soil result within 15 km exists (no new baseline sampling needed)          M2 `soil_sampled_nearby`
-  host       a funded host project in the district, page-verified or partly verified       riders.csv (verified yes/partly)
+  host       a funded host project in the district: page-verified 1.0, partly verified 0.5, unverified 0.25 (host projects are OPTIONAL: they only lower the cost)   riders.csv
   centre     a reachable MoPH-list centre with room: E2SFCA access, scaled 0-1              M1 (capacity is ASSUMED: centres 300/week; ranking stable at 200-400)
   settlements informal-settlement population in the cadaster (IAMP Dec 2016: OLD)           informal_settlements.csv
   outreach   a named outreach operator covers the district (frequency not published)        outreach.csv
@@ -60,9 +60,10 @@ def criteria(scored: pd.DataFrame | None = None, rid: pd.DataFrame | None = None
     sc = scored if scored is not None else m2.compute(raw, spec=m2.apply_quantile_anchors(m2.load_spec(), raw))
     cad = sc[["cadaster_id", "cadaster_name", "district", "lat", "lon", "need_score", "rank", "soil_sampled_nearby", "nearest_soil_site_km", "soil_hq_high_nearby", "population_total"]].copy()
     r = rid if rid is not None else pd.read_csv(PROCESSED / "riders.csv")
-    ok = r[r.verified.isin(["yes", "partly"])]
+    yes, partly = r[r.verified == "yes"], r[r.verified == "partly"]
     cad["host_projects"] = cad.district.map(lambda d: int(r.districts.fillna("").str.contains(d).sum()))
-    cad["host_verified"] = cad.district.map(lambda d: int(ok.districts.fillna("").str.contains(d).sum()))
+    cad["host_verified"] = cad.district.map(lambda d: int(yes.districts.fillna("").str.contains(d).sum()))
+    cad["host_partly"] = cad.district.map(lambda d: int(partly.districts.fillna("").str.contains(d).sum()))
     acc = m1_access.access_by_cadaster(30, "women_15_49")[["cadaster_id", "access_current"]]
     cad = cad.merge(acc, on="cadaster_id")
     s = pd.read_csv(PROCESSED / "informal_settlements.csv", dtype={"cadaster_id": str}).groupby("cadaster_id").individuals.sum().rename("settlement_people_2016")
@@ -76,7 +77,7 @@ def criteria(scored: pd.DataFrame | None = None, rid: pd.DataFrame | None = None
     cad["robust_core"] = cad.cadaster_id.isin(rb[rb["core"]].cadaster_id) if rb is not None and "cadaster_id" in rb else False
     c = pd.DataFrame({"cadaster_id": cad.cadaster_id})
     c["soil"] = cad.soil_sampled_nearby.astype(float)
-    c["host"] = (cad.host_verified > 0).astype(float) + 0.5 * ((cad.host_projects > 0) & (cad.host_verified == 0))       # verified host 1.0; an unverified host 0.5
+    c["host"] = np.where(cad.host_verified > 0, 1.0, np.where(cad.host_partly > 0, 0.5, np.where(cad.host_projects > 0, 0.25, 0.0)))   # page-verified host 1.0; partly verified 0.5; unverified 0.25; none 0
     c["centre"] = (cad.access_current.rank(pct=True)).astype(float)
     c["settlements"] = np.minimum(1.0, cad.settlement_people_2016 / max(cad.settlement_people_2016.quantile(0.9), 1))
     c["outreach"] = cad.outreach_operator.astype(float)

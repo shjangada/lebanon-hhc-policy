@@ -66,3 +66,46 @@ def test_rank_stability_is_reproducible_and_shares_are_valid():
     assert pc.top1_random.sum() == pytest.approx(1.0) and pc.top3_random.sum() == pytest.approx(3.0)              # exactly one first place and three top-3 places per draw
     assert (pc.top10_random >= pc.top3_random).all() and (pc.top3_random >= pc.top1_random).all()
     assert set(a["summary"]["district_of_first_site"]["random"]) <= {"Baalbek", "Hermel", "Zahle", "West Bekaa", "Rachaya"}
+
+
+@need
+def test_docs_quote_the_current_start_site_numbers(monkeypatch):
+    """The start-site result quoted in FEASIBILITY.md and NARRATIVE.md must equal what the code computes (guards against the documents drifting from the model)."""
+    import pathlib
+    monkeypatch.setenv("BEQAA_DATA", "auto")
+    root = pathlib.Path(__file__).resolve().parents[1]
+    r = ss.score()
+    st = ss.rank_stability(ss.criteria())["summary"]
+    first = r.iloc[0].cadaster_name
+    feas, nar = (root / "docs" / "FEASIBILITY.md").read_text(), (root / "docs" / "NARRATIVE.md").read_text()
+    assert first in feas and first in nar and st["random"]["baseline_first_site"] == first
+    pct = lambda x: f"{x * 100:.0f}%"
+    assert f"first in {pct(st['perturb']['baseline_first_share_top1'])} of draws" in feas
+    assert f"first in {pct(st['random']['baseline_first_share_top1'])}" in feas and f"top 3 in {pct(st['random']['baseline_first_share_top3'])}" in feas
+    d = st["district_of_first_site"]["random"]
+    for name, v in d.items():
+        assert f"{name} {pct(v)}" in feas
+    for name in ("Bouday", "Chmistar"):
+        assert f"rank {int(r[r.cadaster_name == name].start_rank.iloc[0])}" in nar
+
+
+@need
+def test_implementation_doc_matches_the_model(monkeypatch):
+    import importlib.util
+    import pathlib
+    monkeypatch.setenv("BEQAA_DATA", "auto")
+    root = pathlib.Path(__file__).resolve().parents[1]
+    spec = importlib.util.spec_from_file_location("mk", root / "scripts" / "make_implementation.py")
+    mk = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mk)
+    assert (root / "docs" / "IMPLEMENTATION.md").read_text() == mk.render()           # regenerate with scripts/make_implementation.py
+
+
+def test_memo_support_docs_exist_with_their_required_columns():
+    import pathlib
+    docs = pathlib.Path(__file__).resolve().parents[1] / "docs"
+    tr = (docs / "TRIGGERS.md").read_text()
+    assert "| Medium | Finding | Threshold | Action | Who acts | Referral | Follow-up |" in tr and "total P cannot establish munition exposure" in tr
+    au = (docs / "HEADLINE_AUDIT.md").read_text()
+    assert "| Number | Where used | File | Source | Status |" in au and "drop" in au and "ok" in au
+    assert all((docs / f).exists() for f in ("OPTIONS.md", "DECISION_ROUTE.md", "OBJECTIONS.md", "IMPLEMENTATION.md"))
