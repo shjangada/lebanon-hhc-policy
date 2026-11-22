@@ -1,0 +1,82 @@
+{
+  "retrieval_date": "2026-11-21",
+  "retrieved_by": "Claude agent (browser fetch for MoPH/UNHCR; WebFetch/WebSearch text extraction for WHO EMRO PDFs)",
+  "moph_esu": {
+    "index": "https://www.moph.gov.lb/en/Pages/2/193/esu",
+    "files": {
+      "Bekaa (Beqaa mohafaza, cazas Hermel/Baalbeck/Zahleh/West-Bekaa/Rashaya)": {
+        "2019": "https://www.moph.gov.lb/userfiles/files/Esu_data/Esu_pastyears/Bekaa2019.htm",
+        "2020": "https://www.moph.gov.lb/userfiles/files/Esu_data/Esu_pastyears/Bekaa2020.htm",
+        "2021": "https://www.moph.gov.lb/userfiles/files/Esu_data/Esu_pastyears/Bekaa2021.htm",
+        "2022": "https://www.moph.gov.lb/userfiles/files/Esu_data/Esu_pastyears/Bekaa2022.htm",
+        "2023": "https://www.moph.gov.lb/userfiles/files/Esu_data/Esu_pastyears/Bekaa2023.htm",
+        "2024": "https://www.moph.gov.lb/userfiles/files/Esu_data/Esu_pastyears/Bekaa2024.htm",
+        "2025": "https://www.moph.gov.lb/userfiles/files/Esu_data/Esu_pastyears/Bekaa2025.htm",
+        "2026": "https://www.moph.gov.lb/userfiles/files/Esu_data/Esu_currentyear/Bekaa.htm"
+      },
+      "Lebanon national (by old 6 mohafazat)": {
+        "2023": "https://www.moph.gov.lb/userfiles/files/Esu_data/Esu_pastyears/Lebanon2023.htm",
+        "2024": "https://www.moph.gov.lb/userfiles/files/Esu_data/Esu_pastyears/Lebanon2024.htm",
+        "2025": "https://www.moph.gov.lb/userfiles/files/Esu_data/Esu_pastyears/Lebanon2025.htm",
+        "2026": "https://www.moph.gov.lb/userfiles/files/Esu_data/Esu_currentyear/Lebanon.htm"
+      },
+      "Baalbeck caza (month + age/sex only)": {
+        "2026": "https://www.moph.gov.lb/userfiles/files/Esu_data/Esu_currentyear/Baalbeck.htm"
+      },
+      "Hermel caza (month + age/sex only)": {
+        "2026": "https://www.moph.gov.lb/userfiles/files/Esu_data/Esu_currentyear/Hermel.htm"
+      }
+    },
+    "as_on_dates_dd_mm_yyyy": {
+      "Bekaa": {
+        "2026": "07/08/2026",
+        "2025": "02/01/2026",
+        "2024": "03/02/2025",
+        "2023": "03/10/2025",
+        "2022": "03/10/2025",
+        "2021": "03/10/2025",
+        "2020": "03/10/2025",
+        "2019": "23/09/2021"
+      },
+      "Lebanon": {
+        "2026": "07/08/2026",
+        "2025": "02/01/2026",
+        "2024": "03/02/2025",
+        "2023": "03/10/2025"
+      }
+    },
+    "not_found_404": [
+      "Esu_currentyear/Baalbek.htm",
+      "Esu_currentyear/BaalbekHermel.htm",
+      "Esu_currentyear/Baalbek-Hermel.htm",
+      "Esu_pastyears/Baalbek2025.htm",
+      "Esu_pastyears/BaalbekHermel2025.htm",
+      "Esu_pastyears/Baalbeck2025.htm",
+      "Esu_pastyears/Hermel2025.htm"
+    ],
+    "integrity": "Tables parsed in-browser from DOM; compact transcript raw/esu_compact.txt verified line-by-line by SHA-256 against the browser parse (40/40 match). Row totals validated; 1 source inconsistency: 2022 Bekaa by-place Meningitis TOTAL 68 vs caza sum 67."
+  },
+  "who_emro_health_briefs": {
+    "note": "emro.who.int returned 502 to browser; values extracted via WebFetch PDF-to-text and cross-checked with WebSearch raw-text snippets.",
+    "urls": [
+      "https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_April_3_May_2025.pdf",
+      "https://www.emro.who.int/images/stories/lebanon/Health_Briefs_4_18_May_2025.pdf",
+      "https://www.emro.who.int/images/stories/lebanon/Health_Briefs_26_June_9_August_2025.pdf",
+      "https://www.emro.who.int/images/stories/lebanon/Health_Briefs_26_July_9_August_2025.pdf",
+      "https://www.emro.who.int/images/stories/lebanon/Health_Briefs_10_August_10_September_2025.pdf",
+      "https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_September_10_October_2025.pdf",
+      "https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_October_11_November_2025.pdf",
+      "https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_November_8_December_2025.pdf",
+      "https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_18_March-28_April_2026.pdf",
+      "https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_29_April-24_May_2026.pdf"
+    ],
+    "listing_page": "https://www.emro.who.int/lbn/information-resources/health-briefs-2023.html",
+    "not_processed": "Jan-Mar 2025 and 19 May-25 Jun 2025 briefs (URLs not resolved); no briefs after May 2026 found."
+  },
+  "unhcr_wash_wbd_risk_map": {
+    "2024_update": "https://data.unhcr.org/ar/documents/download/109156",
+    "2025_early_warning": "https://data.unhcr.org/en/documents/download/118462",
+    "2025_details_page": "https://data.unhcr.org/en/documents/details/118462",
+    "2025_publish_date": "2025-08-15"
+  }
+}

@@ -32,6 +32,8 @@ facility_status,facility_name,Ragheb Harb Hospital,named in a WHO sitrep (no loc
 facility_status,facility_name,Salah Ghandour Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
 facility_status,facility_name,Tebnin Governmental Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
 facility_status,facility_name,Tebnin Public Hospital,named in a WHO sitrep (no location given); no unique OSM hospital of that name in the five districts
+wbd_risk,cadaster,Bednayel,WBD risk-map cadaster not matched to COD-AB; left unknown
+wbd_risk,cadaster,Khodr,WBD risk-map cadaster not matched to COD-AB; left unknown
 facilities_moph,facility,BAA-PHC-23 (الفاكهة),MoPH facility with no usable coordinate or outside the five districts
 facilities_moph,facility,RAC-PHC-02 (عزة),MoPH facility with no usable coordinate or outside the five districts
 facilities_moph,facility,ZAH-PHC-11 (الفاعور),MoPH facility with no usable coordinate or outside the five districts

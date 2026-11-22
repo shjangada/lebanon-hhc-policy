@@ -12,7 +12,7 @@ Rung: **(a)** environmental finding · **(b)** plausible exposure pathway · **(
 | 6 | Nitrate in Baalbek-Hermel samples: median 11, max 137 mg/L (Lebanese standard 45), n=41, Jul-Oct 2023; Beqaa governorate n=2 (unusable) | a | Baalbek-Hermel | Fahes et al. 2025, Sci. Rep. 15:10539 | to_verify (summariser; mixed sample types) |
 | 7 | About 70% of generated wastewater is discharged untreated; private wells supply 33% of water | a | Lebanon (national) | CDR / MoEW strategic environmental assessment of the National Water Sector Strategy | reported (not re-read); the "90% (WHO)" figure is NOT used |
 | 8 | Bebnine: women dissatisfied with water quality reported worse health; household water treatment protective against child diarrhoea | b / c | North Lebanon (Akkar), about 2009-13 | Habib et al., Women & Health 2013; companion study (EcoHealth) | to_verify: the "42%" figure is not in the abstract; do not quote it |
-| 9 | Toxic metals detected in newborn cord blood (EELI birth cohort, about 135 mothers); detection is not a health effect | b | Beirut (not Beqaa) | EELI / Balamand; Int J Hyg Environ Health 2026 | reported (not re-read): confirm "all 8 metals" and associations |
+| 9 | Toxic metals detected in cord blood (n=74); living near agricultural land was associated with higher antimony (p=0.033) and nickel (beta=0.118, p=0.011); detection is not a health effect | b | Beirut / Mount Lebanon (not Beqaa) | EELI correlates paper, Sci Rep 2026 (see E30-E32). The earlier 'IJHEH 2026, 106 pollutants' citation is a Spanish study and is removed (E33) | pack-verified: spot-check |
 | 10 | Women in agriculture have household and occupational pesticide exposure routes; women's exposure is often under-estimated | b | International (no Beqaa study found) | FAO 2023 Status of Women in Agrifood Systems; Deziel et al. 2015 EHP | reported |
 | 11 | Rural women do a major share of agricultural labour in Lebanon, often unrecognised and low paid | b (occupational) / context | Lebanon | FAO 2021 Country Gender Assessment; UN Women 2022, 2024 | reported |
 | 12 | Lack of clean water raises menstrual and postpartum hygiene problems and infections | b | no Lebanon source found | WASH literature (none cited) | assumption: find a UNFPA/UNICEF WASH-MHM source |
@@ -25,3 +25,49 @@ Rung: **(a)** environmental finding · **(b)** plausible exposure pathway · **(
 | 19 | CHW home visits raised any-ANC by 10.5 points (CI 4.2 to 16.9) in Afghanistan; null on 4+ visits in a Tanzania trial | context (effect size) | international | Edmond 2018, BMC Medicine; Geldsetzer 2019, PLoS Med | to_verify (read through a summariser) |
 
 What would change the response: a Cr(VI) speciation test in the 4 villages (rows 1-2: decides whether the response is monitoring or protection); measured water nitrate in the wells the funded projects serve (rows 5-7); maternal and cord-blood biomonitoring near the sampled villages (rows 9-10: the route from (b) to (c)).
+
+
+## Evidence pack (E01-E37, merged 2026-11-21; corrections applied)
+Source: `data/raw/evidence/evidence.csv` (`data/processed/evidence_pack.csv`; each row has a URL there). The `verified` column is the pack's own flag (the page or paper was opened by its author; **spot-check before quoting**). Geographies and notes below apply the latest verification corrections:
+the Agrimovement survey is a **Bekaa and Koura** sample; the cord-blood correlates study is **n=74, Beirut / Mount Lebanon** (living near farmland: antimony p=0.033, nickel beta=0.118 p=0.011); the "106 pollutants" paper is **Spanish** and is excluded;
+Salvatore 2015 (-51.3%, CI -81.3 to +26.8) is **not significant**; soil chromium is **total Cr** (no Cr(VI) data exist). Rung (c) rows E01-E07 are transferred diarrhoea effects in low- and middle-income countries; rows E12-E16 are self-reported symptoms or injuries, not linked to a measured exposure.
+
+| id | claim | figure | rung | geography | verified | note |
+|---|---|---|---|---|---|---|
+| E01 | Point-of-use filtration reduces child diarrhoea risk | 0.50 (0.41-0.60) | c | international | yes |  |
+| E02 | Chlorination (household) reduces child diarrhoea risk | 0.66 (0.56-0.77) | c | international | yes |  |
+| E03 | Solar water disinfection reduces child diarrhoea risk | 0.63 (0.50-0.80) | c | international | yes |  |
+| E04 | Improved drinking water supply on premises with higher water quality (vs unimproved source) reduces diarrhoea risk | 0.48 (0.26-0.87) | c | international | yes |  |
+| E05 | Sewer connection (vs unimproved sanitation) reduces diarrhoea risk | 0.53 (0.30-0.93) | c | international | yes |  |
+| E06 | Sanitation interventions overall reduce diarrhoea risk | 0.76 (0.61-0.94) | c | international | yes |  |
+| E07 | Promotion of handwashing with soap reduces diarrhoea risk | 0.70 (0.64-0.76) | c | international | yes |  |
+| E08 | Educational/behavioural pesticide-safety interventions improve knowledge and attitudes but are less effective at changing behaviour and reducing exposure; multifaceted interventions moderately effective; no studies of engineering/technological or legislation/enforcement interventions found | 31 studies (9 RCTs, 22 quasi-experimental) | b | international | yes |  |
+| E09 | CHW home-based education (3 sessions) and child urinary total DAP metabolites, adjusted | -51.3% (95% CI -81.3 to +26.8), p=0.14 | b | international | yes | NOT significant: the confidence interval includes zero (n=116 families). |
+| E10 | Community-wide intervention did not reduce OP exposure in farmworker children (null result) | p=0.21 (urinary metabolites, intervention vs control, year-adjusted); p=0.49 (house/vehicle dust) | b | international | yes |  |
+| E11 | Akkar smallholder farmers using no protective gear | 37.7% | b | other Lebanon | yes |  |
+| E12 | Akkar farmers reporting acute symptoms (respiratory irritation, skin issues) after pesticide use | 67.5% (102/151) | c | other Lebanon | yes |  |
+| E13 | Survey sample of Syrian refugee women farmworkers | 126 | c | Bekaa and Koura sample (not Beqaa only) | yes | Agrimovement survey; self-reported; not linked to a measured exposure. |
+| E14 | Women farmworkers reporting health problems | 69 of 126 | c | Bekaa and Koura sample | yes | self-reported health problems, not linked to a measured exposure |
+| E15 | Women farmworkers reporting workplace injuries (mild and acute) | 26 of 126 | c | Bekaa and Koura sample | yes | self-reported injuries |
+| E16 | Women farmworkers who received medical support; coverage of costs | 24 of 126; covered at most 30% of financial expenses | c | Bekaa and Koura sample | yes |  |
+| E17 | Women farmworkers living in tents in informal settlements | 94 of 126 | b | Bekaa and Koura sample (94 of 126 in the executive summary vs 90 of 120 in Section 4) | yes |  |
+| E18 | Average daily wage, men vs women farmworkers | 900,000 vs 600,000 | b | Bekaa and Koura sample | yes |  |
+| E19 | Syrian refugees aged 15+ with legal residency | 22% | b | other Lebanon | secondary | as quoted by Agrimovement; VASyR not opened: secondary |
+| E20 | Pesticide use intensity in Lebanon vs global average | 6.5 vs 2.26 (Lebanon was 4 in 1990) | a | other Lebanon | yes |  |
+| E21 | Irrigation water with <2 log E. coli CFU/100 mL: no pathogens (E. coli, Salmonella, parasite eggs) detected on vegetables, any irrigation method | 0 pathogens detected | b | Beqaa | yes |  |
+| E22 | With >2 log E. coli CFU/100 mL, parasitic contamination by irrigation method | 8.33% (sprinkler and surface-irrigated vegetables) vs 2.78% (drip-irrigated root crops) | b | Beqaa | yes |  |
+| E23 | Pesticide residues in Lebanese-grown apples | 212 samples; 77% with residues; 61% > MRL; 16% residues below MRL; 23% no residues | a | other Lebanon | yes |  |
+| E24 | Groundwater nitrate contamination in Upper Litani Basin is 'significant, widespread and persistent'; exceeds drinking-water limits in many parts of the basin | no % reported in abstract | a | Beqaa | yes | Assaf & Saadeh: no percentage of wells over the limit is given: do not quote one |
+| E25 | Nitrate in groundwater wells along a Litani River-to-eastern-divide transect | 12 of 21 wells >200 mg/L nitrate; only 1 of 21 suitable for drinking; 8 mildly contaminated | a | Beqaa | yes | Darwish et al. 2011: 200 mg/L is a lower bound, NO3 vs NO3-N unconfirmed: verify units and context in the paper before quoting |
+| E26 | Share of 10 Lebanese rivers exceeding FAO irrigation limit for E. coli (126/100 mL) | 60% | a | other Lebanon | yes |  |
+| E27 | Share of 10 rivers exceeding FAO upper limit for faecal coliforms (1000/100 mL) | 40% (El Kabir, Kadisha, Antelias, El Awali) | a | other Lebanon | yes |  |
+| E28 | Share of generated wastewater discharged untreated | ~70% | a | other Lebanon | yes |  |
+| E29 | Private wells share of national water supply | 33% (~631 MCM/yr); springs 31% (~593 MCM/yr); public wells 18% (344 MCM/yr) | a | other Lebanon | yes |  |
+| E30 | All toxic heavy metals detected in Lebanese cord blood; Pb and Hg among highest | Pb median 5.45 ug/L (p95 22.4); Hg median 0.7 ug/L (p95 2.01) | b | Beirut / Mount Lebanon (n=74), not Beqaa | yes | Correlates paper (Sci Rep 2026), n=74, Beirut / Mount Lebanon: detection is not a health effect |
+| E31 | Residential proximity to agricultural land associated with higher cord blood antimony (bivariate) | Mann-Whitney U z=-2.135, p=0.033 | b | Beirut / Mount Lebanon (n=74), not Beqaa | yes |  |
+| E32 | Residential proximity to agricultural land associated with higher cord blood nickel (multivariate) | beta=0.118, p=0.011 (Ni model R2=0.423) | b | Beirut / Mount Lebanon (n=74), not Beqaa | yes |  |
+| E33 | 2026 IJHEH '106 pollutants in cord blood' paper is a SPANISH (La Palma) study, not Lebanese: 106 pollutants quantified; maternal smoking shaped mixtures; SGA neonates of smokers had distinct PAH/OCP/low-chlorinated PCB/Pb mixture | n=471 neonates; 106 pollutants | b | Spain (La Palma): NOT Lebanese evidence | yes | EXCLUDED from the Lebanon evidence (it was cited as 'EELI 106 pollutants') |
+| E34 | Soil total Cr, Chmestar (3 samples) | 110; 230; <LOD (50) | a | Beqaa | yes | TOTAL chromium: the CNRS-L report has no Cr(VI) data |
+| E35 | Soil total Cr and Pb, Bouday | Cr: 140 (1 of 6; other 5 <LOD 50); Pb: 230 (single hotspot) | a | Beqaa | yes | TOTAL chromium |
+| E36 | Soil total Cr, Ksarnaba (7 samples) | 130; 170 (other 5 <LOD 50) | a | Beqaa | yes | TOTAL chromium |
+| E37 | Soil total Cr and total P, Rayak (5 samples) | Cr: 130; 150; 220; <LOD; 140. Total P: 1672; 722; 564; 1858; 976 | a | Beqaa | yes | TOTAL chromium; total P is not white phosphorus |

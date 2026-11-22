@@ -1,0 +1,118 @@
+period_start,period_end,indicator,governorate,value,url,note
+2025-04-07,2025-05-03,awd_new_cases,Lebanon (national),3512,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_April_3_May_2025.pdf,Section period 07 Apr-03 May 2025 per WebFetch extraction; file titled 12 Apr-3 May. RDT cholera positive 1; test positivity 0.2 (as printed).
+2025-04-07,2025-05-03,cholera_lab_confirmed,Lebanon (national),0,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_April_3_May_2025.pdf,
+2025-04-07,2025-05-03,hepA_new_suspected (line printed between AWD block and Hepatitis A heading; attributed to hepatitis A),Lebanon (national),99,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_April_3_May_2025.pdf,
+2025-04-07,2025-05-03,hepA_new_lab_confirmed (same attribution),Lebanon (national),40,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_April_3_May_2025.pdf,
+2025-04-07,2025-05-03,hepA_cumulative_year_to_date (same attribution),Lebanon (national),760,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_April_3_May_2025.pdf,Cumulative cases for 2025
+2025-04-07,2025-05-03,hepA_cases_distribution_by_governorate,Akkar,12,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_April_3_May_2025.pdf,governorate sum=139
+2025-04-07,2025-05-03,hepA_cases_distribution_by_governorate,N. Lebanon,50,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_April_3_May_2025.pdf,governorate sum=139
+2025-04-07,2025-05-03,hepA_cases_distribution_by_governorate,Mt Lebanon,14,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_April_3_May_2025.pdf,governorate sum=139
+2025-04-07,2025-05-03,hepA_cases_distribution_by_governorate,Beirut,9,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_April_3_May_2025.pdf,governorate sum=139
+2025-04-07,2025-05-03,hepA_cases_distribution_by_governorate,Beqaa,10,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_April_3_May_2025.pdf,governorate sum=139
+2025-04-07,2025-05-03,hepA_cases_distribution_by_governorate,Baalbek/Hermel,25,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_April_3_May_2025.pdf,governorate sum=139
+2025-04-07,2025-05-03,hepA_cases_distribution_by_governorate,S. Lebanon,7,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_April_3_May_2025.pdf,governorate sum=139
+2025-04-07,2025-05-03,hepA_cases_distribution_by_governorate,Nabatieh,12,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_April_3_May_2025.pdf,governorate sum=139
+2025-05-04,2025-05-18,awd_new_cases,Lebanon (national),1568,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_4_18_May_2025.pdf,Governorate sum (44) != new suspected+confirmed (87).
+2025-05-04,2025-05-18,cholera_lab_confirmed,Lebanon (national),0,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_4_18_May_2025.pdf,
+2025-05-04,2025-05-18,hepA_new_suspected (line printed between AWD block and Hepatitis A heading; attributed to hepatitis A),Lebanon (national),55,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_4_18_May_2025.pdf,
+2025-05-04,2025-05-18,hepA_new_lab_confirmed (same attribution),Lebanon (national),32,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_4_18_May_2025.pdf,
+2025-05-04,2025-05-18,hepA_cumulative_year_to_date (same attribution),Lebanon (national),815,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_4_18_May_2025.pdf,Cumulative cases for 2025
+2025-05-04,2025-05-18,hepA_cases_distribution_by_governorate,Akkar,7,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_4_18_May_2025.pdf,governorate sum=44
+2025-05-04,2025-05-18,hepA_cases_distribution_by_governorate,N. Lebanon,13,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_4_18_May_2025.pdf,governorate sum=44
+2025-05-04,2025-05-18,hepA_cases_distribution_by_governorate,Mt Lebanon,8,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_4_18_May_2025.pdf,governorate sum=44
+2025-05-04,2025-05-18,hepA_cases_distribution_by_governorate,Beirut,3,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_4_18_May_2025.pdf,governorate sum=44
+2025-05-04,2025-05-18,hepA_cases_distribution_by_governorate,Beqaa,4,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_4_18_May_2025.pdf,governorate sum=44
+2025-05-04,2025-05-18,hepA_cases_distribution_by_governorate,Baalbek/Hermel,2,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_4_18_May_2025.pdf,governorate sum=44
+2025-05-04,2025-05-18,hepA_cases_distribution_by_governorate,S. Lebanon,1,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_4_18_May_2025.pdf,governorate sum=44
+2025-05-04,2025-05-18,hepA_cases_distribution_by_governorate,Nabatieh,6,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_4_18_May_2025.pdf,governorate sum=44
+2025-06-26,2025-08-09,awd_new_cases,Lebanon (national),10164,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_26_June_9_August_2025.pdf,Health_Briefs_26_July_9_August_2025.pdf carries identical hepatitis A figures (same content); recorded once. 6-week period.
+2025-06-26,2025-08-09,cholera_lab_confirmed,Lebanon (national),0,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_26_June_9_August_2025.pdf,
+2025-06-26,2025-08-09,hepA_new_suspected (line printed between AWD block and Hepatitis A heading; attributed to hepatitis A),Lebanon (national),118,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_26_June_9_August_2025.pdf,
+2025-06-26,2025-08-09,hepA_new_lab_confirmed (same attribution),Lebanon (national),57,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_26_June_9_August_2025.pdf,
+2025-06-26,2025-08-09,hepA_cumulative_year_to_date (same attribution),Lebanon (national),1027,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_26_June_9_August_2025.pdf,Cumulative cases for 2025
+2025-06-26,2025-08-09,hepA_cases_distribution_by_governorate,Akkar,30,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_26_June_9_August_2025.pdf,governorate sum=168
+2025-06-26,2025-08-09,hepA_cases_distribution_by_governorate,N. Lebanon,53,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_26_June_9_August_2025.pdf,governorate sum=168
+2025-06-26,2025-08-09,hepA_cases_distribution_by_governorate,Mt Lebanon,15,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_26_June_9_August_2025.pdf,governorate sum=168
+2025-06-26,2025-08-09,hepA_cases_distribution_by_governorate,Beirut,10,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_26_June_9_August_2025.pdf,governorate sum=168
+2025-06-26,2025-08-09,hepA_cases_distribution_by_governorate,Beqaa,8,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_26_June_9_August_2025.pdf,governorate sum=168
+2025-06-26,2025-08-09,hepA_cases_distribution_by_governorate,Baalbek/Hermel,32,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_26_June_9_August_2025.pdf,governorate sum=168
+2025-06-26,2025-08-09,hepA_cases_distribution_by_governorate,S. Lebanon,8,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_26_June_9_August_2025.pdf,governorate sum=168
+2025-06-26,2025-08-09,hepA_cases_distribution_by_governorate,Nabatieh,12,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_26_June_9_August_2025.pdf,governorate sum=168
+2025-08-10,2025-09-10,awd_new_cases,Lebanon (national),6926,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_10_August_10_September_2025.pdf,"AWD 6,926 taken from raw PDF text layout (label adjacent to New AWD cases; WebFetch flagged label as slightly ambiguous)."
+2025-08-10,2025-09-10,cholera_lab_confirmed,Lebanon (national),0,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_10_August_10_September_2025.pdf,
+2025-08-10,2025-09-10,hepA_new_suspected (line printed between AWD block and Hepatitis A heading; attributed to hepatitis A),Lebanon (national),86,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_10_August_10_September_2025.pdf,
+2025-08-10,2025-09-10,hepA_new_lab_confirmed (same attribution),Lebanon (national),41,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_10_August_10_September_2025.pdf,
+2025-08-10,2025-09-10,hepA_cumulative_year_to_date (same attribution),Lebanon (national),1113,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_10_August_10_September_2025.pdf,Cumulative suspected cases for 2025
+2025-08-10,2025-09-10,hepA_cases_distribution_by_governorate,Akkar,19,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_10_August_10_September_2025.pdf,governorate sum=127
+2025-08-10,2025-09-10,hepA_cases_distribution_by_governorate,N. Lebanon,31,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_10_August_10_September_2025.pdf,governorate sum=127
+2025-08-10,2025-09-10,hepA_cases_distribution_by_governorate,Mt Lebanon,10,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_10_August_10_September_2025.pdf,governorate sum=127
+2025-08-10,2025-09-10,hepA_cases_distribution_by_governorate,Beirut,6,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_10_August_10_September_2025.pdf,governorate sum=127
+2025-08-10,2025-09-10,hepA_cases_distribution_by_governorate,Beqaa,14,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_10_August_10_September_2025.pdf,governorate sum=127
+2025-08-10,2025-09-10,hepA_cases_distribution_by_governorate,Baalbek/Hermel,31,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_10_August_10_September_2025.pdf,governorate sum=127
+2025-08-10,2025-09-10,hepA_cases_distribution_by_governorate,S. Lebanon,8,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_10_August_10_September_2025.pdf,governorate sum=127
+2025-08-10,2025-09-10,hepA_cases_distribution_by_governorate,Nabatieh,8,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_10_August_10_September_2025.pdf,governorate sum=127
+2025-09-11,2025-10-10,awd_new_cases,Lebanon (national),2356,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_September_10_October_2025.pdf,Section header inside PDF reportedly reads 10 Aug-10 Sept 2025 (probable copy error in source); period taken from file title. Values differ from Aug-Sep brief.
+2025-09-11,2025-10-10,cholera_lab_confirmed,Lebanon (national),0,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_September_10_October_2025.pdf,
+2025-09-11,2025-10-10,hepA_new_suspected (line printed between AWD block and Hepatitis A heading; attributed to hepatitis A),Lebanon (national),39,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_September_10_October_2025.pdf,
+2025-09-11,2025-10-10,hepA_new_lab_confirmed (same attribution),Lebanon (national),23,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_September_10_October_2025.pdf,
+2025-09-11,2025-10-10,hepA_cumulative_year_to_date (same attribution),Lebanon (national),1136,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_September_10_October_2025.pdf,Cumulative suspected cases for 2025
+2025-09-11,2025-10-10,hepA_cases_distribution_by_governorate,Akkar,2,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_September_10_October_2025.pdf,governorate sum=62
+2025-09-11,2025-10-10,hepA_cases_distribution_by_governorate,N. Lebanon,24,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_September_10_October_2025.pdf,governorate sum=62
+2025-09-11,2025-10-10,hepA_cases_distribution_by_governorate,Mt Lebanon,13,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_September_10_October_2025.pdf,governorate sum=62
+2025-09-11,2025-10-10,hepA_cases_distribution_by_governorate,Beirut,3,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_September_10_October_2025.pdf,governorate sum=62
+2025-09-11,2025-10-10,hepA_cases_distribution_by_governorate,Beqaa,7,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_September_10_October_2025.pdf,governorate sum=62
+2025-09-11,2025-10-10,hepA_cases_distribution_by_governorate,Baalbek/Hermel,6,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_September_10_October_2025.pdf,governorate sum=62
+2025-09-11,2025-10-10,hepA_cases_distribution_by_governorate,S. Lebanon,3,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_September_10_October_2025.pdf,governorate sum=62
+2025-09-11,2025-10-10,hepA_cases_distribution_by_governorate,Nabatieh,4,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_September_10_October_2025.pdf,governorate sum=62
+2025-10-11,2025-11-11,awd_new_cases,Lebanon (national),4658,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_October_11_November_2025.pdf,
+2025-10-11,2025-11-11,cholera_lab_confirmed,Lebanon (national),0,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_October_11_November_2025.pdf,
+2025-10-11,2025-11-11,hepA_new_suspected (line printed between AWD block and Hepatitis A heading; attributed to hepatitis A),Lebanon (national),103,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_October_11_November_2025.pdf,
+2025-10-11,2025-11-11,hepA_new_lab_confirmed (same attribution),Lebanon (national),70,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_October_11_November_2025.pdf,
+2025-10-11,2025-11-11,hepA_cumulative_year_to_date (same attribution),Lebanon (national),1228,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_October_11_November_2025.pdf,Cumulative suspected cases for 2025
+2025-10-11,2025-11-11,hepA_cases_distribution_by_governorate,Akkar,17,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_October_11_November_2025.pdf,governorate sum=172
+2025-10-11,2025-11-11,hepA_cases_distribution_by_governorate,N. Lebanon,33,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_October_11_November_2025.pdf,governorate sum=172
+2025-10-11,2025-11-11,hepA_cases_distribution_by_governorate,Mt Lebanon,11,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_October_11_November_2025.pdf,governorate sum=172
+2025-10-11,2025-11-11,hepA_cases_distribution_by_governorate,Beirut,14,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_October_11_November_2025.pdf,governorate sum=172
+2025-10-11,2025-11-11,hepA_cases_distribution_by_governorate,Beqaa,14,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_October_11_November_2025.pdf,governorate sum=172
+2025-10-11,2025-11-11,hepA_cases_distribution_by_governorate,Baalbek/Hermel,34,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_October_11_November_2025.pdf,governorate sum=172
+2025-10-11,2025-11-11,hepA_cases_distribution_by_governorate,S. Lebanon,40,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_October_11_November_2025.pdf,governorate sum=172
+2025-10-11,2025-11-11,hepA_cases_distribution_by_governorate,Nabatieh,9,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_11_October_11_November_2025.pdf,governorate sum=172
+2025-11-12,2025-12-06,awd_new_cases,Lebanon (national),2745,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_November_8_December_2025.pdf,FWBD section period 12 Nov-06 Dec 2025.
+2025-11-12,2025-12-06,cholera_lab_confirmed,Lebanon (national),0,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_November_8_December_2025.pdf,
+2025-11-12,2025-12-06,hepA_new_suspected (line printed between AWD block and Hepatitis A heading; attributed to hepatitis A),Lebanon (national),85,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_November_8_December_2025.pdf,
+2025-11-12,2025-12-06,hepA_new_lab_confirmed (same attribution),Lebanon (national),48,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_November_8_December_2025.pdf,
+2025-11-12,2025-12-06,hepA_cumulative_year_to_date (same attribution),Lebanon (national),1313,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_November_8_December_2025.pdf,Cumulative suspected cases for 2025
+2025-11-12,2025-12-06,hepA_cases_distribution_by_governorate,Akkar,30,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_November_8_December_2025.pdf,governorate sum=136
+2025-11-12,2025-12-06,hepA_cases_distribution_by_governorate,N. Lebanon,28,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_November_8_December_2025.pdf,governorate sum=136
+2025-11-12,2025-12-06,hepA_cases_distribution_by_governorate,Mt Lebanon,16,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_November_8_December_2025.pdf,governorate sum=136
+2025-11-12,2025-12-06,hepA_cases_distribution_by_governorate,Beirut,10,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_November_8_December_2025.pdf,governorate sum=136
+2025-11-12,2025-12-06,hepA_cases_distribution_by_governorate,Beqaa,9,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_November_8_December_2025.pdf,governorate sum=136
+2025-11-12,2025-12-06,hepA_cases_distribution_by_governorate,Baalbek/Hermel,23,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_November_8_December_2025.pdf,governorate sum=136
+2025-11-12,2025-12-06,hepA_cases_distribution_by_governorate,S. Lebanon,12,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_November_8_December_2025.pdf,governorate sum=136
+2025-11-12,2025-12-06,hepA_cases_distribution_by_governorate,Nabatieh,8,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_12_November_8_December_2025.pdf,governorate sum=136
+2026-03-16,2026-04-12,awd_new_cases,Lebanon (national),2009,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_18_March-28_April_2026.pdf,FWBD section period 16 Mar-12 Apr 2026.
+2026-03-16,2026-04-12,cholera_lab_confirmed,Lebanon (national),0,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_18_March-28_April_2026.pdf,
+2026-03-16,2026-04-12,hepA_new_suspected (line printed between AWD block and Hepatitis A heading; attributed to hepatitis A),Lebanon (national),28,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_18_March-28_April_2026.pdf,
+2026-03-16,2026-04-12,hepA_new_lab_confirmed (same attribution),Lebanon (national),26,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_18_March-28_April_2026.pdf,
+2026-03-16,2026-04-12,hepA_cumulative_year_to_date (same attribution),Lebanon (national),,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_18_March-28_April_2026.pdf,"Cumulative suspected cases for 2026: ""?"" printed in source"
+2026-03-16,2026-04-12,hepA_cases_distribution_by_governorate,Akkar,13,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_18_March-28_April_2026.pdf,governorate sum=45
+2026-03-16,2026-04-12,hepA_cases_distribution_by_governorate,N. Lebanon,17,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_18_March-28_April_2026.pdf,governorate sum=45
+2026-03-16,2026-04-12,hepA_cases_distribution_by_governorate,Mt Lebanon,4,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_18_March-28_April_2026.pdf,governorate sum=45
+2026-03-16,2026-04-12,hepA_cases_distribution_by_governorate,Beirut,5,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_18_March-28_April_2026.pdf,governorate sum=45
+2026-03-16,2026-04-12,hepA_cases_distribution_by_governorate,Bekaa,2,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_18_March-28_April_2026.pdf,governorate sum=45
+2026-03-16,2026-04-12,hepA_cases_distribution_by_governorate,Baalbek/Hermel,2,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_18_March-28_April_2026.pdf,governorate sum=45
+2026-03-16,2026-04-12,hepA_cases_distribution_by_governorate,S. Lebanon,2,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_18_March-28_April_2026.pdf,governorate sum=45
+2026-03-16,2026-04-12,hepA_cases_distribution_by_governorate,Nabatieh,0,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_18_March-28_April_2026.pdf,governorate sum=45
+2026-04-19,2026-05-17,awd_new_cases,Lebanon (national),2777,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_29_April-24_May_2026.pdf,FWBD section period 19 Apr-17 May 2026; narrative text reportedly calls AWD figure cumulative.
+2026-04-19,2026-05-17,cholera_lab_confirmed,Lebanon (national),0,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_29_April-24_May_2026.pdf,
+2026-04-19,2026-05-17,hepA_new_suspected (line printed between AWD block and Hepatitis A heading; attributed to hepatitis A),Lebanon (national),33,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_29_April-24_May_2026.pdf,
+2026-04-19,2026-05-17,hepA_new_lab_confirmed (same attribution),Lebanon (national),8,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_29_April-24_May_2026.pdf,
+2026-04-19,2026-05-17,hepA_cumulative_year_to_date (same attribution),Lebanon (national),,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_29_April-24_May_2026.pdf,Cumulative suspected cases for 2026: blank in source
+2026-04-19,2026-05-17,hepA_cases_distribution_by_governorate,Akkar,11,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_29_April-24_May_2026.pdf,governorate sum=41
+2026-04-19,2026-05-17,hepA_cases_distribution_by_governorate,N. Lebanon,16,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_29_April-24_May_2026.pdf,governorate sum=41
+2026-04-19,2026-05-17,hepA_cases_distribution_by_governorate,Mt Lebanon,5,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_29_April-24_May_2026.pdf,governorate sum=41
+2026-04-19,2026-05-17,hepA_cases_distribution_by_governorate,Beirut,1,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_29_April-24_May_2026.pdf,governorate sum=41
+2026-04-19,2026-05-17,hepA_cases_distribution_by_governorate,Bekaa,4,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_29_April-24_May_2026.pdf,governorate sum=41
+2026-04-19,2026-05-17,hepA_cases_distribution_by_governorate,Baalbek/Hermel,0,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_29_April-24_May_2026.pdf,governorate sum=41
+2026-04-19,2026-05-17,hepA_cases_distribution_by_governorate,S. Lebanon,4,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_29_April-24_May_2026.pdf,governorate sum=41
+2026-04-19,2026-05-17,hepA_cases_distribution_by_governorate,Nabatieh,0,https://www.emro.who.int/images/stories/lebanon/Health_Briefs_Health_Briefs_29_April-24_May_2026.pdf,governorate sum=41
