@@ -89,11 +89,11 @@ k = st.columns(3)
 k[0].metric("Baseline (observed)", f"{base['value']:.0%}" if base["value"] is not None else "missing", help=f"{base['scope']}. Source: {base['source']}. Status: {base['status']}. {base['caveat']}")
 p30 = theme_kpi.local_control_share(2030, scn, scored=C.scored_cached(None, 30, 0.1, C.VER))
 k[1].metric("2030 local control (escrow window)", f"{p30['value']:.0%}" if p30["value"] is not None else "missing",
-            help=f"{p30['scope']}. Status: {p30['status']} (district capacity inputs are mock). Source: {p30['source']}.")
+            help=f"{p30['scope']}. Status: {p30['status']} (capacity starts at the national anchor in every district: no district series exists). Source: {p30['source']}.")
 k[2].metric("2030 held by Lebanese organisations", f"{p30.get('lebanese_held_share', 0):.0%}", help="Share of released money administered by any Lebanese organisation (national NGO or above). Starts near 100% in the model because national NGOs qualify from day one.")
 tab = theme_kpi.kpi_table(scenarios=[scn], scored=C.scored_cached(None, 30, 0.1, C.VER))
 obs = lhf.rename(columns={"national_ngo_share": "value"}).assign(series="Observed: LHF share to national NGOs (real)", kind="observed")[["year", "value", "series", "kind"]] if lhf is not None else pd.DataFrame(columns=["year", "value", "series", "kind"])
-proj = tab.rename(columns={"local_control_share": "value"}).assign(series="Projection: local control of the escrow window (assumption, mock capacity inputs)", kind="projection")[["year", "value", "series", "kind"]]
+proj = tab.rename(columns={"local_control_share": "value"}).assign(series="Projection: local control of the escrow window (assumption: national-anchor capacity, scenario thresholds)", kind="projection")[["year", "value", "series", "kind"]]
 bq = theme_kpi.beqaa_proxy_series()
 bqp = bq.rename(columns={"national_ngo_share": "value"}).assign(series="Proxy: Beqaa-titled LHF health projects, share to national NGOs", kind="observed")[["year", "value", "series", "kind"]] if bq is not None else pd.DataFrame(columns=["year", "value", "series", "kind"])
 allp = pd.concat([obs, bqp, proj], ignore_index=True)

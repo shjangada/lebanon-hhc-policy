@@ -33,7 +33,7 @@ sel = path if yr is None else path[path.year == yr]
 tot = float(sel.released_usd.sum())
 lw = sum(float(sel[f"usd_{l}"].sum()) * escrow.LEVEL_LOCAL_WEIGHT[l] for l in escrow.LEVELS) / tot if tot else 0.0
 m = st.columns(4)
-m[0].metric("Local control (theme KPI)", f"{lw:.0%}", help="Released money weighted by the rung that holds it (INGO 0, national NGO 1/3, union 2/3, MoPH 1; escrow.LEVEL_LOCAL_WEIGHT, assumption). Status: assumption, mock district capacity inputs.")
+m[0].metric("Local control (theme KPI)", f"{lw:.0%}", help="Released money weighted by the rung that holds it (INGO 0, national NGO 1/3, union 2/3, MoPH 1; escrow.LEVEL_LOCAL_WEIGHT, assumption). Status: assumption (national-anchor capacity, scenario thresholds).")
 m[1].metric("Released to towns", f"${tot:,.0f}", help="Need floor + capacity tranche released. Illustrative pool of $1M over 2026-2030 (assumption; compare the Health Sector requirement of $74.2M, SC/FEASIBILITY §1).")
 m[2].metric("Held in escrow", f"${float(sel.held_usd.sum()):,.0f}", help="Capacity tranche withheld because a threshold failed (restricted mode).")
 m[3].metric("Held by donors (INGO rung)", f"${float(sel['usd_INGO'].sum()):,.0f}", help="Money administered by an international NGO or UN agency as fiduciary.")
@@ -64,7 +64,7 @@ dd = d.groupby("district").agg(towns=("cadaster_id", "nunique"), released_usd=("
                                rung=("administered_by_floor", lambda x: x.value_counts().index[0]), capacity_index=("admin_capacity_index", "mean")).reset_index()
 st.dataframe(C.pretty(dd.round(2), district="District", towns="Towns in window", released_usd="Released $", held_usd="Held $", rung="Rung holding the need floor (most common)", capacity_index="Capacity index"),
              hide_index=True, width="stretch")
-st.caption("Only districts that contain priority towns appear. Capacity index = mock district series rescaled to the national anchor (SC01, World Bank WGI Government Effectiveness 29.9/100 for 2025).")
+st.caption("Only districts that contain priority towns appear. Capacity index = the national anchor applied to every district (SC01, World Bank WGI Government Effectiveness 29.9/100 for 2025).")
 
 st.subheader("Local control over time, by scenario")
 line = alt.Chart(kt.assign(scenario=kt.scenario.map(theme_kpi.SCENARIO_LABELS))).mark_line(point=True).encode(x=alt.X("year:O", title=None), y=alt.Y("local_control_share:Q", scale=alt.Scale(domain=[0, 1]), title="local control"),
@@ -82,7 +82,7 @@ al = alt.Chart(long).mark_bar().encode(x=alt.X("regime:N", title=None, sort=["To
                                        column=alt.Column("metric:N", title=None), tooltip=["regime", "metric", alt.Tooltip("value:Q", format=",.0f")])
 st.altair_chart(al.properties(width=300, height=240), use_container_width=False)
 st.warning("ASSUMED INPUTS: community priorities, local-fit and capture are scenario values, so these bars are test arms, not results.", icon="ℹ️")
-st.caption("These are PILOT TEST ARMS, not results: the community arm's effect rests on assumptions (local-fit 1.0-1.3, capture 10-40%, mock community priorities), and the model does not value legitimacy or sustainability. "
+st.caption("These are PILOT TEST ARMS, not results: the community arm's effect rests on assumptions (local-fit 1.0-1.3, capture 10-40%, placeholder community priorities), and the model does not value legitimacy or sustainability. "
            "Community-driven development delivers local public goods but does not transform governance by itself (see precedents), so the claim is better targeting, not institution-building. Breakpoints are on the Resilience page.")
 
 st.subheader("Thresholds (data/params/escrow_params.yaml)")
