@@ -35,7 +35,7 @@ cl = ss.clusters(ranked)
 st.dataframe(C.pretty(cl.head(6).round(2), cluster_lead="Cluster", district="District", members="Cadasters", n="n", mean_start_score="Mean start score", startup_central_usd="Startup $ (central)", settlement_people_2016="Settlement people (2016)"), hide_index=True, width="stretch")
 mp = alt.Chart(ranked).mark_circle(size=60).encode(longitude="lon:Q", latitude="lat:Q", color=alt.Color("start_score:Q", scale=alt.Scale(scheme="viridis"), title="Start score"), tooltip=["cadaster_name", "district", alt.Tooltip("start_score:Q", format=".2f"), "startup_central_usd"])
 st.altair_chart(C.wm(mp.properties(), 520, 420), use_container_width=False)
-st.caption("The data does not make the Bouday-Chmestar cluster the first site: they rank lower because centre access and settlement population are weaker there; the Zahle clusters and Hermel lead on this scoring. Change the weights above to see how fragile any one site is.")
+st.caption("The pilot starts where the scorer ranks first (the Zahle clusters and Hermel). Bouday and Chmestar, the CNRS-L soil villages, are a second wave: they rank lower on centre access and settlement population, but have soil data and REACH HSM 2025 coverage (reported). Change the weights above to see how fragile any one site is.")
 
 st.subheader("Visits, tests and the referral funnel")
 site = st.selectbox("Site", top.cadaster_name.tolist(), key="pil_site")
@@ -82,7 +82,7 @@ st.dataframe(C.pretty(mm[["district", "baseline_cases_per_year", "package_cost_u
                       cost_per_case_averted_median="$ per case averted", visits_per_case_to_break_even="Visits per case needed to break even"), hide_index=True, width="stretch")
 st.caption(f"Relative risk {rr[0]:.2f} [{rr[1]:.2f}-{rr[2]:.2f}] for child diarrhoea in low- and middle-income countries (Wolf 2022): TRANSFERRED evidence, applied to reported hepatitis A + typhoid (notified cases; under-reporting not corrected). "
            "Package prices: 2026 UNICEF catalogue filter per household over an assumed 3-year life (the filtration measure; the chlorination package uses NaDCC tablets; handwashing and sewer connection use the filtration price: no package price is sourced for them), plus CHW months. "
-           "Cost and benefit both scale with coverage, so coverage cannot break even: each case would have to cost hundreds of primary-care visits. The package pays for itself only through diarrhoea and severity not counted here.")
+           "The cost per case is for NOTIFIED cases, so it is an UPPER BOUND on the cost per illness averted: most diarrhoea is never notified, and the pilot measures the true figure. Cost and benefit both scale with coverage, so coverage cannot break even: each notified case would have to cost hundreds of primary-care visits; the package pays for itself only through diarrhoea and severity not counted here.")
 
 st.subheader("Pilot metrics: evidence for scaling")
 st.dataframe(pd.DataFrame([
@@ -108,12 +108,14 @@ st.caption("Illustrative stepped-wedge: one site starts every two months in scor
 st.subheader("Cost and reallocation")
 rf_cost = st.slider("Referral fund per red flag with no payer ($, illustrative)", 0, 400, 150, 10, key="pil_refund",
                     help="no payer is found for unregistered Syrians; the patient share of a normal delivery under the ended UNHCR scheme was $128-170")
+mult = st.slider("Shipping and markup multiplier on imported tests and filters (assumption: no Lebanese price or freight rate found)", 1.0, 3.0, 1.0, 0.1, key="pil_mult")
 pr = ss._prices()
+pr = {k: tuple(x * mult if k in ("cr6", "filter") else x for x in v) for k, v in pr.items()}
 n_red = float(fn.set_index("stage").people["red flags referred"])
 package = pd.DataFrame([
-    {"item": "Water tests (nitrate + chromium, wells)", "type": "new money unless the host project pays", "usd": par["n_wells"] * (pr["nitrate"][1] + pr["cr_water"][1])},
+    {"item": "Water tests (nitrate + chromium, wells)", "type": "new money (a host project can pay it: optional saving)", "usd": par["n_wells"] * (pr["nitrate"][1] + pr["cr_water"][1])},
     {"item": "Soil baseline (if no soil result near)", "type": "new money", "usd": 0.0 if bool(row.soil_sampled_nearby) else 10 * pr["soil"][1]},
-    {"item": "Cr(VI) speciation (if a chromium finding is near; no Lebanese price: US lab $40)", "type": "new money", "usd": 10 * pr["cr6"][1] if row.soil_hq_high_nearby > 0 else 0.0},
+    {"item": "Cr(VI) speciation (if a chromium finding is near; US price proxy $40-77, no Lebanese price: assumption A-cost-3)", "type": "new money", "usd": 10 * pr["cr6"][1] if row.soil_hq_high_nearby > 0 else 0.0},
     {"item": "Filters for settlement households (UNICEF catalogue, ex-works)", "type": "new money", "usd": people / 5 * par["filter_share"] * pr["filter"][1]},
     {"item": "CHW months", "type": "redirected where an existing outreach team covers the site, else new", "usd": par["chw_months"] * pr["chw"][1]},
     {"item": "Referral fund for red flags with no payer", "type": "new money", "usd": n_red * rf_cost},

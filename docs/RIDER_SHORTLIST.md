@@ -4,6 +4,8 @@ A rider = testing (soil or water), a trigger to screening and referral at the ne
 
 **Finding to confirm, not a proven fact:** none of the 37 inventoried projects tests soil contamination or screens people for exposure. Pages were read through a summarising tool and several returned 403, so the absence is the result of a desk search.
 
+**Host projects are optional.** No host project could be confirmed, so the rider is funded through the proposed LHF Beqaa window (registry F004); a host project's own safeguard or OHS line only lowers the new money needed.
+
 ## What could and could not be verified
 Only the ILO notice, the BALADNA pages (EEAS, AFD) and the SPNL page could be opened. The HDX/CBPF pages (Nabad, Fair Trade Lebanon) and the UNDP pages (Hermel, GATE grants) were blocked, so those rows rest on search summaries. **Do not cite an amount, date or implementer from this table without opening the source page yourself.**
 

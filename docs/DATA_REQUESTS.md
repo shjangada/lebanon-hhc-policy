@@ -1,3 +1,19 @@
+# Proxies and labelled assumptions (no outreach needed), then optional data requests
+
+The deadline does not allow waiting for replies, so each missing input has a public proxy or a labelled assumption below. The drafted requests further down are optional follow-ups for after submission.
+`reported` = the figure was reported to the team and has **not been opened here**: check before quoting.
+
+| Missing input | Proxy used now | Label |
+|---|---|---|
+| Funding route (host project not confirmed) | the **Lebanon Humanitarian Fund** itself: registry row F004, 2026 second reserve allocation, USD 15M, March 2026, WASH and Health among the priority sectors with frontline partners (ReliefWeb); the Q3 2025 UN aid-tracking report lists the LHF donors (reported) | "ring-fenced Beqaa window within the LHF (proposed)". A host-project add-on is an **optional cost saving**, not a requirement |
+| Cr(VI) price (no Lebanese price; AUB list has total Cr only) | US lab prices: $40 per soil sample (2024 price list) and $77 (US Fish & Wildlife, c. 2008, archived: secondary); water $37 on a 2024 San Antonio Testing Lab list (reported, not opened). A **shipping and markup multiplier** is a slider on the Pilot section (default 1.0 = none; range 1-3) | "US price proxy; Lebanese lab price unknown (assumption A-cost-3)" |
+| Settlement locations and counts | locations: IAMP Dec 2016 (have, 135 cadasters, OLD); counts for scaling: IAMP Bekaa March 2018 snapshot (reported: 1,701 active settlements, about 180,680 people; not used in the model); 2025 cadaster check: REACH HSM Round 2, Jan 2025 (reported: 52-53 cadasters in Bekaa and Baalbek-Hermel including Bouday; health services inaccessible in 17 of 53, mainly because of cost) | "settlement locations 2016, counts 2018, 2025 cadaster check from REACH" |
+| CHW case management (no Lebanese data) | international guidance only: WHO 2018 CHW guideline and the WHO/UNICEF iCCM joint statement (neither opened here); iCCM Cochrane review abstract (care-seeking RR 1.68, appropriate treatment RR 0.96, very low certainty) | "international evidence; the Lebanese CHW share is a pilot measure" (slider with a break-even) |
+| Protective gear (no trial found) | no effect size is claimed; kits are presented as standard occupational practice (hierarchy of controls); symptom change is a pilot measure | "no trial evidence; pilot measure" |
+| Notified cases | $2,600-8,500 per NOTIFIED hepatitis A or typhoid case averted at 10% coverage is an **upper bound** on cost per illness averted: most diarrhoea is never notified | "upper bound; the pilot measures the true figure" |
+
+---
+
 # Data requests and manual steps (drafts, nothing has been sent)
 
 Every request below replaces a mock or assumed input. Contact addresses appear only where a source in the repo gives one (`lebhealthsector@who.int`, `ceelabs@aub.edu.lb`); for the others find the official contact first (do not guess an address). Fill in your name and affiliation; keep the request narrow, ask for aggregates, say what you will cite, and offer to share the result.
