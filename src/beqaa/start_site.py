@@ -126,3 +126,35 @@ def clusters(ranked: pd.DataFrame, radius_km: float = 8.0, top: int = 40) -> pd.
                     "startup_central_usd": g.startup_central_usd.sum(), "settlement_people_2016": g.settlement_people_2016.sum()})
         left = [j for j in left if j not in near]
     return pd.DataFrame(out).sort_values("mean_start_score", ascending=False).reset_index(drop=True)
+
+
+def rank_stability(cad: pd.DataFrame | None = None, n: int = 1000, seed: int = 42) -> dict:
+    """How stable is the start-site ranking? Three perturbations of the criterion weights (equal weights are the centre):
+      random: `n` Dirichlet(1,...,1) weight draws; perturb: each weight scaled by a random factor in [0.75, 1.25] (n draws); leave-one-out: drop each criterion in turn.
+    Returns per-cadaster shares of draws in the top 1 / 3 / 10, mean rank, the baseline #1, and summary booleans. Scores are computed on the 0-1 criteria; no model is re-run."""
+    c = cad if cad is not None else criteria()
+    X = c[CRITERIA].values.astype(float)
+    rng = np.random.default_rng(seed)
+    base_w = np.ones(len(CRITERIA))
+    draws = {"random": rng.dirichlet(np.ones(len(CRITERIA)), n), "perturb": base_w * rng.uniform(0.75, 1.25, (n, len(CRITERIA))),
+             "leave_one_out": np.array([np.where(np.arange(len(CRITERIA)) == i, 0.0, 1.0) for i in range(len(CRITERIA))])}
+    out, summary = c[["cadaster_id", "cadaster_name", "district"]].copy(), {}
+    base_scores = X @ base_w
+    base_first = int(np.argmax(base_scores))
+    for name, W in draws.items():
+        S = X @ W.T                                                  # cadasters x draws
+        R = (-S).argsort(axis=0).argsort(axis=0) + 1
+        out[f"top1_{name}"] = (R == 1).mean(axis=1)
+        out[f"top3_{name}"] = (R <= 3).mean(axis=1)
+        out[f"top10_{name}"] = (R <= 10).mean(axis=1)
+        out[f"mean_rank_{name}"] = R.mean(axis=1)
+        summary[name] = {"baseline_first_site": c.cadaster_name.iloc[base_first], "baseline_first_share_top1": float((R[base_first] == 1).mean()), "baseline_first_share_top3": float((R[base_first] <= 3).mean()),
+                         "most_frequent_first": c.cadaster_name.iloc[int(np.argmax((R == 1).mean(axis=1)))], "n_draws": int(W.shape[0])}
+    # district view: how often is the top site in each district
+    tops = {}
+    for name, W in draws.items():
+        first = np.argmax(X @ W.T, axis=0)
+        tops[name] = pd.Series(c.district.values[first]).value_counts(normalize=True).round(3).to_dict()
+    summary["district_of_first_site"] = tops
+    summary["first_site_stable"] = bool(summary["random"]["baseline_first_share_top3"] >= 0.5)
+    return {"per_cadaster": out.sort_values("top3_random", ascending=False).reset_index(drop=True), "summary": summary}

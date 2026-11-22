@@ -56,3 +56,13 @@ def test_start_site_scores_are_bounded_and_costs_nonnegative():
     heavy = ss.score(weights={"soil": 20.0})
     assert heavy.iloc[0].soil == 1.0                                                                             # a heavy soil weight puts a soil-covered site first
     assert (r.start_rank >= 1).all() and r.cadaster_id.is_unique
+
+
+@need
+def test_rank_stability_is_reproducible_and_shares_are_valid():
+    a, b = ss.rank_stability(n=200, seed=1), ss.rank_stability(n=200, seed=1)
+    pc = a["per_cadaster"]
+    assert pc.equals(b["per_cadaster"])                                                                           # seeded
+    assert pc.top1_random.sum() == pytest.approx(1.0) and pc.top3_random.sum() == pytest.approx(3.0)              # exactly one first place and three top-3 places per draw
+    assert (pc.top10_random >= pc.top3_random).all() and (pc.top3_random >= pc.top1_random).all()
+    assert set(a["summary"]["district_of_first_site"]["random"]) <= {"Baalbek", "Hermel", "Zahle", "West Bekaa", "Rachaya"}
