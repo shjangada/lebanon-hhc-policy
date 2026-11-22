@@ -10,7 +10,7 @@ The deadline does not allow waiting for replies, so each missing input has a pub
 | Settlement locations and counts | locations: IAMP Dec 2016 (have, 135 cadasters, OLD); counts for scaling: IAMP Bekaa March 2018 snapshot (reported: 1,701 active settlements, about 180,680 people; not used in the model); 2025 cadaster check: REACH HSM Round 2, Jan 2025 (reported: 52-53 cadasters in Bekaa and Baalbek-Hermel including Bouday; health services inaccessible in 17 of 53, mainly because of cost) | "settlement locations 2016, counts 2018, 2025 cadaster check from REACH" |
 | CHW case management (no Lebanese data) | international guidance only: WHO 2018 CHW guideline and the WHO/UNICEF iCCM joint statement (neither opened here); iCCM Cochrane review abstract (care-seeking RR 1.68, appropriate treatment RR 0.96, very low certainty) | "international evidence; the Lebanese CHW share is a pilot measure" (slider with a break-even) |
 | Protective gear (no trial found) | no effect size is claimed; kits are presented as standard occupational practice (hierarchy of controls); symptom change is a pilot measure | "no trial evidence; pilot measure" |
-| Notified cases | $2,600-8,500 per NOTIFIED hepatitis A or typhoid case averted at 10% coverage is an **upper bound** on cost per illness averted: most diarrhoea is never notified | "upper bound; the pilot measures the true figure" |
+| Notified cases | $7,900-22,800 per NOTIFIED hepatitis A or typhoid case averted at 10% coverage is an **upper bound** on cost per illness averted: most diarrhoea is never notified | "upper bound; the pilot measures the true figure" |
 
 ---
 

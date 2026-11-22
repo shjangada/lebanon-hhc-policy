@@ -8,7 +8,7 @@ Effects   Wolf et al. 2022 (The Lancet, 124 studies) relative risks for DIARRHOE
 Coverage  share of the district population reached (slider); cases are assumed proportional to population (no settlement-specific incidence exists).
 Outputs   (Monte Carlo over the RR confidence interval and the transfer slider) reported cases averted per year, primary-care visits avoided at $20.03 per service (K2P/UNICEF 2022), cost per case
           averted, and the break-even visits per case at which avoided visit costs cover the package (cost and benefit both scale with coverage).
-Package   2026 UNICEF catalogue prices: ceramic filter per household (one-off) and NaDCC tablets per household-month, plus sourced CHW months; the 2002 cost per person (filtration $3.03, chlorination $0.66)
+Package   2026 UNICEF catalogue prices: ceramic filter per household (one-off, replaced after about a year) and NaDCC tablets per household-month, plus sourced CHW months; the 2002 cost per person (filtration $3.03, chlorination $0.66)
           is shown as the LOW bound and is NOT inflated here (it would be higher)."""
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ from .io import PROCESSED, load_dataset
 
 RR = {"filtration": (0.50, 0.41, 0.60), "chlorination": (0.66, 0.56, 0.77), "handwashing": (0.70, 0.64, 0.76), "sewer connection": (0.53, 0.30, 0.93)}
 VISIT_COST = 20.03          # USD per primary-care service (K2P/UNICEF 2022; cost_ranges 2a)
-HH_SIZE = 5
+HH_SIZE = 4.6                 # persons per Syrian household, VASyR 2025 executive summary (read directly)
 
 
 def baseline_cases(esu: pd.DataFrame | None = None) -> pd.Series:
@@ -29,18 +29,18 @@ def baseline_cases(esu: pd.DataFrame | None = None) -> pd.Series:
     return d.groupby(["district_clean", "year"]).cases.sum().groupby("district_clean").mean()
 
 
-def package_cost_per_person_year(measure: str = "filtration", prices: pd.DataFrame | None = None, life: float = 3.0, hh_size: int = HH_SIZE) -> tuple[float, float, float]:
-    """(low, central, high) USD per person-year. Filtration: catalogue filter per household over 3 years (assumed lifetime) plus no running cost; chlorination: NaDCC tablets per household-month."""
+def package_cost_per_person_year(measure: str = "filtration", prices: pd.DataFrame | None = None, life: float = 1.0, hh_size: float = HH_SIZE) -> tuple[float, float, float]:
+    """(low, central, high) USD per person-year. Filtration: catalogue filter per household over about one year (manufacturer 12 months; field estimate 6 months) plus no running cost; chlorination: NaDCC tablets per household-month."""
     pk = prices if prices is not None else pd.read_csv(PROCESSED / "prices_pack.csv")
     if measure == "chlorination":
         c = float(pk[pk["item"].str.startswith("NaDCC 33 mg")].central.iloc[0])
         return (0.66, c * 12 / hh_size, c * 12 / hh_size * 1.0)               # low = 2002 cost per person (not inflated)
     f = pk[pk["item"].str.startswith("Household ceramic water filter")].iloc[0]
-    return (3.03, float(f.central) / hh_size / life, float(f.high) / hh_size / life * 1.0)      # life = filter lifetime in years: ASSUMPTION
+    return (3.03, float(f.central) / hh_size / life, float(f.high) / hh_size / life * 1.0)      # life = filter lifetime in years: manufacturer assumption 12 months; a field estimate of about 1,500 L is about 6 months for a family of six (scholarsmine.mst.edu/geosci_geo_peteng_facwork/796, 17 families, inconclusive)
 
 
 def simulate(district: str, people_reached: float, district_pop: float, measure: str = "filtration", transfer: float = 1.0, n: int = 5000, seed: int = 42,
-             visits_per_case: float = 1.0, chw_months: float = 6.0, esu: pd.DataFrame | None = None, life: float = 3.0, hh_size: int = HH_SIZE, rr_point: float | None = None) -> dict:
+             visits_per_case: float = 1.0, chw_months: float = 6.0, esu: pd.DataFrame | None = None, life: float = 1.0, hh_size: float = HH_SIZE, rr_point: float | None = None) -> dict:
     rng = np.random.default_rng(seed)
     base = float(baseline_cases(esu).get(district, np.nan))
     rr, lo, hi = RR[measure]

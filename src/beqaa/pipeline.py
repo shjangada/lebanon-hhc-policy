@@ -71,7 +71,7 @@ def run(verbose: bool = True) -> dict:
     from . import unit_costs
     unit_costs.run()
     be = breakeven.run(rb["scored"])
-    pd.concat([be["allocation"].assign(kind="allocation"), be["escrow"].assign(kind="escrow release")], ignore_index=True).to_csv(PROC / "breakeven.csv", index=False)
+    pd.concat([be["allocation"].assign(kind="allocation"), be["escrow"].assign(kind="escrow release"), be["exposure"].assign(kind="exposure")], ignore_index=True).to_csv(PROC / "breakeven.csv", index=False)
     rb["escrow"].to_csv(PROC / "robust_escrow_degradation.csv", index=False)
     esc.to_csv(PROC / "escrow_schedule.csv", index=False)
     esc_sum.to_csv(PROC / "escrow_summary.csv", index=False)

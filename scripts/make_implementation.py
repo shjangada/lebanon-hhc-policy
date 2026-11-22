@@ -25,7 +25,7 @@ def render() -> str:
          "referral completion >= 0.40, posts filled >= 0.60, transparent reporting published; baselines set in months 1-3"),
         ("Phase 2: wave 2 (months 6-24)", f"the CNRS-L soil villages {' and '.join(wave2)}" + (f", and {herm}" if herm else ""),
          f"{usd(w2)} for {' + '.join(wave2)}" + (f" (+ {usd(x.loc[herm, 'startup_central_usd'])} for {herm})" if herm else ""),
-         "same consortium; AUB lab for Cr(VI) speciation (US price proxy $40-77; no Lebanese price)",
+         "same consortium; AUB lab for Cr(VI) speciation (US price proxy $40-80; no Lebanese price)",
          "pilot KPIs met in phase 1 for two consecutive quarters; Cr(VI) result decides protective action"),
         ("Phase 3: district clusters (years 2-4)", f"the {zc.cluster_lead} cluster ({int(zc.n)} cadasters)" + (f" and the {others.iloc[0].cluster_lead} cluster ({int(others.iloc[0].n)} cadasters)" if len(others) else ""),
          f"{usd(zc.startup_central_usd)}" + (f" + {usd(others.iloc[0].startup_central_usd)}" if len(others) else "") + " start-up at full coverage; filters dominate the cost and scale with the share of households covered",

@@ -110,7 +110,11 @@ def evidence_pack() -> dict:
     p = pd.concat([read_loose(E / "prices.csv"), read_loose(E / "prices_extra.csv")], ignore_index=True)     # prices_extra: AUB lab prices read from the AUB price list
     provenance(e, "Evidence pack: 37 claims with rung, geography and verification flag", "2026-11-21", "to_verify", "see url per row", "EVD").to_csv(PROCESSED / "evidence_pack.csv", index=False)
     provenance(p, "Price pack: 20 rows; unverified prices stay sliders", "2026-11-21", "to_verify", "see url per row", "PRC").to_csv(PROCESSED / "prices_pack.csv", index=False)
-    return {"evidence": len(e), "prices": len(p), "evidence_verified_flag": e.verified.value_counts().to_dict()}
+    r = read_loose(E / "reach_hsm_dec2024.csv")
+    r["share"] = pd.to_numeric(r.value) / pd.to_numeric(r.denominator)
+    provenance(r, "REACH HSM Lebanon Round 2 (Dec 2024): community key-informant priorities and health access in 52-53 Bekaa and Baalbek-Hermel cadasters (purposive sample)", "2024-12-20", "partial",
+               "https://repository.impact-initiatives.org/document/impact/12a6a0ac/LBN25_HSM_Round2.pdf", "REACH-HSM").to_csv(PROCESSED / "reach_hsm.csv", index=False)
+    return {"reach_hsm_rows": len(r), "evidence": len(e), "prices": len(p), "evidence_verified_flag": e.verified.value_counts().to_dict()}
 
 
 def run() -> dict:

@@ -5,7 +5,8 @@ Derivations (cost per intervention unit; low / high, USD):
   chw_women_orgs (10 CHW-years)   10 x 12 x monthly pay: low = volunteer incentive 4b ($100), central = NGO CHW pay 4a ($300), high = outreach worker 4c upper ($450). Excludes supervision, training, transport.
   soil_water_screening (catchment) sample count is an ASSUMPTION (10 soil total-Cr + 10 water nitrate + 10 water Cr per catchment) x unit prices 6d/6c (soil), 6a (nitrate), 6b (Cr water).
   mobile_maternal_unit (unit-year) NO published MMU operating cost exists (item 1a not_found): PROXY = consultations/month x 12 x full provider cost per consultation 1d (IRC Jordan, non-Lebanon proxy), throughput 1,200-1,800 per month (1c).
-Not derivable (kept mock, labelled): hub_spoke_ereferral, transport_vouchers, washing_water_truck, sunflower_biochar_plot, cr_speciation_tests (Cr(VI) speciation price not found).
+A software-only proxy for hub_spoke_ereferral (Sierra Leone eIDSR: $1,021 + $224 per facility, PMC8820104) is computed below but deliberately NOT used in the ranking: the option's effect size is still an unsourced placeholder, so a real cost with a placeholder effect would make it look dominant (it moved the community-vs-status-quo break-even from 5.6% to 63%). It is shown in unit_costs.csv for information.
+Not derivable (kept as labelled placeholders): hub_spoke_ereferral, transport_vouchers, washing_water_truck, sunflower_biochar_plot, cr_speciation_tests (Cr(VI) speciation price not found).
 Effect sizes (lift), people reached and the collateral-damage columns stay assumptions in all rows."""
 from __future__ import annotations
 
@@ -33,6 +34,15 @@ def derive(c: pd.DataFrame) -> dict[str, dict]:
                                         cost_high_usd=10 * (_v(c, "6d", "usd_high") + _v(c, "6a", "usd_central") + _v(c, "6b", "usd_high")),
                                         cost_basis="ASSUMED 10 soil + 10 water-nitrate + 10 water-Cr samples per catchment x lab unit prices 6d/6a/6b (soil from $33 to $210; AUB 2025 water $25/$30)",
                                         cost_items="6a;6b;6c;6d")}
+    # hub_spoke_ereferral: PROXY from the Sierra Leone eIDSR (DHIS2) cost study (PMC8820104, 2017 USD): rollout USD 1,021 per facility and running cost USD 224 per facility per year.
+    # First-year cost per district = (1,021 + 224) x number of MoPH-list PHCs in the district (4 to 24). Covers software and rollout only: it EXCLUDES coordination staff and the time to
+    # track referrals (no sourced cost), and it is a surveillance system, not an e-referral tracker.
+    fac = pd.read_csv(PROCESSED / "facilities.csv", dtype={"cadaster_id": str})
+    cad = pd.read_csv(PROCESSED / "cadasters.csv", dtype={"cadaster_id": str})[["cadaster_id", "district"]]
+    n_phc = fac[fac.type == "PHC"].merge(cad, on="cadaster_id").groupby("district").size()
+    out_hub = dict(cost_low_usd=float(n_phc.min() * (1021 + 224)), cost_high_usd=float(n_phc.max() * (1021 + 224)),
+                   cost_basis="PROXY: Sierra Leone eIDSR (DHIS2) rollout $1,021 + running $224 per facility (PMC8820104, 2017) x 4-24 PHCs per district; software and rollout only (no staff time)",
+                   cost_items="eIDSR")
     thr_lo, thr_hi = 1200.0, 1800.0
     out["mobile_maternal_unit"] = dict(cost_low_usd=thr_lo * 12 * _v(c, "1d", "usd_low"), cost_high_usd=thr_hi * 12 * _v(c, "1d", "usd_high"),
                                        cost_basis="PROXY (no published MMU operating cost): 1,200-1,800 consultations/month x 12 x $23-56 full provider cost per consultation (1d, non-Lebanon proxy)",

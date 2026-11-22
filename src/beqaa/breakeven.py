@@ -13,7 +13,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from . import escrow, m2_need_score as m2, robustness as rb
+from . import escrow, m2_need_score as m2, m4_exposure, robustness as rb
 
 PAIRS = [("community", "existing_allocation", "community vs status quo"), ("community", "top_down", "community vs top-down by need")]
 PARAMS = {"capture": (0.0, 0.9, "capture rate", "<", "share of community money diverted"),
@@ -80,6 +80,21 @@ def escrow_breakevens(rules: dict | None = None, yoy_gain: float | None = None) 
     return pd.DataFrame(rows)
 
 
+GREEK_ULTRAMAFIC_BOUND = 11.5 / 2176      # Botsou et al. 2022: total Cr(VI) 0.49-11.5 mg/kg vs total Cr 2,176-21,929 mg/kg => at most 0.53% for any pairing of the ranges (not Beqaa; abstract only)
+
+
+def exposure_breakevens() -> pd.DataFrame:
+    """Cr(VI) share of total chromium at which the child hazard quotient (soil + crop pathway) reaches 1, per sampled site. HQ is linear in the share between hq_low (all Cr(III)) and hq_high
+    (all Cr(VI)): share* = (1 - hq_low) / (hq_high - hq_low). Below it the screening result is 'monitor', above it 'protective action'. Nobody has measured the share in Beqaa; the only published
+    ultramafic-soil data found (Greece, not Beqaa) bound it at <= 0.53% of total Cr, which sits inside the window, so the speciation test is decisive."""
+    s = m4_exposure.screen_sites()
+    c = s[(s.parameter == "Cr") & s.hq_low.notna()].copy()
+    c["cr6_share_at_hq1"] = (1 - c.hq_low) / (c.hq_high - c.hq_low)
+    c["decisive_if_like_greek_ultramafic"] = c.cr6_share_at_hq1 < GREEK_ULTRAMAFIC_BOUND
+    c["reading"] = c.apply(lambda r: f"{r.site_name} ({r.value_mg_kg:.0f} mg/kg total Cr): hazard quotient reaches 1 if Cr(VI) is above {r.cr6_share_at_hq1:.2%} of total Cr", axis=1)
+    return c[["site_name", "value_mg_kg", "hq_low", "hq_high", "cr6_share_at_hq1", "decisive_if_like_greek_ultramafic", "reading"]].reset_index(drop=True)
+
+
 def run(scored: pd.DataFrame | None = None, budget: float = 100_000) -> dict:
     scored = scored if scored is not None else m2.compute(rb.scenario_raw(None, 30, 0.1, rb.load_uncertainty()), spec=m2.load_spec())
-    return {"allocation": allocation_breakevens(scored, budget), "escrow": escrow_breakevens()}
+    return {"allocation": allocation_breakevens(scored, budget), "escrow": escrow_breakevens(), "exposure": exposure_breakevens()}

@@ -20,7 +20,7 @@ from . import m1_access, m2_need_score as m2, riders
 from .io import PROCESSED, load_dataset
 
 CRITERIA = ["soil", "host", "centre", "settlements", "outreach", "disease", "need"]
-DEFAULT_PARAMS = dict(n_wells=20, n_soil=10, n_cr6=10, hh_size=5, chw_months=6, filter_share=1.0)
+DEFAULT_PARAMS = dict(n_wells=20, n_soil=10, n_cr6=10, hh_size=4.6, chw_months=6, filter_share=1.0)
 OUTREACH_DISTRICT_WORDS = {"Hermel": ["hermel"], "Baalbek": ["baalbek", "arsal", "yohmor"], "Zahle": ["zahle", "maalaqa", "bar elias"], "West Bekaa": ["west bekaa", "kamed el loz", "jeb jenine", "mashghara"],
                            "Rachaya": ["rachaya"]}
 
@@ -29,12 +29,10 @@ def _prices(prices: pd.DataFrame | None = None) -> dict:
     pk = prices if prices is not None else pd.read_csv(PROCESSED / "prices_pack.csv")
     u = riders.unit_prices().set_index("unit")
     filt = pk[pk["item"].str.startswith("Household ceramic water filter")].iloc[0]
-    cr6 = pk[pk["item"].str.startswith("Cr(VI) speciation in soil")].iloc[0]
-    cr6_alt = pk[pk["item"].str.startswith("Cr(VI) in soil/sediment")].iloc[0]
     return {"nitrate": tuple(u.loc["nitrate_water", ["usd_low", "usd_central", "usd_high"]]), "cr_water": tuple(u.loc["cr_water", ["usd_low", "usd_central", "usd_high"]]),
             "soil": tuple(u.loc["soil_total_cr", ["usd_low", "usd_central", "usd_high"]]), "chw": tuple(u.loc["chw_month", ["usd_low", "usd_central", "usd_high"]]),
             "filter": (float(filt.low), float(filt.central), float(filt.high)),         # UNICEF catalogue per household filter (ex-works; excludes freight and distribution)
-            "cr6": (float(cr6.central), float(cr6.central), float(cr6_alt.central))}    # US lab $40 (2024) to $77 (c. 2008): NO Lebanese price found
+            "cr6": (40.0, 76.0, 80.25)}      # US prices only (no Lebanese price): $40 soil (2024 list), $74.90 water (Westchester Co. NY 2025), $77 soil (c. 2008), $80.25 solid (2025); central = their median
 
 
 def disease_rate(esu: pd.DataFrame | None = None, pop: pd.DataFrame | None = None) -> pd.Series:

@@ -13,7 +13,7 @@ from .io import load_dataset
 
 RANGES = {  # name: (low, high, default, where it enters)
     "coverage of the district population": (0.02, 0.50, 0.10, "m6"), "transfer of the diarrhoea effect to hepatitis A / typhoid": (0.25, 1.0, 1.0, "m6"),
-    "filter lifetime (years)": (1.0, 5.0, 3.0, "m6"), "household size": (4, 6, 5, "m6"), "relative risk (filtration, 95% CI)": (0.41, 0.60, 0.50, "m6"),
+    "filter lifetime (years)": (0.5, 2.0, 1.0, "m6"), "household size": (4.0, 6.0, 4.6, "m6"), "relative risk (filtration, 95% CI)": (0.41, 0.60, 0.50, "m6"),
     "CHW months per site": (1, 12, 6, "m6"),
     "share of settlement people reached": (0.2, 1.0, 0.5, "flow"), "screened share": (0.2, 0.9, 0.5, "flow"), "symptomatic / positive rate": (0.05, 0.40, 0.15, "flow"),
     "share handled by CHWs": (0.3, 1.0, 0.8, "flow"), "referral completion": (0.2, 1.0, 0.5, "flow"), "spare share of centre capacity": (0.02, 0.40, 0.20, "flow"),
@@ -31,7 +31,7 @@ def _top_site():
 
 def cost_per_case(vals: dict, t, dpop: float) -> float:
     s = m6.simulate(t.district, dpop * vals["coverage of the district population"], dpop, "filtration", vals["transfer of the diarrhoea effect to hepatitis A / typhoid"], n=800,
-                    chw_months=vals["CHW months per site"], life=vals["filter lifetime (years)"], hh_size=int(round(vals["household size"])), rr_point=vals["relative risk (filtration, 95% CI)"])
+                    chw_months=vals["CHW months per site"], life=vals["filter lifetime (years)"], hh_size=float(vals["household size"]), rr_point=vals["relative risk (filtration, 95% CI)"])
     return s["cost_per_case_averted_median"]
 
 
